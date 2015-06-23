@@ -1,0 +1,15 @@
+{
+    "name": "Frost Shock",
+    "class": "shaman",
+    "type": "spell",
+    "description": "Deal 1 damage to an enemy character and Freeze it.",
+    "manaCost": 1,
+    "playActions": [
+        {
+            "class": "TargetedActions.dealSpellDamage",
+            "targets": "all",
+            "damage": 1
+        },
+        "TargetedActions.FREEZE_TARGET"
+    ]
+}

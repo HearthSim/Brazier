@@ -1,0 +1,8 @@
+{
+    "name": "Fel Reaver",
+    "description": "Whenever your opponent plays a card, discard the top 3 cards of your deck.",
+    "class": "neutral",
+    "rarity": "epic",
+    "type": "minion",
+    "manaCost": 5
+}

@@ -1,0 +1,8 @@
+{
+    "name": "Kel'Thuzad",
+    "description": "At the end of each turn, summon all friendly minions that died this turn.",
+    "rarity": "legendary",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 8
+}

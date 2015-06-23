@@ -1,0 +1,8 @@
+{
+    "name": "Vitality Totem",
+    "description": "At the end of your turn, restore 4 Health to your hero.",
+    "class": "shaman",
+    "type": "minion",
+    "rarity": "rare",
+    "manaCost": 2
+}

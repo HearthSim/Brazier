@@ -1,0 +1,8 @@
+{
+    "name": "Junkbot",
+    "description": "Whenever a friendly Mech dies, gain +2/+2.",
+    "class": "neutral",
+    "rarity": "epic",
+    "type": "minion",
+    "manaCost": 5
+}

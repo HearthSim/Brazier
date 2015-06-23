@@ -1,0 +1,19 @@
+{
+    "name": "Blingtron 3000",
+    "attack": 3,
+    "hp": 4,
+    "keywords": "mech",
+    "battleCries": [
+        {
+            "class": "PlayerActions.equipRandomWeapon",
+            "keywords": "collectible"
+        },
+        {
+            "class": "PlayerActions.doForOpponent",
+            "action": {
+                "class": "PlayerActions.equipRandomWeapon",
+                "keywords": "collectible"
+            }
+        }
+    ]
+}

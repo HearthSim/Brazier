@@ -1,0 +1,8 @@
+{
+    "name": "Echoing Ooze",
+    "description": "Battlecry: Summon an exact copy of this minion at the end of the turn.",
+    "class": "neutral",
+    "type": "minion",
+    "rarity": "epic",
+    "manaCost": 2
+}

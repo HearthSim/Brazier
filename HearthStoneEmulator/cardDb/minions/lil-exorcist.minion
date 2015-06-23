@@ -1,0 +1,6 @@
+{
+    "name": "Lil' Exorcist",
+    "attack": 2,
+    "hp": 3,
+    "battleCries": "BattleCries.EXORCIST_BUFF"
+}

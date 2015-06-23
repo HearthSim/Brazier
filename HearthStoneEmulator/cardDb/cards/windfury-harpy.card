@@ -1,0 +1,7 @@
+{
+    "name": "Windfury Harpy",
+    "description": "Windfury",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 6
+}

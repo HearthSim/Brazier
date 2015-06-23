@@ -1,0 +1,7 @@
+{
+    "name": "Dread Corsair",
+    "attack": 3,
+    "hp": 3,
+    "taunt": "true",
+    "keywords": ["pirate"]
+}

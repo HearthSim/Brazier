@@ -1,0 +1,7 @@
+{
+    "name": "Starving Buzzard",
+    "description": "Whenever you summon a Beast, draw a card.",
+    "class": "hunter",
+    "type": "minion",
+    "manaCost": 5
+}

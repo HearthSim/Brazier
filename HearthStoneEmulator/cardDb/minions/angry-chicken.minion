@@ -1,0 +1,14 @@
+{
+    "name": "Angry Chicken",
+    "attack": 1,
+    "hp": 1,
+    "keywords": "beast",
+    "ability": {
+        "class": "MinionAbilities.selfAura",
+        "filter": "MinionAuras.SELF_DAMAGED",
+        "aura": {
+            "class": "MinionAuras.attackBuff",
+            "attack": 5
+        }
+    }
+}

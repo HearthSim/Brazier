@@ -1,0 +1,7 @@
+{
+    "name": "Leper Gnome",
+    "description": "Deathrattle: Deal 2 damage to the enemy hero.",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 1
+}

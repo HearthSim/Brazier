@@ -1,0 +1,7 @@
+{
+    "name": "Sen'jin Shieldmasta",
+    "keywords": "horde-warrior",
+    "attack": 3,
+    "hp": 5,
+    "taunt": true
+}

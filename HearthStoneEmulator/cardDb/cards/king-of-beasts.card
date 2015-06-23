@@ -1,0 +1,8 @@
+{
+    "name": "King of Beasts",
+    "description": "Taunt. Battlecry: Gain +1 Attack for each other Beast you have.",
+    "class": "hunter",
+    "type": "minion",
+    "rarity": "rare",
+    "manaCost": 5
+}

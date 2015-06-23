@@ -1,0 +1,12 @@
+{
+    "name": "Far Sight",
+    "description": "Draw a card. That card costs (3) less.",
+    "class": "shaman",
+    "type": "spell",
+    "rarity": "epic",
+    "manaCost": 3,
+    "playActions": {
+        "class": "PlayerActions.drawCard",
+        "costReduction": 3
+    }
+}

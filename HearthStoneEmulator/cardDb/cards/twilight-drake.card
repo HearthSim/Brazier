@@ -1,0 +1,8 @@
+{
+    "name": "Twilight Drake",
+    "description": "Battlecry: Gain +1 Health for each card in your hand.",
+    "class": "neutral",
+    "type": "minion",
+    "rarity": "rare",
+    "manaCost": 4
+}

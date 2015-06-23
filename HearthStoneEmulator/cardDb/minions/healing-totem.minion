@@ -1,0 +1,17 @@
+{
+    "name": "Healing Totem",
+    "attack": 0,
+    "hp": 2,
+    "triggers": {
+        "turn-ends": {
+            "filter": "BasicFilters.HAS_SAME_OWNER_PLAYER",
+            "action": {
+                "class": "MinionEventActions.doSelf",
+                "action": {
+                    "class": "DamageActions.dealDamageToOwnMinions",
+                    "damage": -1
+                }
+            }
+        }
+    }
+}

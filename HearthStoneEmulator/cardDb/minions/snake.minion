@@ -1,0 +1,6 @@
+{
+    "name": "Snake",
+    "attack": 1,
+    "hp": 1,
+    "keywords": "beast"
+}

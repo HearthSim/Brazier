@@ -1,0 +1,8 @@
+{
+    "name": "Violet Teacher",
+    "description": "Whenever you cast a spell, summon a 1/1 Violet Apprentice.",
+    "class": "neutral",
+    "type": "minion",
+    "rarity": "rare",
+    "manaCost": 4
+}

@@ -1,0 +1,17 @@
+{
+    "name": "Jeeves",
+    "attack": 1,
+    "hp": 4,
+    "keywords": "mech",
+    "triggers": {
+        "turn-ends": {
+            "action": {
+                "class": "MinionEventActions.doForEventSourcePlayer",
+                "action": {
+                    "class": "PlayerActions.drawCardToFillHand",
+                    "targetHandSize": 3
+                }
+            }
+        }
+    }
+}

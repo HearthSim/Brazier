@@ -1,0 +1,13 @@
+{
+    "name": "Iron Juggernaut",
+    "attack": 6,
+    "hp": 5,
+    "keywords": "mech",
+    "battleCries": {
+        "class": "PlayerActions.doForOpponent",
+        "action": {
+            "class": "PlayerActions.shuffleCardIntoDeck",
+            "card": "Burrowing Mine"
+        }
+    }
+}

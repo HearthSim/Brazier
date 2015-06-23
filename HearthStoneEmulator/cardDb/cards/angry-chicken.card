@@ -1,0 +1,8 @@
+{
+    "name": "Angry Chicken",
+    "description": "Enrage: +5 Attack.",
+    "class": "neutral",
+    "rarity": "rare",
+    "type": "minion",
+    "manaCost": 1
+}

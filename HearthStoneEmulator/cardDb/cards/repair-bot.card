@@ -1,0 +1,8 @@
+{
+    "name": "Repair Bot",
+    "description": "At the end of your turn, restore 6 Health to a damaged character.",
+    "class": "neutral",
+    "type": "minion",
+    "collectible": false,
+    "manaCost": 1
+}

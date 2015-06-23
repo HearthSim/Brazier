@@ -1,0 +1,6 @@
+{
+    "name": "Dancing Swords",
+    "attack": 4,
+    "hp": 4,
+    "deathRattle": "PlayerActions.DRAW_FOR_OPPONENT"
+}

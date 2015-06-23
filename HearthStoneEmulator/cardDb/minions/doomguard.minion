@@ -1,0 +1,8 @@
+{
+    "name": "Doomguard",
+    "attack": 5,
+    "hp": 7,
+    "charge": true,
+    "keywords": "demon",
+    "battleCries": ["PlayerActions.DISCARD_RANDOM_CARD", "PlayerActions.DISCARD_RANDOM_CARD"]
+}

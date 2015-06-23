@@ -1,0 +1,21 @@
+{
+    "name": "Ice Lance",
+    "class": "mage",
+    "type": "spell",
+    "description": "Freeze a character. If it was already Frozen, deal 4 damage instead.",
+    "manaCost": 1,
+    "playActions": [
+        {
+            "targets": "all",
+            "class": "TargetedActions.applyIfFrozen",
+            "action": {
+                "class": "TargetedActions.dealSpellDamage",
+                "damage": 4
+            }
+        },
+        {
+            "targets": "all",
+            "class": "TargetedActions.FREEZE_TARGET"
+        }
+    ]
+}

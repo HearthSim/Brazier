@@ -1,0 +1,7 @@
+{
+    "name": "Whelp",
+    "class": "neutral",
+    "type": "minion",
+    "collectible": false,
+    "manaCost": 1
+}

@@ -1,0 +1,16 @@
+{
+    "name": "Defender of Argus",
+    "attack": 2,
+    "hp": 3,
+    "battleCries": {
+        "class": "MinionActions.buffNeighbours",
+        "buff": [
+            "TargetedActions.TAUNT_MINION",
+            {
+                "class": "MinionActions.buff",
+                "attack": 1,
+                "hp": 1
+            }
+        ]
+    }
+}

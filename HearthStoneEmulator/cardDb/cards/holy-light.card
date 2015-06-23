@@ -1,0 +1,12 @@
+{
+    "name": "Holy Light",
+    "description": "Restore 6 Health.",
+    "class": "paladin",
+    "type": "spell",
+    "manaCost": 2,
+    "playActions": {
+        "targets": "all",
+        "class": "TargetedActions.dealSpellDamage",
+        "damage": -6
+    }
+}

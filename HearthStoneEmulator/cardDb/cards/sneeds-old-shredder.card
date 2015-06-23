@@ -1,0 +1,8 @@
+{
+    "name": "Sneed's Old Shredder",
+    "description": "Deathrattle: Summon a random legendary minion.",
+    "class": "neutral",
+    "rarity": "legendary",
+    "type": "minion",
+    "manaCost": 8
+}

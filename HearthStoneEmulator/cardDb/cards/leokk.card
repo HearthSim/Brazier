@@ -1,0 +1,8 @@
+{
+    "name": "Leokk",
+    "description": "Other friendly minions have +1 Attack.",
+    "class": "hunter",
+    "type": "minion",
+    "manaCost": 3,
+    "collectible": false
+}

@@ -1,0 +1,10 @@
+{
+    "name": "Antique Healbot",
+    "attack": 3,
+    "hp": 3,
+    "keywords": "mech",
+    "battleCries": {
+        "class": "DamageActions.damageOwnHero",
+        "damage": -8
+    }
+}

@@ -1,0 +1,8 @@
+{
+    "name": "Hound",
+    "description": "Charge",
+    "class": "hunter",
+    "type": "minion",
+    "collectible": false,
+    "manaCost": 1
+}

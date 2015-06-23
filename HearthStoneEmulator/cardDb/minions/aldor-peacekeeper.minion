@@ -1,0 +1,10 @@
+{
+    "name": "Aldor Peacekeeper",
+    "attack": 3,
+    "hp": 3,
+    "battleCries": {
+        "class": "TargetedActions.setMinionAttackTo",
+        "targets": "enemy-minions",
+        "attack": 1
+    }
+}

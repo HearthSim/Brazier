@@ -1,0 +1,7 @@
+{
+    "name": "Elven Archer",
+    "description": "Battlecry: Deal 1 damage.",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 1
+}

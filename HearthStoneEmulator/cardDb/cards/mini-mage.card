@@ -1,0 +1,8 @@
+{
+    "name": "Mini-Mage",
+    "description": "Stealth Spell Damage +1",
+    "class": "neutral",
+    "type": "minion",
+    "rarity": "epic",
+    "manaCost": 4
+}

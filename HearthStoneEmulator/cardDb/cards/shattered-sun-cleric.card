@@ -1,0 +1,7 @@
+{
+    "name": "Shattered Sun Cleric",
+    "description": "Battlecry: Give a friendly minion +1/+1.",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 3
+}

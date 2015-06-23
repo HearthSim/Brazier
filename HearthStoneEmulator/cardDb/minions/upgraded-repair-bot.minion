@@ -1,0 +1,19 @@
+{
+    "name": "Upgraded Repair Bot",
+    "attack": 5,
+    "hp": 5,
+    "keywords": "mech",
+    "battleCries": {
+        "targets": [
+            "self-minions",
+            {
+                "class": "TargetNeeds.hasKeyword",
+                "keywords": "mech"
+            }],
+        "class": "TargetedActions.applyToMinionTarget",
+        "action": {
+            "class": "MinionActions.buffHp",
+            "hp": 4
+        }
+    }
+}

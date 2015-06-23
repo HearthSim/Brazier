@@ -1,0 +1,7 @@
+{
+    "name": "Ironbark Protector",
+    "description": "Taunt",
+    "class": "druid",
+    "type": "minion",
+    "manaCost": 8
+}

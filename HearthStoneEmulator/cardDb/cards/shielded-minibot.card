@@ -1,0 +1,7 @@
+{
+    "name": "Shielded Minibot",
+    "description": "Divine Shield",
+    "class": "paladin",
+    "type": "minion",
+    "manaCost": 2
+}

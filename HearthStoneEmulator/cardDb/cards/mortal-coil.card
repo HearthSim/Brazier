@@ -1,0 +1,12 @@
+{
+    "name": "Mortal Coil",
+    "class": "warlock",
+    "type": "spell",
+    "description": "Deal 1 damage to a minion. If that kills it, draw a card.",
+    "manaCost": 1,
+    "playActions": {
+        "class": "TargetedActions.mortalCoil",
+        "targets": "all-minions",
+        "damage": 1
+    }
+}

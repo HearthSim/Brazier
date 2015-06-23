@@ -1,0 +1,14 @@
+{
+    "name": "Blackwing Technician",
+    "attack": 2,
+    "hp": 4,
+    "battleCries": {
+        "class": "MinionActions.buff",
+        "requires": {
+            "class": "PlayActionRequirements.hasCardInHand",
+            "keywords": "dragon"
+        },
+        "attack": 1,
+        "hp": 1
+    }
+}

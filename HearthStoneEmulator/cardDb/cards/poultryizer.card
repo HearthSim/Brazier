@@ -1,0 +1,8 @@
+{
+    "name": "Poultryizer",
+    "description": "At the start of your turn, transform a random minion into a 1/1 Chicken.",
+    "class": "neutral",
+    "type": "minion",
+    "collectible": false,
+    "manaCost": 1
+}

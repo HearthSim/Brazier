@@ -1,0 +1,9 @@
+{
+    "name": "Madder Bomber",
+    "attack": 5,
+    "hp": 4,
+    "battleCries": {
+        "class": "DamageActions.throwBombs",
+        "bombCount": 6
+    }
+}

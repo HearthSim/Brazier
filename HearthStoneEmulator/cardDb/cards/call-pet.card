@@ -1,0 +1,16 @@
+{
+    "name": "Call Pet",
+    "description": "Draw a card. If it's a Beast, it costs (4) less.",
+    "class": "hunter",
+    "type": "spell",
+    "rarity": "rare",
+    "manaCost": 2,
+    "playActions": {
+        "class": "PlayerActions.drawCard",
+        "costReduction": 4,
+        "costReductionFilter": {
+            "class": "BasicFilters.eventSourceHasKeyword",
+            "keywords": "beast"
+        }
+    }
+}

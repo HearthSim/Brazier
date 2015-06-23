@@ -1,0 +1,8 @@
+{
+    "name": "Hungry Crab",
+    "description": "Battlecry: Destroy a Murloc and gain +2/+2.",
+    "class": "neutral",
+    "type": "minion",
+    "rarity": "epic",
+    "manaCost": 1
+}

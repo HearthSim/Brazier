@@ -1,0 +1,24 @@
+{
+    "name": "Steady Shot",
+    "description": "Deal 2 damage to the enemy hero.",
+    "manaCost": 2,
+    "action": [
+        {
+            "requires": {
+                "class": "PlayActionRequirements.doesntHavePlayerFlag",
+                "flag": "stead-shot-snipe"
+            },
+            "class": "PlayerActions.damageOpponentHero",
+            "damage": 2,
+            "spell": false
+        },
+        {
+            "requires": {
+                "class": "PlayActionRequirements.hasPlayerFlag",
+                "flag": "stead-shot-snipe"
+            },
+            "targets": "all",
+            "class": "TargetedActions.dealBasicDamage",
+            "damage": 2
+        }]
+}

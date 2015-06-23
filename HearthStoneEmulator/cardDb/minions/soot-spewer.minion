@@ -1,0 +1,10 @@
+{
+    "name": "Soot Spewer",
+    "attack": 3,
+    "hp": 3,
+    "keywords": "mech",
+    "ability": {
+        "class": "MinionAbilities.spellPower",
+        "spellPower": 1
+    }
+}

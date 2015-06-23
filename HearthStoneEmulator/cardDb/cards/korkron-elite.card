@@ -1,0 +1,7 @@
+{
+    "name": "Kor'kron Elite",
+    "description": "Charge",
+    "class": "warrior",
+    "type": "minion",
+    "manaCost": 4
+}

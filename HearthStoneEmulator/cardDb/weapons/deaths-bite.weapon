@@ -1,0 +1,12 @@
+{
+    "name": "Death's Bite",
+    "attack": 4,
+    "charges": 2,
+    "deathRattle": {
+        "class": "WeaponEventActions.doSelf",
+        "action": {
+            "class": "DamageActions.dealDamageToAllMinions",
+            "damage": 1
+        }
+    }
+}

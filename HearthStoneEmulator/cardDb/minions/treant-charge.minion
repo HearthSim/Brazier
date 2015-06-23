@@ -1,0 +1,12 @@
+{
+    "name": "Treant/Charge",
+    "displayName": "Treant",
+    "attack": 2,
+    "hp": 2,
+    "triggers": {
+        "turn-ends": {
+            "filter": "BasicFilters.HAS_SAME_OWNER_PLAYER",
+            "action": "MinionEventActions.SELF_DESTRUCT"
+        }
+    }
+}

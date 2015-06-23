@@ -1,0 +1,10 @@
+{
+    "name": "Mind Spike",
+    "description": "Deal 2 damage.",
+    "manaCost": 2,
+    "action": {
+        "class": "TargetedActions.dealBasicDamage",
+        "targets": "all",
+        "damage": 2
+    }
+}

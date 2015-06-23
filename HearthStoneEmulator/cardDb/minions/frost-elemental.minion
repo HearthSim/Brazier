@@ -1,0 +1,9 @@
+{
+    "name": "Frost Elemental",
+    "attack": 5,
+    "hp": 5,
+    "battleCries": {
+        "class": "TargetedActions.FREEZE_TARGET",
+        "targets": "all"
+    }
+}

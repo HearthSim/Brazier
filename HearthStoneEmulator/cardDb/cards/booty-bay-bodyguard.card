@@ -1,0 +1,7 @@
+{
+    "name": "Booty Bay Bodyguard",
+    "class": "neutral",
+    "description": "Taunt",
+    "type": "minion",
+    "manaCost": 5
+}

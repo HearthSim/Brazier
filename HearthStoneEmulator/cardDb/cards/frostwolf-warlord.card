@@ -1,0 +1,7 @@
+{
+    "name": "Frostwolf Warlord",
+    "class": "neutral",
+    "description": "Battlecry: Gain +1/+1 for each other friendly minion on the battlefield.",
+    "type": "minion",
+    "manaCost": 5
+}

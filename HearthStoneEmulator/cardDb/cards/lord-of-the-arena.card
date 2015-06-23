@@ -1,0 +1,7 @@
+{
+    "name": "Lord of the Arena",
+    "description": "Taunt",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 2
+}

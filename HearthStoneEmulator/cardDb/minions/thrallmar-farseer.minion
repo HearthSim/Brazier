@@ -1,0 +1,7 @@
+{
+    "name": "Thrallmar Farseer",
+    "keywords": "horde-warrior",
+    "attack": 2,
+    "hp": 3,
+    "maxAttackCount": 2
+}

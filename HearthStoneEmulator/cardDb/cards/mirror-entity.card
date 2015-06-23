@@ -1,0 +1,22 @@
+{
+    "name": "Mirror Entity",
+    "class": "mage",
+    "type": "spell",
+    "description": "Secret: When your opponent plays a minion, summon a copy of it.",
+    "manaCost": 3,
+    "secret": {
+        "done-play-card": {
+            "filter": [
+                "BasicFilters.HAS_DIFFERENT_OWNER_PLAYER",
+                "BasicFilters.SELF_BOARD_IS_NOT_FULL",
+                {
+                    "class": "BasicFilters.eventSourceHasKeyword",
+                    "keywords": "minion"
+                }],
+            "action": {
+                "class": "CardEventActions.applyToCardMinion",
+                "action": "MinionActions.SUMMON_COPY_FOR_OPPONENT"
+            }
+        }
+    }
+}

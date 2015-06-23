@@ -1,0 +1,8 @@
+{
+    "name": "Coldlight Seer",
+    "description": "Battlecry: Give ALL other Murlocs +2 Health.",
+    "class": "neutral",
+    "type": "minion",
+    "rarity": "rare",
+    "manaCost": 3
+}

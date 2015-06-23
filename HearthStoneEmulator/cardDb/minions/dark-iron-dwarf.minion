@@ -1,0 +1,10 @@
+{
+    "name": "Dark Iron Dwarf",
+    "attack": 4,
+    "hp": 4,
+    "battleCries": {
+        "class": "TargetedActions.addTemporaryAttack",
+        "targets": "all-minions",
+        "attack": 2
+    }
+}

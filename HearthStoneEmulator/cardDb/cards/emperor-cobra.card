@@ -1,0 +1,8 @@
+{
+    "name": "Emperor Cobra",
+    "description": "Destroy any minion damaged by this minion.",
+    "class": "neutral",
+    "rarity": "rare",
+    "type": "minion",
+    "manaCost": 3
+}

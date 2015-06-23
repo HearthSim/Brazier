@@ -1,0 +1,7 @@
+{
+    "name": "Twilight Whelp",
+    "description": "Battlecry: If you're holding a Dragon, gain +2 Health.",
+    "class": "priest",
+    "type": "minion",
+    "manaCost": 1
+}

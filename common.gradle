@@ -1,0 +1,44 @@
+//
+// This file is to be applied to every subproject.
+//
+
+apply plugin: 'java'
+apply plugin: 'maven'
+
+String mavenGroupId = 'com.github.kelemen'
+String mavenVersion = '0.0.1'
+String mavenArtifactId = name
+
+sourceCompatibility = '1.8'
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+repositories {
+    mavenCentral();
+    maven { url 'http://dl.bintray.com/kelemen/maven' }
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.10'
+    testCompile group: 'org.mockito', name: 'mockito-core', version: '1.10.19'
+}
+
+group = mavenGroupId
+version = mavenVersion
+
+task sourcesJar(type: Jar, dependsOn: classes, description: 'Creates a jar from the source files.') {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+artifacts {
+    archives jar
+    archives sourcesJar
+}
+
+configure(install.repositories.mavenInstaller) {
+    pom.project {
+        groupId = mavenGroupId
+        artifactId = mavenArtifactId
+        version = mavenVersion
+    }
+}

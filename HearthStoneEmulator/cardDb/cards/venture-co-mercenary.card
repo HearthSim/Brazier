@@ -1,0 +1,7 @@
+{
+    "name": "Venture Co. Mercenary",
+    "description": "Your minions cost (3) more.",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 5
+}

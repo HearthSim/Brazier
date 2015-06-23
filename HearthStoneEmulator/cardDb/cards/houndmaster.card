@@ -1,0 +1,7 @@
+{
+    "name": "Houndmaster",
+    "description": "Battlecry: Give a friendly Beast +2/+2 and Taunt.",
+    "class": "hunter",
+    "type": "minion",
+    "manaCost": 4
+}

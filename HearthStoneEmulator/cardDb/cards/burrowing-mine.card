@@ -1,0 +1,16 @@
+{
+    "name": "Burrowing Mine",
+    "description": "When you draw this, it explodes. You take 10 damage and draw a card.",
+    "class": "warrior",
+    "type": "spell",
+    "manaCost": 0,
+    "collectible": false,
+    "drawActions": [
+        {
+            "class": "PlayerActions.damageOwnHero",
+            "spell": false,
+            "damage": 10
+        },
+        "PlayerActions.DRAW_FOR_SELF"
+    ]
+}

@@ -1,0 +1,17 @@
+{
+    "name": "Master Swordsmith",
+    "attack": 1,
+    "hp": 3,
+    "triggers": {
+        "turn-ends": {
+            "filter": "BasicFilters.HAS_SAME_OWNER_PLAYER",
+            "action": {
+                "class": "MinionEventActions.applyTargetedActionToRandomOwnMinion",
+                "action": {
+                    "class": "MinionActions.buffAttack",
+                    "attack": 1
+                }
+            }
+        }
+    }
+}

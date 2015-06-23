@@ -1,0 +1,6 @@
+{
+    "name": "Spider Tank",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 3
+}

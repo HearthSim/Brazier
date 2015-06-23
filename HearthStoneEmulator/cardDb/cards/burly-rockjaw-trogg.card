@@ -1,0 +1,7 @@
+{
+    "name": "Burly Rockjaw Trogg",
+    "class": "neutral",
+    "description": "Whenever your opponent casts a spell, gain +2 Attack.",
+    "type": "minion",
+    "manaCost": 4
+}

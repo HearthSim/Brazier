@@ -1,0 +1,8 @@
+{
+    "name": "Injured Blademaster",
+    "description": "Battlecry: Deal 4 damage to HIMSELF.",
+    "class": "neutral",
+    "type": "minion",
+    "rarity": "rare",
+    "manaCost": 3
+}

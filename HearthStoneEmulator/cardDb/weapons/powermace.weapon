@@ -1,0 +1,20 @@
+{
+    "name": "Powermace",
+    "attack": 3,
+    "charges": 2,
+    "deathRattle": {
+        "class": "PlayerActions.applyTargetedActionToRandomOwnMinion",
+        "filter": {
+            "class": "BasicFilters.eventSourceHasKeyword",
+            "keywords": "mech"
+        },
+        "action": {
+            "class": "TargetedActions.applyToMinionTarget",
+            "action": {
+                "class": "MinionActions.buff",
+                "attack": 2,
+                "hp": 2
+            }
+        }
+    }
+}

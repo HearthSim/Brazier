@@ -1,0 +1,8 @@
+{
+    "name": "Screwjank Clunker",
+    "description": "Battlecry: Give a friendly Mech +2/+2.",
+    "class": "neutral",
+    "rarity": "rare",
+    "type": "minion",
+    "manaCost": 4
+}

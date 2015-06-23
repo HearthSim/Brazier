@@ -1,0 +1,19 @@
+{
+    "name": "Multi-Shot",
+    "description": "Deal 3 damage to two random enemy minions.",
+    "class": "hunter",
+    "type": "spell",
+    "manaCost": 4,
+    "playActions": {
+        "requires": {
+            "class": "PlayActionRequirements.opponentBoardIsLarger",
+            "minionCount": 1
+        },
+        "class": "PlayerActions.forRandomEnemyMinions",
+        "minionCount": 2,
+        "action": {
+            "class": "TargetedActions.dealSpellDamage",
+            "damage": 3
+        }
+    }
+}

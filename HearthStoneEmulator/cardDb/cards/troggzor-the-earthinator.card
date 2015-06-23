@@ -1,0 +1,8 @@
+{
+    "name": "Troggzor the Earthinator",
+    "description": "Whenever your opponent casts a spell, summon a Burly Rockjaw Trogg.",
+    "class": "neutral",
+    "type": "minion",
+    "rarity": "legendary",
+    "manaCost": 7
+}

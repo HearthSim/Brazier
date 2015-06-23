@@ -1,0 +1,8 @@
+{
+    "name": "Upgraded Repair Bot",
+    "description": "Battlecry: Give a friendly Mech +4 Health.",
+    "class": "priest",
+    "rarity": "rare",
+    "type": "minion",
+    "manaCost": 5
+}

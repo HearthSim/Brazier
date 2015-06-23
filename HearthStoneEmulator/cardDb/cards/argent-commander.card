@@ -1,0 +1,8 @@
+{
+    "name": "Argent Commander",
+    "description": "Charge, Divine Shield",
+    "rarity": "rare",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 6
+}

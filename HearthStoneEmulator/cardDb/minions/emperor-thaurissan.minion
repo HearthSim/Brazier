@@ -1,0 +1,14 @@
+{
+    "name": "Emperor Thaurissan",
+    "attack": 5,
+    "hp": 5,
+    "triggers": {
+        "turn-ends": {
+            "filter": "BasicFilters.HAS_SAME_OWNER_PLAYER",
+            "action": {
+                "class": "PlayerActions.decreaseCostOfHand",
+                "amount": 1
+            }
+        }
+    }
+}

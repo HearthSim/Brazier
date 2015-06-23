@@ -1,0 +1,8 @@
+{
+    "name": "Toshley",
+    "description": "Battlecry and Deathrattle: Add a Spare Part card to your hand.",
+    "class": "neutral",
+    "type": "minion",
+    "rarity": "legendary",
+    "manaCost": 6
+}

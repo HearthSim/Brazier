@@ -1,0 +1,14 @@
+{
+    "name": "Dragon Egg",
+    "attack": 0,
+    "hp": 2,
+    "triggers": {
+        "minion-damaged": {
+            "filter": "BasicFilters.TARGET_SELF",
+            "action": {
+                "class": "MinionEventActions.summonMinionRight",
+                "minion": "Black Whelp"
+            }
+        }
+    }
+}

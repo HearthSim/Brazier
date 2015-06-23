@@ -1,0 +1,7 @@
+{
+    "name": "Damaged Golem",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 1,
+    "collectible": 1
+}

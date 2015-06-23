@@ -1,0 +1,7 @@
+{
+    "name": "Abusive Sergeant",
+    "description": "Battlecry: Give a minion +2 Attack this turn.",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 1
+}

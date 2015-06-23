@@ -1,0 +1,7 @@
+{
+    "name": "Defias Bandit",
+    "class": "rouge",
+    "type": "minion",
+    "collectible": false,
+    "manaCost": 1
+}

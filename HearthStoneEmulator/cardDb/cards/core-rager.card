@@ -1,0 +1,8 @@
+{
+    "name": "Core Rager",
+    "description": "Battlecry: If your hand is empty, gain +3/+3.",
+    "class": "hunter",
+    "rarity": "rare",
+    "type": "minion",
+    "manaCost": 4
+}

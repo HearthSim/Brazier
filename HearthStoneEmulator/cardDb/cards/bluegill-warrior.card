@@ -1,0 +1,7 @@
+{
+    "name": "Bluegill Warrior",
+    "description": "Charge",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 2
+}

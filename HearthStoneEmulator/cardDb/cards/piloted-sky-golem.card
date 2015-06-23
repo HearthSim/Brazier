@@ -1,0 +1,8 @@
+{
+    "name": "Piloted Sky Golem",
+    "description": "Deathrattle: Summon a random 4-Cost minion.",
+    "class": "neutral",
+    "rarity": "epic",
+    "type": "minion",
+    "manaCost": 6
+}

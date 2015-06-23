@@ -1,0 +1,15 @@
+{
+    "name": "Murloc Warleader",
+    "attack": 3,
+    "hp": 3,
+    "keywords": "murloc",
+    "ability": {
+        "class": "MinionAbilities.boardAura",
+        "filter": ["MinionAuras.TARGET_IS_MURLOC", "Auras.NOT_SELF"],
+        "aura": {
+            "class": "MinionAuras.bodyBuff",
+            "attack": 2,
+            "hp": 1
+        }
+    }
+}

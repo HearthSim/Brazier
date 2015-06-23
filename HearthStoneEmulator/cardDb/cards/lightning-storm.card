@@ -1,0 +1,14 @@
+{
+    "name": "Lightning Storm",
+    "description": "Deal 2-3 damage to all enemy minions. Overload: (2)",
+    "class": "shaman",
+    "type": "spell",
+    "rarity": "rare",
+    "manaCost": 3,
+    "overload": 2,
+    "playActions": {
+        "class": "PlayerActions.dealDamageToEnemyMinions",
+        "minDamage": 2,
+        "maxDamage": 3
+    }
+}

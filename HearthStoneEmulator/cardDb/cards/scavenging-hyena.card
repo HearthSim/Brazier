@@ -1,0 +1,7 @@
+{
+    "name": "Scavenging Hyena",
+    "description": "Whenever a friendly Beast dies, gain +2/+1.",
+    "class": "hunter",
+    "type": "minion",
+    "manaCost": 2
+}

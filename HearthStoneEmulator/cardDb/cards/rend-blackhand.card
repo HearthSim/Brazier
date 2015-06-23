@@ -1,0 +1,8 @@
+{
+    "name": "Rend Blackhand",
+    "description": "Battlecry: If you're holding a Dragon, destroy a Legendary minion.",
+    "class": "neutral",
+    "type": "minion",
+    "rarity": "legendary",
+    "manaCost": 7
+}

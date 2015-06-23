@@ -1,0 +1,12 @@
+{
+    "name": "Raid Leader",
+    "attack": 2,
+    "hp": 2,
+    "ability": {
+        "class": "MinionAbilities.sameBoardOthersAura",
+        "aura": {
+            "class": "MinionAuras.attackBuff",
+            "attack": 1
+        }
+    }
+}

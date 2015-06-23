@@ -1,0 +1,14 @@
+{
+    "name": "Grimscale Oracle",
+    "attack": 1,
+    "hp": 1,
+    "keywords": "murloc",
+    "ability": {
+        "class": "MinionAbilities.boardAura",
+        "filter": ["MinionAuras.TARGET_IS_MURLOC", "Auras.NOT_SELF"],
+        "aura": {
+            "class": "MinionAuras.attackBuff",
+            "attack": 1
+        }
+    }
+}

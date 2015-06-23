@@ -1,0 +1,17 @@
+{
+    "name": "Mechanical Yeti",
+    "attack": 4,
+    "hp": 5,
+    "keywords": "mech",
+    "deathRattle": [{
+            "class": "PlayerActions.addRandomCard",
+            "keywords": "spare-part"
+        },
+        {
+            "class": "PlayerActions.doForOpponent",
+            "action": {
+                "class": "PlayerActions.addRandomCard",
+                "keywords": "spare-part"
+            }
+        }]
+}

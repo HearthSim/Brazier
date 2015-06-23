@@ -1,0 +1,6 @@
+{
+    "name": "Wolfrider",
+    "attack": 3,
+    "hp": 1,
+    "charge": true
+}

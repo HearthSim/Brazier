@@ -1,0 +1,10 @@
+{
+    "name": "Fire Elemental",
+    "attack": 6,
+    "hp": 5,
+    "battleCries": {
+        "class": "BattleCries.dealDamageToTarget",
+        "targets": "all",
+        "damage": 3
+    }
+}

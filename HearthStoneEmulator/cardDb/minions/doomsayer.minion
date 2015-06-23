@@ -1,0 +1,11 @@
+{
+    "name": "Doomsayer",
+    "attack": 0,
+    "hp": 7,
+    "triggers": {
+        "turn-starts": {
+            "filter": "BasicFilters.HAS_SAME_OWNER_PLAYER",
+            "action": "PlayerActions.KILL_ALL_MINIONS"
+        }
+    }
+}

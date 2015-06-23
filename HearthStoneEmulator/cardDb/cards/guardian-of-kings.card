@@ -1,0 +1,7 @@
+{
+    "name": "Guardian of Kings",
+    "description": "Battlecry: Restore 6 Health to your hero.",
+    "class": "paladin",
+    "type": "minion",
+    "manaCost": 7
+}

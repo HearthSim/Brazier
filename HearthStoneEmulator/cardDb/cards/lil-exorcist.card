@@ -1,0 +1,8 @@
+{
+    "name": "Lil' Exorcist",
+    "description": "Taunt Battlecry: Gain +1/+1 for each enemy Deathrattle minion.",
+    "rarity": "rare",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 3
+}

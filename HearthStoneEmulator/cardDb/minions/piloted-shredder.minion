@@ -1,0 +1,10 @@
+{
+    "name": "Piloted Shredder",
+    "attack": 4,
+    "hp": 3,
+    "keywords": "mech",
+    "deathRattle": {
+        "class": "MinionEventActions.summonRandomMinionRight",
+        "keywords": ["2-cost", "collectible"]
+    }
+}

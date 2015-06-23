@@ -1,0 +1,8 @@
+{
+    "name": "Tinkmaster Overspark",
+    "description": "Battlecry: Transform another random minion into a 5/5 Devilsaur or a 1/1 Squirrel.",
+    "class": "neutral",
+    "type": "minion",
+    "rarity": "legendary",
+    "manaCost": 3
+}

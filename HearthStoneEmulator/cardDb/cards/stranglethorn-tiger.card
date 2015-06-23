@@ -1,0 +1,7 @@
+{
+    "name": "Stranglethorn Tiger",
+    "description": "Stealth",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 5
+}

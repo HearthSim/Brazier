@@ -1,0 +1,7 @@
+{
+    "name": "Frost Elemental",
+    "class": "neutral",
+    "description": "Battlecry: Freeze a character.",
+    "type": "minion",
+    "manaCost": 6
+}

@@ -1,0 +1,7 @@
+{
+    "name": "Sen'jin Shieldmasta",
+    "description": "Taunt",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 4
+}

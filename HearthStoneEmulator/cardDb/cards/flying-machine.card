@@ -1,0 +1,7 @@
+{
+    "name": "Flying Machine",
+    "description": "Windfury",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 3
+}

@@ -1,0 +1,7 @@
+{
+    "name": "Ironfur Grizzly",
+    "description": "Taunt",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 3
+}

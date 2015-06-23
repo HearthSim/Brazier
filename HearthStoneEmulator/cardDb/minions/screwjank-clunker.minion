@@ -1,0 +1,20 @@
+{
+    "name": "Screwjank Clunker",
+    "attack": 2,
+    "hp": 5,
+    "keywords": "mech",
+    "battleCries": {
+        "targets": [
+            "self-minions",
+            {
+                "class": "TargetNeeds.hasKeyword",
+                "keywords": "mech"
+            }],
+        "class": "TargetedActions.applyToMinionTarget",
+        "action": {
+            "class": "MinionActions.buff",
+            "attack": 2,
+            "hp": 2
+        }
+    }
+}

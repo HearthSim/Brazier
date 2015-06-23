@@ -1,0 +1,17 @@
+{
+    "name": "Gurubashi Berserker",
+    "attack": 2,
+    "hp": 7,
+    "triggers": {
+        "minion-damaged": {
+            "filter": "BasicFilters.TARGET_SELF",
+            "action": {
+                "class": "MinionEventActions.applyTargetedActionToSelf",
+                "action": {
+                    "class": "MinionActions.buffAttack",
+                    "attack": 3
+                }
+            }
+        }
+    }
+}

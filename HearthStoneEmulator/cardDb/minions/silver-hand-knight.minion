@@ -1,0 +1,9 @@
+{
+    "name": "Silver Hand Knight",
+    "attack": 4,
+    "hp": 4,
+    "battleCries": {
+        "class": "MinionActions.summonMinionRight",
+        "minion": "Squire"
+    }
+}

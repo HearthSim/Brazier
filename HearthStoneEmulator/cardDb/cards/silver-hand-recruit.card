@@ -1,0 +1,7 @@
+{
+    "name": "Silver Hand Recruit",
+    "class": "paladin",
+    "type": "minion",
+    "collectible": "false",
+    "manaCost": 1
+}

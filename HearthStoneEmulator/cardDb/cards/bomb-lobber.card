@@ -1,0 +1,8 @@
+{
+    "name": "Bomb Lobber",
+    "description": "Battlecry: Deal 4 damage to a random enemy minion.",
+    "rarity": "rare",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 5
+}

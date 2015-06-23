@@ -1,0 +1,11 @@
+{
+    "name": "Unleash the Hounds",
+    "description": "For each enemy minion, summon a 1/1 Hound with Charge.",
+    "class": "hunter",
+    "type": "spell",
+    "manaCost": 3,
+    "playActions": {
+        "class": "PlayerActions.unleashMinions",
+        "minion": "Hound"
+    }
+}

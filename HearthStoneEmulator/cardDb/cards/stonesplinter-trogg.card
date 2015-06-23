@@ -1,0 +1,7 @@
+{
+    "name": "Stonesplinter Trogg",
+    "description": "Whenever your opponent casts a spell, gain +1 Attack.",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 2
+}

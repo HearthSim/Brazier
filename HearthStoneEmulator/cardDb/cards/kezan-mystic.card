@@ -1,0 +1,8 @@
+{
+    "name": "Kezan Mystic",
+    "description": "Battlecry: Take control of a random enemy Secret.",
+    "class": "neutral",
+    "type": "minion",
+    "rarity": "rare",
+    "manaCost": 4
+}

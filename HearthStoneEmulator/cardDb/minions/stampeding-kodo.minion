@@ -1,0 +1,14 @@
+{
+    "name": "Stampeding Kodo",
+    "attack": 3,
+    "hp": 5,
+    "keywords": "beast",
+    "battleCries": {
+        "class": "PlayerActions.applyTargetedActionToRandomMinion",
+        "filter": {
+            "class": "BasicFilters.targetAttackIsLess",
+            "attack": 3
+        },
+        "action": "TargetedActions.KILL_TARGET"
+    }
+}

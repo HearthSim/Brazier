@@ -1,0 +1,10 @@
+{
+    "name": "Murloc Tidehunter",
+    "attack": 2,
+    "hp": 1,
+    "keywords": "murloc",
+    "battleCries": {
+        "class": "MinionActions.summonMinionRight",
+        "minion": "Murloc Scout"
+    }
+}

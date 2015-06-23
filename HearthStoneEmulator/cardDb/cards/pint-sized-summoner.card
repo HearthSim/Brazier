@@ -1,0 +1,8 @@
+{
+    "name": "Pint-Sized Summoner",
+    "description": "The first minion you play each turn costs (1) less.",
+    "class": "neutral",
+    "type": "minion",
+    "rarity": "rare",
+    "manaCost": 2
+}

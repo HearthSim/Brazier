@@ -1,0 +1,7 @@
+{
+    "name": "Fen Creeper",
+    "description": "Taunt",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 5
+}

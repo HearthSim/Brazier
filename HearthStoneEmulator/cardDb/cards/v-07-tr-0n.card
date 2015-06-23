@@ -1,0 +1,9 @@
+{
+    "name": "V-07-TR-0N",
+    "description": "Charge Mega-Windfury (Can attack four times a turn.)",
+    "class": "neutral",
+    "rarity": "legendary",
+    "type": "minion",
+    "manaCost": 8,
+    "collectible": false
+}

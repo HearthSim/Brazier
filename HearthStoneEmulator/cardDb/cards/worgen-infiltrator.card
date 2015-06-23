@@ -1,0 +1,7 @@
+{
+    "name": "Worgen Infiltrator",
+    "class": "neutral",
+    "description": "Stealth",
+    "type": "minion",
+    "manaCost": 1
+}

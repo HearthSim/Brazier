@@ -1,0 +1,8 @@
+{
+    "name": "Mech-Bear-Cat",
+    "description": "Whenever this minion takes damage, add a Spare Part card to your hand.",
+    "class": "druid",
+    "rarity": "rare",
+    "type": "minion",
+    "manaCost": 6
+}

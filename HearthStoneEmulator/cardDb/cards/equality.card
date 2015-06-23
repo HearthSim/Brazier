@@ -1,0 +1,15 @@
+{
+    "name": "Equality",
+    "description": "Change the Health of ALL minions to 1.",
+    "class": "paladin",
+    "type": "spell",
+    "rarity": "rare",
+    "manaCost": 2,
+    "playActions": {
+        "class": "PlayerActions.forAllMinions",
+        "action": {
+            "class": "MinionActions.setMaxHp",
+            "hp": 1
+        }
+    }
+}

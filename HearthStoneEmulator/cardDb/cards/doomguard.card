@@ -1,0 +1,8 @@
+{
+    "name": "Doomguard",
+    "class": "warlock",
+    "type": "minion",
+    "rarity": "rare",
+    "description": "Charge. Battlecry: Discard two random cards.",
+    "manaCost": 5
+}

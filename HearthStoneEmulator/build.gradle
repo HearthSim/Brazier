@@ -1,0 +1,159 @@
+import java.nio.charset.*;
+import java.nio.file.*;
+
+// Note: "common.gradle" in the root project contains additional initialization
+//   for this project. This initialization is applied in the "build.gradle"
+//   of the root project.
+
+// NetBeans will automatically add "run" and "debug" tasks relying on the
+// "mainClass" property. You may however define the property prior executing
+// tasks by passing a "-PmainClass=<QUALIFIED_CLASS_NAME>" argument.
+if (!hasProperty('mainClass')) {
+    ext.mainClass = 'com.github.kelemen.hearthstone.emulator.HearthStoneEmulator'
+}
+
+task configJar {
+    doLast {
+        jar.manifest {
+            attributes 'Class-Path': configurations.runtime.collect { it.getName() }.join(' ');
+            attributes 'Main-Class': mainClass;
+        }
+    }
+}
+jar.dependsOn configJar;
+
+dependencies {
+    compile group: 'org.jtrim', name: 'jtrim-gui', version: '1.7.3';
+    compile group: 'com.google.code.gson', name: 'gson', version: '2.3.1';
+
+    testCompile group: 'com.google.code.gson', name: 'gson', version: '2.3.1';
+}
+
+Path cardDbDir = projectDir.toPath().resolve('cardDb');
+
+sourceSets {
+    cardDb {
+        java.srcDirs = [];
+        resources.srcDirs = [cardDbDir.toFile()];
+    }
+}
+
+String CARD_DB_PROPERTY_NAME = 'CARD_DB';
+
+test.systemProperties.put(CARD_DB_PROPERTY_NAME, cardDbDir.toString());
+
+def configJavaExec = { JavaExec task ->
+    task.dependsOn 'classes';
+
+    task.main = mainClass;
+    task.classpath = project.sourceSets.main.runtimeClasspath;
+    task.standardInput = System.in;
+
+    task.systemProperties.put(CARD_DB_PROPERTY_NAME, cardDbDir.toString());
+}
+
+task run(type: JavaExec) {
+    configJavaExec(it);
+}
+
+task debug(type: JavaExec) {
+    configJavaExec(it);
+    debug = true
+}
+
+task createCardDbZip(type: Zip) {
+    from cardDbDir.toFile();
+    archiveName = 'card-db.zip';
+    destinationDir = buildDir.toPath().resolve('card-db').toFile();
+}
+
+task createPackage(type: Copy) {
+    dependsOn 'createCardDbZip';
+    dependsOn 'jar';
+
+    ext.packageDir = buildDir.toPath().resolve('package');
+
+    from configurations.runtime;
+    from jar.archivePath;
+    from createCardDbZip.archivePath;
+
+    into packageDir.toFile();
+}
+
+createExeTasks(project, true);
+createExeTasks(project, false);
+
+String bundleFilesSubDir(boolean bundleJre) {
+    return bundleJre ? 'standalone' : 'raw';
+}
+
+void createExeTasks(Project project, boolean bundleJre) {
+    Path baseOutputDir = project.buildDir.toPath().resolve('exe');
+
+    String suffix = bundleJre ? 'Standalone' : '';
+    def createExeTask = project.task('createExe' + suffix);
+    createExeTask.dependsOn('createPackage');
+    createExeTask.doLast {
+        createExe(project, baseOutputDir, bundleJre);
+    }
+
+    project.task(['type': Zip], 'createBundle' + suffix, {
+        dependsOn createExeTask;
+        from baseOutputDir.resolve(bundleFilesSubDir(bundleJre)).toFile();
+        archiveName = "${project.name}${suffix}.zip";
+        destinationDir = baseOutputDir.toFile();
+    });
+}
+
+void createExe(Project project, Path baseOutputDir, boolean bundleJre) {
+    if (!project.hasProperty('launch4jExe')) {
+        throw new IllegalStateException('Missing launch4jExe property.');
+    }
+
+    String launch4jExe = project.launch4jExe.toString().trim();
+
+    Path projectDir = project.projectDir.toPath();
+    Path buildDir = project.buildDir.toPath();
+
+    Path outputDir = baseOutputDir.resolve(bundleFilesSubDir(bundleJre));
+    Path outputExe = outputDir.resolve(project.name + '.exe');
+
+    project.delete(outputDir.toFile());
+
+    Files.createDirectories(outputDir);
+    project.copy {
+        from createPackage.packageDir.toFile();
+        into outputDir.resolve('libs').toFile();
+    }
+
+    if (bundleJre) {
+        project.copy {
+            from System.getProperty('java.home');
+            into outputDir.resolve('jre').toFile();
+        }
+    }
+
+    Path configFile = projectDir.resolve('configs').resolve('launch4j-config.xml');
+    Path resolvedConfig = buildDir.resolve('tmp').resolve('launch4j-config.xml');
+    Files.createDirectories(resolvedConfig.parent);
+    Files.copy(configFile, resolvedConfig, StandardCopyOption.REPLACE_EXISTING);
+    applyTemplates(resolvedConfig, Charset.forName('UTF-8'), [
+            '${jre-path}': bundleJre ? 'jre' : '',
+            '${main-jar}': 'libs\\' + project.jar.archiveName,
+            '${output-exe}': outputExe.toString()
+    ]);
+
+    project.exec {
+        commandLine(launch4jExe.toString(), resolvedConfig.toString());
+    }
+}
+
+void applyTemplates(Path file, Charset fileEncoding, Map templates) {
+    String fileContent = new String(Files.readAllBytes(file), fileEncoding);
+
+    templates.each { String key, String value ->
+        fileContent = fileContent.replace(key, value);
+    }
+
+    Files.write(file, fileContent.getBytes(fileEncoding));
+}

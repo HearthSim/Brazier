@@ -1,0 +1,8 @@
+{
+    "name": "Steamwheedle Sniper",
+    "description": "Your Hero Power can target minions.",
+    "class": "hunter",
+    "type": "minion",
+    "rarity": "epic",
+    "manaCost": 2
+}

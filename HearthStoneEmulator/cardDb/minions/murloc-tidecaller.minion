@@ -1,0 +1,22 @@
+{
+    "name": "Murloc Tidecaller",
+    "attack": 1,
+    "hp": 2,
+    "triggers": {
+        "on-summon": {
+            "filter": [
+                "BasicFilters.HAS_SAME_OWNER_PLAYER",
+                {
+                    "class": "BasicFilters.eventSourceHasKeyword",
+                    "keywords": "murloc"
+                }],
+            "action": {
+                "class": "MinionEventActions.applyTargetedActionToSelf",
+                "action": {
+                    "class": "MinionActions.buffAttack",
+                    "attack": 1
+                }
+            }
+        }
+    }
+}

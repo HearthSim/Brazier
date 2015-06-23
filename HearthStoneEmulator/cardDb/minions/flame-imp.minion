@@ -1,0 +1,10 @@
+{
+    "name": "Flame Imp",
+    "attack": 3,
+    "hp": 2,
+    "keywords": "demon",
+    "battleCries": {
+        "class": "DamageActions.damageOwnHero",
+        "damage": 3
+    }
+}

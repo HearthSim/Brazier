@@ -1,0 +1,8 @@
+{
+    "name": "Stoneclaw Totem",
+    "description": "Taunt",
+    "class": "shaman",
+    "type": "minion",
+    "collectible": false,
+    "manaCost": 1
+}

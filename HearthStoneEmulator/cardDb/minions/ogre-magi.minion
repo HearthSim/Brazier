@@ -1,0 +1,9 @@
+{
+    "name": "Ogre Magi",
+    "attack": 4,
+    "hp": 4,
+    "ability": {
+        "class": "MinionAbilities.spellPower",
+        "spellPower": 1
+    }
+}

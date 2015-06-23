@@ -1,0 +1,14 @@
+{
+    "name": "Violet Teacher",
+    "attack": 3,
+    "hp": 5,
+    "triggers": {
+        "start-play-card": {
+            "filter": ["BasicFilters.HAS_SAME_OWNER_PLAYER", "BasicFilters.EVENT_SOURCE_IS_SPELL"],
+            "action": {
+                "class": "MinionEventActions.summonMinionRight",
+                "minion": "Violet Apprentice"
+            }
+        }
+    }
+}

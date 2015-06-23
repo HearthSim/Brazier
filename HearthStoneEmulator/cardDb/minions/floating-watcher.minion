@@ -1,0 +1,19 @@
+{
+    "name": "Floating Watcher",
+    "attack": 4,
+    "hp": 4,
+    "keywords": "demon",
+    "triggers": {
+        "hero-damaged": {
+            "filter": ["BasicFilters.TARGET_HAS_SAME_OWNER_PLAYER", "BasicFilters.SELF_TURN"],
+            "action": {
+                "class": "MinionEventActions.applyTargetedActionToSelf",
+                "action": {
+                    "class": "MinionActions.buff",
+                    "attack": 2,
+                    "hp": 2
+                }
+            }
+        }
+    }
+}

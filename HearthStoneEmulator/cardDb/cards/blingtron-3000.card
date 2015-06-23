@@ -1,0 +1,8 @@
+{
+    "name": "Blingtron 3000",
+    "description": "Battlecry: Equip a random weapon for each player.",
+    "class": "neutral",
+    "rarity": "legendary",
+    "type": "minion",
+    "manaCost": 5
+}

@@ -1,0 +1,8 @@
+{
+    "name": "Nefarian",
+    "description": "Battlecry: Add 2 random spells to your hand (from your opponent's class).",
+    "class": "neutral",
+    "type": "minion",
+    "rarity": "legendary",
+    "manaCost": 9
+}

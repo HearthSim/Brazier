@@ -1,0 +1,13 @@
+{
+    "name": "Stormwind Champion",
+    "attack": 6,
+    "hp": 6,
+    "ability": {
+        "class": "MinionAbilities.sameBoardOthersAura",
+        "aura": {
+            "class": "MinionAuras.bodyBuff",
+            "attack": 1,
+            "hp": 1
+        }
+    }
+}

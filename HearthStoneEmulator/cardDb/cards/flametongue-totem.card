@@ -1,0 +1,7 @@
+{
+    "name": "Flametongue Totem",
+    "description": "Adjacent minions have +2 Attack.",
+    "class": "shaman",
+    "type": "minion",
+    "manaCost": 2
+}

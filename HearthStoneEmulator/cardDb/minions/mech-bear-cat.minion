@@ -1,0 +1,15 @@
+{
+    "name": "Mech-Bear-Cat",
+    "attack": 7,
+    "hp": 6,
+    "keywords": "mech",
+    "triggers": {
+        "minion-damaged": {
+            "filter": "BasicFilters.TARGET_SELF",
+            "action": {
+                "class": "PlayerActions.addRandomCard",
+                "keywords": "spare-part"
+            }
+        }
+    }
+}

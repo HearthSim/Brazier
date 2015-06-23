@@ -1,0 +1,9 @@
+{
+    "name": "Gnomish Experimenter",
+    "attack": 3,
+    "hp": 2,
+    "battleCries": {
+        "class": "PlayerActions.experiment",
+        "replaceCard": "Chicken"
+    }
+}

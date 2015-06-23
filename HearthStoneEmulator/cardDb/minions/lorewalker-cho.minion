@@ -1,0 +1,11 @@
+{
+    "name": "Lorewalker Cho",
+    "attack": 0,
+    "hp": 4,
+    "triggers": {
+        "start-play-card": {
+            "filter": "BasicFilters.EVENT_SOURCE_IS_SPELL",
+            "action": "MinionEventActions.COPY_PLAYER_CARD"
+        }
+    }
+}

@@ -1,0 +1,8 @@
+{
+    "name": "Ethereal Arcanist",
+    "description": "If you control a Secret at the end of your turn, gain +2/+2.",
+    "class": "mage",
+    "type": "minion",
+    "rarity": "rare",
+    "manaCost": 4
+}

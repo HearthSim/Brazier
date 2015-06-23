@@ -1,0 +1,12 @@
+{
+    "name": "Coldlight Oracle",
+    "attack": 2,
+    "hp": 2,
+    "keywords": "murloc",
+    "battleCries": [
+        "PlayerActions.DRAW_FOR_SELF",
+        "PlayerActions.DRAW_FOR_SELF",
+        "PlayerActions.DRAW_FOR_OPPONENT",
+        "PlayerActions.DRAW_FOR_OPPONENT"
+    ]
+}

@@ -1,0 +1,12 @@
+{
+    "name": "Avenging Wrath",
+    "description": "Deal 8 damage randomly split among all enemies.",
+    "class": "paladin",
+    "type": "spell",
+    "rarity": "epic",
+    "manaCost": 6,
+    "playActions": {
+        "class": "PlayerActions.dealMissleDamage",
+        "missleCount": 8
+    }
+}

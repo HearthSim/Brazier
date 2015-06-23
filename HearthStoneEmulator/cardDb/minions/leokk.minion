@@ -1,0 +1,13 @@
+{
+    "name": "Leokk",
+    "attack": 2,
+    "hp": 4,
+    "keywords": ["beast", "animal-companion"],
+    "ability": {
+        "class": "MinionAbilities.sameBoardOthersAura",
+        "aura": {
+            "class": "MinionAuras.attackBuff",
+            "attack": 1
+        }
+    }
+}

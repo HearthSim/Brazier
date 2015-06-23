@@ -1,0 +1,16 @@
+{
+    "name": "Archmage Antonidas",
+    "attack": 5,
+    "hp": 7,
+    "triggers": {
+        "start-play-card": {
+            "filter": [
+                "BasicFilters.HAS_SAME_OWNER_PLAYER",
+                "BasicFilters.EVENT_SOURCE_IS_SPELL"],
+            "action": {
+                "class": "PlayerActions.addCard",
+                "card": "Fireball"
+            }
+        }
+    }
+}

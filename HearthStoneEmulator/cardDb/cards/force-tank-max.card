@@ -1,0 +1,7 @@
+{
+    "name": "Force-Tank MAX",
+    "description": "Divine Shield",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 8
+}

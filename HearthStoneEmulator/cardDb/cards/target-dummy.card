@@ -1,0 +1,8 @@
+{
+    "name": "Target Dummy",
+    "description": "Taunt",
+    "class": "neutral",
+    "rarity": "rare",
+    "type": "minion",
+    "manaCost": 0
+}

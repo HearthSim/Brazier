@@ -1,0 +1,24 @@
+{
+    "name": "Avenge",
+    "class": "paladin",
+    "type": "spell",
+    "description": "Secret: When one of your minions dies, give a random friendly minion +3/+2.",
+    "manaCost": 1,
+    "secret": {
+        "minion-killed": {
+            "filter": ["BasicFilters.HAS_SAME_OWNER_PLAYER", "BasicFilters.HAS_OTHER_OWNED_BUFF_TARGET"],
+            "action": {
+                "class": "GenericEventActions.applyTargetedActionToRandomOwnMinion",
+                "filter": "BasicFilters.NOT_SELF",
+                "action": {
+                    "class": "TargetedActions.applyToMinionTarget",
+                    "action": {
+                        "class": "MinionActions.buff",
+                        "attack": 3,
+                        "hp": 2
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,7 @@
+{
+    "name": "Argent Protector",
+    "description": "Battlecry: Give a friendly minion Divine Shield.",
+    "class": "paladin",
+    "type": "minion",
+    "manaCost": 2
+}

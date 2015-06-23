@@ -1,0 +1,8 @@
+{
+    "name": "Demolisher",
+    "description": "At the start of your turn, deal 2 damage to a random enemy.",
+    "class": "neutral",
+    "rarity": "rare",
+    "type": "minion",
+    "manaCost": 3
+}

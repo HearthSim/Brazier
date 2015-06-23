@@ -1,0 +1,7 @@
+{
+    "name": "Acolyte of Pain",
+    "description": "Whenever this minion takes damage, draw a card.",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 3
+}

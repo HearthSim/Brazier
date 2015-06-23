@@ -1,0 +1,10 @@
+{
+    "name": "Voodoo Doctor",
+    "attack": 2,
+    "hp": 1,
+    "battleCries": {
+        "class": "BattleCries.dealDamageToTarget",
+        "targets": "all",
+        "damage": -2
+    }
+}

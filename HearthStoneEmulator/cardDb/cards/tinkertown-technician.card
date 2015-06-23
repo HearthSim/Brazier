@@ -1,0 +1,7 @@
+{
+    "name": "Tinkertown Technician",
+    "description": "Battlecry: If you have a Mech, gain +1/+1 and add a Spare Part to your hand.",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 3
+}

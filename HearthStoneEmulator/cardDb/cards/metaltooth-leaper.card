@@ -1,0 +1,8 @@
+{
+    "name": "Metaltooth Leaper",
+    "description": "Battlecry: Give your other Mechs +2 Attack.",
+    "class": "hunter",
+    "rarity": "rare",
+    "type": "minion",
+    "manaCost": 3
+}

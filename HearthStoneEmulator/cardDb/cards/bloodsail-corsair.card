@@ -1,0 +1,8 @@
+{
+    "name": "Bloodsail Corsair",
+    "description": "Battlecry: Remove 1 Durability from your opponent's weapon.",
+    "class": "neutral",
+    "type": "minion",
+    "rarity": "rare",
+    "manaCost": 1
+}

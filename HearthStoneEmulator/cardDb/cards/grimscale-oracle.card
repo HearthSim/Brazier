@@ -1,0 +1,7 @@
+{
+    "name": "Grimscale Oracle",
+    "description": "ALL other Murlocs have +1 Attack.",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 1
+}

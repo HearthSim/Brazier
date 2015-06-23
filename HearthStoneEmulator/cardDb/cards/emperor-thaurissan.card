@@ -1,0 +1,8 @@
+{
+    "name": "Emperor Thaurissan",
+    "description": "At the end of your turn, reduce the Cost of cards in your hand by (1).",
+    "rarity": "legendary",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 6
+}

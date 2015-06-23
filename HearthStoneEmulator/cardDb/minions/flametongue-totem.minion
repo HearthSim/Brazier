@@ -1,0 +1,13 @@
+{
+    "name": "Flametongue Totem",
+    "attack": 0,
+    "hp": 3,
+    "keywords": "totem",
+    "ability": {
+        "class": "MinionAbilities.neighboursAura",
+        "aura": {
+            "class": "MinionAuras.attackBuff",
+            "attack": 2
+        }
+    }
+}

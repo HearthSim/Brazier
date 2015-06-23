@@ -1,0 +1,7 @@
+{
+    "name": "Unbound Elemental",
+    "description": "Whenever you play a card with Overload, gain +1/+1.",
+    "class": "shaman",
+    "type": "minion",
+    "manaCost": 3
+}

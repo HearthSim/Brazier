@@ -1,0 +1,10 @@
+{
+    "name": "Fireguard Destroyer",
+    "attack": 3,
+    "hp": 6,
+    "battleCries": {
+        "class": "MinionActions.buffAttack",
+        "minAttack": 1,
+        "maxAttack": 4
+    }
+}

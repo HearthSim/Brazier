@@ -1,0 +1,7 @@
+{
+    "name": "Shieldbearer",
+    "description": "Taunt",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 1
+}

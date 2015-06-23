@@ -1,0 +1,7 @@
+{
+    "name": "Unstable Ghoul",
+    "description": "Taunt. Deathrattle: Deal 1 damage to all minions.",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 2
+}

@@ -1,0 +1,12 @@
+{
+    "name": "Mirror Image",
+    "class": "mage",
+    "type": "spell",
+    "description": "Summon two 0/2 minions with Taunt.",
+    "manaCost": 1,
+    "playActions": {
+        "class": "PlayerActions.summonMinion",
+        "minion": "Mirror Image/Minion",
+        "minionCount": 2
+    }
+}

@@ -1,0 +1,7 @@
+{
+    "name": "Infernal",
+    "class": "warlock",
+    "type": "minion",
+    "collectible": false,
+    "manaCost": 6
+}

@@ -1,0 +1,18 @@
+{
+    "name": "Ragnaros the Firelord",
+    "attack": 8,
+    "hp": 8,
+    "canAttack": false,
+    "triggers": {
+        "turn-ends": {
+            "filter": "BasicFilters.HAS_SAME_OWNER_PLAYER",
+            "action": {
+                "class": "MinionEventActions.applyTargetedActionToRandomEnemy",
+                "action": {
+                    "class": "TargetedMinionActions.damageTarget",
+                    "damage": 8
+                }
+            }
+        }
+    }
+}

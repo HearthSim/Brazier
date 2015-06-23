@@ -1,0 +1,7 @@
+{
+    "name": "Youthful Brewmaster",
+    "description": "Battlecry: Return a friendly minion from the battlefield to your hand.",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 2
+}

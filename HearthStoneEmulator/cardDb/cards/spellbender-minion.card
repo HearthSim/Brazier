@@ -1,0 +1,9 @@
+{
+    "name": "Spellbender/Minion",
+    "displayName": "Spellbender",
+    "class": "mage",
+    "type": "minion",
+    "rarity": "epic",
+    "collectible": false,
+    "manaCost": 0
+}

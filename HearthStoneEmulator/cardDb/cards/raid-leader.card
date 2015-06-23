@@ -1,0 +1,7 @@
+{
+    "name": "Raid Leader",
+    "description": "Your other minions have +1 Attack.",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 3
+}

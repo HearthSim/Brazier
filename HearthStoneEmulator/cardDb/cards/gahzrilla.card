@@ -1,0 +1,8 @@
+{
+    "name": "Gahz'rilla",
+    "description": "Whenever this minion takes damage, double its Attack.",
+    "class": "hunter",
+    "type": "minion",
+    "rarity": "legendary",
+    "manaCost": 7
+}

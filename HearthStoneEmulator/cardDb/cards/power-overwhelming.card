@@ -1,0 +1,25 @@
+{
+    "name": "Power Overwhelming",
+    "class": "warlock",
+    "type": "spell",
+    "description": "Give a friendly minion +4/+4 until end of turn. Then, it dies. Horribly.",
+    "manaCost": 1,
+    "playActions": {
+        "targets": "self-minions",
+        "class": "TargetedActions.applyToMinionTarget",
+        "action": [
+            {
+                "class": "MinionActions.buff",
+                "attack": 4,
+                "hp": 4
+            },
+            {
+                "class": "MinionActions.buff",
+                "ability": {
+                    "class": "MinionAbilities.endOfTurnBuff",
+                    "filter": "BasicFilters.SELF_TURN",
+                    "action": "MinionEventActions.SELF_DESTRUCT"
+                }
+            }]
+    }
+}

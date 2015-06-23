@@ -1,0 +1,9 @@
+{
+    "name": "Treant/Taunt",
+    "displayName": "Treant",
+    "description": "Taunt",
+    "class": "druid",
+    "type": "minion",
+    "collectible": false,
+    "manaCost": 1
+}

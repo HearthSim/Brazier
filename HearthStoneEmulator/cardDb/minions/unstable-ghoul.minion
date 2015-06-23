@@ -1,0 +1,13 @@
+{
+    "name": "Unstable Ghoul",
+    "attack": 1,
+    "hp": 3,
+    "taunt": "true",
+    "deathRattle": {
+        "class": "MinionEventActions.doSelf",
+        "action": {
+            "class": "DamageActions.dealDamageToAllMinions",
+            "damage": 1
+        }
+    }
+}

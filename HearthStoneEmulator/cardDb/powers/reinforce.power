@@ -1,0 +1,10 @@
+{
+    "name": "Reinforce",
+    "description": "Summon a 1/1 Silver Hand Recruit.",
+    "manaCost": 2,
+    "action": {
+        "class": "PlayerActions.summonMinion",
+        "requires": "PlayActionRequirements.HAS_SPACE_ON_OWN_BOARD",
+        "minion": "Silver Hand Recruit"
+    }
+}

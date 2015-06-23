@@ -1,0 +1,8 @@
+{
+    "name": "Aldor Peacekeeper",
+    "description": "Battlecry: Change an enemy minion's Attack to 1.",
+    "rarity": "rare",
+    "class": "paladin",
+    "type": "minion",
+    "manaCost": 3
+}

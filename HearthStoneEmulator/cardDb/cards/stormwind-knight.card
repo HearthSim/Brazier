@@ -1,0 +1,7 @@
+{
+    "name": "Stormwind Knight",
+    "description": "Charge",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 4
+}

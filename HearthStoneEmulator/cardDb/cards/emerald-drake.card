@@ -1,0 +1,8 @@
+{
+    "name": "Emerald Drake",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 4,
+    "keywords": "emerald-dream",
+    "collectible": false
+}

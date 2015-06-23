@@ -1,0 +1,6 @@
+{
+    "name": "Gilblin Stalker",
+    "attack": 2,
+    "hp": 3,
+    "stealth": true
+}

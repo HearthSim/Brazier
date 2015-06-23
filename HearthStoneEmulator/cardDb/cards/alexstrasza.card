@@ -1,0 +1,8 @@
+{
+    "name": "Alexstrasza",
+    "description": "Battlecry: Set a hero's remaining Health to 15.",
+    "rarity": "legendary",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 9
+}

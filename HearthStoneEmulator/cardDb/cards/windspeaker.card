@@ -1,0 +1,7 @@
+{
+    "name": "Windspeaker",
+    "description": "Battlecry: Give a friendly minion Windfury.",
+    "class": "shaman",
+    "type": "minion",
+    "manaCost": 4
+}

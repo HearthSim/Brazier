@@ -1,0 +1,18 @@
+{
+    "name": "Mimiron's Head",
+    "attack": 4,
+    "hp": 5,
+    "keywords": "mech",
+    "triggers": {
+        "turn-starts": {
+            "filter": "BasicFilters.HAS_SAME_OWNER_PLAYER",
+            "action": {
+                "class": "MinionEventActions.doSelf",
+                "action": {
+                    "class": "MinionActions.mimironTransformation",
+                    "minion": "V-07-TR-0N"
+                }
+            }
+        }
+    }
+}

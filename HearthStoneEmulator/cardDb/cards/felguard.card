@@ -1,0 +1,8 @@
+{
+    "name": "Felguard",
+    "description": "Taunt. Battlecry: Destroy one of your Mana Crystals.",
+    "class": "warlock",
+    "type": "minion",
+    "rarity": "rare",
+    "manaCost": 3
+}

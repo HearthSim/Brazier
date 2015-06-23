@@ -1,0 +1,10 @@
+{
+    "name": "Mogor the Ogre",
+    "attack": 7,
+    "hp": 6,
+    "triggers": {
+        "attack-initiated": {
+            "action": "AttackEventActions.MISS_TARGET_SOMETIMES"
+        }
+    }
+}

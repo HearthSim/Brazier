@@ -1,0 +1,14 @@
+{
+    "name": "Millhouse Manastorm",
+    "attack": 4,
+    "hp": 4,
+    "battleCries": {
+        "class": "PlayerActions.untilTurnStartsAura",
+        "target": "CardAuras.OPPONENT_CARD_PROVIDER",
+        "filter": "CardAuras.TARGET_IS_SPELL",
+        "aura": {
+            "class": "CardAuras.setManaCost",
+            "manaCost": 0
+        }
+    }
+}

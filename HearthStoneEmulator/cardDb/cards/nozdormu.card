@@ -1,0 +1,8 @@
+{
+    "name": "Nozdormu",
+    "description": "Players only have 15 seconds to take their turns.",
+    "class": "neutral",
+    "type": "minion",
+    "rarity": "legendary",
+    "manaCost": 9
+}

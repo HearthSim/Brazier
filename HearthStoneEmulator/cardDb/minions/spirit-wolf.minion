@@ -1,0 +1,6 @@
+{
+    "name": "Spirit Wolf",
+    "attack": 2,
+    "hp": 3,
+    "taunt": true
+}

@@ -1,0 +1,12 @@
+{
+    "name": "Sword of Justice",
+    "description": "Whenever you summon a minion, give it +1/+1 and this loses 1 Durability.",
+    "class": "paladin",
+    "type": "weapon",
+    "rarity": "epic",
+    "manaCost": 3,
+    "playActions": {
+        "class": "PlayerActions.equipWeapon",
+        "weapon": "Sword of Justice"
+    }
+}

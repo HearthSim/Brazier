@@ -1,0 +1,8 @@
+{
+    "name": "Baron Geddon",
+    "description": "At the end of your turn, deal 2 damage to ALL other characters.",
+    "class": "neutral",
+    "rarity": "legendary",
+    "type": "minion",
+    "manaCost": 7
+}

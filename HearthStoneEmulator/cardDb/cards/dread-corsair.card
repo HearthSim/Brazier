@@ -1,0 +1,8 @@
+{
+    "name": "Dread Corsair",
+    "description": "Taunt. Costs (1) less per Attack of your weapon.",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 4,
+    "manaCostAdjusters": "ManaCostAdjusters.REDUCE_BY_WEAPON_ATTACK"
+}

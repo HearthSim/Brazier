@@ -1,0 +1,7 @@
+{
+    "name": "Nerub'ar Weblord",
+    "description": "Minions with Battlecry cost (2) more.",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 2
+}

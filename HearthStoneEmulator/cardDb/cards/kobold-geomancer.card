@@ -1,0 +1,7 @@
+{
+    "name": "Kobold Geomancer",
+    "description": "Spell Damage +1",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 2
+}

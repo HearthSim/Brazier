@@ -1,0 +1,7 @@
+{
+    "name": "Silvermoon Guardian",
+    "class": "neutral",
+    "description": "Divine Shield",
+    "type": "minion",
+    "manaCost": 4
+}

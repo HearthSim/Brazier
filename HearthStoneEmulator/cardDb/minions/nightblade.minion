@@ -1,0 +1,9 @@
+{
+    "name": "Nightblade",
+    "attack": 4,
+    "hp": 4,
+    "battleCries": {
+        "class": "DamageActions.damageOpponentHero",
+        "damage": 3
+    }
+}

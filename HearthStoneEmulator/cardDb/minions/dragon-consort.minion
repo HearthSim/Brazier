@@ -1,0 +1,14 @@
+{
+    "name": "Dragon Consort",
+    "attack": 5,
+    "hp": 5,
+    "keywords": "dragon",
+    "battleCries": {
+        "class": "PlayerActions.reduceManaCostNextCard",
+        "filter": {
+            "class": "Auras.targetHasKeyword",
+            "keywords": "dragon"
+        },
+        "amount": 2
+    }
+}

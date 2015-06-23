@@ -1,0 +1,12 @@
+{
+    "name": "Maexxna",
+    "attack": 2,
+    "hp": 8,
+    "keywords": "beast",
+    "triggers": {
+        "minion-damaged": {
+            "filter": "BasicFilters.DAMAGE_SOURCE_SELF",
+            "action": "DamageEventActions.KILL_DAMAGE_TARGET_MINION"
+        }
+    }
+}

@@ -1,0 +1,8 @@
+{
+    "name": "Pit Lord",
+    "class": "warlock",
+    "description": "Battlecry: Deal 5 damage to your hero.",
+    "type": "minion",
+    "rarity": "epic",
+    "manaCost": 4
+}

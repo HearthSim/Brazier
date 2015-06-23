@@ -1,0 +1,9 @@
+{
+    "name": "Solemn Vigil",
+    "description": "Draw 2 cards. Costs (1) less for each minion that died this turn.",
+    "class": "paladin",
+    "type": "spell",
+    "manaCost": 5,
+    "manaCostAdjusters": "ManaCostAdjusters.REDUCE_BY_DEATH_THIS_TURN",
+    "playActions": [PlayerActions.DRAW_FOR_SELF, PlayerActions.DRAW_FOR_SELF]
+}

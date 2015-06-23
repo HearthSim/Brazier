@@ -1,0 +1,8 @@
+{
+    "name": "Coldlight Oracle",
+    "description": "Battlecry: Each player draws 2 cards.",
+    "class": "neutral",
+    "type": "minion",
+    "rarity": "rare",
+    "manaCost": 3
+}

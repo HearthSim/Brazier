@@ -1,0 +1,8 @@
+{
+    "name": "Fel Cannon",
+    "description": "At the end of your turn, deal 2 damage to a non-Mech minion.",
+    "class": "warlock",
+    "type": "minion",
+    "rarity": "rare",
+    "manaCost": 4
+}

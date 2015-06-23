@@ -1,0 +1,17 @@
+{
+    "name": "Troggzor the Earthinator",
+    "attack": 6,
+    "hp": 6,
+    "triggers": {
+        "start-play-card": {
+            "filter": "BasicFilters.EVENT_SOURCE_IS_SPELL",
+            "action": {
+                "class": "MinionEventActions.doSelf",
+                "action": {
+                    "class": "MinionActions.summonMinionRight",
+                    "minion": "Burly Rockjaw Trogg"
+                }
+            }
+        }
+    }
+}

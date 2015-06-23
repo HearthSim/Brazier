@@ -1,0 +1,12 @@
+{
+    "name": "Powermace",
+    "description": "Deathrattle: Give a random friendly Mech +2/+2.",
+    "class": "shaman",
+    "type": "weapon",
+    "rarity": "rare",
+    "manaCost": 3,
+    "playActions": {
+        "class": "PlayerActions.equipWeapon",
+        "weapon": "Powermace"
+    }
+}

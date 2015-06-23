@@ -1,0 +1,6 @@
+{
+    "name": "Kor'kron Elite",
+    "attack": 4,
+    "hp": 3,
+    "charge": "true"
+}

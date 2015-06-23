@@ -1,0 +1,10 @@
+{
+    "name": "Mini-Mage",
+    "attack": 4,
+    "hp": 1,
+    "stealth": true,
+    "ability": {
+        "class": "MinionAbilities.spellPower",
+        "spellPower": 1
+    }
+}

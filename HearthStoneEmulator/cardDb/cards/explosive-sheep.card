@@ -1,0 +1,7 @@
+{
+    "name": "Explosive Sheep",
+    "description": "Deathrattle: Deal 2 damage to all minions.",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 2
+}

@@ -1,0 +1,8 @@
+{
+    "name": "Master Swordsmith",
+    "description": "At the end of your turn, give another random friendly minion +1 Attack.",
+    "class": "neutral",
+    "rarity": "rare",
+    "type": "minion",
+    "manaCost": 2
+}

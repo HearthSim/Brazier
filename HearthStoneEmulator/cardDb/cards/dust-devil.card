@@ -1,0 +1,8 @@
+{
+    "name": "Dust Devil",
+    "description": "Windfury. Overload: (2)",
+    "class": "shaman",
+    "type": "minion",
+    "manaCost": 1,
+    "overload": 2
+}

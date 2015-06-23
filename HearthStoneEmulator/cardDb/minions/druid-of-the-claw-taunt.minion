@@ -1,0 +1,8 @@
+{
+    "name": "Druid of the Claw/Beast",
+    "displayName": "Druid of the Claw",
+    "attack": 4,
+    "hp": 6,
+    "taunt": true,
+    "keywords": "beast"
+}

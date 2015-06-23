@@ -1,0 +1,8 @@
+{
+    "name": "Haunted Creeper",
+    "description": "Deathrattle: Summon two 1/1 Spectral Spiders.",
+    "class": "neutral",
+    "type": "minion",
+    "keywords": "beast",
+    "manaCost": 2
+}

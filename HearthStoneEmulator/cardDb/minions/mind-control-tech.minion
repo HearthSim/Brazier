@@ -1,0 +1,12 @@
+{
+    "name": "Mind Control Tech",
+    "attack": 3,
+    "hp": 3,
+    "battleCries": {
+        "class": "PlayerActions.STEAL_RANDOM_MINION",
+        "actionCondition": {
+            "class": "PlayActionRequirements.opponentBoardIsLarger",
+            "minionCount": 3
+        }
+    }
+}

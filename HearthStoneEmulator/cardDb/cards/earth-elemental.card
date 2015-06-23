@@ -1,0 +1,8 @@
+{
+    "name": "Earth Elemental",
+    "description": "Taunt. Overload: (3)",
+    "class": "shaman",
+    "type": "minion",
+    "manaCost": 5,
+    "overload": 3
+}

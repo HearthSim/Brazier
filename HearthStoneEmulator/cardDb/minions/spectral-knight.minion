@@ -1,0 +1,6 @@
+{
+    "name": "Spectral Knight",
+    "attack": 4,
+    "hp": 6,
+    "targetable": false
+}

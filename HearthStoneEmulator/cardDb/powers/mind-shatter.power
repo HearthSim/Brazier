@@ -1,0 +1,10 @@
+{
+    "name": "Mind Shatter",
+    "description": "Deal 3 damage.",
+    "manaCost": 2,
+    "action": {
+        "class": "TargetedActions.dealBasicDamage",
+        "targets": "all",
+        "damage": 3
+    }
+}

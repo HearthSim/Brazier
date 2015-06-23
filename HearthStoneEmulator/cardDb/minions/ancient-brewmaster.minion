@@ -1,0 +1,10 @@
+{
+    "name": "Ancient Brewmaster",
+    "attack": 5,
+    "hp": 4,
+    "battleCries": {
+        "targets": "self-minions",
+        "class": "TargetedActions.applyToMinionTarget",
+        "action": "MinionActions.RETURN_MINION"
+    }
+}

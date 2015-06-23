@@ -1,0 +1,7 @@
+{
+    "name": "Priestess of Elune",
+    "description": "Battlecry: Restore 4 Health to your hero.",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 6
+}

@@ -1,0 +1,8 @@
+{
+    "name": "Deathwing",
+    "description": "Battlecry: Destroy all other minions and discard your hand.",
+    "class": "neutral",
+    "type": "minion",
+    "rarity": "legendary",
+    "manaCost": 10
+}

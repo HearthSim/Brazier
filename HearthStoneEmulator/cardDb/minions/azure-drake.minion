@@ -1,0 +1,11 @@
+{
+    "name": "Azure Drake",
+    "attack": 4,
+    "hp": 4,
+    "keywords": "dragon",
+    "ability": {
+        "class": "MinionAbilities.spellPower",
+        "spellPower": 1
+    },
+    "battleCries": "PlayerActions.DRAW_FOR_SELF"
+}

@@ -1,0 +1,17 @@
+{
+    "name": "Explosive Trap",
+    "class": "hunter",
+    "type": "spell",
+    "description": "Secret: When your hero is attacked, deal 2 damage to all enemies.",
+    "manaCost": 2,
+    "secret": {
+        "attack-initiated": {
+            "filter": "BasicFilters.ATTACK_TARGET_IS_OWN_HERO",
+            "action": {
+                "class": "PlayerActions.dealDamageToEnemyTargets",
+                "spell": false,
+                "damage": 2
+            }
+        }
+    }
+}

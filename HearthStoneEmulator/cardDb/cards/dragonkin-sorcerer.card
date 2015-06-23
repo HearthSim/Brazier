@@ -1,0 +1,7 @@
+{
+    "name": "Dragonkin Sorcerer",
+    "description": "Whenever you target this minion with a spell, gain +1/+1.",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 4
+}

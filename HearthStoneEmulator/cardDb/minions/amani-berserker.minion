@@ -1,0 +1,13 @@
+{
+    "name": "Amani Berserker",
+    "attack": 2,
+    "hp": 3,
+    "ability": {
+        "class": "MinionAbilities.selfAura",
+        "filter": "MinionAuras.SELF_DAMAGED",
+        "aura": {
+            "class": "MinionAuras.attackBuff",
+            "attack": 3
+        }
+    }
+}

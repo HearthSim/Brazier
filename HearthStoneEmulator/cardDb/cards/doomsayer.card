@@ -1,0 +1,8 @@
+{
+    "name": "Doomsayer",
+    "description": "At the start of your turn, destroy ALL minions.",
+    "rarity": "epic",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 2
+}

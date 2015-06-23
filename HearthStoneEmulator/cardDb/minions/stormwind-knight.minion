@@ -1,0 +1,6 @@
+{
+    "name": "Stormwind Knight",
+    "attack": 2,
+    "hp": 5,
+    "charge": true
+}

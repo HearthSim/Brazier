@@ -1,0 +1,8 @@
+{
+    "name": "Blood Knight",
+    "description": "Battlecry: All minions lose Divine Shield. Gain +3/+3 for each Shield lost.",
+    "class": "neutral",
+    "type": "minion",
+    "rarity": "epic",
+    "manaCost": 3
+}

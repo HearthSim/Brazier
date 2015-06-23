@@ -1,0 +1,7 @@
+{
+    "name": "Stonetusk Boar",
+    "attack": 1,
+    "hp": 1,
+    "charge": "true",
+    "keywords": ["beast"]
+}

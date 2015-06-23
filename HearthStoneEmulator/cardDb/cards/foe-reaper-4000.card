@@ -1,0 +1,8 @@
+{
+    "name": "Foe Reaper 4000",
+    "description": "Also damages the minions next to whomever he attacks.",
+    "class": "neutral",
+    "rarity": "legendary",
+    "type": "minion",
+    "manaCost": 8
+}

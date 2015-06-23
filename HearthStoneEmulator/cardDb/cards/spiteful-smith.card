@@ -1,0 +1,7 @@
+{
+    "name": "Spiteful Smith",
+    "description": "Enrage: Your weapon has +2 Attack.",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 5
+}

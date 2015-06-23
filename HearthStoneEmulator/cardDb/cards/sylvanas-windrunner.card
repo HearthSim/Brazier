@@ -1,0 +1,8 @@
+{
+    "name": "Sylvanas Windrunner",
+    "description": "Deathrattle: Take control of a random enemy minion.",
+    "class": "neutral",
+    "rarity": "legendary",
+    "type": "minion",
+    "manaCost": 6
+}

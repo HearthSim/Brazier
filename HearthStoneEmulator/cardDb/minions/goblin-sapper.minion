@@ -1,0 +1,16 @@
+{
+    "name": "Goblin Sapper",
+    "attack": 2,
+    "hp": 4,
+    "ability": {
+        "class": "MinionAbilities.selfAura",
+        "filter": {
+            "class": "Auras.opponentsHandLarger",
+            "limit": 5
+        },
+        "aura": {
+            "class": "MinionAuras.attackBuff",
+            "attack": 4
+        }
+    }
+}

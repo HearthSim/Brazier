@@ -1,0 +1,6 @@
+{
+    "name": "Ancient Watcher",
+    "attack": 4,
+    "hp": 5,
+    "canAttack": false
+}

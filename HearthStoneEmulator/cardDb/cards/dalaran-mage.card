@@ -1,0 +1,7 @@
+{
+    "name": "Dalaran Mage",
+    "class": "neutral",
+    "description": "Spell Damage +1",
+    "type": "minion",
+    "manaCost": 3
+}

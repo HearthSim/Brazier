@@ -1,0 +1,7 @@
+{
+    "name": "Nightblade",
+    "description": "Battlecry: Deal 3 damage to the enemy hero.",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 4
+}

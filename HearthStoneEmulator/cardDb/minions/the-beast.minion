@@ -1,0 +1,13 @@
+{
+    "name": "The Beast",
+    "attack": 9,
+    "hp": 7,
+    "keywords": "beast",
+    "deathRattle": {
+        "class": "PlayerActions.doForOpponent",
+        "action": {
+            "class": "PlayerActions.summonMinion",
+            "minion": "Finkle Einhorn"
+        }
+    }
+}

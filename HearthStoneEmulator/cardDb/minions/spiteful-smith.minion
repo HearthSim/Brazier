@@ -1,0 +1,13 @@
+{
+    "name": "Spiteful Smith",
+    "attack": 4,
+    "hp": 6,
+    "ability": {
+        "class": "MinionAbilities.ownWeaponAura",
+        "filter": "MinionAuras.SELF_DAMAGED",
+        "aura": {
+            "class": "WeaponAuras.attackBuff",
+            "attack": 2
+        }
+    }
+}

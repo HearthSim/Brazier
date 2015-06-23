@@ -1,0 +1,9 @@
+{
+    "name": "Armor Up!",
+    "description": "Gain 2 armor.",
+    "manaCost": 2,
+    "action": {
+        "class": "PlayerActions.armorUp",
+        "armor": 2
+    }
+}

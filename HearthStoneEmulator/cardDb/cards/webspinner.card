@@ -1,0 +1,7 @@
+{
+    "name": "Webspinner",
+    "description": "Deathrattle: Add a random Beast card to your hand.",
+    "class": "hunter",
+    "type": "minion",
+    "manaCost": 1
+}

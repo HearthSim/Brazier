@@ -1,0 +1,7 @@
+{
+    "name": "Whirling Zap-o-matic",
+    "description": "Windfury",
+    "class": "shaman",
+    "type": "minion",
+    "manaCost": 2
+}

@@ -1,0 +1,14 @@
+{
+    "name": "Coldlight Seer",
+    "attack": 2,
+    "hp": 3,
+    "keywords": "murloc",
+    "battleCries": {
+        "class": "MinionActions.forAllMinions",
+        "filter": "MinionAuras.TARGET_IS_MURLOC",
+        "action": {
+            "class": "MinionActions.buffHp",
+            "hp": 2
+        }
+    }
+}

@@ -1,0 +1,8 @@
+{
+    "name": "Scarlet Purifier",
+    "description": "Battlecry: Deal 2 damage to all minions with Deathrattle.",
+    "class": "paladin",
+    "type": "minion",
+    "rarity": "rare",
+    "manaCost": 3
+}

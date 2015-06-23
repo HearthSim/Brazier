@@ -1,0 +1,15 @@
+{
+    "name": "Tauren Warrior",
+    "keywords": "horde-warrior",
+    "attack": 2,
+    "hp": 3,
+    "taunt": true,
+    "ability": {
+        "class": "MinionAbilities.selfAura",
+        "filter": "MinionAuras.SELF_DAMAGED",
+        "aura": {
+            "class": "MinionAuras.attackBuff",
+            "attack": 3
+        }
+    }
+}

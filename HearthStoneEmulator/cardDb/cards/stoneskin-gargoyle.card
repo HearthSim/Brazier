@@ -1,0 +1,7 @@
+{
+    "name": "Stoneskin Gargoyle",
+    "description": "At the start of your turn, restore this minion to full Health.",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 3
+}

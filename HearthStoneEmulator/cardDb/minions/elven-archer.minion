@@ -1,0 +1,10 @@
+{
+    "name": "Elven Archer",
+    "attack": 1,
+    "hp": 1,
+    "battleCries": {
+        "class": "BattleCries.dealDamageToTarget",
+        "targets": "all",
+        "damage": 1
+    }
+}

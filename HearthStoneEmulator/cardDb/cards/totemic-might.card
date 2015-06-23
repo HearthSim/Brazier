@@ -1,0 +1,14 @@
+{
+    "name": "Totemic Might",
+    "description": "Give your Totems +2 Health.",
+    "class": "shaman",
+    "type": "spell",
+    "manaCost": 0,
+    "playActions": {
+        "class": "PlayerActions.forOwnMinions",
+        "action": {
+            "class": "MinionActions.buffHp",
+            "hp": 2
+        }
+    }
+}

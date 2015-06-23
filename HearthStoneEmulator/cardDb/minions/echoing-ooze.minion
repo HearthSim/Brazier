@@ -1,0 +1,6 @@
+{
+    "name": "Echoing Ooze",
+    "attack": 1,
+    "hp": 2,
+    "battleCries": "BattleCries.COPY_SELF"
+}

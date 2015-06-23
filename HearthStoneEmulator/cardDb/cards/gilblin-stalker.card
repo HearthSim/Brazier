@@ -1,0 +1,7 @@
+{
+    "name": "Gilblin Stalker",
+    "description": "Stealth",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 2
+}

@@ -1,0 +1,7 @@
+{
+    "name": "Mechanical Yeti",
+    "description": "Deathrattle: Give each player a Spare Part.",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 4
+}

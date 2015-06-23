@@ -1,0 +1,20 @@
+{
+    "name": "Blood Imp",
+    "attack": 0,
+    "hp": 1,
+    "stealth": true,
+    "keywords": "demon",
+    "triggers": {
+        "turn-ends": {
+            "filter": "BasicFilters.HAS_SAME_OWNER_PLAYER",
+            "action": {
+                "class": "MinionEventActions.applyTargetedActionToRandomOwnMinion",
+                "filter": "BasicFilters.NOT_SELF",
+                "action": {
+                    "class": "MinionActions.buffHp",
+                    "hp": 1
+                }
+            }
+        }
+    }
+}

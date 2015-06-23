@@ -1,0 +1,7 @@
+{
+    "name": "Stonetusk Boar",
+    "description": "Charge",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 1
+}

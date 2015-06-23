@@ -1,0 +1,9 @@
+{
+    "name": "Twisting Nether",
+    "class": "warlock",
+    "type": "spell",
+    "rarity": "epic",
+    "description": "Destroy all minions.",
+    "manaCost": 8,
+    "playActions": "PlayerActions.KILL_ALL_MINIONS"
+}

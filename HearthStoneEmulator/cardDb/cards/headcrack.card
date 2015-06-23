@@ -1,0 +1,19 @@
+{
+    "name": "Headcrack",
+    "class": "rouge",
+    "type": "spell",
+    "rarity": "rare",
+    "description": "Deal 2 damage to the enemy hero. Combo: Return this to your hand next turn.",
+    "manaCost": 3,
+    "playActions": [
+        {
+            "class": "PlayerActions.damageOpponentHero",
+            "damage": "2"
+        },
+        {
+            "class": "PlayerActions.addCard",
+            "requires": "PlayActionRequirements.COMBO",
+            "card": "Headcrack",
+            "delay": true
+        }]
+}

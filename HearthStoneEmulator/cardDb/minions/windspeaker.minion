@@ -1,0 +1,10 @@
+{
+    "name": "Windspeaker",
+    "attack": 3,
+    "hp": 3,
+    "battleCries": {
+        "targets": "self-minions",
+        "class": "TargetedActions.applyToMinionTarget",
+        "action": "MinionActions.WIND_FURY"
+    }
+}

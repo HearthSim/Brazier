@@ -1,0 +1,13 @@
+{
+    "name": "Explosive Sheep",
+    "attack": 1,
+    "hp": 1,
+    "keywords": "mech",
+    "deathRattle": {
+        "class": "MinionEventActions.doSelf",
+        "action": {
+            "class": "DamageActions.dealDamageToAllMinions",
+            "damage": 2
+        }
+    }
+}

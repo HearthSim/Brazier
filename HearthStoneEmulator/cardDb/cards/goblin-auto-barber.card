@@ -1,0 +1,7 @@
+{
+    "name": "Goblin Auto-Barber",
+    "description": "Battlecry: Give your weapon +1 Attack.",
+    "class": "rouge",
+    "type": "minion",
+    "manaCost": 2
+}

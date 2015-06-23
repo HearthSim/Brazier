@@ -1,0 +1,7 @@
+{
+    "name": "Antique Healbot",
+    "description": "Battlecry: Restore 8 Health to your hero.",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 5
+}

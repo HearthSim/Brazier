@@ -1,0 +1,22 @@
+{
+    "name": "Explosive Shot",
+    "description": "Deal 5 damage to a minion and 2 damage to adjacent ones.",
+    "class": "hunter",
+    "type": "spell",
+    "manaCost": 5,
+    "playActions": {
+        "targets": "all-minions",
+        "class": "CardPlayActions.doAtomic",
+        "action": {
+            "class": "TargetedActions.applyToAdjacentTargets",
+            "mainAction": {
+                "class": "TargetedActions.dealSpellDamage",
+                "damage": 5
+            },
+            "sideAction": {
+                "class": "TargetedActions.dealSpellDamage",
+                "damage": 2
+            }
+        }
+    }
+}

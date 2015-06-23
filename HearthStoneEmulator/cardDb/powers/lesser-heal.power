@@ -1,0 +1,10 @@
+{
+    "name": "Lesser Heal",
+    "description": "Restore 2 health.",
+    "manaCost": 2,
+    "action": {
+        "class": "TargetedActions.dealBasicDamage",
+        "targets": "all",
+        "damage": -2
+    }
+}

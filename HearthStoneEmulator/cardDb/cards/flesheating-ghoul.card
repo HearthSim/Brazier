@@ -1,0 +1,7 @@
+{
+    "name": "Flesheating Ghoul",
+    "class": "neutral",
+    "description": "Whenever a minion dies, gain +1 Attack.",
+    "type": "minion",
+    "manaCost": 3
+}

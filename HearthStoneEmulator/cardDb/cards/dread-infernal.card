@@ -1,0 +1,7 @@
+{
+    "name": "Dread Infernal",
+    "class": "warlock",
+    "description": "Battlecry: Deal 1 damage to ALL other characters.",
+    "type": "minion",
+    "manaCost": 6
+}

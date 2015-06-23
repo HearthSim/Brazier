@@ -1,0 +1,11 @@
+{
+    "name": "Windfury",
+    "description": "Give a minion Windfury.",
+    "class": "shaman",
+    "type": "spell",
+    "manaCost": 2,
+    "playActions": {
+        "targets": "all-minions",
+        "class": "MinionActions.WIND_FURY"
+    }
+}

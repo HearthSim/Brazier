@@ -1,0 +1,14 @@
+{
+    "name": "Unstable Portal",
+    "description": "Add a random minion to your hand. It costs (3) less.",
+    "class": "mage",
+    "type": "spell",
+    "manaCost": 2,
+    "playActions": [
+        {
+            "class": "PlayerActions.addCard",
+            "costReduction": 3,
+            "keywords": ["minion", "collectible"]
+        }
+    ]
+}

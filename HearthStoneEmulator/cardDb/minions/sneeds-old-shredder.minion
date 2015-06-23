@@ -1,0 +1,10 @@
+{
+    "name": "Sneed's Old Shredder",
+    "attack": 5,
+    "hp": 7,
+    "keywords": "mech",
+    "deathRattle": {
+        "class": "MinionEventActions.summonRandomMinionRight",
+        "keywords": ["legendary", "collectible"]
+    }
+}

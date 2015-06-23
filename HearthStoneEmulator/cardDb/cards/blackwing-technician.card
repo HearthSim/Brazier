@@ -1,0 +1,7 @@
+{
+    "name": "Blackwing Technician",
+    "description": "Battlecry: If you're holding a Dragon, gain +1/+1.",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 3
+}

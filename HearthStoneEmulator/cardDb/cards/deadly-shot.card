@@ -1,0 +1,12 @@
+{
+    "name": "Deadly Shot",
+    "description": "Destroy a random enemy minion.",
+    "class": "hunter",
+    "type": "spell",
+    "manaCost": 3,
+    "playActions": {
+        "requires": "PlayActionRequirements.OPPONENT_BOARD_NOT_EMPTY",
+        "class": "PlayerActions.applyTargetedActionToRandomEnemyMinion",
+        "action": "TargetedActions.KILL_TARGET"
+    }
+}

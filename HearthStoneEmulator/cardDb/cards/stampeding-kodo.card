@@ -1,0 +1,8 @@
+{
+    "name": "Stampeding Kodo",
+    "description": "Battlecry: Destroy a random enemy minion with 2 or less Attack.",
+    "class": "neutral",
+    "type": "minion",
+    "rarity": "rare",
+    "manaCost": 5
+}

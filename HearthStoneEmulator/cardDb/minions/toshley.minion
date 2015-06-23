@@ -1,0 +1,13 @@
+{
+    "name": "Toshley",
+    "attack": 5,
+    "hp": 7,
+    "deathRattle": {
+        "class": "PlayerActions.addRandomCard",
+        "keywords": "spare-part"
+    },
+    "battleCries": {
+        "class": "PlayerActions.addRandomCard",
+        "keywords": "spare-part"
+    }
+}

@@ -1,0 +1,6 @@
+{
+    "name": "Laughing Sister",
+    "attack": 3,
+    "hp": 5,
+    "targetable": false
+}

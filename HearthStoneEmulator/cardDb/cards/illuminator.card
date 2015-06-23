@@ -1,0 +1,8 @@
+{
+    "name": "Illuminator",
+    "description": "If you control a Secret at the end of your turn, restore 4 health to your hero.",
+    "class": "neutral",
+    "type": "minion",
+    "rarity": "rare",
+    "manaCost": 3
+}

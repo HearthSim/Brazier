@@ -1,0 +1,6 @@
+{
+    "name": "Frostwolf Warlord",
+    "attack": 4,
+    "hp": 4,
+    "battleCries": "MinionActions.WARLORD_BUFF"
+}

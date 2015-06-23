@@ -1,0 +1,7 @@
+{
+    "name": "Ogre Brute",
+    "description": "50% chance to attack the wrong enemy.",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 3
+}

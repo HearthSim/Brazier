@@ -1,0 +1,14 @@
+{
+    "name": "Anima Golem",
+    "attack": 9,
+    "hp": 9,
+    "triggers": {
+        "turn-ends": {
+            "filter": {
+                "class": "BasicFilters.ownBoardSizeIsLess",
+                "minionCount": 2
+            },
+            "action": "MinionEventActions.SELF_DESTRUCT"
+        }
+    }
+}

@@ -1,0 +1,7 @@
+{
+    "name": "Drakonid Crusher",
+    "description": "Battlecry: If your opponent has 15 or less Health, gain +3/+3.",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 6
+}

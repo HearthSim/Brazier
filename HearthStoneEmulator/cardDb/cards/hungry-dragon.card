@@ -1,0 +1,7 @@
+{
+    "name": "Hungry Dragon",
+    "description": "Battlecry: Summon a random 1-Cost minion for your opponent.",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 4
+}

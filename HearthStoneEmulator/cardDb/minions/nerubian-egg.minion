@@ -1,0 +1,9 @@
+{
+    "name": "Nerubian Egg",
+    "attack": 0,
+    "hp": 2,
+    "deathRattle": {
+        "class": "MinionEventActions.summonMinionRight",
+        "minion": "Nerubian"
+    }
+}

@@ -1,0 +1,7 @@
+{
+    "name": "Faerie Dragon",
+    "attack": 3,
+    "hp": 2,
+    "targetable": false,
+    "keywords": ["dragon"]
+}

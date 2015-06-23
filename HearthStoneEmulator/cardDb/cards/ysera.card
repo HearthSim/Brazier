@@ -1,0 +1,8 @@
+{
+    "name": "Ysera",
+    "description": "At the end of your turn, add a Dream Card to your hand.",
+    "class": "neutral",
+    "type": "minion",
+    "rarity": "legendary",
+    "manaCost": 9
+}

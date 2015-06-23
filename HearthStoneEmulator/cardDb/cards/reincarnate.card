@@ -1,0 +1,12 @@
+{
+    "name": "Reincarnate",
+    "description": "Restore a minion to full Health and give it Taunt.",
+    "class": "shaman",
+    "type": "spell",
+    "manaCost": 2,
+    "playActions": {
+        "targets": "all-minions",
+        "class": "MinionActions.reincarnate",
+        "newMinionAction": "MinionActions.TAUNT"
+    }
+}

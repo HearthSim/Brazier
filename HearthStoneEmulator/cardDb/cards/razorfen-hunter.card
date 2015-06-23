@@ -1,0 +1,7 @@
+{
+    "name": "Razorfen Hunter",
+    "description": "Battlecry: Summon a 1/1 Boar.",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 3
+}

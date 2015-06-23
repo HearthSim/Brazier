@@ -1,0 +1,8 @@
+{
+    "name": "Dragon Egg",
+    "description": "Whenever this minion takes damage, summon a 2/1 Whelp.",
+    "rarity": "rare",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 1
+}

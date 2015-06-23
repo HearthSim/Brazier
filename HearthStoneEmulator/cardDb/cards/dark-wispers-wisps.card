@@ -1,0 +1,14 @@
+{
+    "name": "Dark Wispers/Wisps",
+    "displayName": "Dark Wispers",
+    "class": "druid",
+    "type": "spell",
+    "description": "Summon 5 Wisps.",
+    "collectible": false,
+    "manaCost": 0,
+    "playActions": {
+        "class": "PlayerActions.summonMinion",
+        "minion": "Wisp",
+        "minionCount": 5
+    }
+}

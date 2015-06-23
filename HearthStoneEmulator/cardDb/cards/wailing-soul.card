@@ -1,0 +1,8 @@
+{
+    "name": "Wailing Soul",
+    "description": "Battlecry: Silence your other minions.",
+    "class": "neutral",
+    "type": "minion",
+    "rarity": "rare",
+    "manaCost": 4
+}

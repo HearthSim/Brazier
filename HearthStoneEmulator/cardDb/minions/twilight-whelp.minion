@@ -1,0 +1,14 @@
+{
+    "name": "Twilight Whelp",
+    "attack": 2,
+    "hp": 1,
+    "keywords": "dragon",
+    "battleCries": {
+        "class": "MinionActions.buffHp",
+        "requires": {
+            "class": "PlayActionRequirements.hasCardInHand",
+            "keywords": "dragon"
+        },
+        "hp": 2
+    }
+}

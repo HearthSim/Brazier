@@ -1,0 +1,7 @@
+{
+    "name": "Cogmaster",
+    "class": "neutral",
+    "description": "Has +2 Attack while you have a Mech.",
+    "type": "minion",
+    "manaCost": 1
+}

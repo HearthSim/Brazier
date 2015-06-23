@@ -1,0 +1,7 @@
+{
+    "name": "King Krush",
+    "attack": 8,
+    "hp": 8,
+    "charge": true,
+    "keywords": "beast"
+}

@@ -1,0 +1,12 @@
+{
+    "name": "Defias Ringleader",
+    "description": "Combo: Summon a 2/1 Defias Bandit.",
+    "class": "rouge",
+    "type": "minion",
+    "manaCost": 2,
+    "playActions": {
+        "class": "CardPlayActions.summonMinionRight",
+        "requires": "PlayActionRequirements.COMBO",
+        "minion": "Defias Bandit"
+    }
+}

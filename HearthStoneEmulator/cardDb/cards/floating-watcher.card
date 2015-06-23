@@ -1,0 +1,7 @@
+{
+    "name": "Floating Watcher",
+    "class": "warlock",
+    "description": "Whenever your hero takes damage on your turn, gain +2/+2.",
+    "type": "minion",
+    "manaCost": 5
+}

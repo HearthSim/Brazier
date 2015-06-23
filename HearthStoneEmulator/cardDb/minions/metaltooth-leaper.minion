@@ -1,0 +1,14 @@
+{
+    "name": "Metaltooth Leaper",
+    "attack": 3,
+    "hp": 3,
+    "keywords": "mech",
+    "battleCries": {
+        "class": "MinionActions.forOwnMinions",
+        "filter": "MinionAuras.TARGET_IS_MECH",
+        "action": {
+            "class": "MinionActions.buffAttack",
+            "attack": 2
+        }
+    }
+}

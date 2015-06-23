@@ -1,0 +1,15 @@
+{
+    "name": "Illidan Stormrage",
+    "attack": 7,
+    "hp": 5,
+    "keywords": ["demon"],
+    "triggers": {
+        "start-play-card": {
+            "filter": "BasicFilters.HAS_SAME_OWNER_PLAYER",
+            "action": {
+                "class": "MinionEventActions.summonMinionRight",
+                "minion": "Flame of Azzinoth"
+            }
+        }
+    }
+}

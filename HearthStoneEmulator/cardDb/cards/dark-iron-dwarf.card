@@ -1,0 +1,7 @@
+{
+    "name": "Dark Iron Dwarf",
+    "class": "neutral",
+    "description": "Battlecry: Give a minion +2 Attack this turn.",
+    "type": "minion",
+    "manaCost": 4
+}

@@ -1,0 +1,8 @@
+{
+    "name": "Gadgetzan Auctioneer",
+    "description": "Whenever you cast a spell, draw a card.",
+    "rarity": "rare",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 6
+}

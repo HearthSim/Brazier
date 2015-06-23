@@ -1,0 +1,7 @@
+{
+    "name": "Summoning Portal",
+    "description": "Your minions cost (2) less, but not less than (1).",
+    "class": "warlock",
+    "type": "minion",
+    "manaCost": 4
+}

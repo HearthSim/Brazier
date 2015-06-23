@@ -1,0 +1,9 @@
+{
+    "name": "Dagger Mastery",
+    "description": "Equip a 1/2 Dagger.",
+    "manaCost": 2,
+    "action": {
+        "class": "PlayerActions.equipWeapon",
+        "weapon": "Wicked Knife"
+    }
+}

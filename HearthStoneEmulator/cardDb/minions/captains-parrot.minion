@@ -1,0 +1,10 @@
+{
+    "name": "Captain's Parrot",
+    "attack": 1,
+    "hp": 1,
+    "keywords": "beast",
+    "battleCries": {
+        "class": "PlayerActions.getRandomFromDeck",
+        "keywords": "pirate"
+    }
+}

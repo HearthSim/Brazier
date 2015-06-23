@@ -1,0 +1,7 @@
+{
+    "name": "Mad Bomber",
+    "description": "Battlecry: Deal 3 damage randomly split between all other characters.",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 2
+}

@@ -1,0 +1,7 @@
+{
+    "name": "Ancient Brewmaster",
+    "class": "neutral",
+    "description": "Battlecry: Return a friendly minion from the battlefield to your hand.",
+    "type": "minion",
+    "manaCost": 4
+}

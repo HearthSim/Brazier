@@ -1,0 +1,8 @@
+{
+    "name": "Soot Spewer",
+    "description": "Spell Damage +1",
+    "class": "mage",
+    "rarity": "rare",
+    "type": "minion",
+    "manaCost": 3
+}

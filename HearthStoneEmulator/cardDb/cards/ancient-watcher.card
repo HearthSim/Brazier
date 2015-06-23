@@ -1,0 +1,8 @@
+{
+    "name": "Ancient Watcher",
+    "description": "Can't Attack.",
+    "rarity": "rare",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 2
+}

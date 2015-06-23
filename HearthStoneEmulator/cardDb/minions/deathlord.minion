@@ -1,0 +1,6 @@
+{
+    "name": "Deathlord",
+    "attack": 2,
+    "hp": 8,
+    "deathRattle": "PlayerActions.SUMMON_RANDOM_MINION_FROM_DECK_FOR_OPPONENT"
+}

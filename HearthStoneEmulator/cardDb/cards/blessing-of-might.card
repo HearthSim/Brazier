@@ -1,0 +1,12 @@
+{
+    "name": "Blessing of Might",
+    "description": "Give a minion +3 Attack.",
+    "class": "paladin",
+    "type": "spell",
+    "manaCost": 1,
+    "playActions": {
+        "targets": "all-minions",
+        "class": "MinionActions.buffAttack",
+        "attack": 3
+    }
+}

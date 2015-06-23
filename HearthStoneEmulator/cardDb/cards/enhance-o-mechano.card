@@ -1,0 +1,8 @@
+{
+    "name": "Enhance-o Mechano",
+    "description": "Battlecry: Give your other minions Windfury, Taunt, or Divine Shield. (at random)",
+    "class": "neutral",
+    "rarity": "epic",
+    "type": "minion",
+    "manaCost": 4
+}

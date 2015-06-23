@@ -1,0 +1,27 @@
+{
+    "name": "Nightmare",
+    "class": "neutral",
+    "type": "spell",
+    "description": "Give a minion +5/+5. At the start of your next turn, destroy it.",
+    "manaCost": 0,
+    "keywords": "emerald-dream",
+    "collectible": false,
+    "playActions": {
+        "targets": "self-minions",
+        "class": "TargetedActions.applyToMinionTarget",
+        "action": [
+            {
+                "class": "MinionActions.buff",
+                "attack": 5,
+                "hp": 5
+            },
+            {
+                "class": "MinionActions.buff",
+                "ability": {
+                    "class": "MinionAbilities.startOfTurnBuff",
+                    "filter": "BasicFilters.SELF_TURN",
+                    "action": "MinionEventActions.SELF_DESTRUCT"
+                }
+            }]
+    }
+}

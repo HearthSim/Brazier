@@ -1,0 +1,7 @@
+{
+    "name": "Treant",
+    "class": "druid",
+    "type": "minion",
+    "collectible": false,
+    "manaCost": 1
+}

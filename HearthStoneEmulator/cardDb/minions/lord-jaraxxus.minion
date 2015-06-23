@@ -1,0 +1,17 @@
+{
+    "name": "Lord Jaraxxus",
+    "attack": 3,
+    "hp": 15,
+    "keywords": "demon",
+    "battleCries": [
+        {
+            "class": "BattleCries.replaceHero",
+            "heroClass": "warlock",
+            "heroPower": "INFERNO!"
+        },
+        {
+            "class": "PlayerActions.equipWeapon",
+            "weapon": "Blood Fury"
+        }
+    ]
+}

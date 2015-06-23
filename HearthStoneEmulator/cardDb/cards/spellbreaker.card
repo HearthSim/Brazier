@@ -1,0 +1,7 @@
+{
+    "name": "Spellbreaker",
+    "description": "Battlecry: Silence a minion.",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 4
+}

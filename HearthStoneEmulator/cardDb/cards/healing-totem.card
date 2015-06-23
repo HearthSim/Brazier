@@ -1,0 +1,8 @@
+{
+    "name": "Healing Totem",
+    "description": "At the end of your turn, restore 1 Health to all friendly minions.",
+    "class": "shaman",
+    "type": "minion",
+    "collectible": false,
+    "manaCost": 1
+}

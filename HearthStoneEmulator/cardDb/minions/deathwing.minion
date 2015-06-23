@@ -1,0 +1,10 @@
+{
+    "name": "Deathwing",
+    "attack": 12,
+    "hp": 12,
+    "keywords": "dragon",
+    "battleCries": [
+        "PlayerActions.KILL_ALL_MINIONS",
+        "PlayerActions.DISCARD_HAND"
+    ]
+}

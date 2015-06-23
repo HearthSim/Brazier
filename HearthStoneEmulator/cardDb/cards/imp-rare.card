@@ -1,0 +1,9 @@
+{
+    "name": "Imp/Rare",
+    "displayName": "Imp",
+    "class": "warlock",
+    "type": "minion",
+    "rarity": "rare",
+    "collectible": false,
+    "manaCost": 1
+}

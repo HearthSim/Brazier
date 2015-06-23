@@ -1,0 +1,7 @@
+{
+    "name": "Voidwalker",
+    "class": "warlock",
+    "description": "Taunt",
+    "type": "minion",
+    "manaCost": 1
+}

@@ -1,0 +1,15 @@
+{
+    "name": "Dr. Boom",
+    "attack": 7,
+    "hp": 7,
+    "battleCries": [
+        {
+            "class": "MinionActions.summonMinionRight",
+            "minion": "Boom Bot"
+        },
+        {
+            "class": "MinionActions.summonMinionLeft",
+            "minion": "Boom Bot"
+        }
+    ]
+}

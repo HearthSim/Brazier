@@ -1,0 +1,6 @@
+{
+    "name": "Dust Devil",
+    "attack": 3,
+    "hp": 1,
+    "maxAttackCount": 2
+}

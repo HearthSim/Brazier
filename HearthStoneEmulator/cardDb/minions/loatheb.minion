@@ -1,0 +1,14 @@
+{
+    "name": "Loatheb",
+    "attack": 5,
+    "hp": 5,
+    "battleCries": {
+        "class": "PlayerActions.untilTurnStartsAura",
+        "target": "CardAuras.OPPONENT_CARD_PROVIDER",
+        "filter": "CardAuras.TARGET_IS_SPELL",
+        "aura": {
+            "class": "CardAuras.increaseManaCost",
+            "amount": 5
+        }
+    }
+}

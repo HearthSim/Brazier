@@ -1,0 +1,8 @@
+{
+    "name": "King Krush",
+    "description": "Charge",
+    "class": "hunter",
+    "type": "minion",
+    "rarity": "legendary",
+    "manaCost": 9
+}

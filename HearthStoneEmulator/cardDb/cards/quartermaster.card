@@ -1,0 +1,8 @@
+{
+    "name": "Quartermaster",
+    "description": "Battlecry: Give your Silver Hand Recruits +2/+2.",
+    "class": "paladin",
+    "type": "minion",
+    "rarity": "epic",
+    "manaCost": 5
+}

@@ -1,0 +1,15 @@
+{
+    "name": "Hemet Nesingwary",
+    "attack": 6,
+    "hp": 3,
+    "battleCries": {
+        "class": "TargetedActions.KILL_TARGET",
+        "targets": [
+            "all-minions",
+            {
+                "class": "TargetNeeds.hasKeyword",
+                "keywords": "beast"
+            }
+        ]
+    }
+}

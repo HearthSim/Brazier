@@ -1,0 +1,12 @@
+{
+    "name": "Tinkmaster Overspark",
+    "attack": 3,
+    "hp": 3,
+    "battleCries": {
+        "class": "PlayerActions.applyTargetedActionToRandomMinion",
+        "action": {
+            "class": "MinionActions.transformMinion",
+            "minion": ["Devlisaur", "Squirrel"]
+        }
+    }
+}

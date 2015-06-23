@@ -1,0 +1,7 @@
+{
+    "name": "Mogu'shan Warden",
+    "class": "neutral",
+    "description": "Taunt",
+    "type": "minion",
+    "manaCost": 4
+}

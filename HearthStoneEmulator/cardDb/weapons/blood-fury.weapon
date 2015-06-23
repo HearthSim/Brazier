@@ -1,0 +1,6 @@
+{
+    "name": "Blood Fury",
+    "attack": 3,
+    "charges": 8,
+    "collectible": false
+}

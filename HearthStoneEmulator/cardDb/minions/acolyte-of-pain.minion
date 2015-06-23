@@ -1,0 +1,11 @@
+{
+    "name": "Acolyte of Pain",
+    "attack": 1,
+    "hp": 3,
+    "triggers": {
+        "minion-damaged": {
+            "filter": "BasicFilters.TARGET_SELF",
+            "action": "PlayerActions.DRAW_FOR_SELF"
+        }
+    }
+}

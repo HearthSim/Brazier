@@ -1,0 +1,8 @@
+{
+    "name": "Annoy-o-Tron",
+    "attack": 1,
+    "hp": 2,
+    "divineShield": true,
+    "taunt": true,
+    "keywords": "mech"
+}

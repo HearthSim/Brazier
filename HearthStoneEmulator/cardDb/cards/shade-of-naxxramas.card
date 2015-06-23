@@ -1,0 +1,8 @@
+{
+    "name": "Shade of Naxxramas",
+    "description": "Stealth. At the start of your turn, gain +1/+1.",
+    "class": "neutral",
+    "type": "minion",
+    "rarity": "epic",
+    "manaCost": 3
+}

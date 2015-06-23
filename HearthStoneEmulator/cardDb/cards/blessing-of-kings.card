@@ -1,0 +1,13 @@
+{
+    "name": "Blessing of Kings",
+    "description": "Give a minion +4/+4. (+4 Attack/+4 Health)",
+    "class": "paladin",
+    "type": "spell",
+    "manaCost": 4,
+    "playActions": {
+        "targets": "all-minions",
+        "class": "MinionActions.buff",
+        "attack": 4,
+        "hp": 4
+    }
+}

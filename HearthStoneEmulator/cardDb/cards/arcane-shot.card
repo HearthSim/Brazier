@@ -1,0 +1,12 @@
+{
+    "name": "Arcane Shot",
+    "description": "Deal 2 damage.",
+    "class": "hunter",
+    "type": "spell",
+    "manaCost": 1,
+    "playActions": {
+        "class": "TargetedActions.dealSpellDamage",
+        "targets": "all",
+        "damage": 2
+    }
+}

@@ -1,0 +1,7 @@
+{
+    "name": "Southsea Deckhand",
+    "description": "Has Charge while you have a weapon equipped.",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 1
+}

@@ -1,0 +1,16 @@
+{
+    "name": "Soul of the Forest",
+    "class": "druid",
+    "type": "spell",
+    "description": "Give your minions \"Deathrattle: Summon a 2/2 Treant.\"",
+    "manaCost": 4,
+    "playActions": [
+        {
+            "class": "PlayerActions.addDeathRattleToAll",
+            "action": {
+                "class": "PlayerActions.summonMinion",
+                "minion": "Treant"
+            }
+        }
+    ]
+}

@@ -1,0 +1,6 @@
+{
+    "name": "Doomhammer",
+    "attack": 2,
+    "charges": 8,
+    "maxAttackCount": 2
+}

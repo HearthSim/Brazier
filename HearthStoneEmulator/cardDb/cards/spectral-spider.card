@@ -1,0 +1,7 @@
+{
+    "name": "Spectral Spider",
+    "class": "neutral",
+    "type": "minion",
+    "collectible": "false",
+    "manaCost": 1
+}

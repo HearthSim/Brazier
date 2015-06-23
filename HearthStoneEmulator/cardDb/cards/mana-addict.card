@@ -1,0 +1,8 @@
+{
+    "name": "Mana Addict",
+    "description": "Whenever you cast a spell, gain +2 Attack this turn.",
+    "rarity": "rare",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 2
+}

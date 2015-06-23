@@ -1,0 +1,7 @@
+{
+    "name": "Ironbeak Owl",
+    "description": "Battlecry: Silence a minion.",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 2
+}

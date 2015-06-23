@@ -1,0 +1,8 @@
+{
+    "name": "Ragnaros the Firelord",
+    "description": "Can't Attack. At the end of your turn, deal 8 damage to a random enemy.",
+    "class": "neutral",
+    "type": "minion",
+    "rarity": "legendary",
+    "manaCost": 8
+}

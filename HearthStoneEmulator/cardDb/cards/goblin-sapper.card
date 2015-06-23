@@ -1,0 +1,8 @@
+{
+    "name": "Goblin Sapper",
+    "description": "Has +4 Attack while your opponent has 6 or more cards in hand.",
+    "class": "neutral",
+    "type": "minion",
+    "rarity": "rare",
+    "manaCost": 3
+}

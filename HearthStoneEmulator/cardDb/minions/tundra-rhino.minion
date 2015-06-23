@@ -1,0 +1,11 @@
+{
+    "name": "Tundra Rhino",
+    "attack": 2,
+    "hp": 5,
+    "keywords": "beast",
+    "ability": {
+        "class": "MinionAbilities.sameBoardAura",
+        "filter": "MinionAuras.TARGET_IS_BEAST",
+        "aura": "MinionAuras.CHARGE"
+    }
+}

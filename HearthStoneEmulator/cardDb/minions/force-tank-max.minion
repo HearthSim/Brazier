@@ -1,0 +1,7 @@
+{
+    "name": "Force-Tank MAX",
+    "attack": 7,
+    "hp": 7,
+    "keywords": "mech",
+    "divineShield": true
+}

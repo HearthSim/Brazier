@@ -1,0 +1,8 @@
+{
+    "name": "Mekgineer Thermaplugg",
+    "description": "Whenever an enemy minion dies, summon a Leper Gnome.",
+    "class": "neutral",
+    "rarity": "legendary",
+    "type": "minion",
+    "manaCost": 9
+}

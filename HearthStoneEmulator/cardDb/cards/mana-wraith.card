@@ -1,0 +1,8 @@
+{
+    "name": "Mana Wraith",
+    "description": "ALL minions cost (1) more.",
+    "class": "neutral",
+    "rarity": "rare",
+    "type": "minion",
+    "manaCost": 2
+}

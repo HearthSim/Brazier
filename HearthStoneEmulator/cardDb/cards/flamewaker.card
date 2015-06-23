@@ -1,0 +1,8 @@
+{
+    "name": "Flamewaker",
+    "description": "After you cast a spell, deal 2 damage randomly split among all enemies.",
+    "class": "mage",
+    "type": "minion",
+    "rarity": "rare",
+    "manaCost": 3
+}

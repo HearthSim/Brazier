@@ -1,0 +1,9 @@
+{
+    "name": "Mirror Image/Minion",
+    "displayName": "Mirror Image",
+    "description": "Taunt",
+    "class": "mage",
+    "type": "minion",
+    "collectible": false,
+    "manaCost": 0
+}

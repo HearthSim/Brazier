@@ -1,0 +1,8 @@
+{
+    "name": "Gnoll",
+    "description": "Taunt",
+    "class": "neutral",
+    "type": "minion",
+    "collectible": false,
+    "manaCost": 2
+}

@@ -1,0 +1,8 @@
+{
+    "name": "King Mukla",
+    "description": "Battlecry: Give your opponent 2 Bananas.",
+    "class": "neutral",
+    "type": "minion",
+    "rarity": "legendary",
+    "manaCost": 3
+}

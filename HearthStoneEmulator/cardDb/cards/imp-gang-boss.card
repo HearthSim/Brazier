@@ -1,0 +1,7 @@
+{
+    "name": "Imp Gang Boss",
+    "class": "warlock",
+    "description": "Whenever this minion takes damage, summon a 1/1 Imp.",
+    "type": "minion",
+    "manaCost": 3
+}

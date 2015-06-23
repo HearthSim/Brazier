@@ -1,0 +1,7 @@
+{
+    "name": "Ironforge Rifleman",
+    "description": "Battlecry: Deal 1 damage.",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 8
+}

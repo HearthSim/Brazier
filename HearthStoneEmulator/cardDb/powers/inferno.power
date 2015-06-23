@@ -1,0 +1,10 @@
+{
+    "name": "INFERNO!",
+    "description": "Summon a 6/6 Infernal.",
+    "manaCost": 2,
+    "action": {
+        "class": "PlayerActions.summonMinion",
+        "requires": "PlayActionRequirements.HAS_SPACE_ON_OWN_BOARD",
+        "minion": "Infernal"
+    }
+}

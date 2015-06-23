@@ -1,0 +1,17 @@
+{
+    "name": "Enhance-o Mechano",
+    "attack": 3,
+    "hp": 2,
+    "keywords": "mech",
+    "battleCries": {
+        "class": "MinionActions.forOwnMinions",
+        "action": {
+            "class": "TargetedMinionActions.randomAction",
+            "action": [
+                "MinionActions.GIVE_DIVINE_SHIELD",
+                "MinionActions.WIND_FURY",
+                "MinionActions.TAUNT"
+            ]
+        }
+    }
+}

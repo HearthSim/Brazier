@@ -1,0 +1,8 @@
+{
+    "name": "Questing Adventurer",
+    "description": "Questing Adventurer",
+    "class": "neutral",
+    "type": "minion",
+    "rarity": "rare",
+    "manaCost": 3
+}

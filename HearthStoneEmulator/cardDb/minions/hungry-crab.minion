@@ -1,0 +1,22 @@
+{
+    "name": "Hungry Crab",
+    "attack": 1,
+    "hp": 2,
+    "keywords": "beast",
+    "battleCries": {
+        "targets": ["all-minions",
+            {
+                "class": "TargetNeeds.hasKeyword",
+                "keywords": "murloc"
+            }],
+        "class": "BattleCries.combined",
+        "actions": [
+            "TargetedActions.KILL_TARGET",
+            {
+                "class": "MinionActions.buff",
+                "attack": 2,
+                "hp": 2
+            }
+        ]
+    }
+}

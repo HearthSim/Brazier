@@ -1,0 +1,7 @@
+{
+    "name": "Reckless Rocketeer",
+    "description": "Charge",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 6
+}

@@ -1,0 +1,8 @@
+{
+    "name": "Millhouse Manastorm",
+    "description": "Battlecry: Enemy spells cost (0) next turn.",
+    "rarity": "legendary",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 2
+}

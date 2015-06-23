@@ -1,0 +1,7 @@
+{
+    "name": "Blackwing Corruptor",
+    "description": "Battlecry: If you're holding a Dragon, deal 3 damage.",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 5
+}

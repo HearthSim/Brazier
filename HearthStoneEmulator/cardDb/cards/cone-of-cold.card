@@ -1,0 +1,20 @@
+{
+    "name": "Cone of Cold",
+    "description": "Freeze a minion and the minions next to it, and deal 1 damage to them.",
+    "class": "mage",
+    "type": "spell",
+    "manaCost": 4,
+    "playActions": {
+        "targets": "all-minions",
+        "class": "CardPlayActions.doAtomic",
+        "action": {
+            "class": "TargetedActions.applyToAdjacentTargets",
+            "action": [
+                {
+                    "class": "TargetedActions.dealSpellDamage",
+                    "damage": 1
+                },
+                "TargetedActions.FREEZE_TARGET"]
+        }
+    }
+}

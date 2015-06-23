@@ -1,0 +1,8 @@
+{
+    "name": "Wild Pyromancer",
+    "description": "After you cast a spell, deal 1 damage to ALL minions.",
+    "class": "neutral",
+    "type": "minion",
+    "rarity": "rare",
+    "manaCost": 2
+}

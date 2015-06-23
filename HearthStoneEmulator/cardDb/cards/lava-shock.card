@@ -1,0 +1,16 @@
+{
+    "name": "Lava Shock",
+    "description": "Deal 2 damage. Unlock your Overloaded Mana Crystals.",
+    "class": "shaman",
+    "type": "spell",
+    "rarity": "rare",
+    "manaCost": 2,
+    "playActions": [
+        {
+            "class": "TargetedActions.dealSpellDamage",
+            "targets": "all",
+            "damage": 2
+        },
+        "PlayerActions.REMOVE_OVERLOAD"
+    ]
+}

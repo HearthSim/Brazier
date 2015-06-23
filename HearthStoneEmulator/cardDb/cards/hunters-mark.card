@@ -1,0 +1,12 @@
+{
+    "name": "Hunter's Mark",
+    "description": "Hunter's Mark",
+    "class": "hunter",
+    "type": "spell",
+    "manaCost": 0,
+    "playActions": {
+        "targets": "all-minions",
+        "class": "MinionActions.setMaxHp",
+        "hp": 1
+    }
+}

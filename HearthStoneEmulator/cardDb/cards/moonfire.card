@@ -1,0 +1,14 @@
+{
+    "name": "Moonfire",
+    "class": "druid",
+    "type": "spell",
+    "description": "Deal 1 damage.",
+    "manaCost": 0,
+    "playActions": [
+        {
+            "class": "TargetedActions.dealSpellDamage",
+            "targets": "all",
+            "damage": 1
+        }
+    ]
+}

@@ -1,0 +1,7 @@
+{
+    "name": "Frostwolf Grunt",
+    "keywords": "horde-warrior",
+    "attack": 2,
+    "hp": 2,
+    "taunt": "true"
+}

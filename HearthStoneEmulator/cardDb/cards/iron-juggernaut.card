@@ -1,0 +1,8 @@
+{
+    "name": "Iron Juggernaut",
+    "description": "Battlecry: Shuffle a Mine into your opponent's deck. When drawn, it explodes for 10 damage.",
+    "class": "warrior",
+    "rarity": "legendary",
+    "type": "minion",
+    "manaCost": 6
+}

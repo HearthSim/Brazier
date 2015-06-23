@@ -1,0 +1,7 @@
+{
+    "name": "Timber Wolf",
+    "description": "Your other Beasts have +1 Attack.",
+    "class": "hunter",
+    "type": "minion",
+    "manaCost": 1
+}

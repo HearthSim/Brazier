@@ -1,0 +1,18 @@
+{
+    "name": "Questing Adventurer",
+    "attack": 2,
+    "hp": 2,
+    "triggers": {
+        "start-play-card": {
+            "filter": "BasicFilters.HAS_SAME_OWNER_PLAYER",
+            "action": {
+                "class": "MinionEventActions.applyTargetedActionToSelf",
+                "action": {
+                    "class": "MinionActions.buff",
+                    "attack": 1,
+                    "hp": 1
+                }
+            }
+        }
+    }
+}

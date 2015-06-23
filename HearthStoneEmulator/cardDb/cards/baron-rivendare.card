@@ -1,0 +1,8 @@
+{
+    "name": "Baron Rivendare",
+    "description": "Your minions trigger their Deathrattles twice.",
+    "class": "neutral",
+    "rarity": "legendary",
+    "type": "minion",
+    "manaCost": 4
+}

@@ -1,0 +1,14 @@
+{
+    "name": "Warbot",
+    "attack": 1,
+    "hp": 3,
+    "keywords": "mech",
+    "ability": {
+        "class": "MinionAbilities.selfAura",
+        "filter": "MinionAuras.SELF_DAMAGED",
+        "aura": {
+            "class": "MinionAuras.attackBuff",
+            "attack": 1
+        }
+    }
+}

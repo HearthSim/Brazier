@@ -1,0 +1,10 @@
+{
+    "name": "Clockwork Gnome",
+    "attack": 2,
+    "hp": 1,
+    "keywords": "mech",
+    "deathRattle": {
+        "class": "PlayerActions.addRandomCard",
+        "keywords": "spare-part"
+    }
+}

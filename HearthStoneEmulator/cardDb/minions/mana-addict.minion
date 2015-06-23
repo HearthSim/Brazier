@@ -1,0 +1,17 @@
+{
+    "name": "Mana Addict",
+    "attack": 1,
+    "hp": 3,
+    "triggers": {
+        "start-play-card": {
+            "filter": ["BasicFilters.HAS_SAME_OWNER_PLAYER", "BasicFilters.EVENT_SOURCE_IS_SPELL"],
+            "action": {
+                "class": "MinionEventActions.applyTargetedActionToSelf",
+                "action": {
+                    "class": "TargetedActions.addTemporaryAttack",
+                    "attack": 2
+                }
+            }
+        }
+    }
+}

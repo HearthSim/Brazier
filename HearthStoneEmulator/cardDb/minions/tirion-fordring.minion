@@ -1,0 +1,11 @@
+{
+    "name": "Tirion Fordring",
+    "attack": 6,
+    "hp": 6,
+    "taunt": true,
+    "divineShield": true,
+    "deathRattle": {
+        "class": "PlayerActions.equipWeapon",
+        "weapon": "Ashbringer"
+    }
+}

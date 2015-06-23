@@ -1,0 +1,17 @@
+{
+    "name": "Nefarian",
+    "attack": 8,
+    "hp": 8,
+    "keywords": "dragon",
+    "battleCries": [
+        {
+            "class": "PlayerActions.getRandomOpponentCard",
+            "fallbackCard": "Tail Swipe",
+            "keywords": ["collectible", "spell"]
+        },
+        {
+            "class": "PlayerActions.getRandomOpponentCard",
+            "fallbackCard": "Tail Swipe",
+            "keywords": ["collectible", "spell"]
+        }]
+}

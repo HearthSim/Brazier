@@ -1,0 +1,12 @@
+{
+    "name": "Chromaggus",
+    "attack": 6,
+    "hp": 8,
+    "keywords": "dragon",
+    "triggers": {
+        "draw-card": {
+            "filter": "BasicFilters.HAS_SAME_OWNER_PLAYER",
+            "action": "CardEventActions.ADD_COPY_TO_HAND"
+        }
+    }
+}

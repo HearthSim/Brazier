@@ -1,0 +1,9 @@
+{
+    "name": "Sea Giant",
+    "description": "Costs (1) less for each other minion on the battlefield.",
+    "class": "neutral",
+    "rarity": "epic",
+    "type": "minion",
+    "manaCost": 10,
+    "manaCostAdjusters": "ManaCostAdjusters.REDUCE_BY_BOARD_POPULATION"
+}

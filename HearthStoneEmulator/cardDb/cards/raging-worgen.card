@@ -1,0 +1,7 @@
+{
+    "name": "Raging Worgen",
+    "description": "Enrage: Windfury and +1 Attack",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 3
+}

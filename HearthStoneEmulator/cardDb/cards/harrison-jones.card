@@ -1,0 +1,8 @@
+{
+    "name": "Harrison Jones",
+    "description": "Battlecry: Destroy your opponent's weapon and draw cards equal to its Durability.",
+    "rarity": "legendary",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 5
+}

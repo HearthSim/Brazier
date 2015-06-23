@@ -1,0 +1,18 @@
+{
+    "name": "Elite Tauren Chieftain",
+    "attack": 5,
+    "hp": 5,
+    "battleCries": [
+        {
+            "class": "PlayerActions.addCard",
+            "keywords": "power-chord"
+        },
+        {
+            "class": "PlayerActions.doForOpponent",
+            "action": {
+                "class": "PlayerActions.addCard",
+                "keywords": "power-chord"
+            }
+        }
+    ]
+}

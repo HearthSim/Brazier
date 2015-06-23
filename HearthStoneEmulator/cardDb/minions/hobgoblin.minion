@@ -1,0 +1,23 @@
+{
+    "name": "Hobgoblin",
+    "attack": 2,
+    "hp": 3,
+    "triggers": {
+        "start-play-card": {
+            "filter": [
+                "BasicFilters.HAS_SAME_OWNER_PLAYER",
+                {
+                    "class": "BasicFilters.cardMinionAttackEquals",
+                    "attack": 1
+                }],
+            "action": {
+                "class": "MinionEventActions.applyTargetedActionToPlayedMinion",
+                "action": {
+                    "class": "MinionActions.buff",
+                    "attack": 2,
+                    "hp": 2
+                }
+            }
+        }
+    }
+}

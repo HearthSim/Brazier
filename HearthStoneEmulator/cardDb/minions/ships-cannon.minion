@@ -1,0 +1,20 @@
+{
+    "name": "Ship's Cannon",
+    "attack": 2,
+    "hp": 3,
+    "triggers": {
+        "on-summon": {
+            "filter": {
+                "class": "BasicFilters.eventSourceHasKeyword",
+                "keywords": "pirate"
+            },
+            "action": {
+                "class": "MinionEventActions.applyTargetedActionToRandomEnemy",
+                "action": {
+                    "class": "TargetedMinionActions.damageTarget",
+                    "damage": 2
+                }
+            }
+        }
+    }
+}

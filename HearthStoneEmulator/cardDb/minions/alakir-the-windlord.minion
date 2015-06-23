@@ -1,0 +1,9 @@
+{
+    "name": "Al'Akir the Windlord",
+    "attack": 3,
+    "hp": 5,
+    "maxAttackCount": 2,
+    "divineShield": true,
+    "charge": true,
+    "taunt": true
+}

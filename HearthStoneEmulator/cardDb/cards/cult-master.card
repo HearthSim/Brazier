@@ -1,0 +1,7 @@
+{
+    "name": "Cult Master",
+    "description": "Whenever one of your other minions dies, draw a card.",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 4
+}

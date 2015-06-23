@@ -1,0 +1,7 @@
+{
+    "name": "Warbot",
+    "description": "Enrage: +1 Attack.",
+    "class": "warrior",
+    "type": "minion",
+    "manaCost": 1
+}

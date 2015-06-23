@@ -1,0 +1,9 @@
+{
+    "name": "Mad Scientist",
+    "attack": 2,
+    "hp": 2,
+    "deathRattle": {
+        "class": "PlayerActions.drawAndPlayCard",
+        "keywords": "secret"
+    }
+}

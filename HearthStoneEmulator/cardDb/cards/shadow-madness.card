@@ -1,0 +1,21 @@
+{
+    "name": "Shadow Madness",
+    "description": "Gain control of an enemy minion with 3 or less Attack until end of turn.",
+    "class": "priest",
+    "type": "spell",
+    "manaCost": 4,
+    "playActions": [
+        {
+            "class": "TargetedActions.SHADOW_MADNESS",
+            "requires": "PlayActionRequirements.HAS_SPACE_ON_OWN_BOARD",
+            "targets": [
+                "enemy-minions",
+                {
+                    "class": "TargetNeeds.attackIsLessThan",
+                    "attack": 4
+                }
+            ]
+
+        }
+    ]
+}

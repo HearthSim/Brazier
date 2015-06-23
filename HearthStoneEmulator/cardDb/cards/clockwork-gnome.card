@@ -1,0 +1,7 @@
+{
+    "name": "Clockwork Gnome",
+    "description": "Deathrattle: Add a Spare Part card to your hand.",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 1
+}

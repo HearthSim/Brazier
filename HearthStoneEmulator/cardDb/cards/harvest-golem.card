@@ -1,0 +1,7 @@
+{
+    "name": "Harvest Golem",
+    "description": "Deathrattle: Summon a 2/1 Damaged Golem.",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 3
+}

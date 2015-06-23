@@ -1,0 +1,17 @@
+{
+    "name": "Gruul",
+    "attack": 7,
+    "hp": 7,
+    "triggers": {
+        "turn-ends": {
+            "action": {
+                "class": "MinionEventActions.applyTargetedActionToSelf",
+                "action": {
+                    "class": "MinionActions.buff",
+                    "attack": 1,
+                    "hp": 1
+                }
+            }
+        }
+    }
+}

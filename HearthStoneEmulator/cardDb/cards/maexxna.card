@@ -1,0 +1,8 @@
+{
+    "name": "Maexxna",
+    "description": "Destroy any minion damaged by this minion.",
+    "class": "neutral",
+    "type": "minion",
+    "rarity": "legendary",
+    "manaCost": 6
+}

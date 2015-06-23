@@ -1,0 +1,13 @@
+{
+    "name": "Cogmaster",
+    "attack": 1,
+    "hp": 2,
+    "ability": {
+        "class": "MinionAbilities.selfAura",
+        "filter": "MinionAuras.OWN_BOARD_HAS_MECH",
+        "aura": {
+            "class": "MinionAuras.attackBuff",
+            "attack": 2
+        }
+    }
+}

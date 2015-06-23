@@ -1,0 +1,8 @@
+{
+    "name": "Malygos",
+    "description": "Spell Damage +5",
+    "class": "neutral",
+    "type": "minion",
+    "rarity": "legendary",
+    "manaCost": 9
+}

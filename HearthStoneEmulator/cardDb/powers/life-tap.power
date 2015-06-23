@@ -1,0 +1,15 @@
+{
+    "name": "Life Tap",
+    "description": "Draw a card and take 2 damage.",
+    "manaCost": 2,
+    "action": {
+        "actions": [
+            {
+                "class": "PlayerActions.damageOwnHero",
+                "damage": 2,
+                "spell": false
+            },
+            "PlayerActions.DRAW_FOR_SELF"
+        ]
+    }
+}

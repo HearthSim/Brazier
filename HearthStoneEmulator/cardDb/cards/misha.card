@@ -1,0 +1,8 @@
+{
+    "name": "Misha",
+    "description": "Taunt",
+    "class": "hunter",
+    "type": "minion",
+    "manaCost": 3,
+    "collectible": false
+}

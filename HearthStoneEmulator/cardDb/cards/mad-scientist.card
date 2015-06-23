@@ -1,0 +1,7 @@
+{
+    "name": "Mad Scientist",
+    "description": "Deathrattle: Put a Secret from your deck into the battlefield.",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 2
+}

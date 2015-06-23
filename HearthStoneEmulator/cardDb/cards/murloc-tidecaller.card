@@ -1,0 +1,8 @@
+{
+    "name": "Murloc Tidecaller",
+    "description": "Whenever a Murloc is summoned, gain +1 Attack.",
+    "class": "neutral",
+    "type": "minion",
+    "rarity": "rare",
+    "manaCost": 1
+}

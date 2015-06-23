@@ -1,0 +1,13 @@
+{
+    "name": "Venture Co. Mercenary",
+    "attack": 7,
+    "hp": 6,
+    "ability": {
+        "class": "MinionAbilities.ownCardAura",
+        "filter": "CardAuras.TARGET_IS_MINION",
+        "aura": {
+            "class": "CardAuras.increaseManaCost",
+            "amount": 3
+        }
+    }
+}

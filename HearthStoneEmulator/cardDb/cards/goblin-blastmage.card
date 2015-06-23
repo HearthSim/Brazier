@@ -1,0 +1,8 @@
+{
+    "name": "Goblin Blastmage",
+    "description": "Battlecry: If you have a Mech, deal 4 damage randomly split among all enemies.",
+    "class": "mage",
+    "type": "minion",
+    "rarity": "rare",
+    "manaCost": 4
+}

@@ -1,0 +1,8 @@
+{
+    "name": "Bloodmage Thalnos",
+    "description": "Spell Damage +1. Deathrattle: Draw a card.",
+    "class": "neutral",
+    "rarity": "legendary",
+    "type": "minion",
+    "manaCost": 2
+}

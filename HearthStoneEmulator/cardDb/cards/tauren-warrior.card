@@ -1,0 +1,7 @@
+{
+    "name": "Tauren Warrior",
+    "description": "Taunt. Enrage: +3 Attack",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 3
+}

@@ -1,0 +1,8 @@
+{
+    "name": "Malorne",
+    "description": "Deathrattle: Shuffle this minion into your deck.",
+    "class": "druid",
+    "type": "minion",
+    "rarity": "legendary",
+    "manaCost": 7
+}

@@ -1,0 +1,7 @@
+{
+    "name": "Huffer",
+    "attack": 4,
+    "hp": 2,
+    "charge": true,
+    "keywords": ["beast", "animal-companion"]
+}

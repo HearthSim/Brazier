@@ -1,0 +1,26 @@
+{
+    "name": "Scavenging Hyena",
+    "attack": 2,
+    "hp": 2,
+    "keywords": "beast",
+    "triggers": {
+        "minion-killed": {
+            "filter": [
+                "BasicFilters.NOT_SELF",
+                "BasicFilters.HAS_SAME_OWNER_PLAYER",
+                {
+                    "class": "BasicFilters.targetHasKeyword",
+                    "keywords": "beast"
+                }
+            ],
+            "action": {
+                "class": "MinionEventActions.applyTargetedActionToSelf",
+                "action": {
+                    "class": "MinionActions.buff",
+                    "attack": 2,
+                    "hp": 1
+                }
+            }
+        }
+    }
+}

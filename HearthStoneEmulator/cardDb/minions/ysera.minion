@@ -1,0 +1,15 @@
+{
+    "name": "Ysera",
+    "attack": 4,
+    "hp": 12,
+    "keywords": "dragon",
+    "triggers": {
+        "turn-ends": {
+            "filter": "BasicFilters.HAS_SAME_OWNER_PLAYER",
+            "action": {
+                "class": "PlayerActions.addCard",
+                "keywords": "emerald-dream"
+            }
+        }
+    }
+}

@@ -1,0 +1,16 @@
+{
+    "name": "Flesheating Ghoul",
+    "attack": 2,
+    "hp": 3,
+    "triggers": {
+        "minion-killed": {
+            "action": {
+                "class": "MinionEventActions.applyTargetedActionToSelf",
+                "action": {
+                    "class": "MinionActions.buffAttack",
+                    "attack": 1
+                }
+            }
+        }
+    }
+}

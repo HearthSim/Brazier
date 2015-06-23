@@ -1,0 +1,7 @@
+{
+    "name": "Silver Hand Knight",
+    "description": "Battlecry: Summon a 2/2 Squire.",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 5
+}

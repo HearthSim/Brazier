@@ -1,0 +1,7 @@
+{
+    "name": "Piloted Shredder",
+    "description": "Deathrattle: Summon a random 2-Cost minion.",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 4
+}

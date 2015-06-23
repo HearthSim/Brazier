@@ -1,0 +1,8 @@
+{
+    "name": "Cobalt Guardian",
+    "description": "Whenever you summon a Mech, gain Divine Shield.",
+    "class": "neutral",
+    "rarity": "rare",
+    "type": "minion",
+    "manaCost": 5
+}

@@ -1,0 +1,9 @@
+{
+    "name": "Siltfin Spiritwalker",
+    "description": "Whenever another friendly Murloc dies, draw a card. Overload: (1)",
+    "class": "shaman",
+    "type": "minion",
+    "rarity": "epic",
+    "manaCost": 4,
+    "overload": 1
+}

@@ -1,0 +1,8 @@
+{
+    "name": "Grim Patron",
+    "description": "Whenever this minion survives damage, summon another Grim Patron.",
+    "rarity": "rare",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 5
+}

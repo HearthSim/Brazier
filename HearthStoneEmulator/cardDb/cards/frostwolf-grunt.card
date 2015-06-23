@@ -1,0 +1,7 @@
+{
+    "name": "Frostwolf Grunt",
+    "class": "neutral",
+    "description": "Taunt",
+    "type": "minion",
+    "manaCost": 2
+}

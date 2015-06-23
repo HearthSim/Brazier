@@ -1,0 +1,21 @@
+{
+    "name": "Mal'Ganis",
+    "attack": 9,
+    "hp": 7,
+    "keywords": ["demon"],
+    "ability": [
+        {
+            "class": "MinionAbilities.sameBoardOthersAura",
+            "filter": "MinionAuras.TARGET_IS_DEMON",
+            "aura": {
+                "class": "MinionAuras.bodyBuff",
+                "attack": 2,
+                "hp": 2
+            }
+        },
+        {
+            "class": "MinionAbilities.ownHeroAura",
+            "aura": "HeroAuras.GRANT_IMMUNITY"
+        }
+    ]
+}

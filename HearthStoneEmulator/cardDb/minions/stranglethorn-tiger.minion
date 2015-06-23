@@ -1,0 +1,7 @@
+{
+    "name": "Stranglethorn Tiger",
+    "attack": 5,
+    "hp": 5,
+    "keywords": "beast",
+    "stealth": true
+}

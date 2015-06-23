@@ -1,0 +1,13 @@
+{
+    "name": "Reversing Switch",
+    "description": "Swap a minion's Attack and Health.",
+    "class": "neutral",
+    "type": "spell",
+    "keywords": "spare-part",
+    "collectible": false,
+    "manaCost": 1,
+    "playActions": {
+        "class": "TargetedActions.ATTACK_HP_SWITCH",
+        "targets": "all-minions"
+    }
+}

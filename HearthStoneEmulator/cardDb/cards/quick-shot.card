@@ -1,0 +1,19 @@
+{
+    "name": "Quick Shot",
+    "description": "If your hand is empty, draw a card.",
+    "class": "hunter",
+    "type": "spell",
+    "manaCost": 2,
+    "playActions": [
+        {
+            "targets": "all",
+            "class": "TargetedActions.dealSpellDamage",
+            "damage": 3
+        },
+        {
+            "class": "CardPlayActions.doIf",
+            "condition": "PlayActionRequirements.EMPTY_HAND",
+            "action": "PlayerActions.DRAW_FOR_SELF"
+        }
+    ]
+}

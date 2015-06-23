@@ -1,0 +1,9 @@
+{
+    "name": "Sunfury Protector",
+    "attack": 2,
+    "hp": 3,
+    "battleCries": {
+        "class": "MinionActions.buffNeighbours",
+        "buff": "TargetedActions.TAUNT_MINION"
+    }
+}

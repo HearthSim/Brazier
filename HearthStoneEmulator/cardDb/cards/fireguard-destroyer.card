@@ -1,0 +1,8 @@
+{
+    "name": "Fireguard Destroyer",
+    "description": "Battlecry: Gain 1-4 Attack. Overload: (1)",
+    "class": "shaman",
+    "type": "minion",
+    "manaCost": 4,
+    "overload": 1
+}

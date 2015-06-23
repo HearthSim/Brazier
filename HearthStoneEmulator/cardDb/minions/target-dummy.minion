@@ -1,0 +1,7 @@
+{
+    "name": "Target Dummy",
+    "attack": 0,
+    "hp": 2,
+    "keywords": "mech",
+    "taunt": true
+}

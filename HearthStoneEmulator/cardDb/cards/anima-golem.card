@@ -1,0 +1,8 @@
+{
+    "name": "Anima Golem",
+    "description": "At the end of each turn, destroy this minion if it's your only one.",
+    "class": "warlock",
+    "type": "minion",
+    "rarity": "epic",
+    "manaCost": 6
+}

@@ -1,0 +1,8 @@
+{
+    "name": "Al'Akir the Windlord",
+    "description": "Windfury, Charge, Divine Shield, Taunt",
+    "rarity": "legendary",
+    "class": "shaman",
+    "type": "minion",
+    "manaCost": 8
+}

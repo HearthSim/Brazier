@@ -1,0 +1,14 @@
+{
+    "name": "Hogger",
+    "attack": 4,
+    "hp": 4,
+    "triggers": {
+        "turn-ends": {
+            "filter": "BasicFilters.HAS_SAME_OWNER_PLAYER",
+            "action": {
+                "class": "MinionEventActions.summonMinionRight",
+                "minion": "Gnoll"
+            }
+        }
+    }
+}

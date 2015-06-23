@@ -1,0 +1,13 @@
+{
+    "name": "Mana Wraith",
+    "attack": 2,
+    "hp": 2,
+    "ability": {
+        "class": "MinionAbilities.cardAura",
+        "filter": "CardAuras.TARGET_IS_MINION",
+        "aura": {
+            "class": "CardAuras.increaseManaCost",
+            "amount": 1
+        }
+    }
+}

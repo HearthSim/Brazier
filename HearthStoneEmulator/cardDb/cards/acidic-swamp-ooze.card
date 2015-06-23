@@ -1,0 +1,7 @@
+{
+    "name": "Acidic Swamp Ooze",
+    "class": "neutral",
+    "description": "Battlecry: Destroy your opponent's weapon.",
+    "type": "minion",
+    "manaCost": 2
+}

@@ -1,0 +1,11 @@
+{
+    "name": "Arcane Missiles",
+    "description": "Deal 3 damage randomly split among all enemies.",
+    "class": "mage",
+    "type": "spell",
+    "manaCost": 1,
+    "playActions": {
+        "class": "PlayerActions.dealMissleDamage",
+        "missleCount": 3
+    }
+}

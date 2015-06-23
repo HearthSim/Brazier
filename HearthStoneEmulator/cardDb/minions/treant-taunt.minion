@@ -1,0 +1,7 @@
+{
+    "name": "Treant/Taunt",
+    "displayName": "Treant",
+    "attack": 2,
+    "hp": 2,
+    "taunt": true
+}

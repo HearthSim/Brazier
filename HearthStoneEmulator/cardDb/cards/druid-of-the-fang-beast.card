@@ -1,0 +1,8 @@
+{
+    "name": "Druid of the Fang/Beast",
+    "displayName": "Druid of the Fang",
+    "class": "druid",
+    "type": "minion",
+    "manaCost": 5,
+    "collectible": false
+}

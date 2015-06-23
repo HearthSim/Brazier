@@ -1,0 +1,15 @@
+{
+    "name": "Mekgineer Thermaplugg",
+    "attack": 9,
+    "hp": 7,
+    "keywords": "mech",
+    "triggers": {
+        "minion-killed": {
+            "filter": ["BasicFilters.NOT_SELF", "BasicFilters.HAS_DIFFERENT_OWNER_PLAYER"],
+            "action": {
+                "class": "MinionEventActions.summonMinionRight",
+                "minion": "Leper Gnome"
+            }
+        }
+    }
+}

@@ -1,0 +1,9 @@
+{
+    "name": "Guardian of Kings",
+    "attack": 5,
+    "hp": 6,
+    "battleCries": {
+        "class": "DamageActions.damageOwnHero",
+        "damage": -6
+    }
+}

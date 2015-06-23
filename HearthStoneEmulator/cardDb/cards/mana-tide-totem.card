@@ -1,0 +1,8 @@
+{
+    "name": "Mana Tide Totem",
+    "description": "At the end of your turn, draw a card.",
+    "class": "shaman",
+    "type": "minion",
+    "rarity": "rare",
+    "manaCost": 3
+}

@@ -1,0 +1,7 @@
+{
+    "name": "Stormwind Champion",
+    "description": "Your other minions have +1/+1.",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 7
+}

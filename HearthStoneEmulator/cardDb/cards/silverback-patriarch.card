@@ -1,0 +1,7 @@
+{
+    "name": "Silverback Patriarch",
+    "description": "Taunt",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 3
+}

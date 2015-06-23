@@ -1,0 +1,17 @@
+{
+    "name": "King Mukla",
+    "attack": 5,
+    "hp": 5,
+    "keywords": "beast",
+    "battleCries": {
+        "class": "PlayerActions.doForOpponent",
+        "action": [{
+                "class": "PlayerActions.addCard",
+                "card": "Bananas"
+            },
+            {
+                "class": "PlayerActions.addCard",
+                "card": "Bananas"
+            }]
+    }
+}

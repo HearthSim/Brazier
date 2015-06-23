@@ -1,0 +1,6 @@
+{
+    "name": "Novice Engineer",
+    "attack": 1,
+    "hp": 1,
+    "battleCries": "PlayerActions.DRAW_FOR_SELF"
+}

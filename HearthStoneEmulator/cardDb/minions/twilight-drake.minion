@@ -1,0 +1,7 @@
+{
+    "name": "Twilight Drake",
+    "attack": 4,
+    "hp": 1,
+    "keywords": "dragon",
+    "battleCries": "MinionActions.TWILIGHT_BUFF"
+}

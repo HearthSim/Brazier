@@ -1,0 +1,14 @@
+{
+    "name": "Armor Plating",
+    "description": "Give a minion +1 Health.",
+    "class": "neutral",
+    "type": "spell",
+    "keywords": "spare-part",
+    "collectible": false,
+    "manaCost": 1,
+    "playActions": {
+        "targets": "all-minions",
+        "class": "MinionActions.buffHp",
+        "hp": 1
+    }
+}

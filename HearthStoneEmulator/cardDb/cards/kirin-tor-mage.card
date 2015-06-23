@@ -1,0 +1,8 @@
+{
+    "name": "Kirin Tor Mage",
+    "description": "Battlecry: The next Secret you play this turn costs (0).",
+    "class": "mage",
+    "type": "minion",
+    "rarity": "rare",
+    "manaCost": 3
+}

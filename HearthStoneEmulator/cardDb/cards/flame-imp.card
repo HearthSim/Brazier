@@ -1,0 +1,7 @@
+{
+    "name": "Flame Imp",
+    "class": "warlock",
+    "description": "Battlecry: Deal 3 damage to your hero.",
+    "type": "minion",
+    "manaCost": 1
+}

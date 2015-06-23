@@ -1,0 +1,8 @@
+{
+    "name": "Shadowboxer",
+    "description": "Whenever a character is healed, deal 1 damage to a random enemy.",
+    "class": "priest",
+    "rarity": "rare",
+    "type": "minion",
+    "manaCost": 2
+}

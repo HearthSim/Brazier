@@ -1,0 +1,8 @@
+{
+    "name": "Ancient Mage",
+    "description": "Battlecry: Give adjacent minions Spell Damage +1.",
+    "rarity": "rare",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 4
+}

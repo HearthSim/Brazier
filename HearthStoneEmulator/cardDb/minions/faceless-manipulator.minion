@@ -1,0 +1,9 @@
+{
+    "name": "Faceless Manipulator",
+    "attack": 3,
+    "hp": 3,
+    "battleCries": {
+        "class": "BattleCries.copyOther",
+        "targets": "all-minions"
+    }
+}

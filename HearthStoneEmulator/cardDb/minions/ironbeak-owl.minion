@@ -1,0 +1,10 @@
+{
+    "name": "Ironbeak Owl",
+    "attack": 2,
+    "hp": 1,
+    "keywords": "beast",
+    "battleCries": {
+        "class": "TargetedActions.SILENCE",
+        "targets": "all-minions"
+    }
+}

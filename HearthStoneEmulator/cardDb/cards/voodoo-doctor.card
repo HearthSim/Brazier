@@ -1,0 +1,7 @@
+{
+    "name": "Voodoo Doctor",
+    "class": "neutral",
+    "description": "Battlecry: Restore 2 Health.",
+    "type": "minion",
+    "manaCost": 1
+}

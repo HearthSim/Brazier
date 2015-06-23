@@ -1,0 +1,8 @@
+{
+    "name": "Old Murk-Eye",
+    "description": "Charge. Has +1 Attack for each other Murloc on the battlefield.",
+    "class": "neutral",
+    "type": "minion",
+    "rarity": "legendary",
+    "manaCost": 4
+}

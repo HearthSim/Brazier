@@ -1,0 +1,8 @@
+{
+    "name": "Arcane Intellect",
+    "class": "mage",
+    "type": "spell",
+    "description": "Draw 2 cards.",
+    "manaCost": 3,
+    "playActions": ["PlayerActions.DRAW_FOR_SELF", "PlayerActions.DRAW_FOR_SELF"]
+}

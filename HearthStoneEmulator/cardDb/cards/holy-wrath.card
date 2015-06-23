@@ -1,0 +1,12 @@
+{
+    "name": "Holy Wrath",
+    "description": "Draw a card and deal damage equal to its cost.",
+    "class": "paladin",
+    "type": "spell",
+    "rarity": "rare",
+    "manaCost": 5,
+    "playActions": {
+        "targets": "all",
+        "class": "TargetedActions.HOLY_WRATH"
+    }
+}

@@ -1,0 +1,8 @@
+{
+    "name": "Abomination",
+    "description": "Taunt. Deathrattle: Deal 2 damage to ALL characters.",
+    "rarity": "rare",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 5
+}

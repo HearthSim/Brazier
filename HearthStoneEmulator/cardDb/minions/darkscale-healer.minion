@@ -1,0 +1,9 @@
+{
+    "name": "Darkscale Healer",
+    "attack": 4,
+    "hp": 5,
+    "battleCries": {
+        "class": "DamageActions.dealDamageToOwnTargets",
+        "damage": -2
+    }
+}

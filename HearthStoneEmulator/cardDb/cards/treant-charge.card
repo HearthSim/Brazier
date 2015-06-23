@@ -1,0 +1,9 @@
+{
+    "name": "Treant/Charge",
+    "displayName": "Treant",
+    "description": "Charge. At the end of the turn, destroy this minion.",
+    "class": "druid",
+    "type": "minion",
+    "collectible": false,
+    "manaCost": 1
+}

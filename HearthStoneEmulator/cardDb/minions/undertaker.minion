@@ -1,0 +1,17 @@
+{
+    "name": "Undertaker",
+    "attack": 1,
+    "hp": 2,
+    "triggers": {
+        "done-summoning": {
+            "filter": "BasicFilters.SUMMONED_DEATH_RATTLE",
+            "action": {
+                "class": "MinionEventActions.applyTargetedActionToSelf",
+                "action": {
+                    "class": "MinionActions.buffAttack",
+                    "attack": 1
+                }
+            }
+        }
+    }
+}

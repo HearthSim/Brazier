@@ -1,0 +1,8 @@
+{
+    "name": "Captain's Parrot",
+    "description": "Battlecry: Put a random Pirate from your deck into your hand.",
+    "class": "neutral",
+    "type": "minion",
+    "rarity": "epic",
+    "manaCost": 2
+}

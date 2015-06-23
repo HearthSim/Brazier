@@ -1,0 +1,17 @@
+{
+    "name": "Rend Blackhand",
+    "attack": 8,
+    "hp": 4,
+    "battleCries": {
+        "class": "TargetedActions.KILL_TARGET",
+        "targets": ["all-minions",
+            {
+                "class": "TargetNeeds.hasKeyword",
+                "keywords": "legendary"
+            }],
+        "requires": {
+            "class": "PlayActionRequirements.hasCardInHand",
+            "keywords": "dragon"
+        }
+    }
+}

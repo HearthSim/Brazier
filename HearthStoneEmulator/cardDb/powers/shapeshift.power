@@ -1,0 +1,17 @@
+{
+    "name": "Shapeshift",
+    "description": "+1 Attack this turn. +1 Armor.",
+    "manaCost": 2,
+    "action": {
+        "actions": [
+            {
+                "class": "PlayerActions.armorUp",
+                "armor": 1
+            },
+            {
+                "class": "PlayerActions.addHeroAttackForThisTurn",
+                "attack": 1
+            }
+        ]
+    }
+}

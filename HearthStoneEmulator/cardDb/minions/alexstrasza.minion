@@ -1,0 +1,14 @@
+{
+    "name": "Alexstrasza",
+    "attack": 8,
+    "hp": 8,
+    "keywords": "dragon",
+    "battleCries": {
+        "targets": "all-heroes",
+        "class": "TargetedActions.applyToTargetOwner",
+        "action": {
+            "class": "PlayerActions.setHeroHp",
+            "hp": 15
+        }
+    }
+}

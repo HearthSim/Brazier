@@ -1,0 +1,8 @@
+{
+    "name": "Alarm-o-Bot",
+    "description": "At the start of your turn, swap this minion with a random one in your hand.",
+    "class": "neutral",
+    "rarity": "rare",
+    "type": "minion",
+    "manaCost": 3
+}

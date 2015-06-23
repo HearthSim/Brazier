@@ -1,0 +1,19 @@
+{
+    "name": "Ancestral Spirit",
+    "description": "Give a minion \"Deathrattle: Resummon this minion.\"",
+    "class": "shaman",
+    "type": "spell",
+    "rarity": "rare",
+    "manaCost": 2,
+    "playActions": {
+        "targets": "all-minions",
+        "class": "TargetedActions.applyToMinionTarget",
+        "action": {
+            "class": "MinionActions.addDeathRattle",
+            "action": {
+                "class": "MinionEventActions.doSelf",
+                "action": "MinionActions.RESUMMON_RIGHT"
+            }
+        }
+    }
+}

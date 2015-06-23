@@ -1,0 +1,11 @@
+{
+    "name": "Truesilver Champion",
+    "description": "Whenever your hero attacks, restore 2 Health to it.",
+    "class": "paladin",
+    "type": "weapon",
+    "manaCost": 4,
+    "playActions": {
+        "class": "PlayerActions.equipWeapon",
+        "weapon": "Truesilver Champion"
+    }
+}

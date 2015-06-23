@@ -1,0 +1,15 @@
+{
+    "name": "Old Murk-Eye",
+    "attack": 2,
+    "hp": 4,
+    "charge": true,
+    "keywords": "murloc",
+    "ability": {
+        "class": "MinionAbilities.selfAura",
+        "aura": {
+            "class": "MinionAuras.attackForOtherMinionsBuff",
+            "attack": 1,
+            "keywords": "murloc"
+        }
+    }
+}

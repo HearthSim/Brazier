@@ -1,0 +1,9 @@
+{
+    "name": "Bomb Lobber",
+    "attack": 3,
+    "hp": 3,
+    "battleCries": {
+        "class": "DamageActions.damageRandomEnemyMinion",
+        "damage": 4
+    }
+}

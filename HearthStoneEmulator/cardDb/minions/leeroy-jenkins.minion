@@ -1,0 +1,17 @@
+{
+    "name": "Leeroy Jenkins",
+    "attack": 6,
+    "hp": 2,
+    "charge": true,
+    "battleCries": {
+        "class": "PlayerActions.doForOpponent",
+        "action": [{
+                "class": "PlayerActions.summonMinion",
+                "minion": "Whelp"
+            },
+            {
+                "class": "PlayerActions.summonMinion",
+                "minion": "Whelp"
+            }]
+    }
+}

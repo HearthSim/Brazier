@@ -1,0 +1,7 @@
+{
+    "name": "Boar",
+    "class": "neutral",
+    "type": "minion",
+    "collectible": false,
+    "manaCost": 1
+}

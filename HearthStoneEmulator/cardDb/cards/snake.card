@@ -1,0 +1,7 @@
+{
+    "name": "Snake",
+    "class": "hunter",
+    "type": "minion",
+    "collectible": false,
+    "manaCost": 0
+}

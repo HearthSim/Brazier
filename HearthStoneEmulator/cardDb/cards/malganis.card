@@ -1,0 +1,8 @@
+{
+    "name": "Mal'Ganis",
+    "description": "Your other Demons have +2/+2. Your hero is Immune.",
+    "rarity": "legendary",
+    "class": "warlock",
+    "type": "minion",
+    "manaCost": 9
+}

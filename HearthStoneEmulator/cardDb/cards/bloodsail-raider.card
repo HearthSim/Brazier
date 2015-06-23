@@ -1,0 +1,7 @@
+{
+    "name": "Bloodsail Raider",
+    "description": "Battlecry: Gain Attack equal to the Attack of your weapon.",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 2
+}

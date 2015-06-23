@@ -1,0 +1,9 @@
+{
+    "name": "Spellbreaker",
+    "attack": 4,
+    "hp": 3,
+    "battleCries": {
+        "class": "TargetedActions.SILENCE",
+        "targets": "all-minions"
+    }
+}

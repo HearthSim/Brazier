@@ -1,0 +1,11 @@
+{
+    "name": "Animal Companion",
+    "description": "Summon a random Beast Companion.",
+    "class": "hunter",
+    "type": "spell",
+    "manaCost": 3,
+    "playActions": {
+        "class": "PlayerActions.summonRandomMinion",
+        "keywords": "animal-companion"
+    }
+}

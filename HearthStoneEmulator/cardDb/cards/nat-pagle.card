@@ -1,0 +1,8 @@
+{
+    "name": "Nat Pagle",
+    "description": "At the start of your turn, you have a 50% chance to draw an extra card.",
+    "class": "neutral",
+    "type": "minion",
+    "rarity": "legendary",
+    "manaCost": 2
+}

@@ -1,0 +1,20 @@
+{
+    "name": "Gazlowe",
+    "attack": 3,
+    "hp": 6,
+    "triggers": {
+        "start-play-card": {
+            "filter": [
+                "BasicFilters.HAS_SAME_OWNER_PLAYER",
+                "BasicFilters.EVENT_SOURCE_IS_SPELL",
+                {
+                    "class": "BasicFilters.manaCostEquals",
+                    "manaCost": 1
+                }],
+            "action": {
+                "class": "PlayerActions.addCard",
+                "keywords": ["mech", "collectible"]
+            }
+        }
+    }
+}

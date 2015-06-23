@@ -1,0 +1,15 @@
+{
+    "name": "I Am Murloc",
+    "description": "Summon three, four, or five 1/1 Murlocs.",
+    "class": "neutral",
+    "type": "spell",
+    "keywords": "power-chord",
+    "collectible": false,
+    "manaCost": 4,
+    "playActions": {
+        "class": "PlayerActions.summonMinion",
+        "minMinionCount": 3,
+        "maxMinionCount": 5,
+        "minion": "Murloc"
+    }
+}

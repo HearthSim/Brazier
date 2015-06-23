@@ -1,0 +1,7 @@
+{
+    "name": "Fire Elemental",
+    "description": "Battlecry: Deal 3 damage.",
+    "class": "shaman",
+    "type": "minion",
+    "manaCost": 6
+}

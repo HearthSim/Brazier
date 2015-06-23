@@ -1,0 +1,14 @@
+{
+    "name": "Whirling Blades",
+    "description": "Give a minion +1 Attack.",
+    "class": "neutral",
+    "type": "spell",
+    "keywords": "spare-part",
+    "collectible": false,
+    "manaCost": 1,
+    "playActions": {
+        "targets": "all-minions",
+        "class": "MinionActions.buffAttack",
+        "attack": 1
+    }
+}

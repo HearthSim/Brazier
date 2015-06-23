@@ -1,0 +1,12 @@
+{
+    "name": "Leper Gnome",
+    "attack": 2,
+    "hp": 1,
+    "deathRattle": {
+        "class": "MinionEventActions.doSelf",
+        "action": {
+            "class": "DamageActions.damageOpponentHero",
+            "damage": 2
+        }
+    }
+}

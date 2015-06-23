@@ -1,0 +1,8 @@
+{
+    "name": "Huffer",
+    "description": "Charge",
+    "class": "hunter",
+    "type": "minion",
+    "manaCost": 3,
+    "collectible": false
+}

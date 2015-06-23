@@ -1,0 +1,7 @@
+{
+    "name": "Gurubashi Berserker",
+    "description": "Whenever this minion takes damage, gain +3 Attack.",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 5
+}

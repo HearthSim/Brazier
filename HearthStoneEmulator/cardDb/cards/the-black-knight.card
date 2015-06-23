@@ -1,0 +1,8 @@
+{
+    "name": "The Black Knight",
+    "description": "Battlecry: Destroy an enemy minion with Taunt.",
+    "class": "neutral",
+    "type": "minion",
+    "rarity": "legendary",
+    "manaCost": 6
+}

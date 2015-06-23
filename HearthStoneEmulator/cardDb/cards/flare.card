@@ -1,0 +1,13 @@
+{
+    "name": "Flare",
+    "description": "All minions lose Stealth. Destroy all enemy Secrets. Draw a card.",
+    "class": "hunter",
+    "type": "spell",
+    "rarity": "rare",
+    "manaCost": 2,
+    "playActions": [
+        "PlayerActions.DESTROY_OPPONENT_SECRET",
+        "PlayerActions.DESTROY_STEALTH",
+        "PlayerActions.DRAW_FOR_SELF"
+    ]
+}

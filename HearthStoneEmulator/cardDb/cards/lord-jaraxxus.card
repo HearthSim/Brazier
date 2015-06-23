@@ -1,0 +1,8 @@
+{
+    "name": "Lord Jaraxxus",
+    "description": "Battlecry: Destroy your hero and replace it with Lord Jaraxxus.",
+    "class": "warlock",
+    "type": "minion",
+    "rarity": "legendary",
+    "manaCost": 9
+}

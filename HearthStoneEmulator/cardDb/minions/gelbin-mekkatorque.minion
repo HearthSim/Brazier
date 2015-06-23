@@ -1,0 +1,15 @@
+{
+    "name": "Gelbin Mekkatorque",
+    "attack": 6,
+    "hp": 6,
+    "battleCries": [
+        {
+            "class": "PlayerActions.summonRandomMinion",
+            "keywords": "awesome-invention"
+        },
+        {
+            "class": "PlayerActions.summonRandomMinion",
+            "keywords": "awesome-invention"
+        }
+    ]
+}

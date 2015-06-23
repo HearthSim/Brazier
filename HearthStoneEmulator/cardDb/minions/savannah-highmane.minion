@@ -1,0 +1,14 @@
+{
+    "name": "Savannah Highmane",
+    "attack": 6,
+    "hp": 5,
+    "keywords": ["beast"],
+    "deathRattle": [{
+        "class": "MinionEventActions.summonMinionRight",
+        "minion": "Hyena"
+    },
+    {
+        "class": "MinionEventActions.summonMinionRight",
+        "minion": "Hyena"
+    }]
+}

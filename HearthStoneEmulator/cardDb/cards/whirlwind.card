@@ -1,0 +1,13 @@
+{
+    "name": "Whirlwind",
+    "class": "warrior",
+    "type": "spell",
+    "description": "Deal 1 damage to ALL minions.",
+    "manaCost": 1,
+    "playActions": [
+        {
+            "class": "PlayerActions.dealDamageToAllMinions",
+            "damage": 1
+        }
+    ]
+}

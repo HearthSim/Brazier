@@ -1,0 +1,10 @@
+{
+    "name": "Dread Infernal",
+    "attack": 6,
+    "hp": 6,
+    "keywords": "demon",
+    "battleCries": {
+        "class": "DamageActions.dealDamageToAllTargets",
+        "damage": 1
+    }
+}

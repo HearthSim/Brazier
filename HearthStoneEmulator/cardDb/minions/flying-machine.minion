@@ -1,0 +1,7 @@
+{
+    "name": "Flying Machine",
+    "attack": 1,
+    "hp": 4,
+    "keywords": "mech",
+    "maxAttackCount": 2
+}

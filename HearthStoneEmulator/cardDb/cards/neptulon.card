@@ -1,0 +1,9 @@
+{
+    "name": "Neptulon",
+    "description": "Battlecry: Add 4 random Murlocs to your hand. Overload: (3)",
+    "class": "shaman",
+    "type": "minion",
+    "rarity": "legendary",
+    "manaCost": 7,
+    "overload": 3
+}

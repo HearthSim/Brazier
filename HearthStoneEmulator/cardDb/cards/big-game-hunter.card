@@ -1,0 +1,8 @@
+{
+    "name": "Big Game Hunter",
+    "description": "Battlecry: Destroy a minion with an Attack of 7 or more.",
+    "class": "neutral",
+    "type": "minion",
+    "rarity": "epic",
+    "manaCost": 3
+}

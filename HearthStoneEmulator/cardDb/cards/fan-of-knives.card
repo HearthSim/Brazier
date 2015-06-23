@@ -1,0 +1,14 @@
+{
+    "name": "Fan of Knives",
+    "class": "rouge",
+    "type": "spell",
+    "description": "Deal 1 damage to all enemy minions. Draw a card.",
+    "manaCost": 3,
+    "playActions": [
+        {
+            "class": "PlayerActions.dealDamageToEnemyMinions",
+            "damage": 1
+        },
+        "PlayerActions.DRAW_FOR_SELF"
+    ]
+}

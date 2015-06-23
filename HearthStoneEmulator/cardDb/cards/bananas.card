@@ -1,0 +1,14 @@
+{
+    "name": "Bananas",
+    "class": "neutral",
+    "type": "spell",
+    "description": "Give a minion +1/+1.",
+    "collectible": false,
+    "manaCost": 1,
+    "playActions": {
+        "targets": "all-minions",
+        "class": "MinionActions.buff",
+        "attack": 1,
+        "hp": 1
+    }
+}

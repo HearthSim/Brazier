@@ -1,0 +1,8 @@
+{
+    "name": "Gazlowe",
+    "description": "Whenever you cast a 1-mana spell, add a random Mech to your hand.",
+    "class": "neutral",
+    "type": "minion",
+    "rarity": "legendary",
+    "manaCost": 6
+}

@@ -1,0 +1,12 @@
+{
+    "name": "Ancient Mage",
+    "attack": 2,
+    "hp": 5,
+    "battleCries": {
+        "class": "MinionActions.addAbilityToNeighbours",
+        "ability": {
+            "class": "MinionAbilities.spellPower",
+            "spellPower": 1
+        }
+    }
+}

@@ -1,0 +1,8 @@
+{
+    "name": "Feugen",
+    "description": "Deathrattle: If Stalagg also died this game, summon Thaddius.",
+    "class": "neutral",
+    "type": "minion",
+    "rarity": "legendary",
+    "manaCost": 5
+}

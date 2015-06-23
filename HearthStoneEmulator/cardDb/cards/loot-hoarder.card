@@ -1,0 +1,7 @@
+{
+    "name": "Loot Hoarder",
+    "description": "Deathrattle: Draw a card.",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 2
+}

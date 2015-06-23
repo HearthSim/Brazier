@@ -1,0 +1,17 @@
+{
+    "name": "Earth Shock",
+    "description": "Silence a minion, then deal 1 damage to it.",
+    "class": "shaman",
+    "type": "spell",
+    "manaCost": 1,
+    "playActions": [
+        {
+            "targets": "all-minions",
+            "class": "TargetedActions.SILENCE"
+        },
+        {
+            "targets": "all-minions",
+            "class": "TargetedActions.dealSpellDamage",
+            "damage": 1
+        }]
+}

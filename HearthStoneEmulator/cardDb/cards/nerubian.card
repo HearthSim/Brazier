@@ -1,0 +1,8 @@
+{
+    "name": "Nerubian",
+    "class": "neutral",
+    "type": "minion",
+    "rarity": "rare",
+    "collectible": false,
+    "manaCost": 3
+}

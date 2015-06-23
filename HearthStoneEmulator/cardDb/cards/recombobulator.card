@@ -1,0 +1,8 @@
+{
+    "name": "Recombobulator",
+    "description": "Battlecry: Transform a friendly minion into a random minion with the same Cost.",
+    "class": "neutral",
+    "type": "minion",
+    "rarity": "epic",
+    "manaCost": 2
+}

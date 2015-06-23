@@ -1,0 +1,11 @@
+{
+    "name": "Frost Nova",
+    "description": "Freeze all enemy minions.",
+    "class": "mage",
+    "type": "spell",
+    "manaCost": 3,
+    "playActions": {
+        "class": "PlayerActions.forEnemyMinions",
+        "action": "TargetedActions.FREEZE_TARGET"
+    }
+}

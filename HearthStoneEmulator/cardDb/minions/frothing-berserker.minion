@@ -1,0 +1,16 @@
+{
+    "name": "Frothing Berserker",
+    "attack": 2,
+    "hp": 4,
+    "triggers": {
+        "minion-damaged": {
+            "action": {
+                "class": "MinionEventActions.applyTargetedActionToSelf",
+                "action": {
+                    "class": "MinionActions.buffAttack",
+                    "attack": 1
+                }
+            }
+        }
+    }
+}

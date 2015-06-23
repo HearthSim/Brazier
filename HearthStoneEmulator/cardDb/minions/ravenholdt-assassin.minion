@@ -1,0 +1,6 @@
+{
+    "name": "Ravenholdt Assassin",
+    "attack": 7,
+    "hp": 5,
+    "stealth": true
+}

@@ -1,0 +1,10 @@
+{
+    "name": "Abusive Sergeant",
+    "attack": 2,
+    "hp": 1,
+    "battleCries": {
+        "class": "TargetedActions.addTemporaryAttack",
+        "targets": "all-minions",
+        "attack": 2
+    }
+}

@@ -1,0 +1,7 @@
+{
+    "name": "Mana Wyrm",
+    "description": "Whenever you cast a spell, gain +1 Attack.",
+    "class": "mage",
+    "type": "minion",
+    "manaCost": 1
+}

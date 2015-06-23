@@ -1,0 +1,9 @@
+{
+    "name": "DIE, INSECT!",
+    "description": "Deal 8 damage to a random enemy.",
+    "manaCost": 2,
+    "action": {
+        "class": "PlayerActions.dealBasicDamageToRandomEnemy",
+        "damage": 8
+    }
+}

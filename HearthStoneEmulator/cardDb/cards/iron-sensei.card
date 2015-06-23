@@ -1,0 +1,8 @@
+{
+    "name": "Iron Sensei",
+    "description": "At the end of your turn, give another friendly Mech +2/+2.",
+    "class": "rouge",
+    "rarity": "rare",
+    "type": "minion",
+    "manaCost": 3
+}

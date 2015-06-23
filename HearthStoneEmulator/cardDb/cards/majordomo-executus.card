@@ -1,0 +1,8 @@
+{
+    "name": "Majordomo Executus",
+    "description": "Deathrattle: Replace your hero with Ragnaros, the Firelord.",
+    "rarity": "legendary",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 9
+}

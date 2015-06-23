@@ -1,0 +1,8 @@
+{
+    "name": "Imp Master",
+    "description": "At the end of your turn, deal 1 damage to this minion and summon a 1/1 Imp.",
+    "class": "neutral",
+    "type": "minion",
+    "rarity": "rare",
+    "manaCost": 3
+}

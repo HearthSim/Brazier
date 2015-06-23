@@ -1,0 +1,18 @@
+{
+    "name": "Poultryizer",
+    "attack": 0,
+    "hp": 3,
+    "keywords": "awesome-invention",
+    "triggers": {
+        "turn-ends": {
+            "filter": "BasicFilters.HAS_SAME_OWNER_PLAYER",
+            "action": {
+                "class": "MinionEventActions.applyTargetedActionToRandomMinion",
+                "action": {
+                    "class": "MinionActions.transformMinion",
+                    "minion": "Chicken"
+                }
+            }
+        }
+    }
+}

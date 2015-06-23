@@ -1,0 +1,15 @@
+{
+    "name": "Tail Swipe",
+    "class": "boss-class",
+    "type": "spell",
+    "description": "Deal 4 damage.",
+    "collectible": false,
+    "manaCost": 4,
+    "playActions": [
+        {
+            "class": "TargetedActions.dealSpellDamage",
+            "targets": "all",
+            "damage": 4
+        }
+    ]
+}

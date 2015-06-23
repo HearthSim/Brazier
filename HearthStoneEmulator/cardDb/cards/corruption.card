@@ -1,0 +1,16 @@
+{
+    "name": "Corruption",
+    "class": "warlock",
+    "type": "spell",
+    "description": "Choose an enemy minion. At the start of your turn, destroy it.",
+    "manaCost": 1,
+    "playActions": {
+        "targets": "enemy-minions",
+        "class": "MinionActions.buff",
+        "ability": {
+            "class": "MinionAbilities.startOfTurnBuff",
+            "filter": "BasicFilters.NOT_SELF_TURN",
+            "action": "MinionEventActions.SELF_DESTRUCT"
+        }
+    }
+}

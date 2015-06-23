@@ -1,0 +1,7 @@
+{
+    "name": "Searing Totem",
+    "class": "shaman",
+    "type": "minion",
+    "collectible": false,
+    "manaCost": 1
+}

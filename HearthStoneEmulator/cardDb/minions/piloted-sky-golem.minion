@@ -1,0 +1,10 @@
+{
+    "name": "Piloted Sky Golem",
+    "attack": 6,
+    "hp": 4,
+    "keywords": "mech",
+    "deathRattle": {
+        "class": "MinionEventActions.summonRandomMinionRight",
+        "keywords": ["4-cost", "collectible"]
+    }
+}

@@ -1,0 +1,7 @@
+{
+    "name": "Sorcerer's Apprentice",
+    "description": "Your spells cost (1) less.",
+    "class": "mage",
+    "type": "minion",
+    "manaCost": 2
+}

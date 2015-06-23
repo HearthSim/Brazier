@@ -1,0 +1,7 @@
+{
+    "name": "Wolfrider",
+    "class": "neutral",
+    "description": "Charge",
+    "type": "minion",
+    "manaCost": 3
+}

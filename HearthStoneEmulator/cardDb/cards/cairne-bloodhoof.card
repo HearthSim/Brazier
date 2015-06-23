@@ -1,0 +1,8 @@
+{
+    "name": "Cairne Bloodhoof",
+    "description": "Deathrattle: Summon a 4/5 Baine Bloodhoof.",
+    "rarity": "legendary",
+    "class": "neutral",
+    "type": "minion",
+    "manaCost": 6
+}

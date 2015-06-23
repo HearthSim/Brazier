@@ -1,0 +1,22 @@
+{
+    "name": "Swipe",
+    "description": "Deal 4 damage to an enemy and 1 damage to all other enemies.",
+    "class": "druid",
+    "type": "spell",
+    "manaCost": 4,
+    "playActions": {
+        "targets": "enemy",
+        "class": "CardPlayActions.doAtomic",
+        "action": {
+            "class": "TargetedActions.swipeAction",
+            "mainAction": {
+                "class": "TargetedActions.dealSpellDamage",
+                "damage": 4
+            },
+            "othersAction": {
+                "class": "TargetedActions.dealSpellDamage",
+                "damage": 1
+            }
+        }
+    }
+}

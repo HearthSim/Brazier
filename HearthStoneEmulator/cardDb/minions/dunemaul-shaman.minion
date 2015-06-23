@@ -1,0 +1,12 @@
+{
+    "name": "Dunemaul Shaman",
+    "attack": 5,
+    "hp": 4,
+    "maxAttackCount": 2,
+    "triggers": {
+        "attack-initiated": {
+            "filter": "BasicFilters.ATTACKER_IS_SELF",
+            "action": "AttackEventActions.MISS_TARGET_SOMETIMES"
+        }
+    }
+}

@@ -1,0 +1,10 @@
+{
+    "name": "Harvest Golem",
+    "attack": 2,
+    "hp": 3,
+    "keywords": "mech",
+    "deathRattle": {
+        "class": "MinionEventActions.summonMinionRight",
+        "minion": "Damaged Golem"
+    }
+}

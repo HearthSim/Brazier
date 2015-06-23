@@ -1,0 +1,8 @@
+{
+    "name": "Mind Control Tech",
+    "description": "Battlecry: If your opponent has 4 or more minions, take control of one at random.",
+    "class": "neutral",
+    "rarity": "rare",
+    "type": "minion",
+    "manaCost": 3
+}
