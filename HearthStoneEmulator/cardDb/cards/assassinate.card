@@ -1,0 +1,11 @@
+{
+    "name": "Assassinate",
+    "class": "rouge",
+    "type": "spell",
+    "description": "Destroy an enemy minion.",
+    "manaCost": 5,
+    "playActions": {
+        "targets": "all-minions",
+        "class": "TargetedActions.KILL_TARGET"
+    }
+}
