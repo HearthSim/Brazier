@@ -47,8 +47,14 @@ public final class BasicFilters {
             = (world, owner, eventSource) -> eventSource.getAttacker() instanceof Hero;
     public static final WorldEventFilter<PlayerProperty, AttackRequest> ATTACKER_IS_MINION
             = (world, owner, eventSource) -> eventSource.getAttacker() instanceof Minion;
+    public static final WorldEventFilter<PlayerProperty, AttackRequest> ATTACK_TARGET_IS_MINION
+            = (world, owner, eventSource) -> eventSource.getOriginalTarget()instanceof Minion;
     public static final WorldEventFilter<PlayerProperty, AttackRequest> ATTACK_TARGET_IS_OWN_HERO
             = (world, owner, eventSource) -> owner.getOwner().getHero() == eventSource.getOriginalTarget();
+    public static final WorldEventFilter<PlayerProperty, AttackRequest> ATTACK_TARGET_IS_OWNER
+            = (world, owner, eventSource) -> owner.getOwner() == eventSource.getOriginalTarget().getOwner();
+    public static final WorldEventFilter<PlayerProperty, AttackRequest> ATTACK_TARGET_IS_ENEMY
+            = (world, owner, eventSource) -> owner.getOwner() != eventSource.getOriginalTarget().getOwner();
     public static final WorldEventFilter<PlayerProperty, AttackRequest> ATTACKER_IS_OWNER
             = (world, owner, eventSource) -> owner.getOwner() == eventSource.getAttacker().getOwner();
     public static final WorldEventFilter<PlayerProperty, AttackRequest> ATTACKER_IS_ENEMY
