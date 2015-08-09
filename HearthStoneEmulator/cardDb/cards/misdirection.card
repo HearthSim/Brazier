@@ -1,0 +1,13 @@
+{
+    "name": "Misdirection",
+    "class": "hunter",
+    "type": "spell",
+    "description": "Secret: When a character attacks your hero, instead he attacks another random character.",
+    "manaCost": 2,
+    "secret": {
+        "attack-initiated": {
+            "filter": "BasicFilters.HAS_MISSDIRECT_TARGET",
+            "action": "AttackEventActions.MISSDIRECT"
+        }
+    }
+}

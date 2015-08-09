@@ -9,10 +9,27 @@ import com.github.kelemen.hearthstone.emulator.minions.MinionProvider;
 import com.github.kelemen.hearthstone.emulator.parsing.NamedArg;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 import org.jtrim.utils.ExceptionHelper;
+
+import static com.github.kelemen.hearthstone.emulator.actions.BasicFilters.validMisdirectTarget;
 
 
 public final class AttackEventActions {
+     public static final WorldEventAction<PlayerProperty, AttackRequest> MISSDIRECT = (world, self, eventSource) -> {
+         Predicate<TargetableCharacter> filter = validMisdirectTarget(eventSource);
+         List<TargetableCharacter> targets = new ArrayList<>();
+         ActionUtils.collectAliveTargets(world.getPlayer1(), targets, filter);
+         ActionUtils.collectAliveTargets(world.getPlayer2(), targets, filter);
+
+         TargetableCharacter selected = ActionUtils.pickRandom(world, targets);
+         if (selected == null) {
+             return UndoAction.DO_NOTHING;
+         }
+
+         return eventSource.replaceDefender(selected);
+     };
+
     public static final WorldEventAction<PlayerProperty, AttackRequest> MISS_TARGET_SOMETIMES
             = missTargetSometimes(1, 2);
 

@@ -8,6 +8,7 @@ import com.github.kelemen.hearthstone.emulator.Hero;
 import com.github.kelemen.hearthstone.emulator.Keyword;
 import com.github.kelemen.hearthstone.emulator.Keywords;
 import com.github.kelemen.hearthstone.emulator.LabeledEntity;
+import com.github.kelemen.hearthstone.emulator.Player;
 import com.github.kelemen.hearthstone.emulator.PlayerProperty;
 import com.github.kelemen.hearthstone.emulator.TargetRef;
 import com.github.kelemen.hearthstone.emulator.TargetableCharacter;
@@ -95,6 +96,10 @@ public final class BasicFilters {
         return eventSource.isDamaged();
     };
 
+     public static final WorldEventFilter<PlayerProperty, AttackRequest> HAS_MISSDIRECT_TARGET = (world, self, eventSource) -> {
+         return hasValidTarget(world, validMisdirectTarget(eventSource));
+     };
+
     public static final WorldEventFilter<Object, LabeledEntity> EVENT_SOURCE_IS_SPELL = eventSourceHasKeyword(Keywords.SPELL);
     public static final WorldEventFilter<Object, LabeledEntity> EVENT_SOURCE_IS_SECRET = eventSourceHasKeyword(Keywords.SECRET);
 
@@ -105,6 +110,40 @@ public final class BasicFilters {
     public static final WorldEventFilter<PlayerProperty, Object> OWNER_HAS_SECRET = (world, owner, eventSource) -> {
         return owner.getOwner().getSecrets().getSecrets().size() > 0;
     };
+
+    private static boolean hasValidTarget(
+            World world,
+            Predicate<? super TargetableCharacter> filter) {
+        return hasValidTarget(world.getPlayer1(), filter)
+                || hasValidTarget(world.getPlayer2(), filter);
+    }
+
+    private static boolean hasValidTarget(
+            Player player,
+            Predicate<? super TargetableCharacter> filter) {
+        if (filter.test(player.getHero())) {
+            return true;
+        }
+        return player.getBoard().findMinion(filter) != null;
+    }
+
+    public static Predicate<TargetableCharacter> validMisdirectTarget(AttackRequest request) {
+        return validMisdirectTarget(request.getOriginalTarget(), request.getAttacker());
+    }
+
+    public static Predicate<TargetableCharacter> validMisdirectTarget(TargetableCharacter attacker, TargetableCharacter defender) {
+        return (target) -> {
+             if (target == attacker || target == defender) {
+                 return false;
+             }
+             if (target instanceof Minion) {
+                 if (((Minion)target).getBody().isStealth()) {
+                     return false;
+                 }
+             }
+             return true;
+        };
+    }
 
     public static WorldEventFilter<Object, Object> minionDiedWithKeyword(
             @NamedArg("keywords") Keyword[] keywords) {
