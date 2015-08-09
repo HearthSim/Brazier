@@ -1,0 +1,7 @@
+{
+    "name": "Anub'ar Ambusher",
+    "description": "Deathrattle: Return a random friendly minion to your hand.",
+    "class": "rouge",
+    "type": "minion",
+    "manaCost": 4
+}
