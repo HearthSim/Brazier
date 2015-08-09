@@ -32,6 +32,12 @@ import java.util.function.Predicate;
 import org.jtrim.utils.ExceptionHelper;
 
 public final class MinionActions {
+    public static final MinionAction IMMUNE_THIS_TURN = (world, minion) -> {
+        return ActionUtils.doTemporary(world, () -> {
+            return minion.getProperties().getBody().getImmuneProperty().addRemovableBuff(true);
+        });
+    };
+
     public static final MinionAction RESTORES_SELF_HEALTH = (world, minion) -> {
         MinionBody body = minion.getBody();
         int damage = body.getCurrentHp() - body.getMaxHp();

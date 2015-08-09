@@ -5,6 +5,7 @@ import com.github.kelemen.hearthstone.emulator.World;
 import com.github.kelemen.hearthstone.emulator.minions.Minion;
 import com.github.kelemen.hearthstone.emulator.minions.MinionProvider;
 import com.github.kelemen.hearthstone.emulator.parsing.NamedArg;
+import java.util.Arrays;
 import org.jtrim.utils.ExceptionHelper;
 
 public final class CardPlayActions {
@@ -15,6 +16,11 @@ public final class CardPlayActions {
         return (World world, CardPlayArg arg) -> {
             return world.getEvents().doAtomic(() -> action.alterWorld(world, arg));
         };
+    }
+
+    public static CardPlayAction combine(
+            @NamedArg("actions") CardPlayAction[] actions) {
+        return CardPlayAction.mergeActions(Arrays.asList(actions));
     }
 
     public static CardPlayAction doIf(
