@@ -1,0 +1,14 @@
+{
+    "name": "Vanish",
+    "description": "Return all minions to their owner's hand.",
+    "class": "rouge",
+    "type": "spell",
+    "manaCost": 6,
+    "playActions": {
+        "class": "PlayerActions.forAllMinions",
+        "action": {
+            "class": "TargetedActions.applyToMinionTarget",
+            "action": "MinionActions.RETURN_MINION"
+        }
+    }
+}
