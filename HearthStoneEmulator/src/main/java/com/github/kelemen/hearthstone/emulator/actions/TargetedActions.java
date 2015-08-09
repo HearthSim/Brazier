@@ -101,7 +101,9 @@ public final class TargetedActions {
 
             UndoAction attackUndo = minion.getBuffableAttack().setValueTo(hp);
             UndoAction hpUndo = body.getHp().setMaxHp(attack);
+            UndoAction currentHpUndo = body.getHp().setCurrentHp(attack);
             return () -> {
+                currentHpUndo.undo();
                 hpUndo.undo();
                 attackUndo.undo();
             };
