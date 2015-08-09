@@ -1,0 +1,21 @@
+{
+    "name": "Glaivezooka",
+    "description": "Battlecry: Give a random friendly minion +1 Attack.",
+    "class": "hunter",
+    "type": "weapon",
+    "rarity": "rare",
+    "manaCost": 2,
+    "playActions": [
+        {
+            "class": "PlayerActions.applyTargetedActionToRandomOwnMinion",
+            "action": {
+                "class": "MinionActions.buffAttack",
+                "attack": 1
+            }
+        },
+        {
+            "class": "PlayerActions.equipWeapon",
+            "weapon": "Glaivezooka"
+        }
+    ]
+}
