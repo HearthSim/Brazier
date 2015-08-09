@@ -42,6 +42,7 @@ public final class WorldEvents {
     private final WorldActionEvents<Player> turnEndsListeners;
 
     private final WorldActionEvents<AttackRequest> attackListeners;
+    private final WorldActionEvents<Secret> secretRevealedListeners;
 
     private final AtomicReference<WorldActionList<Void>> pauseCollectorRef;
 
@@ -69,6 +70,7 @@ public final class WorldEvents {
         this.heroHealedListeners = createEventContainer();
         this.minionHealedListeners = createEventContainer();
         this.attackListeners = createEventContainer();
+        this.secretRevealedListeners = createEventContainer();
         this.turnStartsListeners = createEventContainer();
         this.turnEndsListeners = createEventContainer();
 
@@ -151,6 +153,10 @@ public final class WorldEvents {
 
     public WorldActionEventsRegistry<Minion> doneSummoningListeners() {
         return doneSummoningListeners;
+    }
+
+    public WorldActionEventsRegistry<Secret> secretRevealedListeners() {
+        return secretRevealedListeners;
     }
 
     /**

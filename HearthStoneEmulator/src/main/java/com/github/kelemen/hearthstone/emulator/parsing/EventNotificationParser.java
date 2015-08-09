@@ -11,6 +11,7 @@ import com.github.kelemen.hearthstone.emulator.DamageRequest;
 import com.github.kelemen.hearthstone.emulator.Player;
 import com.github.kelemen.hearthstone.emulator.PlayerProperty;
 import com.github.kelemen.hearthstone.emulator.PropertyContainer;
+import com.github.kelemen.hearthstone.emulator.Secret;
 import com.github.kelemen.hearthstone.emulator.World;
 import com.github.kelemen.hearthstone.emulator.WorldEvents;
 import com.github.kelemen.hearthstone.emulator.actions.AttackRequest;
@@ -345,6 +346,12 @@ public final class EventNotificationParser<Self extends PlayerProperty> {
                 root.getChild("attack-initiated"),
                 WorldEvents::attackListeners,
                 result::addOnAttackActionDef);
+
+        parseActionDefs(
+                Secret.class,
+                root.getChild("secret-revealed"),
+                WorldEvents::secretRevealedListeners,
+                result::addOnSecretRevealedActionDefs);
 
         return result.create();
     }

@@ -8,6 +8,7 @@ import com.github.kelemen.hearthstone.emulator.DamageEvent;
 import com.github.kelemen.hearthstone.emulator.DamageRequest;
 import com.github.kelemen.hearthstone.emulator.Player;
 import com.github.kelemen.hearthstone.emulator.PlayerProperty;
+import com.github.kelemen.hearthstone.emulator.Secret;
 import com.github.kelemen.hearthstone.emulator.WorldEvents;
 import com.github.kelemen.hearthstone.emulator.abilities.ActivatableAbility;
 import com.github.kelemen.hearthstone.emulator.cards.Card;
@@ -41,6 +42,7 @@ public final class WorldEventActionDefs<Self extends PlayerProperty> implements 
         private final List<WorldEventBasedActionDef<Self, Player>> onTurnEndsActionDefs;
 
         private final List<WorldEventBasedActionDef<Self, AttackRequest>> onAttackActionDefs;
+        private final List<WorldEventBasedActionDef<Self, Secret>> onSecretRevealedActionDefs;
 
         public Builder() {
             this.onDrawCardActionDefs = new LinkedList<>();
@@ -58,6 +60,7 @@ public final class WorldEventActionDefs<Self extends PlayerProperty> implements 
             this.onAttackActionDefs = new LinkedList<>();
             this.onTurnStartsActionDefs = new LinkedList<>();
             this.onTurnEndsActionDefs = new LinkedList<>();
+            this.onSecretRevealedActionDefs = new LinkedList<>();
         }
 
         public void addOnDrawCardActionDef(WorldEventBasedActionDef<Self, Card> def) {
@@ -135,6 +138,12 @@ public final class WorldEventActionDefs<Self extends PlayerProperty> implements 
             onTurnEndsActionDefs.add(def);
         }
 
+        public void addOnSecretRevealedActionDefs(WorldEventBasedActionDef<Self, Secret> def) {
+            ExceptionHelper.checkNotNullArgument(def, "def");
+            onSecretRevealedActionDefs.add(def);
+        }
+
+
         public WorldEventActionDefs<Self> create() {
             return new WorldEventActionDefs<>(this);
         }
@@ -160,6 +169,7 @@ public final class WorldEventActionDefs<Self extends PlayerProperty> implements 
     private final List<WorldEventBasedActionDef<Self, Player>> onTurnEndsActionDefs;
 
     private final List<WorldEventBasedActionDef<Self, AttackRequest>> onAttackActionDefs;
+    private final List<WorldEventBasedActionDef<Self, Secret>> onSecretRevealedActionDefs;
 
     private final boolean hasAnyActionDef;
 
@@ -181,6 +191,7 @@ public final class WorldEventActionDefs<Self extends PlayerProperty> implements 
         this.onTurnStartsActionDefs = importListeners(builder.onTurnStartsActionDefs, hasListeners);
         this.onTurnEndsActionDefs = importListeners(builder.onTurnEndsActionDefs, hasListeners);
         this.onAttackActionDefs = importListeners(builder.onAttackActionDefs, hasListeners);
+        this.onSecretRevealedActionDefs = importListeners(builder.onSecretRevealedActionDefs, hasListeners);
 
         this.hasAnyActionDef = hasListeners.value;
     }
@@ -253,6 +264,10 @@ public final class WorldEventActionDefs<Self extends PlayerProperty> implements 
         return WorldEventBasedActionDef.registerAll(onAttackActionDefs, worldEvents, self);
     }
 
+    public UndoableUnregisterRef registerOnSecretRevealedAction(WorldEvents worldEvents, Self self) {
+        return WorldEventBasedActionDef.registerAll(onSecretRevealedActionDefs, worldEvents, self);
+    }
+
     @Override
     public UndoableUnregisterRef activate(Self self) {
         if (!hasAnyActionDef) {
@@ -278,6 +293,7 @@ public final class WorldEventActionDefs<Self extends PlayerProperty> implements 
         result.addRef(registerOnTurnStartsAction(worldEvents, self));
         result.addRef(registerOnTurnEndsAction(worldEvents, self));
         result.addRef(registerOnAttackAction(worldEvents, self));
+        result.addRef(registerOnSecretRevealedAction(worldEvents, self));
         return result;
     }
 
