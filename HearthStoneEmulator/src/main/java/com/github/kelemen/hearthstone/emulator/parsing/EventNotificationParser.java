@@ -10,7 +10,6 @@ import com.github.kelemen.hearthstone.emulator.DamageEvent;
 import com.github.kelemen.hearthstone.emulator.DamageRequest;
 import com.github.kelemen.hearthstone.emulator.Player;
 import com.github.kelemen.hearthstone.emulator.PlayerProperty;
-import com.github.kelemen.hearthstone.emulator.PropertyContainer;
 import com.github.kelemen.hearthstone.emulator.Secret;
 import com.github.kelemen.hearthstone.emulator.World;
 import com.github.kelemen.hearthstone.emulator.WorldEvents;
@@ -354,54 +353,5 @@ public final class EventNotificationParser<Self extends PlayerProperty> {
                 result::addOnSecretRevealedActionDefs);
 
         return result.create();
-    }
-
-    private static final class CombinedSummonEventHandler<Self extends PlayerProperty> {
-        private static final Object APPLIED_EVENT_MARKER = new Object();
-
-        private final WorldEventFilter<? super Self, ? super Minion> filter;
-        private final WorldEventAction<? super Self, ? super Minion> action;
-
-        private final Object key;
-
-        public CombinedSummonEventHandler(
-                WorldEventFilter<? super Self, ? super Minion> filter,
-                WorldEventAction<? super Self, ? super Minion> action) {
-            this.filter = filter;
-            this.action = action;
-            this.key = new Object();
-        }
-
-        public UndoAction beforeSummon(World world, Self self, Minion eventSource) {
-            if (!filter.applies(world, self, eventSource)) {
-                return UndoAction.DO_NOTHING;
-            }
-
-            PropertyContainer externalProperties = eventSource.getExternalProperties();
-
-            UndoAction setMarkerUndo = externalProperties.setValue(key, APPLIED_EVENT_MARKER);
-            UndoAction actionUndo = action.alterWorld(world, self, eventSource);
-            return () -> {
-                actionUndo.undo();
-                setMarkerUndo.undo();
-            };
-        }
-
-        public UndoAction afterSummon(World world, Self self, Minion eventSource) {
-            PropertyContainer externalProperties = eventSource.getExternalProperties();
-
-            boolean applied = externalProperties.getValue(key) == APPLIED_EVENT_MARKER;
-            UndoAction removeMarkerUndo = externalProperties.setValue(key, null);
-
-            if (applied || !filter.applies(world, self, eventSource)) {
-                return removeMarkerUndo;
-            }
-
-            UndoAction actionUndo = action.alterWorld(world, self, eventSource);
-            return () -> {
-                actionUndo.undo();
-                removeMarkerUndo.undo();
-            };
-        }
     }
 }
