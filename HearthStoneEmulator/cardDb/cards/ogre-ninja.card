@@ -1,0 +1,8 @@
+{
+    "name": "Ogre Ninja",
+    "description": "Stealth 50% chance to attack the wrong enemy.",
+    "class": "rouge",
+    "type": "minion",
+    "rarity": "rare",
+    "manaCost": 5
+}
