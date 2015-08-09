@@ -1,0 +1,14 @@
+{
+    "name": "Sap",
+    "description": "Return an enemy minion to your opponent's hand.",
+    "class": "rouge",
+    "type": "spell",
+    "manaCost": 2,
+    "playActions": [
+        {
+            "targets": "enemy-minions",
+            "class": "TargetedActions.applyToMinionTarget",
+            "action": "MinionActions.RETURN_MINION"
+        }
+    ]
+}
