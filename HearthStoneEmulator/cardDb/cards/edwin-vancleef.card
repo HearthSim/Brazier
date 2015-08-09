@@ -1,0 +1,16 @@
+{
+    "name": "Edwin VanCleef",
+    "description": "Combo: Gain +2/+2 for each card played earlier this turn.",
+    "class": "rouge",
+    "type": "minion",
+    "rarity": "legendary",
+    "manaCost": 3,
+    "playActions": {
+        "class": "CardPlayActions.doForPlayedMinion",
+        "action": {
+            "class": "MinionActions.vancleefBuff",
+            "attack": 2,
+            "hp": 2
+        }
+    }
+}

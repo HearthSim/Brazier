@@ -400,6 +400,19 @@ public final class MinionActions {
         };
     }
 
+    public static MinionAction vancleefBuff(
+            @NamedArg("attack") int attack,
+            @NamedArg("hp") int hp) {
+        return (World world, Minion minion) -> {
+            int mul = minion.getOwner().getCardsPlayedThisTurn() - 1;
+            if (mul <= 0) {
+                return UndoAction.DO_NOTHING;
+            }
+
+            return buff(minion, attack * mul, hp * mul);
+        };
+    }
+
     public static MinionAction buff(
             @NamedArg("ability") ActivatableAbility<? super Minion> ability) {
         ExceptionHelper.checkNotNullArgument(ability, "ability");

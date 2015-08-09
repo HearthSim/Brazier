@@ -23,6 +23,20 @@ public final class CardPlayActions {
         return CardPlayAction.mergeActions(Arrays.asList(actions));
     }
 
+    public static CardPlayAction doForPlayedMinion(
+            @NamedArg("action") MinionAction action) {
+        ExceptionHelper.checkNotNullArgument(action, "action");
+
+        return (World world, CardPlayArg arg) -> {
+            Minion minion = arg.getCard().getMinion();
+            if (minion == null) {
+                return UndoAction.DO_NOTHING;
+            }
+
+            return action.alterWorld(world, minion);
+        };
+    }
+
     public static CardPlayAction doIf(
             @NamedArg("condition") PlayActionRequirement condition,
             @NamedArg("action") CardPlayAction action) {
