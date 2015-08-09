@@ -7,6 +7,16 @@ import com.github.kelemen.hearthstone.emulator.parsing.NamedArg;
 import org.jtrim.utils.ExceptionHelper;
 
 public final class TargetedMinionActions {
+    public static final TargetedMinionAction DAMAGE_TARGET_WITH_ATTACK = (Minion targeter, PlayTarget target) -> {
+            TargetableCharacter character = target.getTarget();
+            if (character == null) {
+                return UndoAction.DO_NOTHING;
+            }
+
+            int damage = targeter.getAttackTool().getAttack();
+            return ActionUtils.damageCharacter(targeter, damage, character);
+    };
+
     public static TargetedMinionAction randomAction(
             @NamedArg("action") TargetedMinionAction[] actions) {
         TargetedMinionAction[] actionsCopy = actions.clone();

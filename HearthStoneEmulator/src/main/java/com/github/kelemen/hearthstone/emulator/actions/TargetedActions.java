@@ -165,6 +165,40 @@ public final class TargetedActions {
         };
     }
 
+    public static TargetedAction actWithMinionOnNeighbours(
+            @NamedArg("action") TargetedMinionAction action) {
+        return actWithMinionOnNeighbours(action, action);
+    }
+
+    public static TargetedAction actWithMinionOnNeighbours(
+            @NamedArg("leftAction") TargetedMinionAction leftAction,
+            @NamedArg("rightAction") TargetedMinionAction rightAction) {
+        ExceptionHelper.checkNotNullArgument(leftAction, "leftAction");
+        ExceptionHelper.checkNotNullArgument(rightAction, "rightAction");
+
+        return (World world, PlayTarget target) -> {
+            TargetableCharacter character = target.getTarget();
+            if (!(character instanceof Minion)) {
+                return UndoAction.DO_NOTHING;
+            }
+
+            Player castingPlayer = target.getCastingPlayer();
+            Minion minion = (Minion)character;
+
+            UndoBuilder result = new UndoBuilder();
+            SummonLocationRef locationRef = minion.getLocationRef();
+            BoardLocationRef left = locationRef.tryGetLeft();
+            if (left != null) {
+                result.addUndo(leftAction.doAction(minion, new PlayTarget(castingPlayer, left.getMinion())));
+            }
+            BoardLocationRef right = locationRef.tryGetRight();
+            if (right != null) {
+                result.addUndo(rightAction.doAction(minion, new PlayTarget(castingPlayer, right.getMinion())));
+            }
+            return result;
+        };
+    }
+
     public static TargetedAction mortalCoil(@NamedArg("damage") int damage) {
         return damageAndDrawCard(true, damage);
     }

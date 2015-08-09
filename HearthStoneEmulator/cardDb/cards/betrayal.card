@@ -1,0 +1,14 @@
+{
+    "name": "Betrayal",
+    "description": "Force an enemy minion to deal its damage to the minions next to it.",
+    "class": "rouge",
+    "type": "spell",
+    "manaCost": 2,
+    "playActions": [
+        {
+            "targets": "enemy-minions",
+            "class": "TargetedActions.actWithMinionOnNeighbours",
+            "action": "TargetedMinionActions.DAMAGE_TARGET_WITH_ATTACK"
+        }
+    ]
+}
