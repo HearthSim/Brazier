@@ -3,11 +3,13 @@ package com.github.kelemen.hearthstone.emulator.actions;
 import com.github.kelemen.hearthstone.emulator.BoardLocationRef;
 import com.github.kelemen.hearthstone.emulator.BornEntity;
 import com.github.kelemen.hearthstone.emulator.Damage;
+import com.github.kelemen.hearthstone.emulator.Deck;
 import com.github.kelemen.hearthstone.emulator.Hero;
 import com.github.kelemen.hearthstone.emulator.Keyword;
 import com.github.kelemen.hearthstone.emulator.Keywords;
 import com.github.kelemen.hearthstone.emulator.MultiTargeter;
 import com.github.kelemen.hearthstone.emulator.Player;
+import com.github.kelemen.hearthstone.emulator.RandomProvider;
 import com.github.kelemen.hearthstone.emulator.Silencable;
 import com.github.kelemen.hearthstone.emulator.SummonLocationRef;
 import com.github.kelemen.hearthstone.emulator.TargetableCharacter;
@@ -194,6 +196,25 @@ public final class TargetedActions {
             BoardLocationRef right = locationRef.tryGetRight();
             if (right != null) {
                 result.addUndo(rightAction.doAction(minion, new PlayTarget(castingPlayer, right.getMinion())));
+            }
+            return result;
+        };
+    }
+
+    public static TargetedAction shuffleTargetIntoDeck(@NamedArg("cardCount") int cardCount) {
+        return (World world, PlayTarget target) -> {
+            TargetableCharacter character = target.getTarget();
+            if (!(character instanceof Minion)) {
+                return UndoAction.DO_NOTHING;
+            }
+
+            Deck deck = target.getCastingPlayer().getBoard().getDeck();
+            CardDescr card = ((Minion)character).getBaseDescr().getBaseCard();
+
+            RandomProvider rng = world.getRandomProvider();
+            UndoBuilder result = new UndoBuilder(cardCount);
+            for (int i = 0; i < cardCount; i++) {
+                result.addUndo(deck.putToRandomPosition(rng, card));
             }
             return result;
         };
