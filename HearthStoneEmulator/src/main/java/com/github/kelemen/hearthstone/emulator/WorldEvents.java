@@ -155,7 +155,7 @@ public final class WorldEvents {
         return doneSummoningListeners;
     }
 
-    public WorldActionEventsRegistry<Secret> secretRevealedListeners() {
+    public WorldActionEvents<Secret> secretRevealedListeners() {
         return secretRevealedListeners;
     }
 

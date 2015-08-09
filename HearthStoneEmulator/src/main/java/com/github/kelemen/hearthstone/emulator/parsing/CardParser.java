@@ -53,7 +53,12 @@ public final class CardParser implements EntityParser<CardDescr> {
     }
 
     private static UndoAction unregisterSecret(World world, Secret self, Object eventSource) {
-        return self.getOwner().getSecrets().removeSecret(self);
+        UndoAction removeUndo = self.getOwner().getSecrets().removeSecret(self);
+        UndoAction eventUndo = world.getEvents().secretRevealedListeners().triggerEvent(self);
+        return () -> {
+            eventUndo.undo();
+            removeUndo.undo();
+        };
     }
 
     private void parseAbility(
