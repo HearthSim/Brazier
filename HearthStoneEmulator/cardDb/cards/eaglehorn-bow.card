@@ -1,0 +1,14 @@
+{
+    "name": "Eaglehorn Bow",
+    "description": "Whenever a friendly Secret is revealed, gain +1 Durability.",
+    "class": "hunter",
+    "type": "weapon",
+    "rarity": "rare",
+    "manaCost": 3,
+    "playActions": [
+        {
+            "class": "PlayerActions.equipWeapon",
+            "weapon": "Eaglehorn Bow"
+        }
+    ]
+}
