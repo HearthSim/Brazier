@@ -1,0 +1,9 @@
+{
+    "name": "Feign Death",
+    "description": "Trigger all Deathrattles on your minions.",
+    "class": "hunter",
+    "type": "spell",
+    "rarity": "epic",
+    "manaCost": 2,
+    "playActions": "PlayerActions.TRIGGER_DEATHRATTLES"
+}

@@ -54,6 +54,10 @@ import org.jtrim.utils.ExceptionHelper;
 public final class PlayerActions {
     public static final PlayerAction DO_NOTHING = (world, player) -> UndoAction.DO_NOTHING;
 
+    public static final PlayerAction TRIGGER_DEATHRATTLES = (world, player) -> {
+        return player.getBoard().forAllMinions((minion) -> minion.triggetDeathRattles());
+    };
+
     public static final PlayerAction KILL_ALL_MINIONS = killAllMinions();
 
     private static final ActivatableAbility<PlayerProperty> HERO_IS_IMMUNE = (PlayerProperty self) -> {
