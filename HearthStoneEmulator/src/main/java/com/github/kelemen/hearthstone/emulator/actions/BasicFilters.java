@@ -185,6 +185,13 @@ public final class BasicFilters {
         };
     }
 
+    public static WorldEventFilter<Object, LabeledEntity> eventSourceDoesNotHaveKeyword(@NamedArg("keywords") Keyword... keywords) {
+        Predicate<LabeledEntity> filter = ActionUtils.excludedKeywordsFilter(keywords);
+        return (World world, Object owner, LabeledEntity eventSource) -> {
+            return filter.test(eventSource);
+        };
+    }
+
     public static WorldEventFilter<Object, CardRef> cardMinionAttackEquals(@NamedArg("attack") int attack) {
         return (World world, Object owner, CardRef eventSource) -> {
             Minion minion = eventSource.getCard().getMinion();
