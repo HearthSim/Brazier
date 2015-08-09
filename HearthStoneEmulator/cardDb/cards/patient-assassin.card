@@ -1,0 +1,8 @@
+{
+    "name": "Patient Assassin",
+    "description": "Stealth. Destroy any minion damaged by this minion.",
+    "class": "rouge",
+    "type": "minion",
+    "rarity": "epic",
+    "manaCost": 2
+}
