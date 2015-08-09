@@ -1,5 +1,6 @@
 {
     "name": "Gladiator's Longbow",
+    "description": "Your hero is Immune while attacking.",
     "class": "hunter",
     "type": "weapon",
     "rarity": "epic",
