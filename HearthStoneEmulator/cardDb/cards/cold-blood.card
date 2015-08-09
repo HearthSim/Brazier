@@ -1,0 +1,27 @@
+{
+    "name": "Cold Blood",
+    "class": "rouge",
+    "type": "spell",
+    "description": "Give a minion +2 Attack. Combo: +4 Attack instead.",
+    "manaCost": 1,
+    "playActions": [
+        {
+            "targets": "all-minions",
+            "requires": "PlayActionRequirements.NO_COMBO",
+            "class": "TargetedActions.applyToMinionTarget",
+            "action": {
+                "class": "MinionActions.buffAttack",
+                "attack": 2
+            }
+        },
+        {
+            "targets": "all-minions",
+            "requires": "PlayActionRequirements.COMBO",
+            "class": "TargetedActions.applyToMinionTarget",
+            "action": {
+                "class": "MinionActions.buffAttack",
+                "attack": 4
+            }
+        }
+    ]
+}
