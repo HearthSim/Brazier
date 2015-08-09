@@ -3,6 +3,7 @@
     "class": "hunter",
     "type": "spell",
     "description": "Secret: When a character attacks your hero, instead he attacks another random character.",
+    "rarity": "rare",
     "manaCost": 2,
     "secret": {
         "attack-initiated": {
