@@ -1,0 +1,13 @@
+{
+    "name": "Gladiator's Longbow",
+    "class": "hunter",
+    "type": "weapon",
+    "rarity": "epic",
+    "manaCost": 7,
+    "playActions": [
+        {
+            "class": "PlayerActions.equipWeapon",
+            "weapon": "Gladiator's Longbow"
+        }
+    ]
+}
