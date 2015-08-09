@@ -1,0 +1,10 @@
+{
+    "name": "Master of Disguise",
+    "attack": 4,
+    "hp": 4,
+    "battleCries": {
+        "targets": "self-minions",
+        "class": "TargetedActions.applyToMinionTarget",
+        "action": "MinionActions.STEALTH"
+    }
+}

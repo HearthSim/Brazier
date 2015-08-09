@@ -1,0 +1,8 @@
+{
+    "name": "Master of Disguise",
+    "description": "Battlecry: Give a friendly minion Stealth.",
+    "rarity": "rare",
+    "class": "rouge",
+    "type": "minion",
+    "manaCost": 4
+}
