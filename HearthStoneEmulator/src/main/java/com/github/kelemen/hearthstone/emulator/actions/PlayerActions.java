@@ -360,14 +360,34 @@ public final class PlayerActions {
     }
 
     public static PlayerAction forEnemyMinions(@NamedArg("action") TargetedMinionAction action) {
-        return forMinions(action, (player, targets) -> {
-            player.getOpponent().getBoard().collectMinions(targets, Minion::notScheduledToDestroy);
-        });
+        return forEnemyMinions(WorldEventFilter.ANY, action);
     }
 
     public static PlayerAction forOwnMinions(@NamedArg("action") TargetedMinionAction action) {
+        return forOwnMinions(WorldEventFilter.ANY, action);
+    }
+
+    public static PlayerAction forEnemyMinions(
+            @NamedArg("filter") WorldEventFilter<? super Player, ? super Minion> filter,
+            @NamedArg("action") TargetedMinionAction action) {
+        ExceptionHelper.checkNotNullArgument(filter, "filter");
+        ExceptionHelper.checkNotNullArgument(action, "action");
         return forMinions(action, (player, targets) -> {
-           player.getBoard().collectMinions(targets, Minion::notScheduledToDestroy);
+            player.getOpponent().getBoard().collectMinions(targets, (minion) -> {
+                return minion.notScheduledToDestroy() && filter.applies(player.getWorld(), player, minion);
+            });
+        });
+    }
+
+    public static PlayerAction forOwnMinions(
+            @NamedArg("filter") WorldEventFilter<? super Player, ? super Minion> filter,
+            @NamedArg("action") TargetedMinionAction action) {
+        ExceptionHelper.checkNotNullArgument(filter, "filter");
+        ExceptionHelper.checkNotNullArgument(action, "action");
+        return forMinions(action, (player, targets) -> {
+            player.getBoard().collectMinions(targets, (minion) -> {
+                return minion.notScheduledToDestroy() && filter.applies(player.getWorld(), player, minion);
+            });
         });
     }
 

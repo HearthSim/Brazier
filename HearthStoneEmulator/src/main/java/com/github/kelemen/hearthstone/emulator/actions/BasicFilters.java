@@ -77,6 +77,9 @@ public final class BasicFilters {
         return owner.getCharges() > 0;
     };
 
+    public static final WorldEventFilter<PlayerProperty, TargetableCharacter> EVENT_SOURCE_IS_NOT_DAMAGED
+            = (world, owner, eventSource) -> !eventSource.isDamaged();
+
     public static final WorldEventFilter<Object, TargetRef> TARGET_SURVIVES = (world, owner, eventSource) -> {
         return !eventSource.getTarget().isDead();
     };

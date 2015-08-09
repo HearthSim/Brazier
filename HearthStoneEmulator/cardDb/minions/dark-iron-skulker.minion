@@ -1,0 +1,13 @@
+{
+    "name": "Dark Iron Skulker",
+    "attack": 4,
+    "hp": 3,
+    "battleCries": {
+        "class": "TargetedMinionActions.forEnemyMinions",
+        "filter": "BasicFilters.EVENT_SOURCE_IS_NOT_DAMAGED",
+        "action": {
+            "class": "TargetedMinionActions.damageTarget",
+            "damage": 2
+        }
+    }
+}

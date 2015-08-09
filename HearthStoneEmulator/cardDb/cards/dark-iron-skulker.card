@@ -1,0 +1,8 @@
+{
+    "name": "Dark Iron Skulker",
+    "description": "Battlecry: Deal 2 damage to all undamaged enemy minions.",
+    "class": "rouge",
+    "type": "minion",
+    "rarity": "rare",
+    "manaCost": 5
+}
