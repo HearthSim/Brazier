@@ -16,7 +16,12 @@ public final class TargetNeeds {
         return character.isDamaged();
     };
 
+    private static final PlayerPredicate<TargetableCharacter> CHARACTER_NOT_DAMAGED = (playerId, character) -> {
+        return !character.isDamaged();
+    };
+
     public static final TargetNeed TARGET_DAMAGED = new TargetNeed(CHARACTER_DAMAGED, CHARACTER_DAMAGED);
+    public static final TargetNeed TARGET_NOT_DAMAGED = new TargetNeed(CHARACTER_NOT_DAMAGED, CHARACTER_NOT_DAMAGED);
 
     public static final TargetNeed IS_TAUNT = new TargetNeed(PlayerPredicate.ANY, (PlayerId playerId, Minion arg) -> {
         return arg.getBody().isTaunt();

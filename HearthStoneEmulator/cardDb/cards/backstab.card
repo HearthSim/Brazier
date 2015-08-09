@@ -1,0 +1,14 @@
+{
+    "name": "Backstab",
+    "description": "Deal 2 damage to an undamaged minion.",
+    "class": "rouge",
+    "type": "spell",
+    "manaCost": 0,
+    "playActions": [
+        {
+            "targets": ["all-minions", "TargetNeeds.TARGET_NOT_DAMAGED"],
+            "class": "TargetedActions.dealSpellDamage",
+            "damage": 2
+        }
+    ]
+}
