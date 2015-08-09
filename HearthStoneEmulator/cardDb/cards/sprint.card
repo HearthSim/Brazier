@@ -1,0 +1,12 @@
+{
+    "name": "Sprint",
+    "description": "Draw 4 cards.",
+    "class": "rouge",
+    "type": "spell",
+    "manaCost": 7,
+    "playActions": [
+        "PlayerActions.DRAW_FOR_SELF",
+        "PlayerActions.DRAW_FOR_SELF",
+        "PlayerActions.DRAW_FOR_SELF",
+        "PlayerActions.DRAW_FOR_SELF"]
+}
