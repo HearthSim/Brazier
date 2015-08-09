@@ -1,0 +1,18 @@
+{
+    "name": "Sabotage",
+    "description": "Destroy a random enemy minion. Combo: And your opponent's weapon.",
+    "class": "rouge",
+    "type": "spell",
+    "rarity": "epic",
+    "manaCost": 4,
+    "playActions": [
+        {
+            "requires": "PlayActionRequirements.OPPONENT_BOARD_NOT_EMPTY",
+            "class": "PlayerActions.applyTargetedActionToRandomEnemyMinion",
+            "action": "TargetedActions.KILL_TARGET"
+        },
+        {
+            "requires": "PlayActionRequirements.COMBO",
+            "class": "PlayerActions.DESTROY_OPPONENTS_WEAPON"
+        }]
+}
