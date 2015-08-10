@@ -1,0 +1,19 @@
+{
+    "name": "Savage Roar",
+    "description": "Give your characters +2 Attack this turn.",
+    "class": "druid",
+    "type": "spell",
+    "manaCost": 3,
+    "playActions": [
+        {
+            "class": "PlayerActions.forOwnMinions",
+            "action": {
+                "class": "TargetedActions.addTemporaryAttack",
+                "attack": 2
+            }
+        },
+        {
+            "class": "PlayerActions.addHeroAttackForThisTurn",
+            "attack": 2
+        }]
+}

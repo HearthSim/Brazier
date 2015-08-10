@@ -1,0 +1,9 @@
+{
+    "name": "Keeper of the Grove",
+    "description": "Choose One - Deal 2 damage; or Silence a minion.",
+    "class": "druid",
+    "type": "minion",
+    "rarity": "rare",
+    "manaCost": 4,
+    "chooseOne": ["Moonfire/Keeper", "Dispel"]
+}

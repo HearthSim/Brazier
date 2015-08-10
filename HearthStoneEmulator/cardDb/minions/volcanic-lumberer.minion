@@ -1,0 +1,6 @@
+{
+    "name": "Volcanic Lumberer",
+    "attack": 7,
+    "hp": 8,
+    "taunt": true
+}

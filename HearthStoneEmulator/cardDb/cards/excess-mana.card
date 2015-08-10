@@ -1,0 +1,9 @@
+{
+    "name": "Excess Mana",
+    "description": "Draw a card. (You can only have 10 Mana in your tray.)",
+    "class": "druid",
+    "type": "spell",
+    "collectible": false,
+    "manaCost": 0,
+    "playActions": "PlayerActions.DRAW_FOR_SELF"
+}

@@ -1,0 +1,9 @@
+{
+    "name": "Nourish",
+    "description": "Choose One - Gain 2 Mana Crystals; or Draw 3 cards.",
+    "class": "druid",
+    "type": "spell",
+    "rarity": "rare",
+    "manaCost": 5,
+    "chooseOne": ["Nourish/Mana", "Nourish/Draw"]
+}

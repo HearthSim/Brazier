@@ -1,0 +1,13 @@
+{
+    "name": "Starfire",
+    "description": "Deal 5 damage. Draw a card.",
+    "class": "druid",
+    "type": "spell",
+    "manaCost": 6,
+    "playActions": [{
+            "targets": "all",
+            "class": "TargetedActions.dealSpellDamage",
+            "damage": 5
+        },
+        "PlayerActions.DRAW_FOR_SELF"]
+}

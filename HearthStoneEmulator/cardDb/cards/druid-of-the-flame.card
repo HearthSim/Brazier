@@ -1,0 +1,8 @@
+{
+    "name": "Druid of the Flame",
+    "description": "Choose One - Transform into a 5/2 minion; or a 2/5 minion.",
+    "class": "druid",
+    "type": "minion",
+    "manaCost": 3,
+    "chooseOne": ["Firecat Form", "Fire Hawk Form"]
+}

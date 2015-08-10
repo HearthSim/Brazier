@@ -1,0 +1,8 @@
+{
+    "name": "Starfall",
+    "description": "Choose One - Deal 5 damage to a minion; or 2 damage to all enemy minions.",
+    "class": "druid",
+    "type": "spell",
+    "manaCost": 5,
+    "chooseOne": ["Starfall/Single", "Starfall/Aoe"]
+}

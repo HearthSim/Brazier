@@ -1,0 +1,12 @@
+{
+    "name": "Wild Growth",
+    "description": "Gain an empty Mana Crystal.",
+    "class": "druid",
+    "type": "spell",
+    "manaCost": 2,
+    "playActions": {
+        "class": "PlayerActions.wildGrowth",
+        "amount": 1,
+        "excessCard": "Excess Mana"
+    }
+}

@@ -1,0 +1,12 @@
+{
+    "name": "Savagery",
+    "description": "Deal damage equal to your hero's Attack to a minion.",
+    "class": "druid",
+    "type": "spell",
+    "rarity": "rare",
+    "manaCost": 1,
+    "playActions": {
+        "targets": "all-minions",
+        "class": "TargetedActions.SAVAGERY"
+    }
+}

@@ -1,0 +1,9 @@
+{
+    "name": "Grove Tender",
+    "description": "Choose One - Give each player a Mana Crystal; or Each player draws a card.",
+    "class": "druid",
+    "type": "minion",
+    "rarity": "rare",
+    "manaCost": 3,
+    "chooseOne": ["Gift of Mana", "Gift of Cards"]
+}

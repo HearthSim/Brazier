@@ -1,0 +1,16 @@
+{
+    "name": "Claw",
+    "description": "Give your hero +2 Attack this turn and 2 Armor.",
+    "class": "druid",
+    "type": "spell",
+    "manaCost": 1,
+    "playActions": [
+        {
+            "class": "PlayerActions.addHeroAttackForThisTurn",
+            "attack": 2
+        },
+        {
+            "class": "PlayerActions.armorUp",
+            "armor": 2
+        }]
+}

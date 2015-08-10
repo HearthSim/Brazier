@@ -1,0 +1,9 @@
+{
+    "name": "Volcanic Lumberer",
+    "description": "Taunt Costs (1) less for each minion that died this turn.",
+    "class": "druid",
+    "rarity": "rare",
+    "type": "minion",
+    "manaCost": 9,
+    "manaCostAdjusters": "ManaCostAdjusters.REDUCE_BY_DEATH_THIS_TURN"
+}

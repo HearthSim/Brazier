@@ -1,0 +1,9 @@
+{
+    "name": "Ancient of Lore",
+    "description": "Choose One - Draw 2 cards; or Restore 5 Health.",
+    "class": "druid",
+    "type": "minion",
+    "rarity": "epic",
+    "manaCost": 7,
+    "chooseOne": ["Ancient Teachings", "Ancient Secrets"]
+}

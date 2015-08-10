@@ -1,0 +1,16 @@
+{
+    "name": "Bite",
+    "description": "Give your hero +4 Attack this turn and 4 Armor.",
+    "class": "druid",
+    "type": "spell",
+    "manaCost": 4,
+    "playActions": [
+        {
+            "class": "PlayerActions.addHeroAttackForThisTurn",
+            "attack": 4
+        },
+        {
+            "class": "PlayerActions.armorUp",
+            "armor": 4
+        }]
+}

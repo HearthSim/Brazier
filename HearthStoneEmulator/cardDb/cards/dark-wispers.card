@@ -5,5 +5,5 @@
     "rarity": "epic",
     "description": "Choose One - Summon 5 Wisps; or Give a minion +5/+5 and Taunt.",
     "manaCost": 6,
-    "chooseOne": ["Dark Wispers/Buff", "Dark Wispers/Wisps"]
+    "chooseOne": ["Dark Wispers/Wisps", "Dark Wispers/Buff"]
 }

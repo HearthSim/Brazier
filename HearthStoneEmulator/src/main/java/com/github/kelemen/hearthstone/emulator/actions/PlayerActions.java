@@ -413,6 +413,54 @@ public final class PlayerActions {
         };
     }
 
+    public static PlayerAction forAllTargets(
+            @NamedArg("action") TargetedAction action) {
+        return forAllTargets(AuraFilter.ANY, action);
+    }
+
+    public static PlayerAction forAllTargets(
+            @NamedArg("filter") AuraFilter<? super Player, ? super TargetableCharacter> filter,
+            @NamedArg("action") TargetedAction action) {
+        return forAllTargets(action, (player, targets) -> {
+            World world = player.getWorld();
+            Predicate<Minion> minionFilter = (minion) -> {
+                return filter.isApplicable(world, player, minion) && minion.notScheduledToDestroy();
+            };
+            world.getPlayer1().getBoard().collectMinions(targets, minionFilter);
+            world.getPlayer2().getBoard().collectMinions(targets, minionFilter);
+            if (filter.isApplicable(world, player, world.getPlayer1().getHero())) {
+                targets.add(world.getPlayer1().getHero());
+            }
+            if (filter.isApplicable(world, player, world.getPlayer2().getHero())) {
+                targets.add(world.getPlayer2().getHero());
+            }
+        });
+    }
+
+    private static PlayerAction forAllTargets(
+            TargetedAction action,
+            BiConsumer<Player, List<TargetableCharacter>> targetCollector) {
+        ExceptionHelper.checkNotNullArgument(action, "action");
+        ExceptionHelper.checkNotNullArgument(targetCollector, "targetCollector");
+
+        return (World world, Player player) -> {
+            List<TargetableCharacter> targets = new ArrayList<>();
+            targetCollector.accept(player, targets);
+
+            if (targets.isEmpty()) {
+                return UndoAction.DO_NOTHING;
+            }
+
+            BornEntity.sortEntities(targets);
+
+            UndoBuilder result = new UndoBuilder(targets.size());
+            for (TargetableCharacter target: targets) {
+                result.addUndo(action.alterWorld(world, new PlayTarget(player, target)));
+            }
+            return result;
+        };
+    }
+
     public static PlayerAction forAllMinions(@NamedArg("action") TargetedMinionAction action) {
         return forAllMinions(AuraFilter.ANY, action);
     }
@@ -986,6 +1034,11 @@ public final class PlayerActions {
     public static PlayerAction summonMinion(
             @NamedArg("minionCount") int minionCount,
             @NamedArg("minion") MinionProvider minion) {
+        ExceptionHelper.checkNotNullArgument(minion, "minion");
+
+        if (minionCount <= 0) {
+            return (world, player) -> UndoAction.DO_NOTHING;
+        }
         return summonMinion(minionCount, minionCount, minion);
     }
 
@@ -1332,6 +1385,67 @@ public final class PlayerActions {
 
     public static PlayerAction gainMana(@NamedArg("mana") int mana) {
         return (world, player) -> player.setMana(player.getMana() + mana);
+    }
+
+    public static PlayerAction wildGrowth(
+            @NamedArg("amount") int amount,
+            @NamedArg("excessCard") CardProvider card) {
+        return wildGrowth(true, amount, card);
+    }
+
+    public static PlayerAction wildGrowth(
+            @NamedArg("empty") boolean empty,
+            @NamedArg("amount") int amount,
+            @NamedArg("excessCard") CardProvider card) {
+        ExceptionHelper.checkNotNullArgument(card, "card");
+        return (World world, Player player) -> {
+            ManaResource manaResource = player.getManaResource();
+            if (manaResource.getManaCrystals() >= Player.MAX_MANA) {
+                return player.getHand().addCard(card.getCard());
+            }
+
+            UndoAction crystalUndo = manaResource.setManaCrystals(Math.max(0, manaResource.getManaCrystals() + amount));
+            if (empty) {
+                return crystalUndo;
+            }
+            UndoAction manaUndo = manaResource.setMana(manaResource.getMana() + amount);
+            return () -> {
+                manaUndo.undo();
+                crystalUndo.undo();
+            };
+        };
+    }
+
+    public static PlayerAction killAndReplaceMinions(
+            @NamedArg("minion") MinionProvider minion) {
+        ExceptionHelper.checkNotNullArgument(minion, "minion");
+
+        return (World world, Player player) -> {
+            List<Minion> minions1 = new ArrayList<>(Player.MAX_BOARD_SIZE);
+            List<Minion> minions2 = new ArrayList<>(Player.MAX_BOARD_SIZE);
+
+            Player player1 = world.getPlayer1();
+            Player player2 = world.getPlayer2();
+
+            player1.getBoard().collectMinions(minions1);
+            player2.getBoard().collectMinions(minions2);
+
+            UndoBuilder result = new UndoBuilder();
+
+            for (Minion killedMinion: minions1) {
+                result.addUndo(killedMinion.poison());
+            }
+            for (Minion killedMinion: minions2) {
+                result.addUndo(killedMinion.poison());
+            }
+
+            result.addUndo(world.endPhase());
+
+            result.addUndo(summonMinion(minions1.size(), minion).alterWorld(world, player1));
+            result.addUndo(summonMinion(minions2.size(), minion).alterWorld(world, player2));
+
+            return result;
+        };
     }
 
     public static PlayerAction addManaCrystal(@NamedArg("amount") int amount) {

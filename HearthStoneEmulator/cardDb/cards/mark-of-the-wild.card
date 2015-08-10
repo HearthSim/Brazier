@@ -1,0 +1,18 @@
+{
+    "name": "Mark of the Wild",
+    "description": "Give a minion Taunt and +2/+2. (+2 Attack/+2 Health)",
+    "class": "druid",
+    "type": "spell",
+    "manaCost": 2,
+    "playActions": {
+        "targets": "all-minions",
+        "class": "TargetedActions.applyToMinionTarget",
+        "action": [
+            {
+                "class": "MinionActions.buff",
+                "attack": 2,
+                "hp": 2
+            },
+            "MinionActions.TAUNT"]
+    }
+}

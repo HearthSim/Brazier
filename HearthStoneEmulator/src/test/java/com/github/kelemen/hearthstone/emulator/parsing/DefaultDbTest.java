@@ -10,6 +10,7 @@ import com.github.kelemen.hearthstone.emulator.minions.MinionDescr;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import org.junit.Test;
 
@@ -65,6 +66,17 @@ public final class DefaultDbTest {
         }
     }
 
+    private void verifyChooseOneDescription(CardDescr card, String description) {
+        List<CardDescr> actions = card.getChooseOneActions();
+        if (actions.isEmpty()) {
+            return;
+        }
+
+        if (!description.contains("Choose One - ")) {
+            fail("Choose one card has to contain Choose One in its description.");
+        }
+    }
+
     @Test
     public void testBasicKeywordsInDescription() {
         HearthStoneEntityDatabase<CardDescr> cardDb = TestDb.getTestDb().getCardDb();
@@ -114,6 +126,8 @@ public final class DefaultDbTest {
                     needDescription = card.getCardType() == CardType.SPELL;
                 }
 
+                verifyChooseOneDescription(card, description);
+
                 if (needDescription) {
                     if (description.isEmpty()) {
                         fail("This card has some custom action defined, so need a description.");
@@ -139,6 +153,20 @@ public final class DefaultDbTest {
         for (CardDescr card: cardDb.getAll()) {
             if (card.getCardType() == CardType.MINION) {
                 assertNotNull("minion", card.getMinion());
+            }
+        }
+    }
+
+    @Test
+    public void testAllChooseOneCardsMustExist() {
+        HearthStoneEntityDatabase<CardDescr> cardDb = TestDb.getTestDb().getCardDb();
+        for (CardDescr card: cardDb.getAll()) {
+            try {
+                for (CardDescr chooseOneCard: card.getChooseOneActions()) {
+                    assertNotNull(chooseOneCard.getId().getName(), chooseOneCard);
+                }
+            } catch (Throwable ex) {
+                throw new AssertionError("Choose one card does not exist for " + card.getId(), ex);
             }
         }
     }

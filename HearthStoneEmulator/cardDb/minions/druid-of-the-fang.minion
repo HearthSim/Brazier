@@ -1,0 +1,9 @@
+{
+    "name": "Druid of the Fang",
+    "attack": 7,
+    "hp": 7,
+    "battleCries": {
+        "class": "MinionActions.transformMinion",
+        "minion": "Druid of the Fang/Beast"
+    }
+}

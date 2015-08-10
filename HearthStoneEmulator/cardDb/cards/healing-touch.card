@@ -1,0 +1,12 @@
+{
+    "name": "Healing Touch",
+    "description": "Restore 8 Health.",
+    "class": "druid",
+    "type": "spell",
+    "manaCost": 3,
+    "playActions": {
+        "targets": "all",
+        "class": "TargetedActions.dealSpellDamage",
+        "damage": -8
+    }
+}

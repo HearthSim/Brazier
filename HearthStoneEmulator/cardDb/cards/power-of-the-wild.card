@@ -1,0 +1,8 @@
+{
+    "name": "Power of the Wild",
+    "class": "druid",
+    "type": "spell",
+    "description": "Choose One - Give your minions +1/+1; or Summon a 3/2 Panther.",
+    "manaCost": 2,
+    "chooseOne": ["Leader of the Pack", "Summon a Panther"]
+}
