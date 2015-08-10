@@ -1,0 +1,6 @@
+{
+    "name": "Battle Axe",
+    "attack": 2,
+    "charges": 2,
+    "collectible": false
+}

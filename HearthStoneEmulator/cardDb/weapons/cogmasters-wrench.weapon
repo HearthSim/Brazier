@@ -1,0 +1,13 @@
+{
+    "name": "Cogmaster's Wrench",
+    "attack": 1,
+    "charges": 3,
+    "ability": {
+        "class": "Auras.ownWeaponAura",
+        "filter": "MinionAuras.OWN_BOARD_HAS_MECH",
+        "aura": {
+            "class": "WeaponAuras.attackBuff",
+            "attack": 2
+        }
+    }
+}

@@ -1,0 +1,14 @@
+{
+    "name": "Wrath/3",
+    "displayName": "Wrath",
+    "description": "Deal 3 damage to a minion.",
+    "class": "druid",
+    "type": "spell",
+    "collectible": false,
+    "manaCost": 0,
+    "playActions": {
+        "targets": "all-minions",
+        "class": "TargetedActions.dealSpellDamage",
+        "damage": 3
+    }
+}

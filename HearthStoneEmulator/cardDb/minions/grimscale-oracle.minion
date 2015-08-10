@@ -4,7 +4,7 @@
     "hp": 1,
     "keywords": "murloc",
     "ability": {
-        "class": "MinionAbilities.boardAura",
+        "class": "Auras.boardAura",
         "filter": ["MinionAuras.TARGET_IS_MURLOC", "Auras.NOT_SELF"],
         "aura": {
             "class": "MinionAuras.attackBuff",

@@ -13,16 +13,10 @@ import com.github.kelemen.hearthstone.emulator.UndoableIntResult;
 import com.github.kelemen.hearthstone.emulator.UndoableRegistry;
 import com.github.kelemen.hearthstone.emulator.UndoableResult;
 import com.github.kelemen.hearthstone.emulator.World;
-import com.github.kelemen.hearthstone.emulator.WorldProperty;
 import com.github.kelemen.hearthstone.emulator.abilities.ActivatableAbility;
-import com.github.kelemen.hearthstone.emulator.abilities.Aura;
-import com.github.kelemen.hearthstone.emulator.abilities.AuraFilter;
-import com.github.kelemen.hearthstone.emulator.abilities.AuraTargetProvider;
-import com.github.kelemen.hearthstone.emulator.abilities.TargetedActiveAura;
 import com.github.kelemen.hearthstone.emulator.cards.CardDescr;
 import com.github.kelemen.hearthstone.emulator.minions.Minion;
 import com.github.kelemen.hearthstone.emulator.minions.MinionDescr;
-import com.github.kelemen.hearthstone.emulator.parsing.NamedArg;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -137,6 +131,14 @@ public final class ActionUtils {
     }
 
     public static void collectTargets(
+            World world,
+            List<? super TargetableCharacter> result,
+            Predicate<? super TargetableCharacter> filter) {
+        collectTargets(world.getPlayer1(), result, filter);
+        collectTargets(world.getPlayer2(), result, filter);
+    }
+
+    public static void collectTargets(
             Player player,
             List<? super TargetableCharacter> result,
             Predicate<? super TargetableCharacter> filter) {
@@ -244,18 +246,6 @@ public final class ActionUtils {
         listenerRefRef.set(listenerRef);
 
         return listenerRef;
-    }
-
-    public static <Source extends WorldProperty, Target> ActivatableAbility<Source> aura(
-            @NamedArg("target") AuraTargetProvider<? super Source, ? extends Target> target,
-            @NamedArg("filter") AuraFilter<? super Source, ? super Target> filter,
-            @NamedArg("aura") Aura<? super Source, ? super Target> aura) {
-
-        ExceptionHelper.checkNotNullArgument(target, "target");
-        ExceptionHelper.checkNotNullArgument(filter, "filter");
-        ExceptionHelper.checkNotNullArgument(aura, "aura");
-
-        return (Source self) -> self.getWorld().addAura(new TargetedActiveAura<>(self, target, filter, aura));
     }
 
     public static <Self> ActivatableAbility<Self> toSingleTurnAbility(

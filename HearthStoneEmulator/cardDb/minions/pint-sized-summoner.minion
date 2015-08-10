@@ -3,7 +3,7 @@
     "attack": 2,
     "hp": 2,
     "ability": {
-        "class": "MinionAbilities.ownCardAura",
+        "class": "Auras.ownCardAura",
         "filter": ["CardAuras.TARGET_IS_MINION", "Auras.NOT_PLAYED_MINION_THIS_TURN"],
         "aura": {
             "class": "CardAuras.increaseManaCost",

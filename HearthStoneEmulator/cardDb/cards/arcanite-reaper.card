@@ -1,0 +1,12 @@
+{
+    "name": "Arcanite Reaper",
+    "class": "warrior",
+    "type": "weapon",
+    "manaCost": 5,
+    "playActions": [
+        {
+            "class": "PlayerActions.equipWeapon",
+            "weapon": "Arcanite Reaper"
+        }
+    ]
+}

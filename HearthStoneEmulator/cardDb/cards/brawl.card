@@ -1,0 +1,14 @@
+{
+    "name": "Brawl",
+    "description": "Destroy all minions except one. (chosen randomly)",
+    "class": "warrior",
+    "type": "spell",
+    "rarity": "epic",
+    "manaCost": 7,
+    "playActions": [
+        {
+            "requires": "PlayActionRequirements.BOARD_IS_NOT_EMPTY",
+            "class": "PlayerActions.BRAWL"
+        }
+    ]
+}

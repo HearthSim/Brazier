@@ -1,0 +1,15 @@
+{
+    "name": "Wrath/1",
+    "displayName": "Wrath",
+    "description": "Deal 1 damage to a minion. Draw a card.",
+    "class": "druid",
+    "type": "spell",
+    "collectible": false,
+    "manaCost": 0,
+    "playActions": [{
+            "targets": "all-minions",
+            "class": "TargetedActions.dealSpellDamage",
+            "damage": 1
+        },
+        "PlayerActions.DRAW_FOR_SELF"]
+}

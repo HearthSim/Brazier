@@ -3,7 +3,7 @@
     "attack": 1,
     "hp": 4,
     "ability": {
-        "class": "MinionAbilities.cardAura",
+        "class": "Auras.cardAura",
         "filter": "CardAuras.TARGET_HAS_BATTLE_CRY",
         "aura": {
             "class": "CardAuras.increaseManaCost",

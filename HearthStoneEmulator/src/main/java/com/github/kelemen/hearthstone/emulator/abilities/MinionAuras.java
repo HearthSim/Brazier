@@ -50,10 +50,6 @@ public final class MinionAuras {
         return source.getOwner().getBoard().getAllMinions();
     };
 
-    public static final AuraTargetProvider<Minion, Minion> SELF_PROVIDER = (world, source) -> {
-        return Collections.singletonList(source);
-    };
-
     public static final AuraTargetProvider<Minion, Minion> NEIGHBOURS_MINION_PROVIDER = (world, source) -> {
         SummonLocationRef locationRef = source.getLocationRef();
 
@@ -159,6 +155,12 @@ public final class MinionAuras {
             result.addRef(target.getBody().getHp().addAuraBuff(hp));
 
             return result;
+        };
+    }
+
+    public static Aura<Object, Minion> minHp(@NamedArg("hp") int hp) {
+        return (World world, Object source, Minion target) -> {
+            return target.getBody().getMinHpProperty().addAuraBuff((prev) -> Math.max(prev, hp));
         };
     }
 

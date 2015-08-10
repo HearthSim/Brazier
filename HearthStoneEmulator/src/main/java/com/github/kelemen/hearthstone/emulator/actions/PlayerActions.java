@@ -10,6 +10,7 @@ import com.github.kelemen.hearthstone.emulator.Hand;
 import com.github.kelemen.hearthstone.emulator.Hero;
 import com.github.kelemen.hearthstone.emulator.HeroPowerId;
 import com.github.kelemen.hearthstone.emulator.Keyword;
+import com.github.kelemen.hearthstone.emulator.Keywords;
 import com.github.kelemen.hearthstone.emulator.LabeledEntity;
 import com.github.kelemen.hearthstone.emulator.ManaResource;
 import com.github.kelemen.hearthstone.emulator.MultiTargeter;
@@ -25,6 +26,7 @@ import com.github.kelemen.hearthstone.emulator.abilities.ActivatableAbility;
 import com.github.kelemen.hearthstone.emulator.abilities.Aura;
 import com.github.kelemen.hearthstone.emulator.abilities.AuraFilter;
 import com.github.kelemen.hearthstone.emulator.abilities.AuraTargetProvider;
+import com.github.kelemen.hearthstone.emulator.abilities.Auras;
 import com.github.kelemen.hearthstone.emulator.abilities.CardAuras;
 import com.github.kelemen.hearthstone.emulator.abilities.TargetedActiveAura;
 import com.github.kelemen.hearthstone.emulator.cards.Card;
@@ -32,6 +34,7 @@ import com.github.kelemen.hearthstone.emulator.cards.CardDescr;
 import com.github.kelemen.hearthstone.emulator.cards.CardProvider;
 import com.github.kelemen.hearthstone.emulator.cards.CardType;
 import com.github.kelemen.hearthstone.emulator.minions.Minion;
+import com.github.kelemen.hearthstone.emulator.minions.MinionBody;
 import com.github.kelemen.hearthstone.emulator.minions.MinionDescr;
 import com.github.kelemen.hearthstone.emulator.minions.MinionId;
 import com.github.kelemen.hearthstone.emulator.minions.MinionProvider;
@@ -48,6 +51,7 @@ import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 import org.jtrim.utils.ExceptionHelper;
 
 
@@ -117,6 +121,39 @@ public final class PlayerActions {
         Hand hand = player.getHand();
         for (Minion minion: minions) {
             result.addUndo(hand.addCard(minion.getBaseDescr().getBaseCard()));
+        }
+        return result;
+    };
+
+    public static final PlayerAction BATTLE_RAGE = (world, player) -> {
+        int cardsToDraw = player.getHero().isDamaged() ? 1 : 0;
+        cardsToDraw += player.getBoard().countMinions(Minion::isDamaged);
+
+        UndoBuilder result = new UndoBuilder(cardsToDraw);
+        for (int i = 0; i < cardsToDraw; i++) {
+            result.addUndo(player.drawCardToHand());
+        }
+        return result;
+    };
+
+    public static final PlayerAction BRAWL = (world, player) -> {
+        List<Minion> minions = new ArrayList<>(2 * Player.MAX_BOARD_SIZE);
+        world.getPlayer1().getBoard().collectMinions(minions);
+        world.getPlayer2().getBoard().collectMinions(minions);
+
+        List<Minion> brawlers = minions.stream()
+                .filter((minion) -> minion.getKeywords().contains(Keywords.BRAWLER))
+                .collect(Collectors.toList());
+
+        Minion winner = brawlers.isEmpty()
+                ? ActionUtils.pickRandom(world, minions)
+                : ActionUtils.pickRandom(world, brawlers);
+
+        UndoBuilder result = new UndoBuilder();
+        for (Minion minion: minions) {
+            if (minion != winner) {
+                result.addUndo(minion.poison());
+            }
         }
         return result;
     };
@@ -301,6 +338,40 @@ public final class PlayerActions {
             }
 
             return player.getHand().addCard(selected);
+        };
+    }
+
+    public static PlayerAction bouncingBlade(
+            @NamedArg("maxBounces") int maxBounces,
+            @NamedArg("baseDamage") int baseDamage) {
+
+        Predicate<Minion> minionFilter = (minion) -> {
+            MinionBody body = minion.getBody();
+            int currentHp = body.getCurrentHp();
+            return currentHp > 0 && !body.isImmune() && body.getMinHpProperty().getValue() < currentHp;
+        };
+
+        return (World world, Player player) -> {
+            Damage damage = player.getSpellDamage(1);
+            List<Minion> targets = new ArrayList<>();
+
+            UndoBuilder result = new UndoBuilder();
+            for (int i = 0; i < maxBounces; i++) {
+                targets.clear();
+                world.getPlayer1().getBoard().collectMinions(targets, minionFilter);
+                world.getPlayer2().getBoard().collectMinions(targets, minionFilter);
+
+                Minion selected = ActionUtils.pickRandom(world, targets);
+                if (selected == null) {
+                    break;
+                }
+
+                result.addUndo(selected.damage(damage));
+                if (selected.getBody().getCurrentHp() <= 0) {
+                    break;
+                }
+            }
+            return result;
         };
     }
 
@@ -832,7 +903,7 @@ public final class PlayerActions {
         ExceptionHelper.checkNotNullArgument(filter, "filter");
 
         return (World world, Player player) -> {
-            ActivatableAbility<Player> aura = ActionUtils.aura(
+            ActivatableAbility<Player> aura = Auras.aura(
                     CardAuras.OWN_CARD_PROVIDER,
                     filter,
                     CardAuras.increaseManaCost(-amount));
@@ -848,7 +919,7 @@ public final class PlayerActions {
         ExceptionHelper.checkNotNullArgument(filter, "filter");
 
         return (World world, Player player) -> {
-            ActivatableAbility<Player> aura = ActionUtils.aura(
+            ActivatableAbility<Player> aura = Auras.aura(
                     CardAuras.OWN_CARD_PROVIDER,
                     filter,
                     CardAuras.setManaCost(manaCost));
@@ -865,7 +936,7 @@ public final class PlayerActions {
         ExceptionHelper.checkNotNullArgument(filter, "filter");
 
         return (World world, Player player) -> {
-            ActivatableAbility<Player> aura = ActionUtils.aura(
+            ActivatableAbility<Player> aura = Auras.aura(
                     CardAuras.OWN_CARD_PROVIDER,
                     filter,
                     CardAuras.increaseManaCost(-amount));
@@ -992,6 +1063,13 @@ public final class PlayerActions {
     public static PlayerAction decreaseCostOfHand(@NamedArg("amount") int amount) {
         return (world, player) -> {
             return player.getHand().withCards((card) -> card.decreaseManaCost(amount));
+        };
+    }
+
+    public static PlayerAction addThisTurnAbility(@NamedArg("ability") ActivatableAbility<? super Player> ability) {
+        ExceptionHelper.checkNotNullArgument(ability, "ability");
+        return (world, player) -> {
+            return ActionUtils.doTemporary(world, () -> ability.activate(player));
         };
     }
 
@@ -1257,17 +1335,34 @@ public final class PlayerActions {
     }
 
     public static PlayerAction addManaCrystal(@NamedArg("amount") int amount) {
+        return addManaCrystal(true, amount);
+    }
+
+    public static PlayerAction addManaCrystal(
+            @NamedArg("empty") boolean empty,
+            @NamedArg("amount") int amount) {
         return (World world, Player player) -> {
             ManaResource manaResource = player.getManaResource();
-            return manaResource.setManaCrystals(Math.max(0, manaResource.getManaCrystals() + amount));
+            UndoAction crystalUndo = manaResource.setManaCrystals(Math.max(0, manaResource.getManaCrystals() + amount));
+            if (empty) {
+                return crystalUndo;
+            }
+            UndoAction manaUndo = manaResource.setMana(manaResource.getMana() + amount);
+            return () -> {
+                manaUndo.undo();
+                crystalUndo.undo();
+            };
         };
     }
 
     public static PlayerAction addManaCrystalToOpponent(@NamedArg("amount") int amount) {
-        return (World world, Player player) -> {
-            ManaResource manaResource = player.getOpponent().getManaResource();
-            return manaResource.setManaCrystals(Math.max(0, manaResource.getManaCrystals() + amount));
-        };
+        return addManaCrystalToOpponent(true, amount);
+    }
+
+    public static PlayerAction addManaCrystalToOpponent(
+            @NamedArg("empty") boolean empty,
+            @NamedArg("amount") int amount) {
+        return doForOpponent(addManaCrystal(empty, amount));
     }
 
     private static PlayerAction activateAbilityForThisTurn(ActivatableAbility<? super Player> ability) {

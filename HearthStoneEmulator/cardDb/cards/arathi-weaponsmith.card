@@ -1,0 +1,7 @@
+{
+    "name": "Arathi Weaponsmith",
+    "description": "Battlecry: Equip a 2/2 weapon.",
+    "class": "warrior",
+    "type": "minion",
+    "manaCost": 4
+}

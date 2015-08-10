@@ -4,7 +4,7 @@
     "hp": 3,
     "keywords": "mech",
     "ability": {
-        "class": "MinionAbilities.cardAura",
+        "class": "Auras.cardAura",
         "filter": ["CardAuras.TARGET_IS_MINION", "MinionAuras.TARGET_IS_MECH", "Auras.SAME_OWNER"],
         "aura": {
             "class": "CardAuras.increaseManaCost",

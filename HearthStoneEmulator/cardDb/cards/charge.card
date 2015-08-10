@@ -1,0 +1,21 @@
+{
+    "name": "Charge",
+    "description": "Give a friendly minion +2 Attack and Charge.",
+    "class": "warrior",
+    "type": "spell",
+    "manaCost": 3,
+    "playActions": {
+        "targets": "self-minions",
+        "class": "CardPlayActions.combine",
+        "actions": [
+            {
+                "class": "MinionActions.buffAttack",
+                "attack": 2
+            },
+            {
+                "class": "TargetedActions.applyToMinionTarget",
+                "action": "MinionActions.CHARGE"
+            }
+        ]
+    }
+}

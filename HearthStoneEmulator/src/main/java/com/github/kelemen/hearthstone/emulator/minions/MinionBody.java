@@ -6,6 +6,7 @@ import com.github.kelemen.hearthstone.emulator.Silencable;
 import com.github.kelemen.hearthstone.emulator.UndoableIntResult;
 import com.github.kelemen.hearthstone.emulator.WorldEvents;
 import com.github.kelemen.hearthstone.emulator.abilities.AuraAwareBoolProperty;
+import com.github.kelemen.hearthstone.emulator.abilities.AuraAwareIntProperty;
 import com.github.kelemen.hearthstone.emulator.abilities.HpProperty;
 import com.github.kelemen.hearthstone.emulator.actions.UndoAction;
 import org.jtrim.utils.ExceptionHelper;
@@ -22,6 +23,7 @@ public final class MinionBody implements Silencable {
     private final AuraAwareBoolProperty stealth;
     private final AuraAwareBoolProperty untargetable;
     private final AuraAwareBoolProperty immune;
+    private final AuraAwareIntProperty minHp;
 
     public MinionBody(Minion owner, MinionDescr baseStats) {
         ExceptionHelper.checkNotNullArgument(owner, "owner");
@@ -37,6 +39,7 @@ public final class MinionBody implements Silencable {
         this.untargetable = new AuraAwareBoolProperty(!baseStats.isTargetable());
         this.stealth = new AuraAwareBoolProperty(baseStats.isStealth());
         this.immune = new AuraAwareBoolProperty(false);
+        this.minHp = new AuraAwareIntProperty(Integer.MIN_VALUE);
     }
 
     private MinionBody(Minion owner, MinionBody other) {
@@ -52,6 +55,7 @@ public final class MinionBody implements Silencable {
         this.stealth = other.stealth.copy();
         this.untargetable = other.untargetable.copy();
         this.immune = other.immune.copy();
+        this.minHp = other.minHp.copy();
     }
 
     public MinionBody copyFor(Minion minion) {
@@ -77,6 +81,10 @@ public final class MinionBody implements Silencable {
 
     public AuraAwareBoolProperty getImmuneProperty() {
         return immune;
+    }
+
+    public AuraAwareIntProperty getMinHpProperty() {
+        return minHp;
     }
 
     public boolean isTargetable() {
@@ -156,12 +164,16 @@ public final class MinionBody implements Silencable {
             return new UndoableIntResult(0, () -> divineShield = true);
         }
 
-        UndoAction hpUndo = hp.adjustCurrentHp(-attack);
+        int currentHp = hp.getCurrentHp();
+        int newHp = currentHp - attack;
+        newHp = Math.max(minHp.getValue(), Math.min(newHp, hp.getMaxHp()));
+        UndoAction hpUndo = hp.setCurrentHp(newHp);
+        int damageDone = currentHp - newHp;
 
         WorldEvents events = owner.getWorld().getEvents();
         UndoAction eventUndo;
-        DamageEvent event = new DamageEvent(damage.getSource(), owner, attack);
-        if (attack < 0) {
+        DamageEvent event = new DamageEvent(damage.getSource(), owner, damageDone);
+        if (damageDone < 0) {
             eventUndo = events.minionHealedListeners().triggerEvent(event);
         }
         else {

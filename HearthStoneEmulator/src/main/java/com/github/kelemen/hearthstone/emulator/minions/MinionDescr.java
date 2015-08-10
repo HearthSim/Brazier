@@ -4,6 +4,7 @@ import com.github.kelemen.hearthstone.emulator.HearthStoneEntity;
 import com.github.kelemen.hearthstone.emulator.Keyword;
 import com.github.kelemen.hearthstone.emulator.Player;
 import com.github.kelemen.hearthstone.emulator.abilities.ActivatableAbility;
+import com.github.kelemen.hearthstone.emulator.abilities.LivingEntitysAbilities;
 import com.github.kelemen.hearthstone.emulator.actions.BattleCryAction;
 import com.github.kelemen.hearthstone.emulator.actions.BattleCryArg;
 import com.github.kelemen.hearthstone.emulator.actions.BattleCryTargetedAction;
@@ -36,9 +37,7 @@ public final class MinionDescr implements HearthStoneEntity {
         private boolean taunt;
         private boolean charge;
         private boolean canAttack;
-        private WorldEventActionDefs<Minion> eventActionDefs;
-        private WorldEventAction<? super Minion, ? super Minion> deathRattle;
-        private ActivatableAbility<? super Minion> ability;
+        private LivingEntitysAbilities<Minion> abilities;
         private boolean divineShield;
         private int maxAttackCount;
         private boolean targetable;
@@ -58,7 +57,6 @@ public final class MinionDescr implements HearthStoneEntity {
             this.displayName = minionId.getName();
             this.keywords = new HashSet<>();
             this.battleCries = new LinkedList<>();
-            this.eventActionDefs = new WorldEventActionDefs.Builder<Minion>().create();
             this.taunt = false;
             this.divineShield = false;
             this.charge = false;
@@ -66,14 +64,14 @@ public final class MinionDescr implements HearthStoneEntity {
             this.stealth = false;
             this.maxAttackCount = 1;
             this.canAttack = true;
-            this.deathRattle = null;
-            this.ability = null;
+            this.abilities = LivingEntitysAbilities.noAbilities();
             this.attackLeft = false;
             this.attackRight = false;
         }
 
-        public void setActivatableAbility(ActivatableAbility<? super Minion> ability) {
-            this.ability = ability;
+        public void setAbilities(LivingEntitysAbilities<Minion> abilities) {
+            ExceptionHelper.checkNotNullArgument(abilities, "abilities");
+            this.abilities = abilities;
         }
 
         public void setDisplayName(String displayName) {
@@ -83,10 +81,6 @@ public final class MinionDescr implements HearthStoneEntity {
 
         public void setCanAttack(boolean canAttack) {
             this.canAttack = canAttack;
-        }
-
-        public void setDeathRattle(WorldEventAction<? super Minion, ? super Minion> deathRattle) {
-            this.deathRattle = deathRattle;
         }
 
         public void setAttackLeft(boolean attackLeft) {
@@ -131,11 +125,6 @@ public final class MinionDescr implements HearthStoneEntity {
             battleCries.add(battleCry);
         }
 
-        public void setEventActionDefs(WorldEventActionDefs<Minion> eventActionDefs) {
-            ExceptionHelper.checkNotNullArgument(eventActionDefs, "eventActionDefs");
-            this.eventActionDefs = eventActionDefs;
-        }
-
         public MinionDescr create() {
             return new MinionDescr(this);
         }
@@ -148,8 +137,7 @@ public final class MinionDescr implements HearthStoneEntity {
     private final int hp;
     private final Set<Keyword> keywords;
     private final List<BattleCryAction> battleCries;
-    private final WorldEventActionDefs<Minion> eventActionDefs;
-    private final WorldEventAction<? super Minion, ? super Minion> deathRattle;
+    private final LivingEntitysAbilities<Minion> abilities;
     private final boolean taunt;
     private final boolean divineShield;
     private final boolean charge;
@@ -159,7 +147,6 @@ public final class MinionDescr implements HearthStoneEntity {
     private final boolean stealth;
     private final boolean attackLeft;
     private final boolean attackRight;
-    private final ActivatableAbility<? super Minion> ability;
 
     private MinionDescr(Builder builder) {
         this.minionId = builder.minionId;
@@ -169,7 +156,7 @@ public final class MinionDescr implements HearthStoneEntity {
         this.hp = builder.hp;
         this.keywords = Collections.unmodifiableSet(new HashSet<>(builder.keywords));
         this.battleCries = CollectionsEx.readOnlyCopy(builder.battleCries);
-        this.eventActionDefs = builder.eventActionDefs;
+        this.abilities = builder.abilities;
         this.taunt = builder.taunt;
         this.divineShield = builder.divineShield;
         this.charge = builder.charge;
@@ -177,18 +164,16 @@ public final class MinionDescr implements HearthStoneEntity {
         this.maxAttackCount = builder.maxAttackCount;
         this.targetable = builder.targetable;
         this.stealth = builder.stealth;
-        this.deathRattle = builder.deathRattle;
-        this.ability = builder.ability;
         this.attackLeft = builder.attackLeft;
         this.attackRight = builder.attackRight;
     }
 
     public ActivatableAbility<? super Minion> tryGetAbility() {
-        return ability;
+        return abilities.tryGetAbility();
     }
 
     public WorldEventAction<? super Minion, ? super Minion> tryGetDeathRattle() {
-        return deathRattle;
+        return abilities.tryGetDeathRattle();
     }
 
     public boolean isAttackLeft() {
@@ -279,7 +264,7 @@ public final class MinionDescr implements HearthStoneEntity {
     }
 
     public WorldEventActionDefs<Minion> getEventActionDefs() {
-        return eventActionDefs;
+        return abilities.getEventActionDefs();
     }
 
     private static final class CachedSupplier<T> implements Supplier<T> {

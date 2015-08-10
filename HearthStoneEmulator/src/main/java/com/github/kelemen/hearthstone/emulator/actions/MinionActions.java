@@ -2,13 +2,16 @@ package com.github.kelemen.hearthstone.emulator.actions;
 
 import com.github.kelemen.hearthstone.emulator.BoardLocationRef;
 import com.github.kelemen.hearthstone.emulator.BornEntity;
+import com.github.kelemen.hearthstone.emulator.Damage;
 import com.github.kelemen.hearthstone.emulator.Deck;
 import com.github.kelemen.hearthstone.emulator.Hand;
+import com.github.kelemen.hearthstone.emulator.Hero;
 import com.github.kelemen.hearthstone.emulator.Keyword;
 import com.github.kelemen.hearthstone.emulator.Keywords;
 import com.github.kelemen.hearthstone.emulator.LabeledEntity;
 import com.github.kelemen.hearthstone.emulator.Player;
 import com.github.kelemen.hearthstone.emulator.SummonLocationRef;
+import com.github.kelemen.hearthstone.emulator.UndoableIntResult;
 import com.github.kelemen.hearthstone.emulator.UndoableResult;
 import com.github.kelemen.hearthstone.emulator.World;
 import com.github.kelemen.hearthstone.emulator.abilities.ActivatableAbility;
@@ -546,6 +549,30 @@ public final class MinionActions {
             return () -> {
                 updateHpUndo.undo();
                 summonUndo.undo();
+            };
+        };
+    }
+
+    public static MinionAction damageOwnHero(@NamedArg("damage") int damage) {
+        return (world, minion) -> {
+            Hero hero = minion.getOwner().getHero();
+            UndoableResult<Damage> damageRef = minion.createDamage(damage);
+            UndoableIntResult damageUndo = hero.damage(damageRef.getResult());
+            return () -> {
+                damageUndo.undo();
+                damageRef.undo();
+            };
+        };
+    }
+
+    public static MinionAction damageOpponentHero(@NamedArg("damage") int damage) {
+        return (world, minion) -> {
+            Hero hero = minion.getOwner().getOpponent().getHero();
+            UndoableResult<Damage> damageRef = minion.createDamage(damage);
+            UndoableIntResult damageUndo = hero.damage(damageRef.getResult());
+            return () -> {
+                damageUndo.undo();
+                damageRef.undo();
             };
         };
     }

@@ -1,7 +1,6 @@
 package com.github.kelemen.hearthstone.emulator.parsing;
 
 import com.github.kelemen.hearthstone.emulator.Keywords;
-import com.github.kelemen.hearthstone.emulator.actions.WorldEventAction;
 import com.github.kelemen.hearthstone.emulator.weapons.Weapon;
 import com.github.kelemen.hearthstone.emulator.weapons.WeaponDescr;
 import com.github.kelemen.hearthstone.emulator.weapons.WeaponId;
@@ -50,17 +49,7 @@ public final class WeaponParser implements EntityParser<WeaponDescr> {
         boolean collectible = collectibleElement != null ? collectibleElement.getAsBoolean() : true;
         result.addKeyword(collectible ? Keywords.COLLECTIBLE : Keywords.NON_COLLECTIBLE);
 
-        JsonTree triggersElement = root.getChild("triggers");
-        if (triggersElement != null) {
-            result.setEventActionDefs(notificationParser.fromJson(triggersElement));
-        }
-
-        JsonTree deathRattleElement = root.getChild("deathRattle");
-        if (deathRattleElement != null) {
-            WorldEventAction<? super Weapon, ? super Weapon> action
-                    = notificationParser.parseAction(Weapon.class, deathRattleElement);
-            result.setDeathRattle(action);
-        }
+        result.setAbilities(ParserUtils.parseAbilities(Weapon.class, objectParser, notificationParser, root));
 
         return result.create();
     }

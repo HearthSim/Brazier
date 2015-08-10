@@ -3,16 +3,12 @@ package com.github.kelemen.hearthstone.emulator.parsing;
 import com.github.kelemen.hearthstone.emulator.HearthStoneEntityDatabase;
 import com.github.kelemen.hearthstone.emulator.Keywords;
 import com.github.kelemen.hearthstone.emulator.World;
-import com.github.kelemen.hearthstone.emulator.abilities.ActivatableAbility;
 import com.github.kelemen.hearthstone.emulator.actions.BattleCryAction;
 import com.github.kelemen.hearthstone.emulator.actions.BattleCryArg;
 import com.github.kelemen.hearthstone.emulator.actions.BattleCryTargetedAction;
 import com.github.kelemen.hearthstone.emulator.actions.PlayActionRequirement;
 import com.github.kelemen.hearthstone.emulator.actions.TargetNeed;
 import com.github.kelemen.hearthstone.emulator.actions.UndoAction;
-import com.github.kelemen.hearthstone.emulator.actions.WorldEventAction;
-import com.github.kelemen.hearthstone.emulator.actions.WorldEventActionDefs;
-import com.github.kelemen.hearthstone.emulator.actions.WorldEventFilter;
 import com.github.kelemen.hearthstone.emulator.cards.CardDescr;
 import com.github.kelemen.hearthstone.emulator.cards.CardId;
 import com.github.kelemen.hearthstone.emulator.minions.Minion;
@@ -97,35 +93,6 @@ public final class MinionParser implements EntityParser<MinionDescr> {
         }
     }
 
-    private void parseEventActionDefs(
-            JsonTree triggersElement,
-            MinionDescr.Builder abilities) throws ObjectParsingException {
-
-        if (triggersElement == null) {
-            return;
-        }
-
-        WorldEventActionDefs<Minion> actionDefs
-                = eventNotificationParser.fromJson(triggersElement);
-        abilities.setEventActionDefs(actionDefs);
-    }
-
-    private void parseAbility(
-            JsonTree abilityElement,
-            MinionDescr.Builder abilities) throws ObjectParsingException {
-        if (abilityElement == null) {
-            return;
-        }
-
-        // Unsafe but there is nothing we can do about it.
-        @SuppressWarnings("unchecked")
-        ActivatableAbility<? super Minion> ability = (ActivatableAbility<? super Minion>)objectParser.toJavaObject(
-                abilityElement,
-                ActivatableAbility.class,
-                TypeCheckers.genericTypeChecker(ActivatableAbility.class, Minion.class));
-        abilities.setActivatableAbility(ability);
-    }
-
     @Override
     public MinionDescr fromJson(JsonTree root) throws ObjectParsingException {
         String name = ParserUtils.getStringField(root, "name");
@@ -192,33 +159,6 @@ public final class MinionParser implements EntityParser<MinionDescr> {
             result.setAttackRight(attackRightElement.getAsBoolean());
         }
 
-        JsonTree deathRattleConditionElement = root.getChild("deathRattleCondition");
-        WorldEventFilter<? super Minion, ? super Minion> deathRattleFilter = deathRattleConditionElement != null
-                ? eventNotificationParser.parseFilter(Minion.class, deathRattleConditionElement)
-                : null;
-
-        JsonTree deathRattleElement = root.getChild("deathRattle");
-        if (deathRattleElement != null) {
-            WorldEventAction<? super Minion, ? super Minion> action
-                    = eventNotificationParser.parseAction(Minion.class, deathRattleElement);
-
-            WorldEventAction<? super Minion, ? super Minion> filteredAction;
-            if (deathRattleFilter != null) {
-                filteredAction = (World world, Minion self, Minion eventSource) -> {
-                    if (!deathRattleFilter.applies(world, self, eventSource)) {
-                        return UndoAction.DO_NOTHING;
-                    }
-                    return action.alterWorld(world, self, eventSource);
-                };
-            }
-            else {
-                filteredAction = action;
-            }
-            result.setDeathRattle(filteredAction);
-        }
-
-        parseAbility(root.getChild("ability"), result);
-
         JsonTree keywords = root.getChild("keywords");
         if (keywords != null) {
             ParserUtils.parseKeywords(keywords, result::addKeyword);
@@ -227,7 +167,8 @@ public final class MinionParser implements EntityParser<MinionDescr> {
         if (parseBattleCries(root.getChild("battleCries"), result)) {
             result.addKeyword(Keywords.BATTLE_CRY);
         }
-        parseEventActionDefs(root.getChild("triggers"), result);
+
+        result.setAbilities(ParserUtils.parseAbilities(Minion.class, objectParser, eventNotificationParser, root));
 
         return result.create();
     }

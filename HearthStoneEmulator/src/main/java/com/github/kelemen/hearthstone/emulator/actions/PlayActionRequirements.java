@@ -4,6 +4,7 @@ import com.github.kelemen.hearthstone.emulator.BoardSide;
 import com.github.kelemen.hearthstone.emulator.Hand;
 import com.github.kelemen.hearthstone.emulator.Keyword;
 import com.github.kelemen.hearthstone.emulator.Player;
+import com.github.kelemen.hearthstone.emulator.World;
 import com.github.kelemen.hearthstone.emulator.minions.Minion;
 import com.github.kelemen.hearthstone.emulator.minions.MinionId;
 import com.github.kelemen.hearthstone.emulator.parsing.NamedArg;
@@ -27,6 +28,14 @@ public final class PlayActionRequirements {
 
     public static final PlayActionRequirement OPPONENT_BOARD_NOT_EMPTY = opponentBoardIsLarger(0);
 
+    public static final PlayActionRequirement BOARD_IS_EMPTY = (player) -> {
+        World world = player.getWorld();
+        return world.getPlayer1().getBoard().getMinionCount() <= 0
+                && world.getPlayer2().getBoard().getMinionCount() <= 0 ;
+    };
+
+    public static final PlayActionRequirement BOARD_IS_NOT_EMPTY = not(BOARD_IS_EMPTY);
+
     public static final PlayActionRequirement EMPTY_HAND = (player) -> {
         return player.getHand().getCardCount() == 0;
     };
@@ -34,6 +43,8 @@ public final class PlayActionRequirements {
     public static final PlayActionRequirement HAS_WEAPON = (player) -> {
         return player.tryGetWeapon() != null;
     };
+
+    public static final PlayActionRequirement DOESN_HAVE_WEAPON = not(HAS_WEAPON);
 
     public static PlayActionRequirement hasCardInHand(@NamedArg("keywords") Keyword... keywords) {
         ArrayList<Keyword> keywordCopy = new ArrayList<>(Arrays.asList(keywords));
@@ -85,6 +96,14 @@ public final class PlayActionRequirements {
     public static PlayActionRequirement opponentsHpIsLess(@NamedArg("hp") int hp) {
         return (Player player)
                 -> player.getOpponent().getHero().getCurrentHp() < hp;
+    }
+
+    public static PlayActionRequirement ownHpIsLess(@NamedArg("hp") int hp) {
+        return (Player player) -> player.getHero().getCurrentHp() < hp;
+    }
+
+    public static PlayActionRequirement ownHpIsMore(@NamedArg("hp") int hp) {
+        return (Player player) -> player.getHero().getCurrentHp() > hp;
     }
 
     public static PlayActionRequirement hasPlayerFlag(@NamedArg("flag") Keyword flag) {

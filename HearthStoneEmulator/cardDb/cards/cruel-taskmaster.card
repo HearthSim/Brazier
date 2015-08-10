@@ -1,0 +1,7 @@
+{
+    "name": "Cruel Taskmaster",
+    "description": "Battlecry: Deal 1 damage to a minion and give it +2 Attack.",
+    "class": "warrior",
+    "type": "minion",
+    "manaCost": 2
+}

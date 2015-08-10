@@ -1,0 +1,11 @@
+{
+    "name": "Ogre Warmaul",
+    "description": "50% chance to attack the wrong enemy.",
+    "class": "warrior",
+    "type": "weapon",
+    "manaCost": 3,
+    "playActions": {
+        "class": "PlayerActions.equipWeapon",
+        "weapon": "Ogre Warmaul"
+    }
+}

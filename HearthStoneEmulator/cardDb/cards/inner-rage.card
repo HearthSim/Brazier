@@ -1,0 +1,22 @@
+{
+    "name": "Inner Rage",
+    "class": "warrior",
+    "type": "spell",
+    "description": "Deal 1 damage to a minion and give it +2 Attack.",
+    "manaCost": 0,
+    "playActions": [
+        {
+            "targets": "all-minions",
+            "class": "TargetedActions.dealSpellDamage",
+            "damage": 1
+        },
+        {
+            "targets": "all-minions",
+            "class": "TargetedActions.applyToMinionTarget",
+            "action": {
+                "class": "MinionActions.buffAttack",
+                "attack": 2
+            }
+        }
+    ]
+}

@@ -1,0 +1,11 @@
+{
+    "name": "Heroic Strike",
+    "description": "Give your hero +4 Attack this turn.",
+    "class": "warrior",
+    "type": "spell",
+    "manaCost": 2,
+    "playActions": {
+        "class": "PlayerActions.addHeroAttackForThisTurn",
+        "attack": "4"
+    }
+}

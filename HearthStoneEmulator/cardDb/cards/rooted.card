@@ -1,0 +1,16 @@
+{
+    "name": "Rooted",
+    "description": "+5 Health and Taunt.",
+    "class": "druid",
+    "type": "spell",
+    "collectible": false,
+    "manaCost": 0,
+    "playActions": {
+        "class": "CardPlayActions.doForPlayedMinion",
+        "action": [{
+            "class": "MinionActions.buffHp",
+            "hp": 5
+        },
+        "MinionActions.TAUNT"]
+    }
+}

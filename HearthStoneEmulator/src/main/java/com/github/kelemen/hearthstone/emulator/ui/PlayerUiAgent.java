@@ -154,7 +154,7 @@ public final class PlayerUiAgent {
                     }
                 }
 
-                worldAgent.playCard(cardIndex, new PlayTargetRequest(playerId, (int)minionIndex, null));
+                worldAgent.playCard(cardIndex, new PlayTargetRequest(playerId, (int)minionIndex, null, chooseOneChoice));
             }
         });
     }

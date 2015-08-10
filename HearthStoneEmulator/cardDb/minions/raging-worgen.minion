@@ -3,7 +3,7 @@
     "attack": 3,
     "hp": 3,
     "ability": {
-        "class": "MinionAbilities.selfAura",
+        "class": "Auras.selfAura",
         "filter": "MinionAuras.SELF_DAMAGED",
         "aura": [
             {

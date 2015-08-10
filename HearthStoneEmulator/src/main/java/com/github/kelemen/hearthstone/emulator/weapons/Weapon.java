@@ -11,7 +11,9 @@ import com.github.kelemen.hearthstone.emulator.UndoableResult;
 import com.github.kelemen.hearthstone.emulator.World;
 import com.github.kelemen.hearthstone.emulator.abilities.ActivatableAbility;
 import com.github.kelemen.hearthstone.emulator.abilities.AuraAwareIntProperty;
+import com.github.kelemen.hearthstone.emulator.actions.ActivatableAbilities;
 import com.github.kelemen.hearthstone.emulator.actions.UndoAction;
+import com.github.kelemen.hearthstone.emulator.actions.UndoBuilder;
 import com.github.kelemen.hearthstone.emulator.actions.WorldActionEvents;
 import com.github.kelemen.hearthstone.emulator.actions.WorldEventAction;
 import java.util.Set;
@@ -47,16 +49,22 @@ public final class Weapon implements DestroyableEntity, DamageSource, LabeledEnt
     }
 
     public UndoAction activatePassiveAbilities() {
-        UndoAction abilityUndo = abilities.getOwned().addAndActivateAbility(baseDescr.getEventActionDefs());
-        if (deathRattle == null) {
-            return abilityUndo;
+        ActivatableAbilities<Weapon> ownedAbilities = abilities.getOwned();
+
+        UndoBuilder result = new UndoBuilder();
+
+        result.addUndo(ownedAbilities.addAndActivateAbility(baseDescr.getEventActionDefs()));
+
+        ActivatableAbility<? super Weapon> ability = baseDescr.tryGetAbility();
+        if (ability != null) {
+            result.addUndo(ownedAbilities.addAndActivateAbility(ability));
         }
 
-        UndoAction deathRattleUndo = abilities.getOwned().addAndActivateAbility(deathRattle);
-        return () -> {
-            deathRattleUndo.undo();
-            abilityUndo.undo();
-        };
+        if (deathRattle != null) {
+            result.addUndo(ownedAbilities.addAndActivateAbility(deathRattle));
+        }
+
+        return result;
     }
 
     public UndoAction deactivateAllAbilities() {

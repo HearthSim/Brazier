@@ -14,7 +14,7 @@
             }
         },
         {
-            "class": "MinionAbilities.ownHeroAura",
+            "class": "Auras.ownHeroAura",
             "aura": "HeroAuras.GRANT_IMMUNITY"
         }
     ]

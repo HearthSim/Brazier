@@ -1,0 +1,15 @@
+{
+    "name": "Uproot",
+    "description": "+5 Attack.",
+    "class": "druid",
+    "type": "spell",
+    "collectible": false,
+    "manaCost": 0,
+    "playActions": {
+        "class": "CardPlayActions.doForPlayedMinion",
+        "action": {
+            "class": "MinionActions.buffAttack",
+            "attack": 5
+        }
+    }
+}

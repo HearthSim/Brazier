@@ -1,0 +1,8 @@
+{
+    "name": "Shieldmaiden",
+    "description": "Battlecry: Gain 5 Armor.",
+    "class": "warrior",
+    "rarity": "rare",
+    "type": "minion",
+    "manaCost": 6
+}

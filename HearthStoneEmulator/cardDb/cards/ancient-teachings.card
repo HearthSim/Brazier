@@ -1,0 +1,9 @@
+{
+    "name": "Ancient Teachings",
+    "description": "Draw 2 cards.",
+    "class": "druid",
+    "type": "spell",
+    "collectible": false,
+    "manaCost": 0,
+    "playActions": ["PlayerActions.DRAW_FOR_SELF", "PlayerActions.DRAW_FOR_SELF"]
+}

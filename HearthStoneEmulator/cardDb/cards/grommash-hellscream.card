@@ -1,0 +1,8 @@
+{
+    "name": "Grommash Hellscream",
+    "description": "Charge Enrage: +6 Attack",
+    "class": "warrior",
+    "rarity": "legendary",
+    "type": "minion",
+    "manaCost": 8
+}

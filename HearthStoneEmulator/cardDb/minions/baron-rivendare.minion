@@ -3,7 +3,7 @@
     "attack": 1,
     "hp": 7,
     "ability": {
-        "class": "MinionAbilities.ownPlayerAura",
+        "class": "Auras.ownPlayerAura",
         "aura": "HeroAuras.DUPLICATE_DEATH_RATTLE"
     }
 }

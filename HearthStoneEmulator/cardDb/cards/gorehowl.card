@@ -1,0 +1,14 @@
+{
+    "name": "Gorehowl",
+    "description": "Attacking a minion costs 1 Attack instead of 1 Durability.",
+    "class": "warrior",
+    "type": "weapon",
+    "rarity": "epic",
+    "manaCost": 7,
+    "playActions": [
+        {
+            "class": "PlayerActions.equipWeapon",
+            "weapon": "Gorehowl"
+        }
+    ]
+}

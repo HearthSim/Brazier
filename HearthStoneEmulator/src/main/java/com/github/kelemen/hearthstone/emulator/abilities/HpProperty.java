@@ -39,12 +39,6 @@ public final class HpProperty implements Silencable {
         return () -> currentHp = prevCurrentHp;
     }
 
-    public UndoAction adjustCurrentHp(int amount) {
-        int prevCurrentHp = currentHp;
-        currentHp = Math.min(getMaxHp(), currentHp + amount);
-        return () -> currentHp = prevCurrentHp;
-    }
-
     public UndoAction buffHp(int amount) {
         if (amount == 0) {
             return UndoAction.DO_NOTHING;

@@ -1,0 +1,12 @@
+{
+    "name": "Starfall/Aoe",
+    "description": "Deal 2 damage to all enemy minions.",
+    "class": "druid",
+    "type": "spell",
+    "collectible": false,
+    "manaCost": 0,
+    "playActions": {
+        "class": "PlayerActions.dealDamageToEnemyMinions",
+        "damage": 2
+    }
+}

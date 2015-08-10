@@ -1,0 +1,14 @@
+{
+    "name": "Cogmaster's Wrench",
+    "description": "Has +2 Attack while you have a Mech.",
+    "class": "rouge",
+    "type": "weapon",
+    "rarity": "epic",
+    "manaCost": 3,
+    "playActions": [
+        {
+            "class": "PlayerActions.equipWeapon",
+            "weapon": "Cogmaster's Wrench"
+        }
+    ]
+}

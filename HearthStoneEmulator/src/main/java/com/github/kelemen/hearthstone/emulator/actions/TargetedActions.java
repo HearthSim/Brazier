@@ -71,6 +71,17 @@ public final class TargetedActions {
         }
     };
 
+    public static final TargetedAction SHIELD_SLAM = (World world, PlayTarget playTarget) -> {
+        TargetableCharacter target = playTarget.getTarget();
+        if (target == null) {
+            return UndoAction.DO_NOTHING;
+        }
+
+        Player player = playTarget.getCastingPlayer();
+        int armor = player.getHero().getCurrentArmor();
+        return target.damage(player.getSpellDamage(armor));
+    };
+
     public static final TargetedAction SHADOW_FLAME_DAMAGE = shadowFlameDamage();
 
     public static final CharacterTargetedAction KILL_TARGET = (World world, TargetableCharacter target) -> {

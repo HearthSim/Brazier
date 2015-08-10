@@ -1,0 +1,15 @@
+{
+    "name": "Tank Mode",
+    "description": "+1 Health.",
+    "class": "druid",
+    "type": "spell",
+    "collectible": false,
+    "manaCost": 0,
+    "playActions": {
+        "class": "CardPlayActions.doForPlayedMinion",
+        "action": {
+            "class": "MinionActions.buffHp",
+            "hp": 1
+        }
+    }
+}

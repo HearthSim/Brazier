@@ -1,0 +1,15 @@
+{
+    "name": "Fire Hawk Form",
+    "description": "Transform into a 2/5 minion.",
+    "class": "druid",
+    "type": "spell",
+    "collectible": false,
+    "manaCost": 0,
+    "playActions": {
+        "class": "CardPlayActions.doForPlayedMinion",
+        "action": {
+            "class": "MinionActions.transformMinion",
+            "minion": "Druid of the Flame/Firehawk"
+        }
+    }
+}

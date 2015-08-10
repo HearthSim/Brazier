@@ -42,6 +42,8 @@ public final class Keywords {
 
     public static final Keyword HORDE_WARRIOR = Keyword.create("horde-warrior");
 
+    public static final Keyword BRAWLER = Keyword.create("brawler");
+
     public static Keyword manaCost(int manaCost) {
         return Keyword.create(manaCost + "-cost");
     }

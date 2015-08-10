@@ -1,0 +1,9 @@
+{
+    "name": "Shieldmaiden",
+    "attack": 5,
+    "hp": 5,
+    "battleCries": {
+        "class": "PlayerActions.armorUp",
+        "armor": 5
+    }
+}

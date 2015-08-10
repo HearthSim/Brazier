@@ -1,0 +1,21 @@
+{
+    "name": "Upgrade!",
+    "description": "If you have a weapon, give it +1/+1. Otherwise equip a 1/3 weapon.",
+    "class": "warrior",
+    "type": "spell",
+    "rarity": "rare",
+    "manaCost": 1,
+    "playActions": [
+        {
+            "requires": "PlayActionRequirements.HAS_WEAPON",
+            "class": "PlayerActions.buffWeapon",
+            "attack": 1,
+            "charges": 1
+        },
+        {
+            "requires": "PlayActionRequirements.DOESN_HAVE_WEAPON",
+            "class": "PlayerActions.equipWeapon",
+            "weapon": "Heavy Axe"
+        }
+    ]
+}

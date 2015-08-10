@@ -4,9 +4,11 @@ import com.github.kelemen.hearthstone.emulator.HearthStoneDb;
 import com.github.kelemen.hearthstone.emulator.HeroPowerId;
 import com.github.kelemen.hearthstone.emulator.Keyword;
 import com.github.kelemen.hearthstone.emulator.PlayerProperty;
+import com.github.kelemen.hearthstone.emulator.World;
 import com.github.kelemen.hearthstone.emulator.abilities.ActivatableAbility;
 import com.github.kelemen.hearthstone.emulator.abilities.Aura;
 import com.github.kelemen.hearthstone.emulator.abilities.AuraFilter;
+import com.github.kelemen.hearthstone.emulator.abilities.LivingEntitysAbilities;
 import com.github.kelemen.hearthstone.emulator.actions.BattleCryTargetedAction;
 import com.github.kelemen.hearthstone.emulator.actions.CardPlayAction;
 import com.github.kelemen.hearthstone.emulator.actions.CharacterTargetedAction;
@@ -17,9 +19,11 @@ import com.github.kelemen.hearthstone.emulator.actions.PlayerAction;
 import com.github.kelemen.hearthstone.emulator.actions.TargetNeed;
 import com.github.kelemen.hearthstone.emulator.actions.TargetedAction;
 import com.github.kelemen.hearthstone.emulator.actions.TargetedMinionAction;
+import com.github.kelemen.hearthstone.emulator.actions.UndoAction;
 import com.github.kelemen.hearthstone.emulator.actions.WeaponAction;
 import com.github.kelemen.hearthstone.emulator.actions.WorldAction;
 import com.github.kelemen.hearthstone.emulator.actions.WorldEventAction;
+import com.github.kelemen.hearthstone.emulator.actions.WorldEventActionDefs;
 import com.github.kelemen.hearthstone.emulator.actions.WorldEventFilter;
 import com.github.kelemen.hearthstone.emulator.actions.WorldObjectAction;
 import com.github.kelemen.hearthstone.emulator.cards.CardDescr;
@@ -395,6 +399,77 @@ public final class ParserUtils {
         return requiresElement != null
                 ?getPlayRequirement(objectParser, requiresElement)
                 : PlayActionRequirement.ALLOWED;
+    }
+
+    private static <Self extends PlayerProperty> WorldEventActionDefs<Self> parseEventActionDefs(
+            EventNotificationParser<Self> eventNotificationParser,
+            JsonTree triggersElement) throws ObjectParsingException {
+        if (triggersElement == null) {
+            return new WorldEventActionDefs.Builder<Self>().create();
+        }
+
+        return eventNotificationParser.fromJson(triggersElement);
+    }
+
+    private static <Self> ActivatableAbility<? super Self> parseAbility(
+            Class<Self> selfClass,
+            JsonDeserializer objectParser,
+            JsonTree abilityElement) throws ObjectParsingException {
+        if (abilityElement == null) {
+            return null;
+        }
+
+        // Unsafe but there is nothing we can do about it.
+        @SuppressWarnings("unchecked")
+        ActivatableAbility<? super Self> ability = (ActivatableAbility<? super Self>)objectParser.toJavaObject(
+                abilityElement,
+                ActivatableAbility.class,
+                TypeCheckers.genericTypeChecker(ActivatableAbility.class, selfClass));
+        return ability;
+    }
+
+    private static <Self extends PlayerProperty> WorldEventAction<? super Self, ? super Self> parseDeathRattle(
+            Class<Self> selfClass,
+            EventNotificationParser<Self> eventNotificationParser,
+            JsonTree root) throws ObjectParsingException {
+
+        JsonTree deathRattleElement = root.getChild("deathRattle");
+        if (deathRattleElement == null) {
+            return null;
+        }
+
+        JsonTree deathRattleConditionElement = root.getChild("deathRattleCondition");
+        WorldEventFilter<? super Self, ? super Self> deathRattleFilter = deathRattleConditionElement != null
+                ? eventNotificationParser.parseFilter(selfClass, deathRattleConditionElement)
+                : null;
+
+        WorldEventAction<? super Self, ? super Self> action
+                = eventNotificationParser.parseAction(selfClass, deathRattleElement);
+
+        if (deathRattleFilter != null) {
+            return (World world, Self self, Self eventSource) -> {
+                if (!deathRattleFilter.applies(world, self, eventSource)) {
+                    return UndoAction.DO_NOTHING;
+                }
+                return action.alterWorld(world, self, eventSource);
+            };
+        }
+        else {
+            return action;
+        }
+    }
+
+    public static <Self extends PlayerProperty> LivingEntitysAbilities<Self> parseAbilities(
+            Class<Self> selfClass,
+            JsonDeserializer objectParser,
+            EventNotificationParser<Self> eventNotificationParser,
+            JsonTree root) throws ObjectParsingException {
+
+        ActivatableAbility<? super Self> ability = parseAbility(selfClass, objectParser, root.getChild("ability"));
+        WorldEventActionDefs<Self> eventActionDefs = parseEventActionDefs(eventNotificationParser, root.getChild("triggers"));
+        WorldEventAction<? super Self, ? super Self> deathRattle = parseDeathRattle(selfClass, eventNotificationParser, root);
+
+        return new LivingEntitysAbilities<>(ability, eventActionDefs, deathRattle);
     }
 
     private ParserUtils() {

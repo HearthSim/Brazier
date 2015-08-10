@@ -1,0 +1,12 @@
+{
+    "name": "Shield Slam",
+    "description": "Deal 1 damage to a minion for each Armor you have.",
+    "class": "warrior",
+    "type": "spell",
+    "rarity": "epic",
+    "manaCost": 1,
+    "playActions": {
+        "targets": "all-minions",
+        "class": "TargetedActions.SHIELD_SLAM"
+    }
+}

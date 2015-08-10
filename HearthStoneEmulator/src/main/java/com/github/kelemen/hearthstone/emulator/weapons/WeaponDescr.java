@@ -2,6 +2,8 @@ package com.github.kelemen.hearthstone.emulator.weapons;
 
 import com.github.kelemen.hearthstone.emulator.HearthStoneEntity;
 import com.github.kelemen.hearthstone.emulator.Keyword;
+import com.github.kelemen.hearthstone.emulator.abilities.ActivatableAbility;
+import com.github.kelemen.hearthstone.emulator.abilities.LivingEntitysAbilities;
 import com.github.kelemen.hearthstone.emulator.actions.WorldEventAction;
 import com.github.kelemen.hearthstone.emulator.actions.WorldEventActionDefs;
 import java.util.Collection;
@@ -22,8 +24,7 @@ public final class WeaponDescr implements HearthStoneEntity {
 
         private final Set<Keyword> keywords;
 
-        private WorldEventActionDefs<Weapon> eventActionDefs;
-        private WorldEventAction<? super Weapon, ? super Weapon> deathRattle;
+        private LivingEntitysAbilities<Weapon> abilities;
 
         public Builder(WeaponId id, int attack, int charges) {
             ExceptionHelper.checkNotNullArgument(id, "id");
@@ -35,21 +36,16 @@ public final class WeaponDescr implements HearthStoneEntity {
             this.canRetaliateWith = false;
             this.canTargetRetaliate = true;
             this.keywords = new HashSet<>();
-            this.eventActionDefs = new WorldEventActionDefs.Builder<Weapon>().create();
-            this.deathRattle = null;
+            this.abilities = LivingEntitysAbilities.noAbilities();
+        }
+
+        public void setAbilities(LivingEntitysAbilities<Weapon> abilities) {
+            ExceptionHelper.checkNotNullArgument(abilities, "abilities");
+            this.abilities = abilities;
         }
 
         public void setMaxAttackCount(int maxAttackCount) {
             this.maxAttackCount = maxAttackCount;
-        }
-
-        public void setEventActionDefs(WorldEventActionDefs<Weapon> eventActionDefs) {
-            ExceptionHelper.checkNotNullArgument(eventActionDefs, "eventActionDefs");
-            this.eventActionDefs = eventActionDefs;
-        }
-
-        public void setDeathRattle(WorldEventAction<? super Weapon, ? super Weapon> deathRattle) {
-            this.deathRattle = deathRattle;
         }
 
         public void addKeyword(Keyword keyword) {
@@ -80,8 +76,7 @@ public final class WeaponDescr implements HearthStoneEntity {
 
     private final Set<Keyword> keywords;
 
-    private final WorldEventActionDefs<Weapon> eventActionDefs;
-    private final WorldEventAction<? super Weapon, ? super Weapon> deathRattle;
+    private final LivingEntitysAbilities<Weapon> abilities;
 
     private WeaponDescr(Builder builder) {
         this.id = builder.id;
@@ -91,8 +86,7 @@ public final class WeaponDescr implements HearthStoneEntity {
         this.canRetaliateWith = builder.canRetaliateWith;
         this.canTargetRetaliate = builder.canTargetRetaliate;
         this.keywords = readOnlyCopySet(builder.keywords);
-        this.eventActionDefs = builder.eventActionDefs;
-        this.deathRattle = builder.deathRattle;
+        this.abilities = builder.abilities;
     }
 
     private <T> Set<T> readOnlyCopySet(Collection<? extends T> src) {
@@ -138,10 +132,14 @@ public final class WeaponDescr implements HearthStoneEntity {
     }
 
     public WorldEventActionDefs<Weapon> getEventActionDefs() {
-        return eventActionDefs;
+        return abilities.getEventActionDefs();
     }
 
     public WorldEventAction<? super Weapon, ? super Weapon> tryGetDeathRattle() {
-        return deathRattle;
+        return abilities.tryGetDeathRattle();
+    }
+
+    public ActivatableAbility<? super Weapon> tryGetAbility() {
+        return abilities.tryGetAbility();
     }
 }

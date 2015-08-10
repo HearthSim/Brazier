@@ -5,7 +5,7 @@
     "hp": 3,
     "taunt": true,
     "ability": {
-        "class": "MinionAbilities.selfAura",
+        "class": "Auras.selfAura",
         "filter": "MinionAuras.SELF_DAMAGED",
         "aura": {
             "class": "MinionAuras.attackBuff",

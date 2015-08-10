@@ -4,7 +4,7 @@
     "hp": 3,
     "keywords": "mech",
     "ability": {
-        "class": "MinionAbilities.selfAura",
+        "class": "Auras.selfAura",
         "filter": "MinionAuras.SELF_DAMAGED",
         "aura": {
             "class": "MinionAuras.attackBuff",

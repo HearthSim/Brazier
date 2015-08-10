@@ -4,6 +4,7 @@ import com.github.kelemen.hearthstone.emulator.Hero;
 import com.github.kelemen.hearthstone.emulator.Player;
 import com.github.kelemen.hearthstone.emulator.World;
 import com.github.kelemen.hearthstone.emulator.cards.Card;
+import com.github.kelemen.hearthstone.emulator.minions.Minion;
 import com.github.kelemen.hearthstone.emulator.parsing.NamedArg;
 import com.github.kelemen.hearthstone.emulator.weapons.Weapon;
 
@@ -56,6 +57,13 @@ public final class ManaCostAdjusters {
             Hero hero = card.getOwner().getHero();
             int manaReduction = hero.getOwner().getHand().getCardCount();
             return currentManaCost - manaReduction + extraCost;
+        };
+    }
+
+    public static ManaCostAdjuster reduceIfHaveDamaged(@NamedArg("reduction") int reduction) {
+        return (Card card, int currentManaCost) -> {
+            int damagedCount = card.getOwner().getBoard().countMinions(Minion::isDamaged);
+            return damagedCount > 0 ? currentManaCost - reduction : currentManaCost;
         };
     }
 

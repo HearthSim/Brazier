@@ -1,0 +1,13 @@
+{
+    "name": "Nourish/Mana",
+    "description": "Gain 2 Mana Crystals.",
+    "class": "druid",
+    "type": "spell",
+    "collectible": false,
+    "manaCost": 0,
+    "playActions": {
+        "class": "PlayerActions.addManaCrystal",
+        "empty": false,
+        "amount": 2
+    }
+}

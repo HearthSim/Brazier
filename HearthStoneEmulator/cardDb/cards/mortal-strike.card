@@ -1,0 +1,28 @@
+{
+    "name": "Mortal Strike",
+    "description": "Deal 4 damage. If you have 12 or less Health, deal 6 instead.",
+    "class": "warrior",
+    "type": "spell",
+    "rarity": "rare",
+    "manaCost": 4,
+    "playActions": [
+        {
+            "targets": "all",
+            "requires": {
+                "class": "PlayActionRequirements.ownHpIsMore",
+                "hp": 12
+            },
+            "class": "TargetedActions.dealSpellDamage",
+            "damage": 4
+        },
+        {
+            "targets": "all",
+            "requires": {
+                "class": "PlayActionRequirements.ownHpIsLess",
+                "hp": 13
+            },
+            "class": "TargetedActions.dealSpellDamage",
+            "damage": 6
+        }
+    ]
+}

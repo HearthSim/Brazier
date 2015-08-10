@@ -5,7 +5,7 @@
     "charge": true,
     "keywords": "murloc",
     "ability": {
-        "class": "MinionAbilities.selfAura",
+        "class": "Auras.selfAura",
         "aura": {
             "class": "MinionAuras.attackForOtherMinionsBuff",
             "attack": 1,

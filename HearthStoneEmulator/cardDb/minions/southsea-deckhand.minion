@@ -4,7 +4,7 @@
     "hp": 1,
     "keywords": "pirate",
     "ability": {
-        "class": "MinionAbilities.selfAura",
+        "class": "Auras.selfAura",
         "filter": "Auras.OWNER_HAS_WEAPON",
         "aura": "MinionAuras.CHARGE"
     }

@@ -1,0 +1,7 @@
+{
+    "name": "Axe Flinger",
+    "description": "Whenever this minion takes damage, deal 2 damage to the enemy hero.",
+    "class": "warrior",
+    "type": "minion",
+    "manaCost": 4
+}

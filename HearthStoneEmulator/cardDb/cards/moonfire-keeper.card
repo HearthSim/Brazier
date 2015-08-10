@@ -1,0 +1,17 @@
+{
+    "name": "Moonfire/Keeper",
+    "displayName": "Moonfire",
+    "description": "Deal 2 damage.",
+    "class": "druid",
+    "type": "spell",
+    "collectible": false,
+    "manaCost": 0,
+    "playActions": {
+        "targets": "all",
+        "class": "CardPlayActions.doWithPlayedMinion",
+        "action": {
+            "class": "TargetedMinionActions.damageTarget",
+            "damage": 2
+        }
+    }
+}

@@ -1,0 +1,9 @@
+{
+    "name": "Arathi Weaponsmith",
+    "attack": 3,
+    "hp": 3,
+    "battleCries": {
+        "class": "PlayerActions.equipWeapon",
+        "weapon": "Battle Axe"
+    }
+}

@@ -1,0 +1,13 @@
+{
+    "name": "Starfall/Single",
+    "description": "Deal 5 damage to a minion.",
+    "class": "druid",
+    "type": "spell",
+    "collectible": false,
+    "manaCost": 0,
+    "playActions": {
+        "targets": "all-minions",
+        "class": "TargetedActions.dealSpellDamage",
+        "damage": 5
+    }
+}

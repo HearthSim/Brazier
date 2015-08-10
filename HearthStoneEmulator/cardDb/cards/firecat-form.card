@@ -1,0 +1,15 @@
+{
+    "name": "Firecat Form",
+    "description": "Transform into a 5/2 minion.",
+    "class": "druid",
+    "type": "spell",
+    "collectible": false,
+    "manaCost": 0,
+    "playActions": {
+        "class": "CardPlayActions.doForPlayedMinion",
+        "action": {
+            "class": "MinionActions.transformMinion",
+            "minion": "Druid of the Flame/Firecat"
+        }
+    }
+}

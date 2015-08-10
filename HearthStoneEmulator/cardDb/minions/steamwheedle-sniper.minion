@@ -3,7 +3,7 @@
     "attack": 2,
     "hp": 3,
     "ability": {
-        "class": "MinionAbilities.ownPlayerAura",
+        "class": "Auras.ownPlayerAura",
         "aura": {
             "class": "HeroAuras.playerFlag",
             "flag": "stead-shot-snipe"

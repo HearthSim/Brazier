@@ -1,0 +1,17 @@
+{
+    "name": "Axe Flinger",
+    "attack": 2,
+    "hp": 5,
+    "triggers": {
+        "minion-damaged": {
+            "filter": "BasicFilters.TARGET_SELF",
+            "action": {
+                "class": "MinionEventActions.applyTargetedActionToSelf",
+                "action": {
+                    "class": "MinionActions.damageOpponentHero",
+                    "damage": 2
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,12 @@
+{
+    "name": "Summon a Panther",
+    "description": "Summon a 3/2 Panther.",
+    "class": "druid",
+    "type": "spell",
+    "collectible": false,
+    "manaCost": 0,
+    "playActions": {
+        "class": "PlayerActions.summonMinion",
+        "minion": "Panther"
+    }
+}

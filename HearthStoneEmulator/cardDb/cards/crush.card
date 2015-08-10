@@ -1,0 +1,16 @@
+{
+    "name": "Crush",
+    "description": "Destroy a minion. If you have a damaged minion, this costs (4) less.",
+    "class": "rouge",
+    "type": "spell",
+    "rarity": "epic",
+    "manaCost": 7,
+    "manaCostAdjusters": {
+        "class": "ManaCostAdjusters.reduceIfHaveDamaged",
+        "reduction": 4
+    },
+    "playActions": {
+        "targets": "all-minions",
+        "class": "TargetedActions.KILL_TARGET"
+    }
+}

@@ -4,7 +4,7 @@
     "hp": 5,
     "keywords": "beast",
     "ability": {
-        "class": "MinionAbilities.sameBoardAura",
+        "class": "Auras.sameBoardAura",
         "filter": "MinionAuras.TARGET_IS_BEAST",
         "aura": "MinionAuras.CHARGE"
     }
