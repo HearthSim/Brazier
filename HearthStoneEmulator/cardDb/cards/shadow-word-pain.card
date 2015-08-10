@@ -1,0 +1,17 @@
+{
+    "name": "Shadow Word: Pain",
+    "description": "Destroy a minion with 3 or less Attack.",
+    "class": "priest",
+    "type": "spell",
+    "manaCost": 2,
+    "playActions": {
+        "targets": [
+            "all-minions",
+            {
+                "class": "TargetNeeds.attackIsLessThan",
+                "attack": 4
+            }
+        ],
+        "class": "TargetedActions.KILL_TARGET"
+    }
+}

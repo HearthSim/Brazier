@@ -1,0 +1,11 @@
+{
+    "name": "Mind Blast",
+    "description": "Deal 5 damage to the enemy hero.",
+    "class": "priest",
+    "type": "spell",
+    "manaCost": 1,
+    "playActions": {
+        "class": "PlayerActions.damageOpponentHero",
+        "damage": 5
+    }
+}

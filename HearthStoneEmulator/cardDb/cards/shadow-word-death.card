@@ -1,0 +1,17 @@
+{
+    "name": "Shadow Word: Death",
+    "description": "Destroy a minion with an Attack of 5 or more.",
+    "class": "priest",
+    "type": "spell",
+    "manaCost": 3,
+    "playActions": {
+        "targets": [
+            "all-minions",
+            {
+                "class": "TargetNeeds.attackIsMoreThan",
+                "attack": 4
+            }
+        ],
+        "class": "TargetedActions.KILL_TARGET"
+    }
+}

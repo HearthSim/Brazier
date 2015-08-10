@@ -1,0 +1,16 @@
+{
+    "name": "Power Word: Shield",
+    "description": "Give a minion +2 Health. Draw a card.",
+    "class": "priest",
+    "type": "spell",
+    "manaCost": 1,
+    "playActions": [{
+            "targets": "all-minions",
+            "class": "TargetedActions.applyToMinionTarget",
+            "action": {
+                "class": "MinionActions.buffHp",
+                "hp": 2
+            }
+        },
+        "PlayerActions.DRAW_FOR_SELF"]
+}
