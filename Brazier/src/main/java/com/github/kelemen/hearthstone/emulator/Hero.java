@@ -191,6 +191,10 @@ public final class Hero implements TargetableCharacter {
         return () -> this.heroPower = prevHeroPower;
     }
 
+    public HpProperty getHp() {
+        return hp;
+    }
+
     public int getMaxHp() {
         return hp.getMaxHp();
     }

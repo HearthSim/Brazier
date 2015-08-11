@@ -1178,12 +1178,7 @@ public final class PlayerActions {
                 return hero.setCurrentHp(hp);
             }
             else {
-                UndoAction maxHpUndo = hero.setMaxHp(hp);
-                UndoAction currentHpUndo = hero.setCurrentHp(hp);
-                return () -> {
-                    currentHpUndo.undo();
-                    maxHpUndo.undo();
-                };
+                return hero.getHp().setMaxAndCurrentHp(hp);
             }
         };
     }
