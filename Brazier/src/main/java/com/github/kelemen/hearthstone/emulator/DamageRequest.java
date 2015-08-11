@@ -3,7 +3,7 @@ package com.github.kelemen.hearthstone.emulator;
 import com.github.kelemen.hearthstone.emulator.actions.UndoAction;
 import org.jtrim.utils.ExceptionHelper;
 
-public final class DamageRequest implements TargetRef {
+public final class DamageRequest implements TargetRef, PlayerProperty {
     private Damage damage;
     private final TargetableCharacter target;
 
@@ -13,6 +13,11 @@ public final class DamageRequest implements TargetRef {
 
         this.damage = damage;
         this.target = target;
+    }
+
+    @Override
+    public Player getOwner() {
+        return damage.getSource().getOwner();
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.github.kelemen.hearthstone.emulator;
 
 import com.github.kelemen.hearthstone.emulator.abilities.AuraAwareIntProperty;
+import com.github.kelemen.hearthstone.emulator.abilities.BuffableIntProperty;
 import com.github.kelemen.hearthstone.emulator.actions.ActionUtils;
 import com.github.kelemen.hearthstone.emulator.actions.CardPlayArg;
 import com.github.kelemen.hearthstone.emulator.actions.PlayTarget;
@@ -35,7 +36,8 @@ public final class Player implements PlayerProperty {
     private final Hand hand;
 
     private final AuraAwareIntProperty deathRattleTriggerCount;
-    private final AuraAwareIntProperty spellPower;
+    private final BuffableIntProperty spellPower;
+    private final BuffableIntProperty heroDamageMultiplier;
 
     private final ManaResource manaResource;
 
@@ -60,7 +62,8 @@ public final class Player implements PlayerProperty {
         this.hand = new Hand(this, MAX_HAND_SIZE);
         this.manaResource = new ManaResource();
         this.fatique = 0;
-        this.spellPower = new AuraAwareIntProperty(0);
+        this.spellPower = new BuffableIntProperty(() -> 0);
+        this.heroDamageMultiplier = new BuffableIntProperty(() -> 1);
         this.cardsPlayedThisTurn = 0;
         this.minionsPlayedThisTurn = 0;
         this.secrets = new SecretContainer(this);
@@ -336,14 +339,18 @@ public final class Player implements PlayerProperty {
         };
     }
 
+    private int adjustHeroDamage(int base) {
+        return base * heroDamageMultiplier.getValue();
+    }
+
     public Damage getSpellDamage(int baseDamage) {
-        return new Damage(hero, baseDamage >= 0
+        return new Damage(hero, adjustHeroDamage(baseDamage >= 0
                 ? baseDamage + spellPower.getValue()
-                : baseDamage);
+                : baseDamage));
     }
 
     public Damage getBasicDamage(int baseDamage) {
-        return new Damage(hero, baseDamage);
+        return new Damage(hero, adjustHeroDamage(baseDamage));
     }
 
     public UndoAction doFatiqueDamage() {
@@ -430,8 +437,12 @@ public final class Player implements PlayerProperty {
         return manaResource.getMana();
     }
 
-    public AuraAwareIntProperty getSpellPower() {
+    public BuffableIntProperty getSpellPower() {
         return spellPower;
+    }
+
+    public BuffableIntProperty getHeroDamageMultiplier() {
+        return heroDamageMultiplier;
     }
 
     public AuraAwareIntProperty getDeathRattleTriggerCount() {

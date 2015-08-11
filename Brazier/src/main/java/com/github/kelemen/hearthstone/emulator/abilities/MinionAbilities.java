@@ -44,8 +44,15 @@ public final class MinionAbilities {
 
     public static ActivatableAbility<PlayerProperty> spellPower(@NamedArg("spellPower") int spellPower) {
         return (PlayerProperty self) -> {
-            AuraAwareIntProperty playersSpellPower = self.getOwner().getSpellPower();
-            return playersSpellPower.addAuraBuff(spellPower);
+            BuffableIntProperty playersSpellPower = self.getOwner().getSpellPower();
+            return playersSpellPower.addBuff(spellPower);
+        };
+    }
+
+    public static ActivatableAbility<PlayerProperty> spellMultiplier(@NamedArg("mul") int mul) {
+        return (PlayerProperty self) -> {
+            BuffableIntProperty playersSpellPower = self.getOwner().getHeroDamageMultiplier();
+            return playersSpellPower.addBuff((prev) -> prev * mul);
         };
     }
 

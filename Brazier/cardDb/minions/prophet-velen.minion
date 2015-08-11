@@ -1,0 +1,9 @@
+{
+    "name": "Prophet Velen",
+    "attack": 7,
+    "hp": 7,
+    "ability": {
+        "class": "MinionAbilities.spellMultiplier",
+        "mul": 2
+    }
+}
