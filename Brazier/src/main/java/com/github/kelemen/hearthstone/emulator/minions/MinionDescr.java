@@ -5,6 +5,7 @@ import com.github.kelemen.hearthstone.emulator.Keyword;
 import com.github.kelemen.hearthstone.emulator.Player;
 import com.github.kelemen.hearthstone.emulator.abilities.ActivatableAbility;
 import com.github.kelemen.hearthstone.emulator.abilities.LivingEntitysAbilities;
+import com.github.kelemen.hearthstone.emulator.abilities.OwnedIntPropertyBuff;
 import com.github.kelemen.hearthstone.emulator.actions.BattleCryAction;
 import com.github.kelemen.hearthstone.emulator.actions.BattleCryArg;
 import com.github.kelemen.hearthstone.emulator.actions.BattleCryTargetedAction;
@@ -42,9 +43,10 @@ public final class MinionDescr implements HearthStoneEntity {
         private int maxAttackCount;
         private boolean targetable;
         private boolean stealth;
-
         private boolean attackLeft;
         private boolean attackRight;
+
+        private OwnedIntPropertyBuff<? super Minion> attackFinalizer;
 
         public Builder(MinionId minionId, int attack, int hp, Supplier<? extends CardDescr> baseCardRef) {
             ExceptionHelper.checkNotNullArgument(minionId, "minionId");
@@ -67,6 +69,7 @@ public final class MinionDescr implements HearthStoneEntity {
             this.abilities = LivingEntitysAbilities.noAbilities();
             this.attackLeft = false;
             this.attackRight = false;
+            this.attackFinalizer = OwnedIntPropertyBuff.IDENTITY;
         }
 
         public void setAbilities(LivingEntitysAbilities<Minion> abilities) {
@@ -81,6 +84,11 @@ public final class MinionDescr implements HearthStoneEntity {
 
         public void setCanAttack(boolean canAttack) {
             this.canAttack = canAttack;
+        }
+
+        public void setAttackFinalizer(OwnedIntPropertyBuff<? super Minion> attackFinalizer) {
+            ExceptionHelper.checkNotNullArgument(attackFinalizer, "attackFinalizer");
+            this.attackFinalizer = attackFinalizer;
         }
 
         public void setAttackLeft(boolean attackLeft) {
@@ -147,6 +155,7 @@ public final class MinionDescr implements HearthStoneEntity {
     private final boolean stealth;
     private final boolean attackLeft;
     private final boolean attackRight;
+    private final OwnedIntPropertyBuff<? super Minion> attackFinalizer;
 
     private MinionDescr(Builder builder) {
         this.minionId = builder.minionId;
@@ -161,6 +170,7 @@ public final class MinionDescr implements HearthStoneEntity {
         this.divineShield = builder.divineShield;
         this.charge = builder.charge;
         this.canAttack = builder.canAttack;
+        this.attackFinalizer = builder.attackFinalizer;
         this.maxAttackCount = builder.maxAttackCount;
         this.targetable = builder.targetable;
         this.stealth = builder.stealth;
@@ -198,6 +208,10 @@ public final class MinionDescr implements HearthStoneEntity {
 
     public String getDisplayName() {
         return displayName;
+    }
+
+    public OwnedIntPropertyBuff<? super Minion> getAttackFinalizer() {
+        return attackFinalizer;
     }
 
     @Override
