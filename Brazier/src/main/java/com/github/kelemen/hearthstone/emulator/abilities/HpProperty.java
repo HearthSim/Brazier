@@ -111,6 +111,22 @@ public final class HpProperty implements Silencable {
         return setMaxHp(baseMaxValue);
     }
 
+    public UndoAction setMaxAndCurrentHp(int newValue) {
+        int prevBuffedMaxHp = buffedMaxHp;
+        int prevCurrentHp = currentHp;
+        int prevCurrentMaxHp = currentMaxHp;
+
+        buffedMaxHp = newValue;
+        currentMaxHp = currentMaxHp + (newValue - prevBuffedMaxHp);
+        currentHp = getMaxHp();
+
+        return () -> {
+            currentMaxHp = prevCurrentMaxHp;
+            currentHp = prevCurrentHp;
+            buffedMaxHp = prevBuffedMaxHp;
+        };
+    }
+
     public UndoAction setMaxHp(int newValue) {
         int prevBuffedMaxHp = buffedMaxHp;
         int prevCurrentHp = currentHp;

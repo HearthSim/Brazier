@@ -1,0 +1,8 @@
+{
+    "name": "Vol'jin",
+    "description": "Battlecry: Swap Health with another minion.",
+    "class": "priest",
+    "type": "minion",
+    "rarity": "legendary",
+    "manaCost": 5
+}
