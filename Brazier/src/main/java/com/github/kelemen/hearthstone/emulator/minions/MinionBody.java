@@ -213,4 +213,8 @@ public final class MinionBody implements Silencable {
         }
         return damage >= getCurrentHp();
     }
+
+    public UndoAction applyAuras() {
+        return hp.applyAura();
+    }
 }

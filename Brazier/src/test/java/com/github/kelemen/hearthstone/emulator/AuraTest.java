@@ -1,6 +1,5 @@
 package com.github.kelemen.hearthstone.emulator;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import static com.github.kelemen.hearthstone.emulator.TestCards.*;
@@ -283,7 +282,6 @@ public final class AuraTest {
         });
     }
 
-    @Ignore // Currently failing
     @Test
     public void testRedemptionResurrectsHpAuraProvider() {
         PlayScript.testScript((script) -> {

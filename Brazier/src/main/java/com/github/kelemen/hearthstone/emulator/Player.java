@@ -109,6 +109,15 @@ public final class Player implements PlayerProperty {
         };
     }
 
+    public UndoAction applyAuras() {
+        UndoAction heroUndo = hero.applyAuras();
+        UndoAction boardUndo = board.applyAuras();
+        return () -> {
+            boardUndo.undo();
+            heroUndo.undo();
+        };
+    }
+
     public Player getOpponent() {
         return world.getOpponent(playerId);
     }

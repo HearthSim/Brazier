@@ -331,6 +331,10 @@ public final class Minion implements TargetableCharacter, DestroyableEntity, Sil
         return properties.refreshEndOfTurn();
     }
 
+    public UndoAction applyAuras() {
+        return properties.updateAuras();
+    }
+
     private UndoAction act() {
         return getBody().setStealth(false);
     }

@@ -88,6 +88,10 @@ public final class Hero implements TargetableCharacter {
         };
     }
 
+    public UndoAction applyAuras() {
+        return hp.applyAura();
+    }
+
     @Override
     public long getBirthDate() {
         return birthDate;

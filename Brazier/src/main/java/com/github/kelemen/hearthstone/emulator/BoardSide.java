@@ -64,6 +64,25 @@ public final class BoardSide {
         return result;
     }
 
+    /**
+     * Applies the aura effects if they are not already applied. This is
+     * only needed for health auras to atomically update all health affecting
+     * auras.
+     * <P>
+     * This method is idempotent.
+     *
+     * @return an action which undoes everything this method did, assuming
+     *   the undo action is called in the same state as was before calling this
+     *   {@code regresh method}. This method never returns {@code null}.
+     */
+    public UndoAction applyAuras() {
+        UndoBuilder result = new UndoBuilder(minionRefs.size());
+        for (MinionRef minionRef: minionRefs) {
+            result.addUndo(minionRef.minion.applyAuras());
+        }
+        return result;
+    }
+
     public Player getOwner() {
         return owner;
     }

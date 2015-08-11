@@ -115,6 +115,10 @@ public final class MinionProperties implements Silencable {
         return attackTool.refreshEndOfTurn();
     }
 
+    public UndoAction updateAuras() {
+        return body.applyAuras();
+    }
+
     private World getWorld() {
         return minion.getWorld();
     }

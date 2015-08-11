@@ -7,23 +7,49 @@ import com.github.kelemen.hearthstone.emulator.actions.UndoableUnregisterRef;
 public final class HpProperty implements Silencable {
     private final int baseMaxValue;
 
-    private int currentMaxHp;
-    private int extraAuraMaxHp;
+    private int buffedMaxHp;
+    private int auraBuff;
 
+    private int currentMaxHp;
     private int currentHp;
 
     public HpProperty(int baseMaxValue) {
         this.baseMaxValue = baseMaxValue;
         this.currentMaxHp = baseMaxValue;
-        this.extraAuraMaxHp = 0;
+        this.buffedMaxHp = baseMaxValue;
+        this.auraBuff = 0;
         this.currentHp = baseMaxValue;
+    }
+
+    public UndoAction applyAura() {
+        int newMaxHp = buffedMaxHp + auraBuff;
+        if (newMaxHp == currentMaxHp) {
+            return UndoAction.DO_NOTHING;
+        }
+
+        int prevMaxHp = currentMaxHp;
+        int prevCurrentHp = currentHp;
+
+        if (newMaxHp > currentMaxHp) {
+            currentHp = currentHp + (newMaxHp - currentMaxHp);
+        }
+        currentHp = Math.min(newMaxHp, currentHp);
+        currentMaxHp = newMaxHp;
+
+        return () -> {
+            currentHp = prevCurrentHp;
+            currentMaxHp = prevMaxHp;
+        };
     }
 
     public HpProperty copy() {
         HpProperty result = new HpProperty(baseMaxValue);
-        result.currentMaxHp = currentMaxHp;
-        result.extraAuraMaxHp = 0;
-        result.currentHp = Math.min(result.getMaxHp(), currentHp - extraAuraMaxHp);
+        int auraOffset = currentMaxHp - buffedMaxHp;
+
+        result.currentMaxHp = buffedMaxHp;
+        result.buffedMaxHp = buffedMaxHp;
+        result.auraBuff = 0;
+        result.currentHp = Math.min(result.getMaxHp(), currentHp - auraOffset);
         return result;
     }
 
@@ -32,10 +58,8 @@ public final class HpProperty implements Silencable {
             return UndoAction.DO_NOTHING;
         }
 
-        // Omitting the range check is intentional (i.e., we allow setting the
-        // current hp to a higher value than the maximum hp by this method).
         int prevCurrentHp = currentHp;
-        currentHp = newHp;
+        currentHp = Math.min(getMaxHp(), newHp);
         return () -> currentHp = prevCurrentHp;
     }
 
@@ -45,43 +69,33 @@ public final class HpProperty implements Silencable {
         }
 
         currentHp += amount;
-        currentMaxHp += amount;
+        UndoAction maxHpUndo = setMaxHp(buffedMaxHp + amount);
 
         return () -> {
-            currentMaxHp -= amount;
+            maxHpUndo.undo();
             currentHp -= amount;
         };
     }
 
     public UndoableUnregisterRef addAuraBuff(int amount) {
-        currentHp += amount;
-        extraAuraMaxHp += amount;
+        auraBuff += amount;
 
         return UndoableUnregisterRef.makeIdempotent(new UndoableUnregisterRef() {
             @Override
             public UndoAction unregister() {
-                int prevCurrentHp = currentHp;
-                int prevExtraMaxHp = extraAuraMaxHp;
-
-                extraAuraMaxHp -= amount;
-                currentHp = Math.min(getMaxHp(), currentHp);
-
-                return () -> {
-                    currentHp = prevCurrentHp;
-                    extraAuraMaxHp = prevExtraMaxHp;
-                };
+                auraBuff -= amount;
+                return () -> auraBuff += amount;
             }
 
             @Override
             public void undo() {
-                currentHp -= amount;
-                extraAuraMaxHp -= amount;
+                auraBuff -= amount;
             }
         });
     }
 
     public int getMaxHp() {
-        return currentMaxHp + extraAuraMaxHp;
+        return currentMaxHp;
     }
 
     public int getCurrentHp() {
@@ -94,30 +108,22 @@ public final class HpProperty implements Silencable {
 
     @Override
     public UndoAction silence() {
-        int prevCurrentHp = currentHp;
-        int prevCurrentMaxHp = currentMaxHp;
-
-        currentMaxHp = baseMaxValue;
-        currentHp = Math.min(getMaxHp(), prevCurrentMaxHp < currentMaxHp
-                ? currentHp + currentMaxHp - prevCurrentMaxHp
-                : currentHp);
-
-        return () -> {
-            currentHp = prevCurrentHp;
-            currentMaxHp = prevCurrentMaxHp;
-        };
+        return setMaxHp(baseMaxValue);
     }
 
     public UndoAction setMaxHp(int newValue) {
-        int prevMaxHp = currentMaxHp;
-        currentMaxHp = newValue;
+        int prevBuffedMaxHp = buffedMaxHp;
+        int prevCurrentHp = currentHp;
+        int prevCurrentMaxHp = currentMaxHp;
 
-        int prevCurentHp = currentHp;
+        buffedMaxHp = newValue;
+        currentMaxHp = currentMaxHp + (newValue - prevBuffedMaxHp);
         currentHp = Math.min(currentHp, getMaxHp());
 
         return () -> {
-            currentHp = prevCurentHp;
-            currentMaxHp = prevMaxHp;
+            currentMaxHp = prevCurrentMaxHp;
+            currentHp = prevCurrentHp;
+            buffedMaxHp = prevBuffedMaxHp;
         };
     }
 

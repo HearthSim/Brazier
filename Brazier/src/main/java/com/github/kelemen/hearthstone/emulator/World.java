@@ -272,7 +272,11 @@ public final class World {
     }
 
     private UndoAction updateAllAuras() {
-        return activeAuras.updateAllAura(this);
+        UndoBuilder result = new UndoBuilder();
+        result.addUndo(activeAuras.updateAllAura(this));
+        result.addUndo(player1.applyAuras());
+        result.addUndo(player2.applyAuras());
+        return result;
     }
 
     public DeathResolutionResult endPhase() {
