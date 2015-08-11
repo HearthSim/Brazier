@@ -1,6 +1,7 @@
 package com.github.kelemen.hearthstone.emulator;
 
 import com.github.kelemen.hearthstone.emulator.abilities.AuraAwareIntProperty;
+import com.github.kelemen.hearthstone.emulator.abilities.BuffableBoolProperty;
 import com.github.kelemen.hearthstone.emulator.abilities.BuffableIntProperty;
 import com.github.kelemen.hearthstone.emulator.actions.ActionUtils;
 import com.github.kelemen.hearthstone.emulator.actions.CardPlayArg;
@@ -38,6 +39,7 @@ public final class Player implements PlayerProperty {
     private final AuraAwareIntProperty deathRattleTriggerCount;
     private final BuffableIntProperty spellPower;
     private final BuffableIntProperty heroDamageMultiplier;
+    private final BuffableBoolProperty damagingHealAura;
 
     private final ManaResource manaResource;
 
@@ -64,6 +66,7 @@ public final class Player implements PlayerProperty {
         this.fatique = 0;
         this.spellPower = new BuffableIntProperty(() -> 0);
         this.heroDamageMultiplier = new BuffableIntProperty(() -> 1);
+        this.damagingHealAura = new BuffableBoolProperty(() -> false);
         this.cardsPlayedThisTurn = 0;
         this.minionsPlayedThisTurn = 0;
         this.secrets = new SecretContainer(this);
@@ -339,18 +342,29 @@ public final class Player implements PlayerProperty {
         };
     }
 
+    private int prepareHeroDamage(int base) {
+        if (base < 0 && damagingHealAura.getValue()) {
+            return -base;
+        }
+        else {
+            return base;
+        }
+    }
+
     private int adjustHeroDamage(int base) {
         return base * heroDamageMultiplier.getValue();
     }
 
     public Damage getSpellDamage(int baseDamage) {
-        return new Damage(hero, adjustHeroDamage(baseDamage >= 0
-                ? baseDamage + spellPower.getValue()
-                : baseDamage));
+        int preparedDamage = prepareHeroDamage(baseDamage);
+        return new Damage(hero, adjustHeroDamage(preparedDamage >= 0
+                ? preparedDamage + spellPower.getValue()
+                : preparedDamage));
     }
 
     public Damage getBasicDamage(int baseDamage) {
-        return new Damage(hero, adjustHeroDamage(baseDamage));
+        int preparedDamage = prepareHeroDamage(baseDamage);
+        return new Damage(hero, adjustHeroDamage(preparedDamage));
     }
 
     public UndoAction doFatiqueDamage() {
@@ -447,6 +461,10 @@ public final class Player implements PlayerProperty {
 
     public AuraAwareIntProperty getDeathRattleTriggerCount() {
         return deathRattleTriggerCount;
+    }
+
+    public BuffableBoolProperty getDamagingHealAura() {
+        return damagingHealAura;
     }
 
     public UndoAction setMana(int mana) {

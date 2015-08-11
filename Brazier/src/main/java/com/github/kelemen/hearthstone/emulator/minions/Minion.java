@@ -310,7 +310,11 @@ public final class Minion implements TargetableCharacter, DestroyableEntity, Sil
 
     @Override
     public UndoableResult<Damage> createDamage(int damage) {
-        return new UndoableResult<>(new Damage(this, damage), act());
+        int preparedDamage = damage;
+        if (damage < 0 && getOwner().getDamagingHealAura().getValue()) {
+            preparedDamage = -damage;
+        }
+        return new UndoableResult<>(new Damage(this, preparedDamage), act());
     }
 
     @Override

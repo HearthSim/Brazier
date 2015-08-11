@@ -1,0 +1,9 @@
+{
+    "name": "Auchenai Soulpriest",
+    "attack": 3,
+    "hp": 5,
+    "ability": {
+        "class": "Auras.ownPlayerAura",
+        "aura": "HeroAuras.DAMAGING_HEAL"
+    }
+}

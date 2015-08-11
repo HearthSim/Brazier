@@ -35,6 +35,10 @@ public final class HeroAuras {
         return target.getDeathRattleTriggerCount().addAuraBuff((int prev) -> Math.max(prev, 2));
     };
 
+    public static final Aura<Object, Player> DAMAGING_HEAL = (world, source, target) -> {
+        return target.getDamagingHealAura().addBuff(true);
+    };
+
     public static Aura<Object, Player> playerFlag(@NamedArg("flag") Keyword flag) {
         ExceptionHelper.checkNotNullArgument(flag, "flag");
 
