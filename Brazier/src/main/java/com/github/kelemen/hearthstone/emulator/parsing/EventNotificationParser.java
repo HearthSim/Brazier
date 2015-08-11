@@ -10,6 +10,7 @@ import com.github.kelemen.hearthstone.emulator.DamageEvent;
 import com.github.kelemen.hearthstone.emulator.DamageRequest;
 import com.github.kelemen.hearthstone.emulator.Player;
 import com.github.kelemen.hearthstone.emulator.PlayerProperty;
+import com.github.kelemen.hearthstone.emulator.Priorities;
 import com.github.kelemen.hearthstone.emulator.Secret;
 import com.github.kelemen.hearthstone.emulator.World;
 import com.github.kelemen.hearthstone.emulator.WorldEvents;
@@ -127,18 +128,18 @@ public final class EventNotificationParser<Self extends PlayerProperty> {
     private int getPriority(JsonTree actionDefElement) {
         JsonTree priorityElement = actionDefElement.getChild("priority");
         if (priorityElement == null) {
-            return WorldEvents.NORMAL_PRIORITY;
+            return Priorities.NORMAL_PRIORITY;
         }
 
         JsonPrimitive value = priorityElement.getAsJsonPrimitive();
         if (value.isString()) {
             switch (value.getAsString().toLowerCase(Locale.ROOT)) {
                 case "low":
-                    return WorldEvents.LOW_PRIORITY;
+                    return Priorities.LOW_PRIORITY;
                 case "normal":
-                    return WorldEvents.NORMAL_PRIORITY;
+                    return Priorities.NORMAL_PRIORITY;
                 case "high":
-                    return WorldEvents.HIGH_PRIORITY;
+                    return Priorities.HIGH_PRIORITY;
             }
         }
         return priorityElement.getAsInt();

@@ -1,7 +1,7 @@
 package com.github.kelemen.hearthstone.emulator.actions;
 
+import com.github.kelemen.hearthstone.emulator.Priorities;
 import com.github.kelemen.hearthstone.emulator.World;
-import com.github.kelemen.hearthstone.emulator.WorldEvents;
 import java.util.ArrayList;
 import java.util.Collection;
 import org.jtrim.collections.RefLinkedList;
@@ -16,7 +16,7 @@ public final class WorldActionList<T> {
     }
 
     public UndoableUnregisterRef addAction(WorldObjectAction<T> action) {
-        return addAction(WorldEvents.NORMAL_PRIORITY, action);
+        return addAction(Priorities.NORMAL_PRIORITY, action);
     }
 
     private static <T> int getPriority(RefList.ElementRef<ActionWrapper<T>> ref) {

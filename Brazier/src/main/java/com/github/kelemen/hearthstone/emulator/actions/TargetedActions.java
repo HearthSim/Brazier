@@ -9,6 +9,7 @@ import com.github.kelemen.hearthstone.emulator.Keyword;
 import com.github.kelemen.hearthstone.emulator.Keywords;
 import com.github.kelemen.hearthstone.emulator.MultiTargeter;
 import com.github.kelemen.hearthstone.emulator.Player;
+import com.github.kelemen.hearthstone.emulator.Priorities;
 import com.github.kelemen.hearthstone.emulator.RandomProvider;
 import com.github.kelemen.hearthstone.emulator.Silencable;
 import com.github.kelemen.hearthstone.emulator.SummonLocationRef;
@@ -371,7 +372,7 @@ public final class TargetedActions {
                 Player player = target.getCastingPlayer();
                 Minion minion = (Minion)targetCharacter;
 
-                return minion.addAndActivateAbility(drawCardOnAttackAbility(world, player, WorldEvents.LOW_PRIORITY));
+                return minion.addAndActivateAbility(drawCardOnAttackAbility(world, player, Priorities.LOW_PRIORITY));
             }
             else {
                 return UndoAction.DO_NOTHING;

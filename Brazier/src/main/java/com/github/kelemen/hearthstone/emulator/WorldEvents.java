@@ -15,10 +15,6 @@ import java.util.concurrent.atomic.AtomicReference;
 import org.jtrim.utils.ExceptionHelper;
 
 public final class WorldEvents {
-    public static final int LOW_PRIORITY = -1;
-    public static final int NORMAL_PRIORITY = 0;
-    public static final int HIGH_PRIORITY = 1;
-
     private final World world;
 
     private final WorldActionEvents<Card> drawCardListeners;
