@@ -290,6 +290,7 @@ public final class MinionProperties implements Silencable {
             this.charge = base.charge.copy();
             this.attackLeft = base.attackLeft;
             this.attackRight = base.attackRight;
+            this.attackFinalizer = base.attackFinalizer;
         }
 
         public UndoAction setAttackFinalizer(OwnedIntPropertyBuff<? super Minion> newAttackFinalizer) {
