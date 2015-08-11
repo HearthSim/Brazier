@@ -1,0 +1,8 @@
+{
+    "name": "Shadowbomber",
+    "description": "Battlecry: Deal 3 damage to each hero.",
+    "class": "priest",
+    "type": "minion",
+    "rarity": "epic",
+    "manaCost": 1
+}

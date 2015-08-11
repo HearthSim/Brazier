@@ -1,0 +1,11 @@
+{
+    "name": "Circle of Healing",
+    "description": "Restore 4 Health to ALL minions.",
+    "class": "priest",
+    "type": "spell",
+    "manaCost": 0,
+    "playActions": {
+        "class": "PlayerActions.dealDamageToAllMinions",
+        "damage": -4
+    }
+}

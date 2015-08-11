@@ -3,15 +3,27 @@ package com.github.kelemen.hearthstone.emulator.parsing;
 import com.github.kelemen.hearthstone.emulator.HearthStoneDb;
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicReference;
+import org.jtrim.utils.ExceptionHelper;
 import org.junit.internal.AssumptionViolatedException;
 
 public final class TestDb {
+    private static final AtomicReference<Throwable> LOAD_FAILURE = new AtomicReference<>(null);
     private static final AtomicReference<HearthStoneDb> DB_REF = new AtomicReference<>(null);
 
     public static HearthStoneDb getTestDbUnsafe() throws IOException, ObjectParsingException {
+        Throwable failure = LOAD_FAILURE.get();
+        if (failure != null) {
+            throw ExceptionHelper.throwChecked(failure, ObjectParsingException.class);
+        }
+
         HearthStoneDb result = DB_REF.get();
         if (result == null) {
-            result = HearthStoneDb.readDefault();
+            try {
+                result = HearthStoneDb.readDefault();
+            } catch (Throwable ex) {
+                LOAD_FAILURE.set(ex);
+                throw ex;
+            }
             if (!DB_REF.compareAndSet(null, result)) {
                 result = DB_REF.get();
             }

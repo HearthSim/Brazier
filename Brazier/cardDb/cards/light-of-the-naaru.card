@@ -1,0 +1,23 @@
+{
+    "name": "Light of the Naaru",
+    "description": "Restore 3 Health. If the target is still damaged, summon a Lightwarden.",
+    "class": "priest",
+    "type": "spell",
+    "rarity": "rare",
+    "manaCost": 1,
+    "playActions": [
+        {
+            "targets": "all",
+            "class": "TargetedActions.dealSpellDamage",
+            "damage": -3
+        },
+        {
+            "targets": "all",
+            "class": "CardPlayActions.doIfTarget",
+            "condition": "BasicFilters.EVENT_SOURCE_DAMAGED",
+            "action": {
+                "class": "PlayerActions.summonMinion",
+                "minion": "Lightwarden"
+            }
+        }]
+}

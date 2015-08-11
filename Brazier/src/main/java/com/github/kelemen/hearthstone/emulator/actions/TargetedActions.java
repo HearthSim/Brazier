@@ -32,6 +32,16 @@ import java.util.function.Function;
 import org.jtrim.utils.ExceptionHelper;
 
 public final class TargetedActions {
+    public static final TargetedAction TAKE_CONTROL = (World world, PlayTarget playTarget) -> {
+        TargetableCharacter target = playTarget.getTarget();
+        if (target instanceof Minion) {
+            return playTarget.getCastingPlayer().getBoard().takeOwnership((Minion)target);
+        }
+        else {
+            return UndoAction.DO_NOTHING;
+        }
+    };
+
     public static final TargetedAction FULL_HEAL = (World world, PlayTarget target) -> {
         Player player = target.getCastingPlayer();
         TargetableCharacter character = target.getTarget();
@@ -92,6 +102,17 @@ public final class TargetedActions {
         Player player = playTarget.getCastingPlayer();
         int armor = player.getHero().getAttackTool().getAttack();
         return target.damage(player.getSpellDamage(armor));
+    };
+
+    public static final TargetedAction OWN_ATTACK_DAMAGE = (World world, PlayTarget playTarget) -> {
+        TargetableCharacter target = playTarget.getTarget();
+        if (target == null) {
+            return UndoAction.DO_NOTHING;
+        }
+
+        Player player = playTarget.getCastingPlayer();
+        int attack = target.getAttackTool().getAttack();
+        return target.damage(player.getSpellDamage(attack));
     };
 
     public static final TargetedAction SHADOW_FLAME_DAMAGE = shadowFlameDamage();

@@ -18,6 +18,7 @@ import com.github.kelemen.hearthstone.emulator.abilities.ActivatableAbility;
 import com.github.kelemen.hearthstone.emulator.abilities.Aura;
 import com.github.kelemen.hearthstone.emulator.abilities.AuraAwareIntProperty;
 import com.github.kelemen.hearthstone.emulator.abilities.AuraFilter;
+import com.github.kelemen.hearthstone.emulator.abilities.HpProperty;
 import com.github.kelemen.hearthstone.emulator.cards.Card;
 import com.github.kelemen.hearthstone.emulator.cards.CardDescr;
 import com.github.kelemen.hearthstone.emulator.minions.Minion;
@@ -82,6 +83,11 @@ public final class MinionActions {
 
     public static final MinionAction DOUBLE_ATTACK = (world, minion) -> {
         return minion.getProperties().getBuffableAttack().addBuff((prev) -> 2 * prev);
+    };
+
+    public static final MinionAction INNER_FIRE = (world, minion) -> {
+        int hp = minion.getBody().getCurrentHp();
+        return minion.getProperties().getBuffableAttack().setValueTo(hp);
     };
 
     public static final MinionAction SHUFFLE_MINION = (world, minion) -> {
@@ -341,6 +347,13 @@ public final class MinionActions {
 
             int buff = weapon.getAttack();
             return minion.addAttackBuff(buffPerAttack * buff);
+        };
+    }
+
+    public static MinionAction multiplyHp(@NamedArg("mul") int mul) {
+        return (World world, Minion minion) -> {
+            HpProperty hp = minion.getBody().getHp();
+            return hp.buffHp(hp.getCurrentHp());
         };
     }
 

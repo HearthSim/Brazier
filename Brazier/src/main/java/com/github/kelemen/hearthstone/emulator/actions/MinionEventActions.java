@@ -90,6 +90,38 @@ public final class MinionEventActions {
         return (target) -> filter.applies(world, self, target);
     }
 
+    public static WorldEventAction<Minion, Object> applyTargetedActionToRandomOwnTarget(
+            @NamedArg("action") TargetedMinionAction action) {
+        return applyTargetedActionToRandomOwnTarget(action, WorldEventFilter.ANY);
+    }
+
+    public static WorldEventAction<Minion, Object> applyTargetedActionToRandomOwnTarget(
+            @NamedArg("action") TargetedMinionAction action,
+            @NamedArg("filter") WorldEventFilter<? super Minion, ? super TargetableCharacter> filter) {
+        return applyTargetedActionToRandomOwnTarget(false, action, filter);
+    }
+
+    public static WorldEventAction<Minion, Object> applyTargetedActionToRandomOwnTarget(
+            @NamedArg("collectDying") boolean collectDying,
+            @NamedArg("action") TargetedMinionAction action,
+            @NamedArg("filter") WorldEventFilter<? super Minion, ? super TargetableCharacter> filter) {
+        ExceptionHelper.checkNotNullArgument(action, "action");
+
+        WorldEventFilter<? super Minion, ? super TargetableCharacter> appliedFilter
+                = MinionEventActions.adjustFilter(collectDying, filter);
+
+        return (World world, Minion self, Object eventSource) -> {
+            Player player = self.getOwner();
+            Predicate<TargetableCharacter> targetFilter = toPredicate(world, self, appliedFilter);
+            TargetableCharacter target = ActionUtils.rollPlayerTarget(world, player, targetFilter);
+            if (target == null) {
+                return UndoAction.DO_NOTHING;
+            }
+
+            return action.doAction(self, new PlayTarget(self.getOwner(), target));
+        };
+    }
+
     public static WorldEventAction<Minion, Object> applyTargetedActionToRandomEnemy(
             @NamedArg("action") TargetedMinionAction action) {
         return applyTargetedActionToRandomEnemy(action, WorldEventFilter.ANY);

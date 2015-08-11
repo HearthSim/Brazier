@@ -134,12 +134,16 @@ public final class EventNotificationParser<Self extends PlayerProperty> {
         JsonPrimitive value = priorityElement.getAsJsonPrimitive();
         if (value.isString()) {
             switch (value.getAsString().toLowerCase(Locale.ROOT)) {
+                case "lowest":
+                    return Priorities.LOWEST_PRIORITY;
                 case "low":
                     return Priorities.LOW_PRIORITY;
                 case "normal":
                     return Priorities.NORMAL_PRIORITY;
                 case "high":
                     return Priorities.HIGH_PRIORITY;
+                case "highest":
+                    return Priorities.HIGHEST_PRIORITY;
             }
         }
         return priorityElement.getAsInt();

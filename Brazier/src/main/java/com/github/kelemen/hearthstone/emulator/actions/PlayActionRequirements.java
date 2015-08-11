@@ -56,6 +56,21 @@ public final class PlayActionRequirements {
         };
     }
 
+    public static PlayActionRequirement stealBattleCryNeeds(@NamedArg("maxAttack") int maxAttack) {
+        return (Player player) -> {
+            BoardSide opponentBoard = player.getOpponent().getBoard();
+
+            boolean hasTarget = opponentBoard
+                    .findMinion((minion) -> minion.getAttackTool().getAttack() <= maxAttack) != null;
+            if (hasTarget) {
+                return player.getBoard().getMinionCount() + 1 < Player.MAX_BOARD_SIZE;
+            }
+            else {
+                return !player.getBoard().isFull();
+            }
+        };
+    }
+
     public static PlayActionRequirement hasOnOwnBoard(@NamedArg("keywords") Keyword... keywords) {
         ArrayList<Keyword> keywordCopy = new ArrayList<>(Arrays.asList(keywords));
         ExceptionHelper.checkNotNullElements(keywordCopy, "keywords");

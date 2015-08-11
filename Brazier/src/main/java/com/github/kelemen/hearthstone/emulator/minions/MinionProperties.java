@@ -262,7 +262,7 @@ public final class MinionProperties implements Silencable {
         private boolean attackRight;
 
         public MinionAttackTool(MinionDescr baseDescr) {
-            this.attack = new AuraAwareIntProperty(baseDescr.getAttack());
+            this.attack = new AuraAwareIntProperty(baseDescr.getAttack(), 0);
             this.freezeManager = new FreezeManager();
             this.maxAttackCount = new AuraAwareIntProperty(baseDescr.getMaxAttackCount());
             this.attackCount = 0;

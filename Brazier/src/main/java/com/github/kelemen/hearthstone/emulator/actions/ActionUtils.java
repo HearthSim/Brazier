@@ -8,6 +8,7 @@ import com.github.kelemen.hearthstone.emulator.Keywords;
 import com.github.kelemen.hearthstone.emulator.LabeledEntity;
 import com.github.kelemen.hearthstone.emulator.Player;
 import com.github.kelemen.hearthstone.emulator.PlayerProperty;
+import com.github.kelemen.hearthstone.emulator.RandomProvider;
 import com.github.kelemen.hearthstone.emulator.TargetableCharacter;
 import com.github.kelemen.hearthstone.emulator.UndoableIntResult;
 import com.github.kelemen.hearthstone.emulator.UndoableRegistry;
@@ -18,6 +19,7 @@ import com.github.kelemen.hearthstone.emulator.cards.CardDescr;
 import com.github.kelemen.hearthstone.emulator.minions.Minion;
 import com.github.kelemen.hearthstone.emulator.minions.MinionDescr;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
@@ -228,6 +230,36 @@ public final class ActionUtils {
 
         int index = world.getRandomProvider().roll(list.length);
         return list[index];
+    }
+
+    public static <T> List<T> pickMultipleRandom(World world, int count, List<? extends T> list) {
+        int size = list.size();
+        if (size == 0 || count <= 0) {
+            return Collections.emptyList();
+        }
+        if (size == 1) {
+            return Collections.singletonList(list.get(0));
+        }
+
+        RandomProvider rng = world.getRandomProvider();
+        if (count == 1) {
+            return Collections.singletonList(list.get(rng.roll(size)));
+        }
+
+        int[] indexes = new int[size];
+        for (int i = 0; i < indexes.length; i++) {
+            indexes[i] = i;
+        }
+
+        List<T> result = new ArrayList<>(count);
+        for (int i = 0; i < count; i++) {
+            int indexOfIndex = rng.roll(indexes.length - i);
+            int choice = indexes[indexOfIndex];
+            indexes[indexOfIndex] = indexes[indexes.length - i - 1];
+
+            result.add(list.get(choice));
+        }
+        return result;
     }
 
     public static UndoAction doOnEndOfTurn(World world, UndoableAction action) {

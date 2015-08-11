@@ -8,8 +8,11 @@
     "playActions": {
         "class": "PlayerActions.forAllMinions",
         "action": {
-            "class": "MinionActions.setMaxHp",
-            "hp": 1
+            "class": "TargetedActions.applyToMinionTarget",
+            "action": {
+                "class": "MinionActions.setMaxHp",
+                "hp": 1
+            }
         }
     }
 }

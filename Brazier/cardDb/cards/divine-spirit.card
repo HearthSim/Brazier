@@ -1,0 +1,12 @@
+{
+    "name": "Divine Spirit",
+    "description": "Double a minion's Health.",
+    "class": "priest",
+    "type": "spell",
+    "manaCost": 2,
+    "playActions": {
+        "targets": "all-minions",
+        "class": "MinionActions.multiplyHp",
+        "mul": 2
+    }
+}

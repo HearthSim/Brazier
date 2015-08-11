@@ -1,0 +1,7 @@
+{
+    "name": "Northshire Cleric",
+    "description": "Whenever a minion is healed, draw a card.",
+    "class": "priest",
+    "type": "minion",
+    "manaCost": 1
+}

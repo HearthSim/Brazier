@@ -116,6 +116,9 @@ public final class DefaultDbTest {
                     if (!minion.isTargetable()) {
                         assertTrue("Not targetable", description.contains("Can't be targeted by spells or Hero Powers"));
                     }
+                    if (minion.tryGetDeathRattle() != null) {
+                        assertTrue("Deathrattle", description.contains("Deathrattle"));
+                    }
                     needDescription = minion.getBattleCries().size() > 0
                             || minion.getEventActionDefs().hasAnyActionDef()
                             || minion.tryGetAbility() != null

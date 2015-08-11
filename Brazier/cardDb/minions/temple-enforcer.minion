@@ -1,0 +1,13 @@
+{
+    "name": "Temple Enforcer",
+    "attack": 6,
+    "hp": 6,
+    "battleCries": {
+        "targets": "self-minions",
+        "class": "TargetedActions.applyToMinionTarget",
+        "action": {
+            "class": "MinionActions.buffHp",
+            "hp": 3
+        }
+    }
+}

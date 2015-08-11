@@ -1,5 +1,6 @@
 {
     "name": "Nerubian Egg",
+    "description": "Deathrattle: Summon a 4/4 Nerubian.",
     "class": "neutral",
     "type": "minion",
     "rarity": "rare",

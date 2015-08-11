@@ -1,0 +1,12 @@
+{
+    "name": "Mind Control",
+    "description": "Take control of an enemy minion.",
+    "class": "priest",
+    "type": "spell",
+    "manaCost": 10,
+    "playActions": {
+        "targets": "enemy-minions",
+        "requires": "PlayActionRequirements.HAS_SPACE_ON_OWN_BOARD",
+        "class": "TargetedActions.TAKE_CONTROL"
+    }
+}

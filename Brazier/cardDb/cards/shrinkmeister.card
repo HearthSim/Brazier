@@ -1,0 +1,7 @@
+{
+    "name": "Shrinkmeister",
+    "description": "Battlecry: Give a minion -2 Attack this turn.",
+    "class": "priest",
+    "type": "minion",
+    "manaCost": 2
+}

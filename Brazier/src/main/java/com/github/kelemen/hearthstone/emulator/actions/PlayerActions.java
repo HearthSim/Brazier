@@ -62,6 +62,14 @@ public final class PlayerActions {
         return player.getBoard().forAllMinions((minion) -> minion.triggetDeathRattles());
     };
 
+    public static final PlayerAction MIND_VISION = (world, player) -> {
+        Card card = player.getOpponent().getHand().getRandomCard();
+        if (card == null) {
+            return UndoAction.DO_NOTHING;
+        }
+        return player.getHand().addCard(card.getCardDescr());
+    };
+
     public static final PlayerAction KILL_ALL_MINIONS = killAllMinions();
 
     private static final ActivatableAbility<PlayerProperty> HERO_IS_IMMUNE = (PlayerProperty self) -> {
@@ -141,6 +149,7 @@ public final class PlayerActions {
         world.getPlayer1().getBoard().collectMinions(minions);
         world.getPlayer2().getBoard().collectMinions(minions);
 
+        // TODO: Brawler shouldn't be a keyword because keywords cannot be silenced.
         List<Minion> brawlers = minions.stream()
                 .filter((minion) -> minion.getKeywords().contains(Keywords.BRAWLER))
                 .collect(Collectors.toList());
@@ -323,8 +332,7 @@ public final class PlayerActions {
         }
     };
 
-    public static final PlayerAction SUMMON_RANDOM_MINION_FROM_DECK = summonRandomMinionFromDeck(false);
-    public static final PlayerAction SUMMON_RANDOM_MINION_FROM_DECK_FOR_OPPONENT = summonRandomMinionFromDeck(true);
+    public static final PlayerAction SUMMON_RANDOM_MINION_FROM_DECK = summonRandomMinionFromDeck(null);
 
     public static PlayerAction addRandomCard(@NamedArg("keywords") Keyword[] keywords) {
         Keyword[] keywordsCopy = keywords.clone();
@@ -406,6 +414,24 @@ public final class PlayerActions {
         };
     }
 
+    public static PlayerAction stealFromOpponent(
+            @NamedArg("cardCount") int cardCount) {
+        return (World world, Player player) -> {
+            Player opponent = player.getOpponent();
+            List<CardDescr> picked = ActionUtils.pickMultipleRandom(
+                    world,
+                    cardCount,
+                    opponent.getBoard().getDeck().getCards());
+
+            UndoBuilder result = new UndoBuilder(picked.size());
+            Hand hand = player.getHand();
+            for (CardDescr card: picked) {
+                result.addUndo(hand.addCard(card));
+            }
+            return result;
+        };
+    }
+
     public static PlayerAction doForOpponent(@NamedArg("action") PlayerAction action) {
         ExceptionHelper.checkNotNullArgument(action, "action");
         return (World world, Player player) -> {
@@ -461,13 +487,13 @@ public final class PlayerActions {
         };
     }
 
-    public static PlayerAction forAllMinions(@NamedArg("action") TargetedMinionAction action) {
+    public static PlayerAction forAllMinions(@NamedArg("action") TargetedAction action) {
         return forAllMinions(AuraFilter.ANY, action);
     }
 
     public static PlayerAction forAllMinions(
             @NamedArg("filter") AuraFilter<? super Player, ? super Minion> filter,
-            @NamedArg("action") TargetedMinionAction action) {
+            @NamedArg("action") TargetedAction action) {
         return forMinions(action, (player, targets) -> {
             World world = player.getWorld();
             Predicate<Minion> appliedFilter = (minion) -> {
@@ -478,17 +504,17 @@ public final class PlayerActions {
         });
     }
 
-    public static PlayerAction forEnemyMinions(@NamedArg("action") TargetedMinionAction action) {
+    public static PlayerAction forEnemyMinions(@NamedArg("action") TargetedAction action) {
         return forEnemyMinions(WorldEventFilter.ANY, action);
     }
 
-    public static PlayerAction forOwnMinions(@NamedArg("action") TargetedMinionAction action) {
+    public static PlayerAction forOwnMinions(@NamedArg("action") TargetedAction action) {
         return forOwnMinions(WorldEventFilter.ANY, action);
     }
 
     public static PlayerAction forEnemyMinions(
             @NamedArg("filter") WorldEventFilter<? super Player, ? super Minion> filter,
-            @NamedArg("action") TargetedMinionAction action) {
+            @NamedArg("action") TargetedAction action) {
         ExceptionHelper.checkNotNullArgument(filter, "filter");
         ExceptionHelper.checkNotNullArgument(action, "action");
         return forMinions(action, (player, targets) -> {
@@ -500,7 +526,7 @@ public final class PlayerActions {
 
     public static PlayerAction forOwnMinions(
             @NamedArg("filter") WorldEventFilter<? super Player, ? super Minion> filter,
-            @NamedArg("action") TargetedMinionAction action) {
+            @NamedArg("action") TargetedAction action) {
         ExceptionHelper.checkNotNullArgument(filter, "filter");
         ExceptionHelper.checkNotNullArgument(action, "action");
         return forMinions(action, (player, targets) -> {
@@ -511,7 +537,7 @@ public final class PlayerActions {
     }
 
     private static PlayerAction forMinions(
-            TargetedMinionAction action,
+            TargetedAction action,
             BiConsumer<Player, List<Minion>> minionCollector) {
         ExceptionHelper.checkNotNullArgument(action, "action");
         ExceptionHelper.checkNotNullArgument(minionCollector, "minionCollector");
@@ -528,7 +554,7 @@ public final class PlayerActions {
 
             UndoBuilder result = new UndoBuilder(targets.size());
             for (Minion minion: targets) {
-                result.addUndo(action.doAction(minion, new PlayTarget(player, minion)));
+                result.addUndo(action.alterWorld(world, new PlayTarget(player, minion)));
             }
             return result;
         };
@@ -746,16 +772,29 @@ public final class PlayerActions {
         };
     }
 
-    public static PlayerAction summonRandomMinionFromDeck() {
-        return summonRandomMinionFromDeck(false);
-    }
+    public static PlayerAction summonRandomMinionFromDeck(
+            @NamedArg("fallbackMinion") MinionProvider fallbackMinion) {
 
-    public static PlayerAction summonRandomMinionFromDeckForOpponent() {
-        return summonRandomMinionFromDeck(true);
-    }
+        Predicate<CardDescr> appliedFilter = (card) -> card.getMinion() != null;
+        return (World world, Player player) -> {
+            UndoableResult<CardDescr> cardRef = ActionUtils.pollDeckForCard(player, appliedFilter);
+            if (cardRef == null && fallbackMinion == null) {
+                return UndoAction.DO_NOTHING;
+            }
 
-    public static PlayerAction summonRandomMinionFromDeck(@NamedArg("opponent") boolean opponent) {
-        return summonRandomMinionFromDeck(opponent, (minion) -> true);
+            MinionDescr minion = cardRef != null
+                    ? cardRef.getResult().getMinion()
+                    : fallbackMinion.getMinion();
+            assert minion != null;
+
+            UndoAction summonUndo = player.summonMinion(minion);
+            return () -> {
+                summonUndo.undo();
+                if (cardRef != null) {
+                    cardRef.undo();
+                }
+            };
+        };
     }
 
     public static PlayerAction summonRandomMinionFromDeck(
@@ -1204,6 +1243,16 @@ public final class PlayerActions {
         return dealDamageTo(spell, true, false, true, true, damage < 0, damage);
     }
 
+    public static PlayerAction dealDamageToOwnTargets(@NamedArg("damage") int damage) {
+        return dealDamageTo(true, false, true, true, true, damage < 0, damage);
+    }
+
+    public static PlayerAction dealDamageToOwnTargets(
+            @NamedArg("minDamage") int minDamage,
+            @NamedArg("maxDamage") int maxDamage) {
+        return dealDamageTo(true, false, true, true, true, minDamage < 0, (target) -> true, minDamage, maxDamage);
+    }
+
     public static PlayerAction dealDamageToEnemyMinions(@NamedArg("damage") int damage) {
         return dealDamageTo(true, true, false, true, false, damage < 0, damage);
     }
@@ -1530,6 +1579,32 @@ public final class PlayerActions {
             hero.setHeroPower(world.getDb().getHeroPowerDb().getById(new HeroPowerId(heroPower)));
 
             return player.setHero(hero);
+        };
+    }
+
+    public static PlayerAction replaceHeroPower(
+            @NamedArg("heroPower") HeroPowerId[] heroPower) {
+        ExceptionHelper.checkArgumentInRange(heroPower.length, 1, Integer.MAX_VALUE, "heroPower.length");
+        HeroPowerId[] heroPowerCopy = heroPower.clone();
+        ExceptionHelper.checkNotNullElements(heroPowerCopy, "heroPower");
+
+
+        return (World world, Player player) -> {
+            Hero hero = player.getHero();
+
+            HeroPowerId currentId = hero.getHeroPower().getPowerDef().getId();
+            HeroPowerId newId = heroPowerCopy[0];
+            for (int i = 0; i < heroPowerCopy.length; i++) {
+                if (currentId.equals(heroPowerCopy[i])) {
+                    int selectedIndex = i + 1;
+                    newId = selectedIndex >= heroPowerCopy.length
+                            ? heroPowerCopy[heroPowerCopy.length - 1]
+                            : heroPowerCopy[selectedIndex];
+                    break;
+                }
+            }
+
+            return hero.setHeroPower(world.getDb().getHeroPowerDb().getById(newId));
         };
     }
 

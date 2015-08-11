@@ -1,0 +1,10 @@
+{
+    "name": "Northshire Cleric",
+    "attack": 1,
+    "hp": 3,
+    "triggers": {
+        "minion-healed": {
+            "action": "PlayerActions.DRAW_FOR_SELF"
+        }
+    }
+}

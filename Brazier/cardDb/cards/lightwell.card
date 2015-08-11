@@ -1,0 +1,8 @@
+{
+    "name": "Lightwell",
+    "description": "At the start of your turn, restore 3 Health to a damaged friendly character.",
+    "class": "priest",
+    "type": "minion",
+    "rarity": "rare",
+    "manaCost": 2
+}

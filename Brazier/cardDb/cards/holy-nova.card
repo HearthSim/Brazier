@@ -1,0 +1,17 @@
+{
+    "name": "Holy Nova",
+    "description": "Deal 2 damage to all enemies. Restore 2 Health to all friendly characters.",
+    "class": "priest",
+    "type": "spell",
+    "manaCost": 5,
+    "playActions": [
+        {
+            "class": "PlayerActions.dealDamageToEnemyTargets",
+            "damage": 2
+        },
+        {
+            "class": "PlayerActions.dealDamageToOwnTargets",
+            "damage": -2
+        }
+    ]
+}

@@ -6,12 +6,18 @@ import com.github.kelemen.hearthstone.emulator.actions.UndoableUnregisterRef;
 
 public final class AuraAwareIntProperty implements Silencable {
     private final int baseValue;
+    private final int minValue;
     private final BuffableIntProperty preAuraBuffs;
     private final BuffableIntProperty ownValue;
     private final BuffableIntProperty auraBuffs;
 
     public AuraAwareIntProperty(int baseValue) {
+        this(baseValue, Integer.MIN_VALUE);
+    }
+
+    public AuraAwareIntProperty(int baseValue, int minValue) {
         this.baseValue = baseValue;
+        this.minValue = minValue;
         this.preAuraBuffs = new BuffableIntProperty(() -> baseValue);
         this.ownValue = new BuffableIntProperty(this.preAuraBuffs::getValue);
         this.auraBuffs = new BuffableIntProperty(this.ownValue::getValue);
@@ -19,6 +25,7 @@ public final class AuraAwareIntProperty implements Silencable {
 
     private AuraAwareIntProperty(AuraAwareIntProperty other) {
         this.baseValue = other.baseValue;
+        this.minValue = other.minValue;
         this.preAuraBuffs = new BuffableIntProperty(() -> baseValue);
         this.ownValue = other.ownValue.copy(this.preAuraBuffs::getValue);
         this.auraBuffs = new BuffableIntProperty(this.ownValue::getValue);
@@ -50,7 +57,8 @@ public final class AuraAwareIntProperty implements Silencable {
     }
 
     public int getValue() {
-        return auraBuffs.getValue();
+        int result = auraBuffs.getValue();
+        return result < minValue ? minValue : result;
     }
 
     public UndoableUnregisterRef addPreAuraBuff(int toAdd) {

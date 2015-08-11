@@ -1,0 +1,12 @@
+{
+    "name": "Shadowform",
+    "description": "Deal 2 damage.",
+    "class": "priest",
+    "type": "spell",
+    "rarity": "epic",
+    "manaCost": 3,
+    "playActions": {
+        "class": "PlayerActions.replaceHeroPower",
+        "heroPower": ["Mind Spike", "Mind Shatter"]
+    }
+}

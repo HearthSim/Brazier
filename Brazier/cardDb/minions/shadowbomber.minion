@@ -1,0 +1,14 @@
+{
+    "name": "Shadowbomber",
+    "attack": 2,
+    "hp": 1,
+    "battleCries": [
+        {
+            "class": "DamageActions.damageOwnHero",
+            "damage": 3
+        },
+        {
+            "class": "DamageActions.damageOpponentHero",
+            "damage": 3
+        }]
+}

@@ -1,0 +1,7 @@
+{
+    "name": "Dark Cultist",
+    "description": "Deathrattle: Give a random friendly minion +3 Health.",
+    "class": "priest",
+    "type": "minion",
+    "manaCost": 3
+}

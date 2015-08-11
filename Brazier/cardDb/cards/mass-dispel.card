@@ -1,0 +1,14 @@
+{
+    "name": "Mass Dispel",
+    "description": "Silence all enemy minions. Draw a card.",
+    "class": "priest",
+    "type": "spell",
+    "rarity": "rare",
+    "manaCost": 4,
+    "playActions": [
+        {
+            "class": "PlayerActions.forEnemyMinions",
+            "action": "TargetedActions.SILENCE"
+        },
+        "PlayerActions.DRAW_FOR_SELF"]
+}

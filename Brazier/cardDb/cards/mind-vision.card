@@ -1,0 +1,8 @@
+{
+    "name": "Mind Vision",
+    "description": "Put a copy of a random card in your opponent's hand into your hand.",
+    "class": "priest",
+    "type": "spell",
+    "manaCost": 1,
+    "playActions": "PlayerActions.MIND_VISION"
+}

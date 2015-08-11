@@ -1,0 +1,17 @@
+{
+    "name": "Mindgames",
+    "description": "Put a copy of a random minion from your opponent's deck into the battlefield.",
+    "class": "priest",
+    "type": "spell",
+    "rarity": "epic",
+    "manaCost": 4,
+    "playActions": [
+        "PlayerActions.SUMMON_RANDOM_MINION_FROM_DECK",
+        {
+            "class": "PlayerActions.doForOpponent",
+            "action": {
+                "class": "PlayerActions.summonRandomMinionFromDeck",
+                "fallbackMinion": "Shadow of Nothing"
+            }
+        }]
+}

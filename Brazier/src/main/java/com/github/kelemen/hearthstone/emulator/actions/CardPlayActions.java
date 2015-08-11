@@ -1,5 +1,6 @@
 package com.github.kelemen.hearthstone.emulator.actions;
 
+import com.github.kelemen.hearthstone.emulator.Player;
 import com.github.kelemen.hearthstone.emulator.TargetableCharacter;
 import com.github.kelemen.hearthstone.emulator.World;
 import com.github.kelemen.hearthstone.emulator.minions.Minion;
@@ -48,6 +49,24 @@ public final class CardPlayActions {
             }
 
             return action.doAction(minion, arg.getTarget());
+        };
+    }
+
+    public static CardPlayAction doIfTarget(
+            @NamedArg("condition") WorldEventFilter<? super Player, ? super TargetableCharacter> condition,
+            @NamedArg("action") CardPlayAction action) {
+        ExceptionHelper.checkNotNullArgument(condition, "condition");
+        ExceptionHelper.checkNotNullArgument(action, "action");
+
+        return (World world, CardPlayArg arg) -> {
+            Player player = arg.getTarget().getCastingPlayer();
+            TargetableCharacter target = arg.getTarget().getTarget();
+            if (condition.applies(world, player, target)) {
+                return action.alterWorld(world, arg);
+            }
+            else {
+                return UndoAction.DO_NOTHING;
+            }
         };
     }
 

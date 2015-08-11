@@ -1,0 +1,24 @@
+{
+    "name": "Velen's Chosen",
+    "description": "Give a minion +2/+4 and Spell Damage +1.",
+    "class": "priest",
+    "type": "spell",
+    "manaCost": 3,
+    "playActions": {
+        "targets": "all-minions",
+        "class": "TargetedActions.applyToMinionTarget",
+        "action": [
+            {
+                "class": "MinionActions.buff",
+                "attack": 2,
+                "hp": 4
+            },
+            {
+                "class": "MinionActions.buff",
+                "ability": {
+                    "class": "MinionAbilities.spellPower",
+                    "spellPower": 1
+                }
+            }]
+    }
+}

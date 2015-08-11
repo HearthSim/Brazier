@@ -1,0 +1,10 @@
+{
+    "name": "Shrinkmeister",
+    "attack": 3,
+    "hp": 2,
+    "battleCries": {
+        "class": "TargetedActions.addTemporaryAttack",
+        "targets": "all-minions",
+        "attack": -2
+    }
+}
