@@ -8,15 +8,15 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.jtrim.utils.ExceptionHelper;
 
-public final class TargetFilters {
-    public static <Actor, Target> TargetFilter<Actor, Target> noTarget() {
-        return (world, actor, target) -> Stream.empty();
+public final class EntityFilters {
+    public static <Entity> EntityFilter<Entity> empty() {
+        return (world, entities) -> Stream.empty();
     }
 
-    public static <Actor, Target> TargetFilter<Actor, Target> random() {
-        return (World world, Actor actor, Stream<Target> target) -> {
-            List<Target> elements = target.collect(Collectors.toList());
-            Target result = ActionUtils.pickRandom(world, elements);
+    public static <Entity> EntityFilter<Entity> random() {
+        return (World world, Stream<? extends Entity> entities) -> {
+            List<Entity> elements = entities.collect(Collectors.<Entity>toList());
+            Entity result = ActionUtils.pickRandom(world, elements);
             if (result == null) {
                 return Stream.empty();
             }
@@ -26,22 +26,22 @@ public final class TargetFilters {
         };
     }
 
-    public static <Actor, Target> TargetFilter<Actor, Target> random(@NamedArg("count") int count) {
+    public static <Entity> EntityFilter<Entity> random(@NamedArg("count") int count) {
         ExceptionHelper.checkArgumentInRange(count, 0, Integer.MAX_VALUE, "count");
         if (count == 0) {
-            return noTarget();
+            return empty();
         }
         if (count == 1) {
             return random();
         }
 
-        return (World world, Actor actor, Stream<Target> target) -> {
-            List<Target> elements = target.collect(Collectors.toList());
+        return (World world, Stream<? extends Entity> entities) -> {
+            List<Entity> elements = entities.collect(Collectors.<Entity>toList());
             return ActionUtils.pickMultipleRandom(world, count, elements).stream();
         };
     }
 
-    private TargetFilters() {
+    private EntityFilters() {
         throw new AssertionError();
     }
 }

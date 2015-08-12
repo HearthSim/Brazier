@@ -26,7 +26,7 @@ import com.github.kelemen.hearthstone.emulator.actions.WorldEventAction;
 import com.github.kelemen.hearthstone.emulator.actions.WorldEventActionDefs;
 import com.github.kelemen.hearthstone.emulator.actions.WorldEventFilter;
 import com.github.kelemen.hearthstone.emulator.actions.WorldObjectAction;
-import com.github.kelemen.hearthstone.emulator.actions2.TargetFilter;
+import com.github.kelemen.hearthstone.emulator.actions2.EntityFilter;
 import com.github.kelemen.hearthstone.emulator.actions2.EntitySelector;
 import com.github.kelemen.hearthstone.emulator.actions2.TargetedAction;
 import com.github.kelemen.hearthstone.emulator.cards.CardDescr;
@@ -152,12 +152,12 @@ public final class ParserUtils {
                     = (Collection<? extends TargetedAction<Object, Object>>)elements;
             return TargetedAction.merge(unsafeElements);
         });
-        result.setTypeMerger(TargetFilter.class, (Collection<? extends TargetFilter<?, ?>> elements) -> {
+        result.setTypeMerger(EntityFilter.class, (Collection<? extends EntityFilter<?>> elements) -> {
             // Unsafe but there is nothing to do.
             @SuppressWarnings("unchecked")
-            Collection<? extends TargetFilter<Object, Object>> unsafeElements
-                    = (Collection<? extends TargetFilter<Object, Object>>)elements;
-            return TargetFilter.merge(unsafeElements);
+            Collection<? extends EntityFilter<Object>> unsafeElements
+                    = (Collection<? extends EntityFilter<Object>>)elements;
+            return EntityFilter.merge(unsafeElements);
         });
         result.setTypeMerger(EntitySelector.class, (Collection<? extends EntitySelector<?, ?, ?>> elements) -> {
             // Unsafe but there is nothing to do.
