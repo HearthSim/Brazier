@@ -18,7 +18,7 @@ public interface CharacterTargetedAction extends WorldObjectAction<TargetableCha
         };
     }
 
-    public default TargetedAction toTargetedAction() {
+    public default ActorlessTargetedAction toTargetedAction() {
         return (World world, PlayTarget target) -> alterWorld(world, target.getTarget());
     }
 }

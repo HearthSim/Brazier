@@ -11,7 +11,7 @@ public interface PlayerAction extends WorldObjectAction<Player> {
     @Override
     public UndoAction alterWorld(World world, Player player);
 
-    public default TargetedAction toTargetedAction() {
+    public default ActorlessTargetedAction toTargetedAction() {
         return (world, target) -> alterWorld(world, target.getCastingPlayer());
     }
 

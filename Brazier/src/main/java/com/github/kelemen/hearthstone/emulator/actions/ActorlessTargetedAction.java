@@ -7,8 +7,8 @@ import java.util.Collection;
 import java.util.List;
 import org.jtrim.utils.ExceptionHelper;
 
-public interface TargetedAction extends WorldObjectAction<PlayTarget> {
-    public static final TargetedAction DO_NOTHING = (world, target) -> UndoAction.DO_NOTHING;
+public interface ActorlessTargetedAction extends WorldObjectAction<PlayTarget> {
+    public static final ActorlessTargetedAction DO_NOTHING = (world, target) -> UndoAction.DO_NOTHING;
 
     @Override
     public UndoAction alterWorld(World world, PlayTarget target);
@@ -31,17 +31,17 @@ public interface TargetedAction extends WorldObjectAction<PlayTarget> {
         };
     }
 
-    public static TargetedAction mergeActions(Collection<? extends TargetedAction> actions) {
+    public static ActorlessTargetedAction mergeActions(Collection<? extends ActorlessTargetedAction> actions) {
         if (actions.size() == 1) {
             return actions.iterator().next();
         }
 
-        List<TargetedAction> actionsCopy = new ArrayList<>(actions);
+        List<ActorlessTargetedAction> actionsCopy = new ArrayList<>(actions);
         ExceptionHelper.checkNotNullElements(actionsCopy, "actions");
 
         return (World world, PlayTarget target) -> {
             UndoBuilder result = new UndoBuilder(actionsCopy.size());
-            for (TargetedAction action: actionsCopy) {
+            for (ActorlessTargetedAction action: actionsCopy) {
                 result.addUndo(action.alterWorld(world, target));
             }
             return result;

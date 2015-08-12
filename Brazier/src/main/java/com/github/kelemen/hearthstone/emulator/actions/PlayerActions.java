@@ -440,13 +440,13 @@ public final class PlayerActions {
     }
 
     public static PlayerAction forAllTargets(
-            @NamedArg("action") TargetedAction action) {
+            @NamedArg("action") ActorlessTargetedAction action) {
         return forAllTargets(AuraFilter.ANY, action);
     }
 
     public static PlayerAction forAllTargets(
             @NamedArg("filter") AuraFilter<? super Player, ? super TargetableCharacter> filter,
-            @NamedArg("action") TargetedAction action) {
+            @NamedArg("action") ActorlessTargetedAction action) {
         return forAllTargets(action, (player, targets) -> {
             World world = player.getWorld();
             Predicate<Minion> minionFilter = (minion) -> {
@@ -464,7 +464,7 @@ public final class PlayerActions {
     }
 
     private static PlayerAction forAllTargets(
-            TargetedAction action,
+            ActorlessTargetedAction action,
             BiConsumer<Player, List<TargetableCharacter>> targetCollector) {
         ExceptionHelper.checkNotNullArgument(action, "action");
         ExceptionHelper.checkNotNullArgument(targetCollector, "targetCollector");
@@ -487,13 +487,13 @@ public final class PlayerActions {
         };
     }
 
-    public static PlayerAction forAllMinions(@NamedArg("action") TargetedAction action) {
+    public static PlayerAction forAllMinions(@NamedArg("action") ActorlessTargetedAction action) {
         return forAllMinions(AuraFilter.ANY, action);
     }
 
     public static PlayerAction forAllMinions(
             @NamedArg("filter") AuraFilter<? super Player, ? super Minion> filter,
-            @NamedArg("action") TargetedAction action) {
+            @NamedArg("action") ActorlessTargetedAction action) {
         return forMinions(action, (player, targets) -> {
             World world = player.getWorld();
             Predicate<Minion> appliedFilter = (minion) -> {
@@ -504,17 +504,17 @@ public final class PlayerActions {
         });
     }
 
-    public static PlayerAction forEnemyMinions(@NamedArg("action") TargetedAction action) {
+    public static PlayerAction forEnemyMinions(@NamedArg("action") ActorlessTargetedAction action) {
         return forEnemyMinions(WorldEventFilter.ANY, action);
     }
 
-    public static PlayerAction forOwnMinions(@NamedArg("action") TargetedAction action) {
+    public static PlayerAction forOwnMinions(@NamedArg("action") ActorlessTargetedAction action) {
         return forOwnMinions(WorldEventFilter.ANY, action);
     }
 
     public static PlayerAction forEnemyMinions(
             @NamedArg("filter") WorldEventFilter<? super Player, ? super Minion> filter,
-            @NamedArg("action") TargetedAction action) {
+            @NamedArg("action") ActorlessTargetedAction action) {
         ExceptionHelper.checkNotNullArgument(filter, "filter");
         ExceptionHelper.checkNotNullArgument(action, "action");
         return forMinions(action, (player, targets) -> {
@@ -526,7 +526,7 @@ public final class PlayerActions {
 
     public static PlayerAction forOwnMinions(
             @NamedArg("filter") WorldEventFilter<? super Player, ? super Minion> filter,
-            @NamedArg("action") TargetedAction action) {
+            @NamedArg("action") ActorlessTargetedAction action) {
         ExceptionHelper.checkNotNullArgument(filter, "filter");
         ExceptionHelper.checkNotNullArgument(action, "action");
         return forMinions(action, (player, targets) -> {
@@ -537,7 +537,7 @@ public final class PlayerActions {
     }
 
     private static PlayerAction forMinions(
-            TargetedAction action,
+            ActorlessTargetedAction action,
             BiConsumer<Player, List<Minion>> minionCollector) {
         ExceptionHelper.checkNotNullArgument(action, "action");
         ExceptionHelper.checkNotNullArgument(minionCollector, "minionCollector");
@@ -562,7 +562,7 @@ public final class PlayerActions {
 
     public static PlayerAction forRandomEnemyMinions(
             @NamedArg("minionCount") int minionCount,
-            @NamedArg("action") TargetedAction action) {
+            @NamedArg("action") ActorlessTargetedAction action) {
         return forRandomMinions(minionCount, action, (player, targets) -> {
             player.getOpponent().getBoard().collectMinions(targets, Minion::notScheduledToDestroy);
         });
@@ -570,7 +570,7 @@ public final class PlayerActions {
 
     private static PlayerAction forRandomMinions(
             int minionCount,
-            TargetedAction action,
+            ActorlessTargetedAction action,
             BiConsumer<Player, List<Minion>> minionCollector) {
         ExceptionHelper.checkNotNullArgument(action, "action");
         ExceptionHelper.checkNotNullArgument(minionCollector, "minionCollector");
@@ -1611,24 +1611,24 @@ public final class PlayerActions {
     }
 
     public static PlayerAction applyTargetedActionToRandomMinion(
-            @NamedArg("action") TargetedAction action) {
+            @NamedArg("action") ActorlessTargetedAction action) {
         return applyTargetedActionToRandomMinion(action, false);
     }
 
     public static PlayerAction applyTargetedActionToRandomMinion(
-            @NamedArg("action") TargetedAction action,
+            @NamedArg("action") ActorlessTargetedAction action,
             @NamedArg("collectDying") boolean collectDying) {
         return applyTargetedActionToRandomMinion(action, collectDying, WorldEventFilter.ANY);
     }
 
     public static PlayerAction applyTargetedActionToRandomMinion(
-            @NamedArg("action") TargetedAction action,
+            @NamedArg("action") ActorlessTargetedAction action,
             @NamedArg("filter") WorldEventFilter<? super Player, ? super Minion> filter) {
         return applyTargetedActionToRandomMinion(action, false, filter);
     }
 
     public static PlayerAction applyTargetedActionToRandomMinion(
-            @NamedArg("action") TargetedAction action,
+            @NamedArg("action") ActorlessTargetedAction action,
             @NamedArg("collectDying") boolean collectDying,
             @NamedArg("filter") WorldEventFilter<? super Player, ? super Minion> filter) {
         ExceptionHelper.checkNotNullArgument(action, "action");
@@ -1657,29 +1657,29 @@ public final class PlayerActions {
     }
 
     public static PlayerAction applyTargetedActionToRandomEnemyMinion(
-            @NamedArg("action") TargetedAction action) {
+            @NamedArg("action") ActorlessTargetedAction action) {
         return applyTargetedActionToRandomEnemyMinion(action, WorldEventFilter.ANY);
     }
 
     public static PlayerAction applyTargetedActionToRandomEnemyMinion(
-            @NamedArg("action") TargetedAction action,
+            @NamedArg("action") ActorlessTargetedAction action,
             @NamedArg("filter") WorldEventFilter<? super Player, ? super Minion> filter) {
         return applyTargetedActionToRandomPlayerMinion(action, filter, Player::getOpponent);
     }
 
     public static PlayerAction applyTargetedActionToRandomOwnMinion(
-            @NamedArg("action") TargetedAction action) {
+            @NamedArg("action") ActorlessTargetedAction action) {
         return applyTargetedActionToRandomOwnMinion(action, WorldEventFilter.ANY);
     }
 
     public static PlayerAction applyTargetedActionToRandomOwnMinion(
-            @NamedArg("action") TargetedAction action,
+            @NamedArg("action") ActorlessTargetedAction action,
             @NamedArg("filter") WorldEventFilter<? super Player, ? super Minion> filter) {
         return applyTargetedActionToRandomPlayerMinion(action, filter, Function.identity());
     }
 
     private static PlayerAction applyTargetedActionToRandomPlayerMinion(
-            TargetedAction action,
+            ActorlessTargetedAction action,
             WorldEventFilter<? super Player, ? super Minion> filter,
             Function<Player, Player> playerGetter) {
         ExceptionHelper.checkNotNullArgument(action, "action");

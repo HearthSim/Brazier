@@ -1,9 +1,9 @@
 package com.github.kelemen.hearthstone.emulator;
 
+import com.github.kelemen.hearthstone.emulator.actions.ActorlessTargetedAction;
 import com.github.kelemen.hearthstone.emulator.actions.CardPlayArg;
 import com.github.kelemen.hearthstone.emulator.actions.PlayTarget;
 import com.github.kelemen.hearthstone.emulator.actions.TargetNeed;
-import com.github.kelemen.hearthstone.emulator.actions.TargetedAction;
 import com.github.kelemen.hearthstone.emulator.actions.UndoAction;
 import com.github.kelemen.hearthstone.emulator.actions.UndoBuilder;
 import com.github.kelemen.hearthstone.emulator.cards.Card;
@@ -14,7 +14,7 @@ import com.github.kelemen.hearthstone.emulator.cards.CardType;
 import java.util.concurrent.atomic.AtomicReference;
 import org.jtrim.utils.ExceptionHelper;
 
-public final class HeroPower implements PlayerProperty, TargetedAction {
+public final class HeroPower implements PlayerProperty, ActorlessTargetedAction {
     private final Hero hero;
     private final HeroPowerDef powerDef;
 

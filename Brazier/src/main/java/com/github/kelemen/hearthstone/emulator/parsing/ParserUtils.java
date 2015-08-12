@@ -9,6 +9,7 @@ import com.github.kelemen.hearthstone.emulator.abilities.ActivatableAbility;
 import com.github.kelemen.hearthstone.emulator.abilities.Aura;
 import com.github.kelemen.hearthstone.emulator.abilities.AuraFilter;
 import com.github.kelemen.hearthstone.emulator.abilities.LivingEntitysAbilities;
+import com.github.kelemen.hearthstone.emulator.actions.ActorlessTargetedAction;
 import com.github.kelemen.hearthstone.emulator.actions.BattleCryTargetedAction;
 import com.github.kelemen.hearthstone.emulator.actions.CardPlayAction;
 import com.github.kelemen.hearthstone.emulator.actions.CharacterTargetedAction;
@@ -17,7 +18,6 @@ import com.github.kelemen.hearthstone.emulator.actions.MinionAction;
 import com.github.kelemen.hearthstone.emulator.actions.PlayActionRequirement;
 import com.github.kelemen.hearthstone.emulator.actions.PlayerAction;
 import com.github.kelemen.hearthstone.emulator.actions.TargetNeed;
-import com.github.kelemen.hearthstone.emulator.actions.TargetedAction;
 import com.github.kelemen.hearthstone.emulator.actions.TargetedMinionAction;
 import com.github.kelemen.hearthstone.emulator.actions.UndoAction;
 import com.github.kelemen.hearthstone.emulator.actions.WeaponAction;
@@ -26,6 +26,9 @@ import com.github.kelemen.hearthstone.emulator.actions.WorldEventAction;
 import com.github.kelemen.hearthstone.emulator.actions.WorldEventActionDefs;
 import com.github.kelemen.hearthstone.emulator.actions.WorldEventFilter;
 import com.github.kelemen.hearthstone.emulator.actions.WorldObjectAction;
+import com.github.kelemen.hearthstone.emulator.actions2.TargetFilter;
+import com.github.kelemen.hearthstone.emulator.actions2.EntitySelector;
+import com.github.kelemen.hearthstone.emulator.actions2.TargetedAction;
 import com.github.kelemen.hearthstone.emulator.cards.CardDescr;
 import com.github.kelemen.hearthstone.emulator.cards.CardId;
 import com.github.kelemen.hearthstone.emulator.cards.CardProvider;
@@ -71,7 +74,7 @@ public final class ParserUtils {
 
     private static void addTypeMergers(JsonDeserializer.Builder result) {
         result.setTypeMerger(PlayActionRequirement.class, (elements) -> PlayActionRequirement.merge(elements));
-        result.setTypeMerger(TargetedAction.class, (elements) -> TargetedAction.mergeActions(elements));
+        result.setTypeMerger(ActorlessTargetedAction.class, (elements) -> ActorlessTargetedAction.mergeActions(elements));
         result.setTypeMerger(CardPlayAction.class, (elements) -> CardPlayAction.mergeActions(elements));
         result.setTypeMerger(WorldEventFilter.class, (Collection<? extends WorldEventFilter<?, ?>> elements) -> {
             // Unsafe but there is nothing to do.
@@ -142,6 +145,27 @@ public final class ParserUtils {
         result.setTypeMerger(TargetedMinionAction.class, (Collection<? extends TargetedMinionAction> elements) -> {
             return TargetedMinionAction.merge(elements);
         });
+        result.setTypeMerger(TargetedAction.class, (Collection<? extends TargetedAction<?, ?>> elements) -> {
+            // Unsafe but there is nothing to do.
+            @SuppressWarnings("unchecked")
+            Collection<? extends TargetedAction<Object, Object>> unsafeElements
+                    = (Collection<? extends TargetedAction<Object, Object>>)elements;
+            return TargetedAction.merge(unsafeElements);
+        });
+        result.setTypeMerger(TargetFilter.class, (Collection<? extends TargetFilter<?, ?>> elements) -> {
+            // Unsafe but there is nothing to do.
+            @SuppressWarnings("unchecked")
+            Collection<? extends TargetFilter<Object, Object>> unsafeElements
+                    = (Collection<? extends TargetFilter<Object, Object>>)elements;
+            return TargetFilter.merge(unsafeElements);
+        });
+        result.setTypeMerger(EntitySelector.class, (Collection<? extends EntitySelector<?, ?, ?>> elements) -> {
+            // Unsafe but there is nothing to do.
+            @SuppressWarnings("unchecked")
+            Collection<? extends EntitySelector<Object, Object, Object>> unsafeElements
+                    = (Collection<? extends EntitySelector<Object, Object, Object>>)elements;
+            return EntitySelector.merge(unsafeElements);
+        });
     }
 
     private static void addTypeConversions(JsonDeserializer.Builder result) {
@@ -154,22 +178,22 @@ public final class ParserUtils {
                 (action) -> action.toTargetedAction().toTargetedMinionAction());
         result.addTypeConversion(CharacterTargetedAction.class, TargetedMinionAction.class,
                 (action) -> action.toTargetedAction().toTargetedMinionAction());
-        result.addTypeConversion(TargetedAction.class, TargetedMinionAction.class,
+        result.addTypeConversion(ActorlessTargetedAction.class, TargetedMinionAction.class,
                 (action) -> action.toTargetedMinionAction());
         result.addTypeConversion(MinionAction.class, TargetedMinionAction.class,
                 (action) -> action.toCharacterTargetedAction().toTargetedAction().toTargetedMinionAction());
         result.addTypeConversion(DamageAction.class, TargetedMinionAction.class,
                 (action) -> action.toCharacterTargetedAction().toTargetedAction().toTargetedMinionAction());
 
-        result.addTypeConversion(WorldAction.class, TargetedAction.class,
+        result.addTypeConversion(WorldAction.class, ActorlessTargetedAction.class,
                 (action) -> (world, target) -> action.alterWorld(world));
-        result.addTypeConversion(PlayerAction.class, TargetedAction.class,
+        result.addTypeConversion(PlayerAction.class, ActorlessTargetedAction.class,
                 (action) -> action.toTargetedAction());
-        result.addTypeConversion(CharacterTargetedAction.class, TargetedAction.class,
+        result.addTypeConversion(CharacterTargetedAction.class, ActorlessTargetedAction.class,
                 (action) -> action.toTargetedAction());
-        result.addTypeConversion(MinionAction.class, TargetedAction.class,
+        result.addTypeConversion(MinionAction.class, ActorlessTargetedAction.class,
                 (action) -> action.toCharacterTargetedAction().toTargetedAction());
-        result.addTypeConversion(DamageAction.class, TargetedAction.class,
+        result.addTypeConversion(DamageAction.class, ActorlessTargetedAction.class,
                 (action) -> action.toCharacterTargetedAction().toTargetedAction());
 
         result.addTypeConversion(WorldAction.class, CardPlayAction.class,
@@ -178,7 +202,7 @@ public final class ParserUtils {
                 (action) -> action.toTargetedAction().toCardPlayAction());
         result.addTypeConversion(CharacterTargetedAction.class, CardPlayAction.class,
                 (action) -> action.toTargetedAction().toCardPlayAction());
-        result.addTypeConversion(TargetedAction.class, CardPlayAction.class,
+        result.addTypeConversion(ActorlessTargetedAction.class, CardPlayAction.class,
                 (action) -> action.toCardPlayAction());
         result.addTypeConversion(MinionAction.class, CardPlayAction.class,
                 (action) -> action.toCharacterTargetedAction().toTargetedAction().toCardPlayAction());
@@ -191,7 +215,7 @@ public final class ParserUtils {
                 (action) -> action.toBattleCryTargetedAction());
         result.addTypeConversion(CharacterTargetedAction.class, BattleCryTargetedAction.class,
                 (action) -> action.toBattleCryTargetedAction());
-        result.addTypeConversion(TargetedAction.class, BattleCryTargetedAction.class,
+        result.addTypeConversion(ActorlessTargetedAction.class, BattleCryTargetedAction.class,
                 (action) -> action.toBattleCryTargetedAction());
         result.addTypeConversion(TargetedMinionAction.class, BattleCryTargetedAction.class,
                 (action) -> action.toBattleCryTargetedAction());

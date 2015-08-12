@@ -32,7 +32,7 @@ import java.util.function.Function;
 import org.jtrim.utils.ExceptionHelper;
 
 public final class TargetedActions {
-    public static final TargetedAction TAKE_CONTROL = (World world, PlayTarget playTarget) -> {
+    public static final ActorlessTargetedAction TAKE_CONTROL = (World world, PlayTarget playTarget) -> {
         TargetableCharacter target = playTarget.getTarget();
         if (target instanceof Minion) {
             return playTarget.getCastingPlayer().getBoard().takeOwnership((Minion)target);
@@ -42,7 +42,7 @@ public final class TargetedActions {
         }
     };
 
-    public static final TargetedAction FULL_HEAL = (World world, PlayTarget target) -> {
+    public static final ActorlessTargetedAction FULL_HEAL = (World world, PlayTarget target) -> {
         Player player = target.getCastingPlayer();
         TargetableCharacter character = target.getTarget();
         if (character == null) {
@@ -82,7 +82,7 @@ public final class TargetedActions {
         }
     };
 
-    public static final TargetedAction SHIELD_SLAM = (World world, PlayTarget playTarget) -> {
+    public static final ActorlessTargetedAction SHIELD_SLAM = (World world, PlayTarget playTarget) -> {
         TargetableCharacter target = playTarget.getTarget();
         if (target == null) {
             return UndoAction.DO_NOTHING;
@@ -93,7 +93,7 @@ public final class TargetedActions {
         return target.damage(player.getSpellDamage(armor));
     };
 
-    public static final TargetedAction SAVAGERY = (World world, PlayTarget playTarget) -> {
+    public static final ActorlessTargetedAction SAVAGERY = (World world, PlayTarget playTarget) -> {
         TargetableCharacter target = playTarget.getTarget();
         if (target == null) {
             return UndoAction.DO_NOTHING;
@@ -104,7 +104,7 @@ public final class TargetedActions {
         return target.damage(player.getSpellDamage(armor));
     };
 
-    public static final TargetedAction OWN_ATTACK_DAMAGE = (World world, PlayTarget playTarget) -> {
+    public static final ActorlessTargetedAction OWN_ATTACK_DAMAGE = (World world, PlayTarget playTarget) -> {
         TargetableCharacter target = playTarget.getTarget();
         if (target == null) {
             return UndoAction.DO_NOTHING;
@@ -115,7 +115,7 @@ public final class TargetedActions {
         return target.damage(player.getSpellDamage(attack));
     };
 
-    public static final TargetedAction SHADOW_FLAME_DAMAGE = shadowFlameDamage();
+    public static final ActorlessTargetedAction SHADOW_FLAME_DAMAGE = shadowFlameDamage();
 
     public static final CharacterTargetedAction KILL_TARGET = (World world, TargetableCharacter target) -> {
         return target.poison();
@@ -159,7 +159,7 @@ public final class TargetedActions {
         }
     };
 
-    public static final TargetedAction SHADOW_MADNESS = (World world, PlayTarget arg) -> {
+    public static final ActorlessTargetedAction SHADOW_MADNESS = (World world, PlayTarget arg) -> {
         TargetableCharacter target = arg.getTarget();
         if (target instanceof Minion) {
             Player player = arg.getCastingPlayer();
@@ -171,7 +171,7 @@ public final class TargetedActions {
         }
     };
 
-    public static final TargetedAction HOLY_WRATH = (world, arg) -> {
+    public static final ActorlessTargetedAction HOLY_WRATH = (world, arg) -> {
         Player player = arg.getCastingPlayer();
 
         UndoableResult<CardDescr> cardRef = player.drawCardToHand();
@@ -186,7 +186,7 @@ public final class TargetedActions {
         };
     };
 
-    private static TargetedAction damageAndDrawCard(
+    private static ActorlessTargetedAction damageAndDrawCard(
             boolean drawWhenDead,
             int damage) {
         return (world, target) -> {
@@ -211,12 +211,12 @@ public final class TargetedActions {
         };
     }
 
-    public static TargetedAction actWithMinionOnNeighbours(
+    public static ActorlessTargetedAction actWithMinionOnNeighbours(
             @NamedArg("action") TargetedMinionAction action) {
         return actWithMinionOnNeighbours(action, action);
     }
 
-    public static TargetedAction actWithMinionOnNeighbours(
+    public static ActorlessTargetedAction actWithMinionOnNeighbours(
             @NamedArg("leftAction") TargetedMinionAction leftAction,
             @NamedArg("rightAction") TargetedMinionAction rightAction) {
         ExceptionHelper.checkNotNullArgument(leftAction, "leftAction");
@@ -245,7 +245,7 @@ public final class TargetedActions {
         };
     }
 
-    public static TargetedAction shuffleTargetIntoDeck(@NamedArg("cardCount") int cardCount) {
+    public static ActorlessTargetedAction shuffleTargetIntoDeck(@NamedArg("cardCount") int cardCount) {
         return (World world, PlayTarget target) -> {
             TargetableCharacter character = target.getTarget();
             if (!(character instanceof Minion)) {
@@ -264,15 +264,15 @@ public final class TargetedActions {
         };
     }
 
-    public static TargetedAction mortalCoil(@NamedArg("damage") int damage) {
+    public static ActorlessTargetedAction mortalCoil(@NamedArg("damage") int damage) {
         return damageAndDrawCard(true, damage);
     }
 
-    public static TargetedAction slam(@NamedArg("damage") int damage) {
+    public static ActorlessTargetedAction slam(@NamedArg("damage") int damage) {
         return damageAndDrawCard(false, damage);
     }
 
-    public static TargetedAction dealBasicDamage(@NamedArg("damage") int damage) {
+    public static ActorlessTargetedAction dealBasicDamage(@NamedArg("damage") int damage) {
         return (world, target) -> {
             Player player = target.getCastingPlayer();
             TargetableCharacter character = target.getTarget();
@@ -282,7 +282,7 @@ public final class TargetedActions {
         };
     }
 
-    public static TargetedAction dealSpellDamage(
+    public static ActorlessTargetedAction dealSpellDamage(
             @NamedArg("minDamage") int minDamage,
             @NamedArg("maxDamage") int maxDamage) {
         return (world, target) -> {
@@ -291,7 +291,7 @@ public final class TargetedActions {
         };
     }
 
-    public static TargetedAction dealSpellDamage(@NamedArg("damage") int damage) {
+    public static ActorlessTargetedAction dealSpellDamage(@NamedArg("damage") int damage) {
         return (world, target) -> {
             return dealSpellDamage(target, damage);
         };
@@ -326,7 +326,7 @@ public final class TargetedActions {
         return dealSpellDamage(player, target, damage);
     }
 
-    private static TargetedAction shadowFlameDamage() {
+    private static ActorlessTargetedAction shadowFlameDamage() {
         MultiTargeter.Builder targeterBuilder = new MultiTargeter.Builder();
         targeterBuilder.setEnemy(true);
         targeterBuilder.setMinions(true);
@@ -346,7 +346,7 @@ public final class TargetedActions {
         };
     }
 
-    public static TargetedAction implosion(
+    public static ActorlessTargetedAction implosion(
             @NamedArg("minDamage") int minDamage,
             @NamedArg("maxDamage") int maxDamage,
             @NamedArg("minion") MinionProvider minion) {
@@ -386,7 +386,7 @@ public final class TargetedActions {
         };
     }
 
-    public static TargetedAction blessingOfWisdom() {
+    public static ActorlessTargetedAction blessingOfWisdom() {
         return (World world, PlayTarget target) -> {
             TargetableCharacter targetCharacter = target.getTarget();
             if (targetCharacter instanceof Minion) {
@@ -454,9 +454,9 @@ public final class TargetedActions {
         return leftRef != null ? leftRef.getMinion() : null;
     }
 
-    public static TargetedAction swipeAction(
-            @NamedArg("mainAction") TargetedAction mainAction,
-            @NamedArg("othersAction") TargetedAction othersAction) {
+    public static ActorlessTargetedAction swipeAction(
+            @NamedArg("mainAction") ActorlessTargetedAction mainAction,
+            @NamedArg("othersAction") ActorlessTargetedAction othersAction) {
         ExceptionHelper.checkNotNullArgument(mainAction, "mainAction");
         ExceptionHelper.checkNotNullArgument(othersAction, "othersAction");
 
@@ -484,9 +484,9 @@ public final class TargetedActions {
         };
     }
 
-    public static TargetedAction applyToAdjacentTargets(
-            @NamedArg("mainAction") TargetedAction mainAction,
-            @NamedArg("sideAction") TargetedAction sideAction) {
+    public static ActorlessTargetedAction applyToAdjacentTargets(
+            @NamedArg("mainAction") ActorlessTargetedAction mainAction,
+            @NamedArg("sideAction") ActorlessTargetedAction sideAction) {
         ExceptionHelper.checkNotNullArgument(mainAction, "mainAction");
         ExceptionHelper.checkNotNullArgument(sideAction, "sideAction");
 
@@ -516,13 +516,13 @@ public final class TargetedActions {
         };
     }
 
-    public static TargetedAction applyToAdjacentTargets(
-            @NamedArg("action") TargetedAction action) {
+    public static ActorlessTargetedAction applyToAdjacentTargets(
+            @NamedArg("action") ActorlessTargetedAction action) {
         return applyToAdjacentTargets(action, action);
     }
 
-    public static TargetedAction applyIfFrozen(
-            @NamedArg("action") TargetedAction action) {
+    public static ActorlessTargetedAction applyIfFrozen(
+            @NamedArg("action") ActorlessTargetedAction action) {
         ExceptionHelper.checkNotNullArgument(action, "action");
 
         return (World world, PlayTarget target) -> {
@@ -562,9 +562,9 @@ public final class TargetedActions {
         return target.getKeywords().contains(Keywords.RACE_DEMON);
     }
 
-    public static TargetedAction demonBuff(@NamedArg("buff") int buff) {
+    public static ActorlessTargetedAction demonBuff(@NamedArg("buff") int buff) {
         CharacterTargetedAction buffAction = applyToMinionTarget(MinionActions.buff(buff, buff));
-        TargetedAction damageAction = dealSpellDamage(buff);
+        ActorlessTargetedAction damageAction = dealSpellDamage(buff);
 
         return (World world, PlayTarget arg) -> {
             TargetableCharacter target = arg.getTarget();
@@ -605,12 +605,12 @@ public final class TargetedActions {
         }));
     }
 
-    public static TargetedAction damageAndSummonOnDeath(
+    public static ActorlessTargetedAction damageAndSummonOnDeath(
             @NamedArg("damage") int damage,
             @NamedArg("keywords") Keyword[] keywords) {
 
         Function<World, MinionDescr> minionProvider = ActionUtils.randomMinionProvider(keywords);
-        TargetedAction damageAction = dealSpellDamage(damage);
+        ActorlessTargetedAction damageAction = dealSpellDamage(damage);
 
         return (World world, PlayTarget arg) -> {
             UndoAction damageUndo = damageAction.alterWorld(world, arg);

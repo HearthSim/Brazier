@@ -12,12 +12,12 @@ import org.jtrim.utils.ExceptionHelper;
 
 public final class GenericEventActions {
     public static WorldEventAction<PlayerProperty, Object> applyTargetedActionToRandomOwnMinion(
-            @NamedArg("action") TargetedAction action) {
+            @NamedArg("action") ActorlessTargetedAction action) {
         return applyTargetedActionToRandomOwnMinion(action, WorldEventFilter.ANY);
     }
 
     public static WorldEventAction<PlayerProperty, Object> applyTargetedActionToRandomOwnMinion(
-            @NamedArg("action") TargetedAction action,
+            @NamedArg("action") ActorlessTargetedAction action,
             @NamedArg("filter") WorldEventFilter<? super PlayerProperty, ? super Minion> filter) {
         ExceptionHelper.checkNotNullArgument(action, "action");
         ExceptionHelper.checkNotNullArgument(filter, "filter");
