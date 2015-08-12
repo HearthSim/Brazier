@@ -187,6 +187,27 @@ public final class AuraTest {
     }
 
     @Test
+    public void testHealWithHuntersMark() {
+        PlayScript.testScript((script) -> {
+            script.setMana("p1", 10);
+
+            script.playMinionCard("p1", WISP, 0);
+            script.playMinionCard("p1", STORMWIND_CHAMPION, 1);
+            script.playCard("p1", MOONFIRE, "p1:0");
+
+            script.expectBoard("p1",
+                    expectedMinion(WISP, 2, 1),
+                    expectedMinion(STORMWIND_CHAMPION, 6, 6));
+
+            script.playCard("p1", HUNTERS_MARK, "p1:0");
+
+            script.expectBoard("p1",
+                    expectedMinion(WISP, 2, 2),
+                    expectedMinion(STORMWIND_CHAMPION, 6, 6));
+        });
+    }
+
+    @Test
     public void testStormwindChampion() {
         PlayScript.testScript((script) -> {
             script.setMana("p1", 10);

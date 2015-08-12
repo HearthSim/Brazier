@@ -117,8 +117,8 @@ public final class HpProperty implements Silencable {
         int prevCurrentMaxHp = currentMaxHp;
 
         buffedMaxHp = newValue;
-        currentMaxHp = currentMaxHp + (newValue - prevBuffedMaxHp);
-        currentHp = getMaxHp();
+        currentMaxHp = newValue;
+        currentHp = newValue;
 
         return () -> {
             currentMaxHp = prevCurrentMaxHp;
@@ -133,8 +133,8 @@ public final class HpProperty implements Silencable {
         int prevCurrentMaxHp = currentMaxHp;
 
         buffedMaxHp = newValue;
-        currentMaxHp = currentMaxHp + (newValue - prevBuffedMaxHp);
-        currentHp = Math.min(currentHp, getMaxHp());
+        currentMaxHp = newValue;
+        currentHp = Math.min(currentHp, newValue);
 
         return () -> {
             currentMaxHp = prevCurrentMaxHp;

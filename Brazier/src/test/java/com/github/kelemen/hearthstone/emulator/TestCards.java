@@ -48,6 +48,7 @@ public final class TestCards {
     public static final String HAUNTED_CREEPER = "Haunted Creeper";
     public static final String HEADCRACK = "Headcrack";
     public static final String HELLFIRE = "Hellfire";
+    public static final String HUNTERS_MARK = "Hunter's Mark";
     public static final String ICE_BARRIER = "Ice Barrier";
     public static final String ILLIDAN_STORMRAGE = "Illidan Stormrage";
     public static final String JARAXXUS = "Lord Jaraxxus";
