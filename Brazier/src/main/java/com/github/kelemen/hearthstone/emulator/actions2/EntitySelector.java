@@ -8,7 +8,7 @@ import java.util.stream.Stream;
 import org.jtrim.utils.ExceptionHelper;
 
 public interface EntitySelector<Actor, Target, Selection> {
-    public Stream<Selection> select(World world, Actor actor, Target target);
+    public Stream<? extends Selection> select(World world, Actor actor, Target target);
 
     public static <Actor, Target, Selection> EntitySelector<Actor, Target, Selection> merge(
             Collection<? extends EntitySelector<Actor, Target, Selection>> selectors) {
@@ -24,9 +24,9 @@ public interface EntitySelector<Actor, Target, Selection> {
         }
 
         return (World world, Actor actor, Target target) -> {
-            Stream<Selection> result = null;
+            Stream<? extends Selection> result = null;
             for (EntitySelector<Actor, Target, Selection> selector: selectorsCopy) {
-                Stream<Selection> selected = selector.select(world, actor, target);
+                Stream<? extends Selection> selected = selector.select(world, actor, target);
                 result = result != null
                         ? Stream.concat(result, selected)
                         : selected;

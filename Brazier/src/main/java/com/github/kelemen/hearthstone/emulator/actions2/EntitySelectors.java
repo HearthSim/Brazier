@@ -8,7 +8,9 @@ import com.github.kelemen.hearthstone.emulator.SummonLocationRef;
 import com.github.kelemen.hearthstone.emulator.World;
 import com.github.kelemen.hearthstone.emulator.cards.Card;
 import com.github.kelemen.hearthstone.emulator.minions.Minion;
+import com.github.kelemen.hearthstone.emulator.parsing.NamedArg;
 import java.util.stream.Stream;
+import org.jtrim.utils.ExceptionHelper;
 
 public final class EntitySelectors {
     public static <Actor, Target, Selection> EntitySelector<Actor, Target, Selection> empty() {
@@ -17,6 +19,18 @@ public final class EntitySelectors {
 
     public static <Actor, Target> EntitySelector<Actor, Target, Actor> self() {
         return (World world, Actor actor, Target target) -> Stream.of(actor);
+    }
+
+    public static <Actor, Target, Selection> EntitySelector<Actor, Target, Selection> filter(
+            @NamedArg("filter") EntityFilter<Selection> filter,
+            @NamedArg("selector") EntitySelector<? super Actor, ? super Target, ? extends Selection> selector) {
+        ExceptionHelper.checkNotNullArgument(filter, "filter");
+        ExceptionHelper.checkNotNullArgument(selector, "selector");
+
+        return (World world, Actor actor, Target target) -> {
+            Stream<? extends Selection> selection = selector.select(world, actor, target);
+            return filter.select(world, selection);
+        };
     }
 
     public static <Target> EntitySelector<Card, Target, Minion> actorCardsMinion() {
