@@ -16,11 +16,11 @@ import org.jtrim.utils.ExceptionHelper;
 public final class TargetedActions {
     public static <Target> TargetedAction<Card, Target> withCardsMinion(
             @NamedArg("action") TargetedAction<? super Minion, ? super Target> action) {
-        return forActors(EntitySelectors.actorCardsMinion(), action);
+        return forActors(TargetedEntitySelectors.actorCardsMinion(), action);
     }
 
     public static <Actor, Target, FinalTarget> TargetedAction<Actor, Target> forTargets(
-            @NamedArg("targets") EntitySelector<? super Actor, ? super Target, ? extends FinalTarget> targets,
+            @NamedArg("targets") TargetedEntitySelector<? super Actor, ? super Target, ? extends FinalTarget> targets,
             @NamedArg("action") TargetedAction<? super Actor, ? super FinalTarget> action) {
         ExceptionHelper.checkNotNullArgument(targets, "targets");
         ExceptionHelper.checkNotNullArgument(action, "action");
@@ -35,7 +35,7 @@ public final class TargetedActions {
     }
 
     public static <Actor, Target, FinalActor> TargetedAction<Actor, Target> forActors(
-            @NamedArg("actors") EntitySelector<? super Actor, ? super Target, ? extends FinalActor> actors,
+            @NamedArg("actors") TargetedEntitySelector<? super Actor, ? super Target, ? extends FinalActor> actors,
             @NamedArg("action") TargetedAction<? super FinalActor, ? super Target> action) {
         ExceptionHelper.checkNotNullArgument(actors, "actors");
         ExceptionHelper.checkNotNullArgument(action, "action");

@@ -3,7 +3,6 @@ package com.github.kelemen.hearthstone.emulator.parsing;
 import com.github.kelemen.hearthstone.emulator.HearthStoneDb;
 import com.github.kelemen.hearthstone.emulator.HeroPowerId;
 import com.github.kelemen.hearthstone.emulator.Keyword;
-import com.github.kelemen.hearthstone.emulator.Player;
 import com.github.kelemen.hearthstone.emulator.PlayerProperty;
 import com.github.kelemen.hearthstone.emulator.TargetableCharacter;
 import com.github.kelemen.hearthstone.emulator.World;
@@ -34,6 +33,8 @@ import com.github.kelemen.hearthstone.emulator.actions.WorldObjectAction;
 import com.github.kelemen.hearthstone.emulator.actions2.EntityFilter;
 import com.github.kelemen.hearthstone.emulator.actions2.EntitySelector;
 import com.github.kelemen.hearthstone.emulator.actions2.TargetedAction;
+import com.github.kelemen.hearthstone.emulator.actions2.TargetedEntitySelector;
+import com.github.kelemen.hearthstone.emulator.actions2.TargetlessAction;
 import com.github.kelemen.hearthstone.emulator.cards.Card;
 import com.github.kelemen.hearthstone.emulator.cards.CardDescr;
 import com.github.kelemen.hearthstone.emulator.cards.CardId;
@@ -160,6 +161,13 @@ public final class ParserUtils {
                     = (Collection<? extends TargetedAction<Object, Object>>)elements;
             return TargetedAction.merge(unsafeElements);
         });
+        result.setTypeMerger(TargetlessAction.class, (Collection<? extends TargetlessAction<?>> elements) -> {
+            // Unsafe but there is nothing to do.
+            @SuppressWarnings("unchecked")
+            Collection<? extends TargetlessAction<Object>> unsafeElements
+                    = (Collection<? extends TargetlessAction<Object>>)elements;
+            return TargetlessAction.merge(unsafeElements);
+        });
         result.setTypeMerger(EntityFilter.class, (Collection<? extends EntityFilter<?>> elements) -> {
             // Unsafe but there is nothing to do.
             @SuppressWarnings("unchecked")
@@ -167,11 +175,18 @@ public final class ParserUtils {
                     = (Collection<? extends EntityFilter<Object>>)elements;
             return EntityFilter.merge(unsafeElements);
         });
-        result.setTypeMerger(EntitySelector.class, (Collection<? extends EntitySelector<?, ?, ?>> elements) -> {
+        result.setTypeMerger(TargetedEntitySelector.class, (Collection<? extends TargetedEntitySelector<?, ?, ?>> elements) -> {
             // Unsafe but there is nothing to do.
             @SuppressWarnings("unchecked")
-            Collection<? extends EntitySelector<Object, Object, Object>> unsafeElements
-                    = (Collection<? extends EntitySelector<Object, Object, Object>>)elements;
+            Collection<? extends TargetedEntitySelector<Object, Object, Object>> unsafeElements
+                    = (Collection<? extends TargetedEntitySelector<Object, Object, Object>>)elements;
+            return TargetedEntitySelector.merge(unsafeElements);
+        });
+        result.setTypeMerger(EntitySelector.class, (Collection<? extends EntitySelector<?, ?>> elements) -> {
+            // Unsafe but there is nothing to do.
+            @SuppressWarnings("unchecked")
+            Collection<? extends EntitySelector<Object, Object>> unsafeElements
+                    = (Collection<? extends EntitySelector<Object, Object>>)elements;
             return EntitySelector.merge(unsafeElements);
         });
     }
@@ -242,6 +257,12 @@ public final class ParserUtils {
 
         result.addTypeConversion(DamageAction.class, WeaponAction.class,
                 (action) -> action.toWeaponAction());
+
+        result.addTypeConversion(TargetlessAction.class, TargetedAction.class,
+                (action) -> action.toTargetedAction());
+
+        result.addTypeConversion(EntitySelector.class, TargetedEntitySelector.class,
+                (action) -> action.toTargeted());
 
         // FIXME: These are temporary conversion and will need only until all previous
         //   action types get replaced with the new mechanic.

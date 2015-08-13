@@ -7,12 +7,16 @@ import java.util.List;
 import java.util.stream.Stream;
 import org.jtrim.utils.ExceptionHelper;
 
-public interface EntitySelector<Actor, Target, Selection> {
-    public Stream<? extends Selection> select(World world, Actor actor, Target target);
+public interface EntitySelector<Actor, Selection> {
+    public Stream<? extends Selection> select(World world, Actor actor);
 
-    public static <Actor, Target, Selection> EntitySelector<Actor, Target, Selection> merge(
-            Collection<? extends EntitySelector<Actor, Target, Selection>> selectors) {
-        List<EntitySelector<Actor, Target, Selection>> selectorsCopy = new ArrayList<>(selectors);
+    public default TargetedEntitySelector<Actor, Object, Selection> toTargeted() {
+        return (World world, Actor actor, Object target) -> select(world, actor);
+    }
+
+    public static <Actor, Selection> EntitySelector<Actor, Selection> merge(
+            Collection<? extends EntitySelector<Actor, Selection>> selectors) {
+        List<EntitySelector<Actor, Selection>> selectorsCopy = new ArrayList<>(selectors);
         ExceptionHelper.checkNotNullElements(selectorsCopy, "selectors");
 
         int count = selectorsCopy.size();
@@ -23,10 +27,10 @@ public interface EntitySelector<Actor, Target, Selection> {
             return selectorsCopy.get(0);
         }
 
-        return (World world, Actor actor, Target target) -> {
+        return (World world, Actor actor) -> {
             Stream<? extends Selection> result = null;
-            for (EntitySelector<Actor, Target, Selection> selector: selectorsCopy) {
-                Stream<? extends Selection> selected = selector.select(world, actor, target);
+            for (EntitySelector<Actor, Selection> selector: selectorsCopy) {
+                Stream<? extends Selection> selected = selector.select(world, actor);
                 result = result != null
                         ? Stream.concat(result, selected)
                         : selected;
