@@ -3,19 +3,24 @@ package com.github.kelemen.hearthstone.emulator.parsing;
 import com.github.kelemen.hearthstone.emulator.HearthStoneDb;
 import com.github.kelemen.hearthstone.emulator.HeroPowerId;
 import com.github.kelemen.hearthstone.emulator.Keyword;
+import com.github.kelemen.hearthstone.emulator.Player;
 import com.github.kelemen.hearthstone.emulator.PlayerProperty;
+import com.github.kelemen.hearthstone.emulator.TargetableCharacter;
 import com.github.kelemen.hearthstone.emulator.World;
 import com.github.kelemen.hearthstone.emulator.abilities.ActivatableAbility;
 import com.github.kelemen.hearthstone.emulator.abilities.Aura;
 import com.github.kelemen.hearthstone.emulator.abilities.AuraFilter;
 import com.github.kelemen.hearthstone.emulator.abilities.LivingEntitysAbilities;
 import com.github.kelemen.hearthstone.emulator.actions.ActorlessTargetedAction;
+import com.github.kelemen.hearthstone.emulator.actions.BattleCryArg;
 import com.github.kelemen.hearthstone.emulator.actions.BattleCryTargetedAction;
 import com.github.kelemen.hearthstone.emulator.actions.CardPlayAction;
+import com.github.kelemen.hearthstone.emulator.actions.CardPlayArg;
 import com.github.kelemen.hearthstone.emulator.actions.CharacterTargetedAction;
 import com.github.kelemen.hearthstone.emulator.actions.DamageAction;
 import com.github.kelemen.hearthstone.emulator.actions.MinionAction;
 import com.github.kelemen.hearthstone.emulator.actions.PlayActionRequirement;
+import com.github.kelemen.hearthstone.emulator.actions.PlayTarget;
 import com.github.kelemen.hearthstone.emulator.actions.PlayerAction;
 import com.github.kelemen.hearthstone.emulator.actions.TargetNeed;
 import com.github.kelemen.hearthstone.emulator.actions.TargetedMinionAction;
@@ -29,9 +34,11 @@ import com.github.kelemen.hearthstone.emulator.actions.WorldObjectAction;
 import com.github.kelemen.hearthstone.emulator.actions2.EntityFilter;
 import com.github.kelemen.hearthstone.emulator.actions2.EntitySelector;
 import com.github.kelemen.hearthstone.emulator.actions2.TargetedAction;
+import com.github.kelemen.hearthstone.emulator.cards.Card;
 import com.github.kelemen.hearthstone.emulator.cards.CardDescr;
 import com.github.kelemen.hearthstone.emulator.cards.CardId;
 import com.github.kelemen.hearthstone.emulator.cards.CardProvider;
+import com.github.kelemen.hearthstone.emulator.minions.Minion;
 import com.github.kelemen.hearthstone.emulator.minions.MinionDescr;
 import com.github.kelemen.hearthstone.emulator.minions.MinionId;
 import com.github.kelemen.hearthstone.emulator.minions.MinionProvider;
@@ -234,6 +241,28 @@ public final class ParserUtils {
 
         result.addTypeConversion(DamageAction.class, WeaponAction.class,
                 (action) -> action.toWeaponAction());
+
+        // FIXME: These are temporary conversion and will need only until all previous
+        //   action types get replaced with the new mechanic.
+        @SuppressWarnings("unchecked")
+        Class<TargetedAction<Card, TargetableCharacter>> playTargetedActionClass
+                = (Class<TargetedAction<Card, TargetableCharacter>>)(Class<?>)TargetedAction.class;
+        result.addTypeConversion(playTargetedActionClass, CardPlayAction.class, (action) -> {
+            return (World world, CardPlayArg arg) -> {
+                PlayTarget target = arg.getTarget();
+                return action.alterWorld(world, arg.getCard(), target.getTarget());
+            };
+        });
+
+        @SuppressWarnings("unchecked")
+        Class<TargetedAction<Minion, TargetableCharacter>> battleCryTargetedActionClass
+                = (Class<TargetedAction<Minion, TargetableCharacter>>)(Class<?>)TargetedAction.class;
+        result.addTypeConversion(battleCryTargetedActionClass, BattleCryTargetedAction.class, (action) -> {
+            return (World world, BattleCryArg arg) -> {
+                PlayTarget target = arg.getTarget();
+                return action.alterWorld(world, arg.getSource(), target.getTarget());
+            };
+        });
     }
 
     private static void addCustomStringParsers(Supplier<HearthStoneDb> dbRef, JsonDeserializer.Builder result) {

@@ -1,5 +1,10 @@
 package com.github.kelemen.hearthstone.emulator.actions2;
 
+import com.github.kelemen.hearthstone.emulator.Damage;
+import com.github.kelemen.hearthstone.emulator.DamageSource;
+import com.github.kelemen.hearthstone.emulator.TargetableCharacter;
+import com.github.kelemen.hearthstone.emulator.UndoableIntResult;
+import com.github.kelemen.hearthstone.emulator.UndoableResult;
 import com.github.kelemen.hearthstone.emulator.World;
 import com.github.kelemen.hearthstone.emulator.actions.UndoBuilder;
 import com.github.kelemen.hearthstone.emulator.cards.Card;
@@ -40,6 +45,24 @@ public final class TargetedActions {
                 result.addUndo(action.alterWorld(world, actor, target));
             });
             return result;
+        };
+    }
+
+    public static TargetedAction<DamageSource, TargetableCharacter> damageTarget(@NamedArg("damage") int damage) {
+        return damageTarget(damage, damage);
+    }
+
+    public static TargetedAction<DamageSource, TargetableCharacter> damageTarget(
+            @NamedArg("minDamage") int minDamage,
+            @NamedArg("maxDamage") int maxDamage) {
+        return (World world, DamageSource actor, TargetableCharacter target) -> {
+            int damage = world.getRandomProvider().roll(minDamage, maxDamage);
+            UndoableResult<Damage> damageRef = actor.createDamage(damage);
+            UndoableIntResult damageUndo = target.damage(damageRef.getResult());
+            return () -> {
+                damageUndo.undo();
+                damageRef.getUndoAction();
+            };
         };
     }
 

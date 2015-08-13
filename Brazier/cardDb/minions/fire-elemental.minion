@@ -3,8 +3,8 @@
     "attack": 6,
     "hp": 5,
     "battleCries": {
-        "class": "BattleCries.dealDamageToTarget",
         "targets": "all",
+        "class": "com.github.kelemen.hearthstone.emulator.actions2.TargetedActions.damageTarget",
         "damage": 3
     }
 }

@@ -1,9 +1,12 @@
 package com.github.kelemen.hearthstone.emulator.cards;
 
+import com.github.kelemen.hearthstone.emulator.Damage;
+import com.github.kelemen.hearthstone.emulator.DamageSource;
 import com.github.kelemen.hearthstone.emulator.Keyword;
 import com.github.kelemen.hearthstone.emulator.LabeledEntity;
 import com.github.kelemen.hearthstone.emulator.Player;
 import com.github.kelemen.hearthstone.emulator.PlayerProperty;
+import com.github.kelemen.hearthstone.emulator.UndoableResult;
 import com.github.kelemen.hearthstone.emulator.abilities.AuraAwareIntProperty;
 import com.github.kelemen.hearthstone.emulator.actions.CardRef;
 import com.github.kelemen.hearthstone.emulator.actions.ManaCostAdjuster;
@@ -14,7 +17,7 @@ import java.util.List;
 import java.util.Set;
 import org.jtrim.utils.ExceptionHelper;
 
-public final class Card implements PlayerProperty, LabeledEntity, CardRef {
+public final class Card implements PlayerProperty, LabeledEntity, CardRef, DamageSource {
     private final Player owner;
     private final CardDescr cardDescr;
     private final Minion minion;
@@ -61,6 +64,19 @@ public final class Card implements PlayerProperty, LabeledEntity, CardRef {
     @Override
     public Set<Keyword> getKeywords() {
         return cardDescr.getKeywords();
+    }
+
+    @Override
+    public UndoableResult<Damage> createDamage(int damage) {
+        if (minion != null) {
+            return minion.createDamage(damage);
+        }
+
+        if (cardDescr.getCardType() == CardType.SPELL) {
+            return new UndoableResult<>(getOwner().getSpellDamage(damage));
+        }
+
+        return new UndoableResult<>(new Damage(this, damage));
     }
 
     public CardDescr getCardDescr() {
