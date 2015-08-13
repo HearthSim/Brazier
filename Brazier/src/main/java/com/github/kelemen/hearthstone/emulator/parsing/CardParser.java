@@ -202,10 +202,21 @@ public final class CardParser implements EntityParser<CardDescr> {
 
     @Override
     public CardDescr fromJson(JsonTree root) throws ObjectParsingException {
+        return fromJsonWithCardType(root, null);
+    }
+
+    public CardDescr fromJson(JsonTree root, CardType predefinedCardType) throws ObjectParsingException {
+        ExceptionHelper.checkNotNullArgument(predefinedCardType, "predefinedCardType");
+        return fromJsonWithCardType(root, predefinedCardType);
+    }
+
+    private CardDescr fromJsonWithCardType(JsonTree root, CardType predefinedCardType) throws ObjectParsingException {
         String name = ParserUtils.getStringField(root, "name");
         int manaCost = ParserUtils.getIntField(root, "manaCost");
         Set<Keyword> keywords = new HashSet<>();
-        CardType cardType = parseCardType(root.getChild("type"));
+        CardType cardType = predefinedCardType != null
+                ? predefinedCardType
+                : parseCardType(root.getChild("type"));
 
         JsonTree minionElement = root.getChild("minion");
         if (minionElement != null && cardType == CardType.UNKNOWN) {

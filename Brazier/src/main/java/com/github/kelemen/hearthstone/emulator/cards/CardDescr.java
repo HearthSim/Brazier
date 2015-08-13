@@ -24,6 +24,8 @@ import org.jtrim.collections.CollectionsEx;
 import org.jtrim.utils.ExceptionHelper;
 
 public final class CardDescr implements HearthStoneEntity {
+    public static final CardDescr DO_NOTHING = new Builder(new CardId(""), CardType.UNKNOWN, 0).create();
+
     public static final class Builder {
         private final CardId cardId;
         private final CardType cardType;

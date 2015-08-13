@@ -1,7 +1,6 @@
 package com.github.kelemen.hearthstone.emulator.parsing;
 
 import com.github.kelemen.hearthstone.emulator.HearthStoneDb;
-import com.github.kelemen.hearthstone.emulator.HeroPowerId;
 import com.github.kelemen.hearthstone.emulator.Keyword;
 import com.github.kelemen.hearthstone.emulator.PlayerProperty;
 import com.github.kelemen.hearthstone.emulator.TargetableCharacter;
@@ -298,7 +297,6 @@ public final class ParserUtils {
         result.setCustomStringParser(CardId.class, (str) -> new CardId(str));
         result.setCustomStringParser(MinionId.class, (str) -> new MinionId(str));
         result.setCustomStringParser(WeaponId.class, (str) -> new WeaponId(str));
-        result.setCustomStringParser(HeroPowerId.class, (str) -> new HeroPowerId(str));
     }
 
     private static TargetNeed toTargetNeed(String str) throws ObjectParsingException {

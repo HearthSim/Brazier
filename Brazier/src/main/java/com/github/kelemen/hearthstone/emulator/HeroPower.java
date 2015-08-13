@@ -16,13 +16,13 @@ import org.jtrim.utils.ExceptionHelper;
 
 public final class HeroPower implements PlayerProperty, ActorlessTargetedAction {
     private final Hero hero;
-    private final HeroPowerDef powerDef;
+    private final CardDescr powerDef;
 
     private int useCount;
 
     private final AtomicReference<Card> baseCardRef;
 
-    public HeroPower(Hero hero, HeroPowerDef powerDef) {
+    public HeroPower(Hero hero, CardDescr powerDef) {
         ExceptionHelper.checkNotNullArgument(hero, "hero");
         ExceptionHelper.checkNotNullArgument(powerDef, "powerDef");
 
@@ -53,7 +53,7 @@ public final class HeroPower implements PlayerProperty, ActorlessTargetedAction 
         return hero.getOwner();
     }
 
-    public HeroPowerDef getPowerDef() {
+    public CardDescr getPowerDef() {
         return powerDef;
     }
 
@@ -62,7 +62,7 @@ public final class HeroPower implements PlayerProperty, ActorlessTargetedAction 
     }
 
     public TargetNeed getTargetNeed(Player player) {
-        return CardPlayActionDef.combineNeeds(player, powerDef.getActions());
+        return CardPlayActionDef.combineNeeds(player, powerDef.getOnPlayActions());
     }
 
     public boolean isPlayable(Player player) {
@@ -71,11 +71,11 @@ public final class HeroPower implements PlayerProperty, ActorlessTargetedAction 
         if (powerDef.getManaCost() > getOwner().getMana()) {
             return false;
         }
-        if (useCount >= powerDef.getMaxUseCost()) {
+        if (useCount >= 1) {
             return false;
         }
 
-        for (CardPlayActionDef action: powerDef.getActions()) {
+        for (CardPlayActionDef action: powerDef.getOnPlayActions()) {
             if (action.getRequirement().meetsRequirement(player)) {
                 return true;
             }
@@ -95,7 +95,7 @@ public final class HeroPower implements PlayerProperty, ActorlessTargetedAction 
         useCount++;
         result.addUndo(() -> useCount--);
 
-        for (CardPlayActionDef action: powerDef.getActions()) {
+        for (CardPlayActionDef action: powerDef.getOnPlayActions()) {
             result.addUndo(action.alterWorld(world, playArg));
         }
         return result;

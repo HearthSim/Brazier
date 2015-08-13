@@ -2,13 +2,13 @@ package com.github.kelemen.hearthstone.emulator.ui;
 
 import com.github.kelemen.hearthstone.emulator.HearthStoneDb;
 import com.github.kelemen.hearthstone.emulator.Hero;
-import com.github.kelemen.hearthstone.emulator.HeroPowerDef;
-import com.github.kelemen.hearthstone.emulator.HeroPowerId;
 import com.github.kelemen.hearthstone.emulator.Keyword;
 import com.github.kelemen.hearthstone.emulator.Keywords;
 import com.github.kelemen.hearthstone.emulator.ManaResource;
 import com.github.kelemen.hearthstone.emulator.Player;
 import com.github.kelemen.hearthstone.emulator.actions.UndoBuilder;
+import com.github.kelemen.hearthstone.emulator.cards.CardDescr;
+import com.github.kelemen.hearthstone.emulator.cards.CardId;
 import java.text.Collator;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,7 @@ import org.jtrim.utils.ExceptionHelper;
 @SuppressWarnings("serial")
 public class HeroEditorPanel extends javax.swing.JPanel {
     private final PlayerUiAgent agent;
-    private final HeroPowerId currentPowerId;
+    private final CardId currentPowerId;
 
     public HeroEditorPanel(HearthStoneDb db, PlayerUiAgent agent) {
         ExceptionHelper.checkNotNullArgument(db, "db");
@@ -67,7 +67,7 @@ public class HeroEditorPanel extends javax.swing.JPanel {
         }
     }
 
-    private void setupHeroPowerCombo(HearthStoneDb db, HeroPowerId defaultSelection) {
+    private void setupHeroPowerCombo(HearthStoneDb db, CardId defaultSelection) {
         HeroPowerItem[] powerItems = getPowerItems(db);
         HeroPowerItem selected = null;
         for (HeroPowerItem item: powerItems) {
@@ -88,7 +88,7 @@ public class HeroEditorPanel extends javax.swing.JPanel {
         return heroClassItem != null ? heroClassItem.getHeroClass() : null;
     }
 
-    private HeroPowerDef tryGetNewHeroPower() {
+    private CardDescr tryGetNewHeroPower() {
         HeroPowerItem heroPower = SwingProperties.comboBoxSelection(jHeroPowerEditor).getValue();
         if (heroPower == null) {
             return null;
@@ -120,10 +120,10 @@ public class HeroEditorPanel extends javax.swing.JPanel {
     }
 
     private static HeroPowerItem[] getPowerItems(HearthStoneDb db) {
-        List<HeroPowerDef> all = db.getHeroPowerDb().getAll();
+        List<CardDescr> all = db.getHeroPowerDb().getAll();
         List<HeroPowerItem> result = new ArrayList<>(all.size());
 
-        for (HeroPowerDef def: all) {
+        for (CardDescr def: all) {
             result.add(new HeroPowerItem(def));
         }
 
@@ -155,9 +155,9 @@ public class HeroEditorPanel extends javax.swing.JPanel {
     }
 
     private static final class HeroPowerItem {
-        private final HeroPowerDef powerDef;
+        private final CardDescr powerDef;
 
-        public HeroPowerItem(HeroPowerDef powerDef) {
+        public HeroPowerItem(CardDescr powerDef) {
             ExceptionHelper.checkNotNullArgument(powerDef, "powerDef");
             this.powerDef = powerDef;
         }
@@ -352,7 +352,7 @@ public class HeroEditorPanel extends javax.swing.JPanel {
         int overloadNextTurn = (int)jOverloadNextTurnEditor.getValue();
 
         Keyword heroClass = tryGetHeroClass();
-        HeroPowerDef heroPower = tryGetNewHeroPower();
+        CardDescr heroPower = tryGetNewHeroPower();
 
         agent.alterPlayer((player) -> {
             UndoBuilder result = new UndoBuilder();

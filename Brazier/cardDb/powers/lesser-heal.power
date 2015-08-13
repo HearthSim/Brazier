@@ -1,8 +1,9 @@
 {
     "name": "Lesser Heal",
     "description": "Restore 2 health.",
+    "class": "priest",
     "manaCost": 2,
-    "action": {
+    "playActions": {
         "class": "ActorlessTargetedActions.dealBasicDamage",
         "targets": "all",
         "damage": -2

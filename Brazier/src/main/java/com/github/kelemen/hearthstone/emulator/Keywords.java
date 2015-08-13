@@ -6,6 +6,7 @@ public final class Keywords {
     public static final Keyword MINION = Keyword.create("minion");
     public static final Keyword SPELL = Keyword.create("spell");
     public static final Keyword WEAPON = Keyword.create("weapon");
+    public static final Keyword HERO_POWER = Keyword.create("hero-power");
 
     public static final Keyword SPARE_PART = Keyword.create("spare-part");
     public static final Keyword BATTLE_CRY = Keyword.create("battlecry");

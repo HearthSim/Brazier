@@ -1,8 +1,9 @@
 {
     "name": "Totemic Call",
     "description": "Summon a random Totem.",
+    "class": "shaman",
     "manaCost": 2,
-    "action": {
+    "playActions": {
         "class": "PlayerActions.summonRandomTotem",
         "requires": [
             {

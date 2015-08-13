@@ -1,8 +1,9 @@
 {
     "name": "Mind Shatter",
     "description": "Deal 3 damage.",
+    "class": "priest",
     "manaCost": 2,
-    "action": {
+    "playActions": {
         "class": "ActorlessTargetedActions.dealBasicDamage",
         "targets": "all",
         "damage": 3

@@ -1,8 +1,9 @@
 {
     "name": "Fireblast",
     "description": "Deal 1 damage.",
+    "class": "mage",
     "manaCost": 2,
-    "action": {
+    "playActions": {
         "class": "ActorlessTargetedActions.dealBasicDamage",
         "targets": "all",
         "damage": 1

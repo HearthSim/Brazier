@@ -8,7 +8,6 @@ import com.github.kelemen.hearthstone.emulator.Deck;
 import com.github.kelemen.hearthstone.emulator.EntityId;
 import com.github.kelemen.hearthstone.emulator.Hand;
 import com.github.kelemen.hearthstone.emulator.Hero;
-import com.github.kelemen.hearthstone.emulator.HeroPowerId;
 import com.github.kelemen.hearthstone.emulator.Keyword;
 import com.github.kelemen.hearthstone.emulator.Keywords;
 import com.github.kelemen.hearthstone.emulator.LabeledEntity;
@@ -31,6 +30,7 @@ import com.github.kelemen.hearthstone.emulator.abilities.CardAuras;
 import com.github.kelemen.hearthstone.emulator.abilities.TargetedActiveAura;
 import com.github.kelemen.hearthstone.emulator.cards.Card;
 import com.github.kelemen.hearthstone.emulator.cards.CardDescr;
+import com.github.kelemen.hearthstone.emulator.cards.CardId;
 import com.github.kelemen.hearthstone.emulator.cards.CardProvider;
 import com.github.kelemen.hearthstone.emulator.cards.CardType;
 import com.github.kelemen.hearthstone.emulator.minions.Minion;
@@ -1571,24 +1571,24 @@ public final class PlayerActions {
 
         return (World world, Player player) -> {
             Hero hero = new Hero(player, maxHp, armor, heroClass, keywordsCopy);
-            hero.setHeroPower(world.getDb().getHeroPowerDb().getById(new HeroPowerId(heroPower)));
+            hero.setHeroPower(world.getDb().getHeroPowerDb().getById(new CardId(heroPower)));
 
             return player.setHero(hero);
         };
     }
 
     public static PlayerAction replaceHeroPower(
-            @NamedArg("heroPower") HeroPowerId[] heroPower) {
+            @NamedArg("heroPower") CardId[] heroPower) {
         ExceptionHelper.checkArgumentInRange(heroPower.length, 1, Integer.MAX_VALUE, "heroPower.length");
-        HeroPowerId[] heroPowerCopy = heroPower.clone();
+        CardId[] heroPowerCopy = heroPower.clone();
         ExceptionHelper.checkNotNullElements(heroPowerCopy, "heroPower");
 
 
         return (World world, Player player) -> {
             Hero hero = player.getHero();
 
-            HeroPowerId currentId = hero.getHeroPower().getPowerDef().getId();
-            HeroPowerId newId = heroPowerCopy[0];
+            CardId currentId = hero.getHeroPower().getPowerDef().getId();
+            CardId newId = heroPowerCopy[0];
             for (int i = 0; i < heroPowerCopy.length; i++) {
                 if (currentId.equals(heroPowerCopy[i])) {
                     int selectedIndex = i + 1;

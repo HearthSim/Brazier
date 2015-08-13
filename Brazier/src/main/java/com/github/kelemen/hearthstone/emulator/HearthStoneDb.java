@@ -1,10 +1,10 @@
 package com.github.kelemen.hearthstone.emulator;
 
 import com.github.kelemen.hearthstone.emulator.cards.CardDescr;
+import com.github.kelemen.hearthstone.emulator.cards.CardType;
 import com.github.kelemen.hearthstone.emulator.minions.MinionDescr;
 import com.github.kelemen.hearthstone.emulator.parsing.CardParser;
 import com.github.kelemen.hearthstone.emulator.parsing.EntityParser;
-import com.github.kelemen.hearthstone.emulator.parsing.HeroPowerParser;
 import com.github.kelemen.hearthstone.emulator.parsing.JsonDeserializer;
 import com.github.kelemen.hearthstone.emulator.parsing.ObjectParsingException;
 import com.github.kelemen.hearthstone.emulator.parsing.ParserUtils;
@@ -29,11 +29,11 @@ public final class HearthStoneDb {
     private final HearthStoneEntityDatabase<MinionDescr> minionDb;
     private final HearthStoneEntityDatabase<CardDescr> cardDb;
     private final HearthStoneEntityDatabase<WeaponDescr> weaponDb;
-    private final HearthStoneEntityDatabase<HeroPowerDef> heroPowerDb;
+    private final HearthStoneEntityDatabase<CardDescr> heroPowerDb;
 
     public HearthStoneDb(
             HearthStoneEntityDatabase<CardDescr> cardDb,
-            HearthStoneEntityDatabase<HeroPowerDef> heroPowerDb) {
+            HearthStoneEntityDatabase<CardDescr> heroPowerDb) {
         ExceptionHelper.checkNotNullArgument(cardDb, "cardDb");
         ExceptionHelper.checkNotNullArgument(heroPowerDb, "heroPowerDb");
 
@@ -127,7 +127,7 @@ public final class HearthStoneDb {
 
         HearthStoneEntityDatabase<CardDescr> cardDb
                 = createCardDb(cardDir, objectParser);
-        HearthStoneEntityDatabase<HeroPowerDef> heroPowerDb
+        HearthStoneEntityDatabase<CardDescr> heroPowerDb
                 = createHeroPowerDb(powerDir, objectParser);
 
         cardDbRef.set(cardDb);
@@ -150,11 +150,14 @@ public final class HearthStoneDb {
         return createEntityDb(cardDir, ".card", new CardParser(objectParser));
     }
 
-    private static HearthStoneEntityDatabase<HeroPowerDef> createHeroPowerDb(
+    private static HearthStoneEntityDatabase<CardDescr> createHeroPowerDb(
             Path powerDir,
             JsonDeserializer objectParser) throws IOException, ObjectParsingException {
 
-        return createEntityDb(powerDir, ".power", new HeroPowerParser(objectParser));
+        CardParser cardParser = new CardParser(objectParser);
+        return createEntityDb(powerDir, ".power", (obj) -> {
+            return cardParser.fromJson(obj, CardType.HERO_POWER);
+        });
     }
 
     private static <T extends HearthStoneEntity> HearthStoneEntityDatabase<T> createEntityDb(
@@ -182,7 +185,7 @@ public final class HearthStoneDb {
         return result.create();
     }
 
-    public HearthStoneEntityDatabase<HeroPowerDef> getHeroPowerDb() {
+    public HearthStoneEntityDatabase<CardDescr> getHeroPowerDb() {
         return heroPowerDb;
     }
 

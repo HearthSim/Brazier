@@ -89,8 +89,8 @@ public class HearthStoneEmulator {
         player2.getManaResource().setManaCrystals(8);
         player2.setMana(8);
 
-        player1.getHero().setHeroPower(db.getHeroPowerDb().getById(new HeroPowerId("Armor Up!")));
-        player2.getHero().setHeroPower(db.getHeroPowerDb().getById(new HeroPowerId("Armor Up!")));
+        player1.getHero().setHeroPower(db.getHeroPowerDb().getById(new CardId("Armor Up!")));
+        player2.getHero().setHeroPower(db.getHeroPowerDb().getById(new CardId("Armor Up!")));
     }
 
     private static void setupInitialWorld2(World world) {
@@ -145,8 +145,8 @@ public class HearthStoneEmulator {
         player2.getManaResource().setManaCrystals(8);
         player2.setMana(8);
 
-        player1.getHero().setHeroPower(db.getHeroPowerDb().getById(new HeroPowerId("Armor Up!")));
-        player2.getHero().setHeroPower(db.getHeroPowerDb().getById(new HeroPowerId("Armor Up!")));
+        player1.getHero().setHeroPower(db.getHeroPowerDb().getById(new CardId("Armor Up!")));
+        player2.getHero().setHeroPower(db.getHeroPowerDb().getById(new CardId("Armor Up!")));
     }
 
     private static void setupInitialWorld3(World world) {
@@ -155,7 +155,7 @@ public class HearthStoneEmulator {
         Player player1 = world.getPlayer1();
         world.setCurrentPlayerId(player1.getPlayerId());
 
-        player1.getHero().setHeroPower(db.getHeroPowerDb().getById(new HeroPowerId("Reinforce")));
+        player1.getHero().setHeroPower(db.getHeroPowerDb().getById(new CardId("Reinforce")));
 
         player1.summonMinion(db.getMinionDb().getById(new MinionId("Tirion Fordring")));
         player1.summonMinion(db.getMinionDb().getById(new MinionId("Tirion Fordring")));
@@ -165,7 +165,7 @@ public class HearthStoneEmulator {
         player1.getBoard().getDeck().setCards(getRandomCards(db, 10));
 
         Player player2 = world.getPlayer2();
-        player2.getHero().setHeroPower(db.getHeroPowerDb().getById(new HeroPowerId("Dagger Mastery")));
+        player2.getHero().setHeroPower(db.getHeroPowerDb().getById(new CardId("Dagger Mastery")));
 
         playCard(player2, "The Coin",
                 new PlayTargetRequest(player2.getPlayerId()));

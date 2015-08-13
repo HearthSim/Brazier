@@ -1,8 +1,9 @@
 {
     "name": "Life Tap",
     "description": "Draw a card and take 2 damage.",
+    "class": "warlock",
     "manaCost": 2,
-    "action": {
+    "playActions": {
         "actions": [
             {
                 "class": "PlayerActions.damageOwnHero",

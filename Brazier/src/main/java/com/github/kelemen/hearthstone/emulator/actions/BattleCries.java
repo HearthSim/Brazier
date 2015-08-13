@@ -3,12 +3,12 @@ package com.github.kelemen.hearthstone.emulator.actions;
 import com.github.kelemen.hearthstone.emulator.BoardLocationRef;
 import com.github.kelemen.hearthstone.emulator.BoardSide;
 import com.github.kelemen.hearthstone.emulator.Hero;
-import com.github.kelemen.hearthstone.emulator.HeroPowerId;
 import com.github.kelemen.hearthstone.emulator.Keyword;
 import com.github.kelemen.hearthstone.emulator.Player;
 import com.github.kelemen.hearthstone.emulator.SummonLocationRef;
 import com.github.kelemen.hearthstone.emulator.TargetableCharacter;
 import com.github.kelemen.hearthstone.emulator.World;
+import com.github.kelemen.hearthstone.emulator.cards.CardId;
 import com.github.kelemen.hearthstone.emulator.minions.Minion;
 import com.github.kelemen.hearthstone.emulator.minions.MinionBody;
 import com.github.kelemen.hearthstone.emulator.parsing.NamedArg;
@@ -152,7 +152,7 @@ public final class BattleCries {
 
     public static BattleCryTargetedAction replaceHero(
             @NamedArg("heroClass") Keyword heroClass,
-            @NamedArg("heroPower") String heroPower) {
+            @NamedArg("heroPower") CardId heroPower) {
 
         return (World world, BattleCryArg arg) -> {
             Minion minion = arg.getSource();
@@ -163,7 +163,7 @@ public final class BattleCries {
 
             Hero hero = new Hero(player, body.getHp(), 0, heroClass, minion.getKeywords());
             hero.setCurrentHp(body.getCurrentHp());
-            hero.setHeroPower(world.getDb().getHeroPowerDb().getById(new HeroPowerId(heroPower)));
+            hero.setHeroPower(world.getDb().getHeroPowerDb().getById(heroPower));
 
             UndoAction setHeroUndo = player.setHero(hero);
             return () -> {

@@ -7,6 +7,7 @@ public enum CardType {
     SPELL(Keywords.SPELL),
     MINION(Keywords.MINION),
     WEAPON(Keywords.WEAPON),
+    HERO_POWER(Keywords.HERO_POWER),
     UNKNOWN(Keyword.create("unknown-card-type"));
 
     private final Keyword keyword;

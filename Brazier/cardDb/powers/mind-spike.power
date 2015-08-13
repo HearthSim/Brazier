@@ -1,8 +1,9 @@
 {
     "name": "Mind Spike",
     "description": "Deal 2 damage.",
+    "class": "priest",
     "manaCost": 2,
-    "action": {
+    "playActions": {
         "class": "ActorlessTargetedActions.dealBasicDamage",
         "targets": "all",
         "damage": 2

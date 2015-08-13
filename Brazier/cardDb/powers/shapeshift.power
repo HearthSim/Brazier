@@ -1,8 +1,9 @@
 {
     "name": "Shapeshift",
     "description": "+1 Attack this turn. +1 Armor.",
+    "class": "druid",
     "manaCost": 2,
-    "action": {
+    "playActions": {
         "actions": [
             {
                 "class": "PlayerActions.armorUp",

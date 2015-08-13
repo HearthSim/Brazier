@@ -4,6 +4,7 @@ import com.github.kelemen.hearthstone.emulator.abilities.AuraAwareBoolProperty;
 import com.github.kelemen.hearthstone.emulator.abilities.HpProperty;
 import com.github.kelemen.hearthstone.emulator.actions.UndoAction;
 import com.github.kelemen.hearthstone.emulator.actions.WorldActionEvents;
+import com.github.kelemen.hearthstone.emulator.cards.CardDescr;
 import com.github.kelemen.hearthstone.emulator.weapons.AttackTool;
 import com.github.kelemen.hearthstone.emulator.weapons.Weapon;
 import java.util.Collection;
@@ -51,7 +52,7 @@ public final class Hero implements TargetableCharacter {
         ExceptionHelper.checkNotNullArgument(heroClass, "heroClass");
 
         this.heroId = new TargetId();
-        this.heroPower = new HeroPower(this, HeroPowerDef.DO_NOTHING);
+        this.heroPower = new HeroPower(this, CardDescr.DO_NOTHING);
         this.owner = owner;
         this.hp = hp;
         this.currentArmor = startingArmor;
@@ -182,7 +183,7 @@ public final class Hero implements TargetableCharacter {
         return heroPower;
     }
 
-    public UndoAction setHeroPower(HeroPowerDef power) {
+    public UndoAction setHeroPower(CardDescr power) {
         ExceptionHelper.checkNotNullArgument(power, "power");
 
         HeroPower prevHeroPower = this.heroPower;
