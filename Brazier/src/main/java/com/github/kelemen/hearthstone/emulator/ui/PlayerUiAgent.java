@@ -1,7 +1,6 @@
 package com.github.kelemen.hearthstone.emulator.ui;
 
 import com.github.kelemen.hearthstone.emulator.Hero;
-import com.github.kelemen.hearthstone.emulator.HeroPower;
 import com.github.kelemen.hearthstone.emulator.Player;
 import com.github.kelemen.hearthstone.emulator.PlayerId;
 import com.github.kelemen.hearthstone.emulator.TargetId;
@@ -41,43 +40,22 @@ public final class PlayerUiAgent {
         });
     }
 
+    public boolean canPlayHeroPower() {
+        Player player = worldAgent.getWorld().getPlayer(playerId);
+        return player.getHero().getHeroPower().canPlay();
+    }
+
     public boolean canPlayCard(Card card) {
         Player player = worldAgent.getWorld().getPlayer(playerId);
-        if (player.getMana() < card.getActiveManaCost()) {
-            return false;
-        }
-
-        return card.getCardDescr().doesSomethingWhenPlayed(player);
+        return player.canPlayCard(card);
     }
 
     public void playHeroPower() {
         Player player = worldAgent.getWorld().getPlayer(playerId);
-        HeroPower heroPower = player.getHero().getHeroPower();
-
-        if (!heroPower.isPlayable(player)) {
-            throw new IllegalStateException("Cannot play the hero power.");
-        }
-
-        TargetNeed targetNeed = heroPower.getTargetNeed(player);
-        if (targetNeed.hasTarget()) {
-            TargetManager targetManager = worldAgent.getTargetManager();
-            TargeterDef targeterDef = new TargeterDef(playerId, true, false);
-            PlayerTargetNeed playerTargetNeed = new PlayerTargetNeed(targeterDef, targetNeed);
-            targetManager.requestTarget(playerTargetNeed, (targetId) -> {
-                if (targetId instanceof TargetId) {
-                    targetManager.clearRequest();
-                    playHeroPowerNow((TargetId)targetId);
-                }
-            });
-        }
-        else {
-            playHeroPowerNow(null);
-        }
-    }
-
-    private void playHeroPowerNow(TargetId targetId) {
-        PlayTargetRequest target = new PlayTargetRequest(playerId, -1, targetId);
-        worldAgent.playHeroPower(target);
+        Card card = player.getHero().getHeroPower().createCard();
+        playCard(card, (request) -> {
+            worldAgent.playHeroPower(request);
+        });
     }
 
     public void playCard(int cardIndex) {
@@ -87,6 +65,17 @@ public final class PlayerUiAgent {
             throw new IllegalArgumentException("Cannot play the given card.");
         }
 
+        playCard(card, (request) -> {
+            worldAgent.playCard(cardIndex, request);
+        });
+    }
+
+    private void playCard(Card card, PlayRequestor playRequestor) {
+        if (!canPlayCard(card)) {
+            throw new IllegalArgumentException("Cannot play the given card.");
+        }
+
+        Player player = worldAgent.getWorld().getPlayer(playerId);
         List<CardDescr> chooseOneActions = card.getCardDescr().getChooseOneActions();
         CardDescr chooseOneChoice;
         if (!chooseOneActions.isEmpty()) {
@@ -101,7 +90,7 @@ public final class PlayerUiAgent {
 
         boolean needsMinion = card.getCardDescr().getMinion() != null;
         if (needsMinion) {
-            findMinionTarget(player, cardIndex, card, chooseOneChoice);
+            findMinionTarget(player, card, chooseOneChoice, playRequestor);
             return;
         }
 
@@ -113,10 +102,10 @@ public final class PlayerUiAgent {
         if (targetNeed.hasTarget()) {
             TargeterDef targeterDef = new TargeterDef(playerId, true, false);
             PlayerTargetNeed playerTargetNeed = new PlayerTargetNeed(targeterDef, targetNeed);
-            findTarget(playerTargetNeed, cardIndex, -1, chooseOneChoice);
+            findTarget(playerTargetNeed, -1, chooseOneChoice, playRequestor);
         }
         else {
-            worldAgent.playCard(cardIndex, new PlayTargetRequest(playerId, -1, null, chooseOneChoice));
+            playRequestor.play(new PlayTargetRequest(playerId, -1, null, chooseOneChoice));
         }
     }
 
@@ -133,7 +122,7 @@ public final class PlayerUiAgent {
                 || hasValidTarget(world.getPlayer2(), targetNeed);
     }
 
-    private void findMinionTarget(Player player, int cardIndex, Card card, CardDescr chooseOneChoice) {
+    private void findMinionTarget(Player player, Card card, CardDescr chooseOneChoice, PlayRequestor playRequestor) {
         if (player.getBoard().isFull()) {
             return;
         }
@@ -149,23 +138,22 @@ public final class PlayerUiAgent {
                     TargeterDef targeterDef = new TargeterDef(playerId, false, false);
                     PlayerTargetNeed playerTargetNeed = new PlayerTargetNeed(targeterDef, targetNeed);
                     if (hasValidTarget(player.getWorld(), playerTargetNeed)) {
-                        findTarget(playerTargetNeed, cardIndex, (int)minionIndex, chooseOneChoice);
+                        findTarget(playerTargetNeed, (int)minionIndex, chooseOneChoice, playRequestor);
                         return;
                     }
                 }
 
-                worldAgent.playCard(cardIndex, new PlayTargetRequest(playerId, (int)minionIndex, null, chooseOneChoice));
+                playRequestor.play(new PlayTargetRequest(playerId, (int)minionIndex, null, chooseOneChoice));
             }
         });
     }
 
-    private void findTarget(PlayerTargetNeed targetNeed, int cardIndex, int minionIndex, CardDescr chooseOneChoice) {
+    private void findTarget(PlayerTargetNeed targetNeed, int minionIndex, CardDescr chooseOneChoice, PlayRequestor playRequestor) {
         TargetManager targetManager = worldAgent.getTargetManager();
         targetManager.requestTarget(targetNeed, (targetId) -> {
             if (targetId instanceof TargetId) {
                 targetManager.clearRequest();
-                worldAgent.playCard(cardIndex,
-                        new PlayTargetRequest(playerId, minionIndex, (TargetId)targetId, chooseOneChoice));
+                playRequestor.play(new PlayTargetRequest(playerId, minionIndex, (TargetId)targetId, chooseOneChoice));
             }
         });
     }
@@ -188,5 +176,9 @@ public final class PlayerUiAgent {
     @Override
     public String toString() {
         return "UI agent of " + playerId.getName();
+    }
+
+    private interface PlayRequestor {
+        public void play(PlayTargetRequest targetRequest);
     }
 }

@@ -858,7 +858,7 @@ public final class PlayerActions {
                 return UndoAction.DO_NOTHING;
             }
 
-            UndoAction playUndo = player.playCardEffect(new Card(player, cardRef.getResult()));
+            UndoAction playUndo = player.playCardEffect(new Card(player, cardRef.getResult()), 0);
 
             return () -> {
                 playUndo.undo();

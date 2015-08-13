@@ -107,13 +107,13 @@ public class PlayerPanel extends javax.swing.JPanel {
         jManaValue.setText(Integer.toString(manaResource.getMana()) + "/" + Integer.toString(manaResource.getManaCrystals()));
         jDeckSizeValueLabel.setText(Integer.toString(player.getBoard().getDeck().getNumberOfCards()));
         jAttackButton.setVisible(uiAgent != null);
-        jAttackButton.setEnabled(player.getHero().getAttackTool().canAttackWith());
+        jAttackButton.setEnabled(hero.getAttackTool().canAttackWith());
 
-        HeroPower heroPower = player.getHero().getHeroPower();
+        HeroPower heroPower = hero.getHeroPower();
         String heroPowerName = heroPower.getPowerDef().getDisplayName();
         jUsePowerButton.setText(heroPowerName.isEmpty() ? "Use power" : heroPowerName);
         jUsePowerButton.setVisible(uiAgent != null);
-        jUsePowerButton.setEnabled(player.getHero().getHeroPower().isPlayable(player));
+        jUsePowerButton.setEnabled(uiAgent != null && uiAgent.canPlayHeroPower());
 
         updateHandCards(uiAgent, player.getHand().getCards());
     }
