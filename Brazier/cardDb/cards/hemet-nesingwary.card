@@ -3,6 +3,19 @@
     "description": "Battlecry: Destroy a Beast.",
     "rarity": "legendary",
     "class": "neutral",
-    "type": "minion",
-    "manaCost": 5
+    "manaCost": 5,
+    "minion": {
+        "attack": 6,
+        "hp": 3,
+        "battleCries": {
+            "class": "ActorlessTargetedActions.KILL_TARGET",
+            "targets": [
+                "all-minions",
+                {
+                    "class": "TargetNeeds.hasKeyword",
+                    "keywords": "beast"
+                }
+            ]
+        }
+    }
 }

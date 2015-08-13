@@ -2,7 +2,13 @@
     "name": "Druid of the Claw",
     "description": "Choose One - Charge; or +2 Health and Taunt.",
     "class": "druid",
-    "type": "minion",
     "manaCost": 5,
-    "chooseOne": ["Cat Form", "Bear Form"]
+    "chooseOne": [
+        "Cat Form",
+        "Bear Form"
+    ],
+    "minion": {
+        "attack": 4,
+        "hp": 4
+    }
 }

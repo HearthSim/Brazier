@@ -2,6 +2,10 @@
     "name": "Novice Engineer",
     "description": "Battlecry: Draw a card.",
     "class": "neutral",
-    "type": "minion",
-    "manaCost": 2
+    "manaCost": 2,
+    "minion": {
+        "attack": 1,
+        "hp": 1,
+        "battleCries": "PlayerActions.DRAW_FOR_SELF"
+    }
 }

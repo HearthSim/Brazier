@@ -2,6 +2,17 @@
     "name": "Unstable Ghoul",
     "description": "Taunt. Deathrattle: Deal 1 damage to all minions.",
     "class": "neutral",
-    "type": "minion",
-    "manaCost": 2
+    "manaCost": 2,
+    "minion": {
+        "attack": 1,
+        "hp": 3,
+        "taunt": "true",
+        "deathRattle": {
+            "class": "MinionEventActions.doSelf",
+            "action": {
+                "class": "DamageActions.dealDamageToAllMinions",
+                "damage": 1
+            }
+        }
+    }
 }

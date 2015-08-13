@@ -2,6 +2,11 @@
     "name": "Bluegill Warrior",
     "description": "Charge",
     "class": "neutral",
-    "type": "minion",
-    "manaCost": 2
+    "manaCost": 2,
+    "keywords": "murloc",
+    "minion": {
+        "attack": 2,
+        "hp": 1,
+        "charge": true
+    }
 }

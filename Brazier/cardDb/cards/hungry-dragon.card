@@ -2,6 +2,20 @@
     "name": "Hungry Dragon",
     "description": "Battlecry: Summon a random 1-Cost minion for your opponent.",
     "class": "neutral",
-    "type": "minion",
-    "manaCost": 4
+    "manaCost": 4,
+    "keywords": "dragon",
+    "minion": {
+        "attack": 5,
+        "hp": 6,
+        "battleCries": {
+            "class": "PlayerActions.doForOpponent",
+            "action": {
+                "class": "PlayerActions.summonRandomMinion",
+                "keywords": [
+                    "1-cost",
+                    "collectible"
+                ]
+            }
+        }
+    }
 }

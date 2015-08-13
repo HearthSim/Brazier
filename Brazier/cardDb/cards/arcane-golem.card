@@ -3,6 +3,14 @@
     "description": "Charge. Battlecry: Give your opponent a Mana Crystal.",
     "rarity": "rare",
     "class": "neutral",
-    "type": "minion",
-    "manaCost": 3
+    "manaCost": 3,
+    "minion": {
+        "attack": 4,
+        "hp": 2,
+        "charge": true,
+        "battleCries": {
+            "class": "PlayerActions.addManaCrystalToOpponent",
+            "amount": 1
+        }
+    }
 }

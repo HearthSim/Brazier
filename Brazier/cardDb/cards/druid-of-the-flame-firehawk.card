@@ -2,7 +2,12 @@
     "name": "Druid of the Flame/Firehawk",
     "displayName": "Druid of the Flame",
     "class": "druid",
-    "type": "minion",
     "manaCost": 3,
-    "collectible": false
+    "collectible": false,
+    "keywords": "beast",
+    "minion": {
+        "displayName": "Druid of the Flame",
+        "attack": 2,
+        "hp": 5
+    }
 }

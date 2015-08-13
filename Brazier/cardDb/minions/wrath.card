@@ -1,8 +1,0 @@
-{
-    "name": "Wrath",
-    "description": "Choose One - Deal 3 damage to a minion; or 1 damage and draw a card.",
-    "class": "druid",
-    "type": "spell",
-    "manaCost": 2,
-    "chooseOne": ["Wrath/3", "Wrath/1"]
-}

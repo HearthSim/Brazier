@@ -2,6 +2,10 @@
     "name": "Gnomish Inventor",
     "description": "Battlecry: Draw a card.",
     "class": "neutral",
-    "type": "minion",
-    "manaCost": 4
+    "manaCost": 4,
+    "minion": {
+        "attack": 2,
+        "hp": 4,
+        "battleCries": "PlayerActions.DRAW_FOR_SELF"
+    }
 }

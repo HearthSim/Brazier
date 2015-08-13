@@ -2,6 +2,14 @@
     "name": "Stormpike Commando",
     "description": "Battlecry: Deal 2 damage.",
     "class": "neutral",
-    "type": "minion",
-    "manaCost": 5
+    "manaCost": 5,
+    "minion": {
+        "attack": 4,
+        "hp": 2,
+        "battleCries": {
+            "class": "BattleCries.dealDamageToTarget",
+            "targets": "all",
+            "damage": 2
+        }
+    }
 }

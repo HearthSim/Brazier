@@ -3,7 +3,13 @@
     "displayName": "Druid of the Claw",
     "description": "Charge",
     "class": "druid",
-    "type": "minion",
     "manaCost": 5,
-    "collectible": false
+    "collectible": false,
+    "keywords": "beast",
+    "minion": {
+        "displayName": "Druid of the Claw",
+        "attack": 4,
+        "hp": 4,
+        "charge": true
+    }
 }

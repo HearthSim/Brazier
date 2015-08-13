@@ -2,7 +2,14 @@
     "name": "Injured Blademaster",
     "description": "Battlecry: Deal 4 damage to HIMSELF.",
     "class": "neutral",
-    "type": "minion",
     "rarity": "rare",
-    "manaCost": 3
+    "manaCost": 3,
+    "minion": {
+        "attack": 4,
+        "hp": 7,
+        "battleCries": {
+            "class": "MinionActions.damageSelf",
+            "damage": 4
+        }
+    }
 }

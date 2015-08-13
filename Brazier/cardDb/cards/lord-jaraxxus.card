@@ -2,7 +2,22 @@
     "name": "Lord Jaraxxus",
     "description": "Battlecry: Destroy your hero and replace it with Lord Jaraxxus.",
     "class": "warlock",
-    "type": "minion",
     "rarity": "legendary",
-    "manaCost": 9
+    "manaCost": 9,
+    "keywords": "demon",
+    "minion": {
+        "attack": 3,
+        "hp": 15,
+        "battleCries": [
+            {
+                "class": "BattleCries.replaceHero",
+                "heroClass": "warlock",
+                "heroPower": "INFERNO!"
+            },
+            {
+                "class": "PlayerActions.equipWeapon",
+                "weapon": "Blood Fury"
+            }
+        ]
+    }
 }

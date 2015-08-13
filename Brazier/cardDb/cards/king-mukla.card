@@ -2,7 +2,24 @@
     "name": "King Mukla",
     "description": "Battlecry: Give your opponent 2 Bananas.",
     "class": "neutral",
-    "type": "minion",
     "rarity": "legendary",
-    "manaCost": 3
+    "manaCost": 3,
+    "keywords": "beast",
+    "minion": {
+        "attack": 5,
+        "hp": 5,
+        "battleCries": {
+            "class": "PlayerActions.doForOpponent",
+            "action": [
+                {
+                    "class": "PlayerActions.addCard",
+                    "card": "Bananas"
+                },
+                {
+                    "class": "PlayerActions.addCard",
+                    "card": "Bananas"
+                }
+            ]
+        }
+    }
 }

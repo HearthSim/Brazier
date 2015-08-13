@@ -3,6 +3,25 @@
     "description": "Whenever you summon a Mech, gain Divine Shield.",
     "class": "neutral",
     "rarity": "rare",
-    "type": "minion",
-    "manaCost": 5
+    "manaCost": 5,
+    "keywords": "mech",
+    "minion": {
+        "attack": 6,
+        "hp": 3,
+        "triggers": {
+            "on-summon": {
+                "filter": [
+                    "BasicFilters.HAS_SAME_OWNER_PLAYER",
+                    {
+                        "class": "BasicFilters.eventSourceHasKeyword",
+                        "keywords": "mech"
+                    }
+                ],
+                "action": {
+                    "class": "MinionEventActions.doSelf",
+                    "action": "MinionActions.GIVE_DIVINE_SHIELD"
+                }
+            }
+        }
+    }
 }

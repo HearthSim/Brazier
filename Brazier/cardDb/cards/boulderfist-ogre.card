@@ -1,6 +1,9 @@
 {
     "name": "Boulderfist Ogre",
     "class": "neutral",
-    "type": "minion",
-    "manaCost": 6
+    "manaCost": 6,
+    "minion": {
+        "attack": 6,
+        "hp": 7
+    }
 }

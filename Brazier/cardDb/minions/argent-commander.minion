@@ -1,7 +1,0 @@
-{
-    "name": "Argent Commander",
-    "attack": 4,
-    "hp": 2,
-    "charge": true,
-    "divineShield": true
-}

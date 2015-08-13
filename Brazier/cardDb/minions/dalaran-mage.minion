@@ -1,9 +1,0 @@
-{
-    "name": "Dalaran Mage",
-    "attack": 1,
-    "hp": 4,
-    "ability": {
-        "class": "MinionAbilities.spellPower",
-        "spellPower": 1
-    }
-}

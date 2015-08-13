@@ -2,6 +2,13 @@
     "name": "Archmage",
     "class": "neutral",
     "description": "Spell Damage +1",
-    "type": "minion",
-    "manaCost": 6
+    "manaCost": 6,
+    "minion": {
+        "attack": 4,
+        "hp": 7,
+        "ability": {
+            "class": "MinionAbilities.spellPower",
+            "spellPower": 1
+        }
+    }
 }

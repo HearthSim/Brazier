@@ -2,6 +2,17 @@
     "name": "Dire Wolf Alpha",
     "description": "Adjacent minions have +1 Attack.",
     "class": "neutral",
-    "type": "minion",
-    "manaCost": 2
+    "manaCost": 2,
+    "keywords": "beast",
+    "minion": {
+        "attack": 2,
+        "hp": 2,
+        "ability": {
+            "class": "MinionAbilities.neighboursAura",
+            "aura": {
+                "class": "MinionAuras.attackBuff",
+                "attack": 1
+            }
+        }
+    }
 }

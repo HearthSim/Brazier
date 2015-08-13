@@ -2,8 +2,12 @@
     "name": "Spellbender/Minion",
     "displayName": "Spellbender",
     "class": "mage",
-    "type": "minion",
     "rarity": "epic",
     "collectible": false,
-    "manaCost": 0
+    "manaCost": 0,
+    "minion": {
+        "displayName": "Spellbender",
+        "attack": 1,
+        "hp": 3
+    }
 }

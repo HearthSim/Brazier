@@ -2,7 +2,17 @@
     "name": "Chromaggus",
     "description": "Whenever you draw a card, put another copy into your hand.",
     "class": "neutral",
-    "type": "minion",
     "rarity": "legendary",
-    "manaCost": 8
+    "manaCost": 8,
+    "keywords": "dragon",
+    "minion": {
+        "attack": 6,
+        "hp": 8,
+        "triggers": {
+            "draw-card": {
+                "filter": "BasicFilters.HAS_SAME_OWNER_PLAYER",
+                "action": "CardEventActions.ADD_COPY_TO_HAND"
+            }
+        }
+    }
 }

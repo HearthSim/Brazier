@@ -3,6 +3,17 @@
     "description": "Deathrattle: Summon a random legendary minion.",
     "class": "neutral",
     "rarity": "legendary",
-    "type": "minion",
-    "manaCost": 8
+    "manaCost": 8,
+    "keywords": "mech",
+    "minion": {
+        "attack": 5,
+        "hp": 7,
+        "deathRattle": {
+            "class": "MinionEventActions.summonRandomMinionRight",
+            "keywords": [
+                "legendary",
+                "collectible"
+            ]
+        }
+    }
 }

@@ -3,6 +3,29 @@
     "description": "Whenever a character is healed, gain +2 Attack.",
     "rarity": "rare",
     "class": "neutral",
-    "type": "minion",
-    "manaCost": 1
+    "manaCost": 1,
+    "minion": {
+        "attack": 1,
+        "hp": 2,
+        "triggers": {
+            "hero-healed": {
+                "action": {
+                    "class": "MinionEventActions.applyTargetedActionToSelf",
+                    "action": {
+                        "class": "MinionActions.buffAttack",
+                        "attack": 1
+                    }
+                }
+            },
+            "minion-healed": {
+                "action": {
+                    "class": "MinionEventActions.applyTargetedActionToSelf",
+                    "action": {
+                        "class": "MinionActions.buffAttack",
+                        "attack": 1
+                    }
+                }
+            }
+        }
+    }
 }

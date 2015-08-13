@@ -1,7 +1,0 @@
-{
-    "name": "Shielded Minibot",
-    "attack": 2,
-    "hp": 2,
-    "keywords": "mech",
-    "divineShield": true
-}

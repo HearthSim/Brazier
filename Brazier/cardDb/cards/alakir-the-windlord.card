@@ -3,6 +3,13 @@
     "description": "Windfury, Charge, Divine Shield, Taunt",
     "rarity": "legendary",
     "class": "shaman",
-    "type": "minion",
-    "manaCost": 8
+    "manaCost": 8,
+    "minion": {
+        "attack": 3,
+        "hp": 5,
+        "maxAttackCount": 2,
+        "divineShield": true,
+        "charge": true,
+        "taunt": true
+    }
 }

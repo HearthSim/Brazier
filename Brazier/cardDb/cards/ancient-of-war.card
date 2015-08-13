@@ -2,8 +2,14 @@
     "name": "Ancient of War",
     "description": "Choose One - +5 Attack; or +5 Health and Taunt.",
     "class": "druid",
-    "type": "minion",
     "rarity": "epic",
     "manaCost": 7,
-    "chooseOne": ["Uproot", "Rooted"]
+    "chooseOne": [
+        "Uproot",
+        "Rooted"
+    ],
+    "minion": {
+        "attack": 5,
+        "hp": 5
+    }
 }

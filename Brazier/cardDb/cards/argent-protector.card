@@ -2,6 +2,14 @@
     "name": "Argent Protector",
     "description": "Battlecry: Give a friendly minion Divine Shield.",
     "class": "paladin",
-    "type": "minion",
-    "manaCost": 2
+    "manaCost": 2,
+    "minion": {
+        "attack": 2,
+        "hp": 2,
+        "battleCries": {
+            "targets": "self-minions",
+            "class": "ActorlessTargetedActions.applyToMinionTarget",
+            "action": "MinionActions.GIVE_DIVINE_SHIELD"
+        }
+    }
 }

@@ -2,6 +2,14 @@
     "name": "Clockwork Gnome",
     "description": "Deathrattle: Add a Spare Part card to your hand.",
     "class": "neutral",
-    "type": "minion",
-    "manaCost": 1
+    "manaCost": 1,
+    "keywords": "mech",
+    "minion": {
+        "attack": 2,
+        "hp": 1,
+        "deathRattle": {
+            "class": "PlayerActions.addRandomCard",
+            "keywords": "spare-part"
+        }
+    }
 }

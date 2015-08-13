@@ -3,6 +3,14 @@
     "description": "Taunt. Deathrattle: Summon a 1/2 Slime with Taunt.",
     "rarity": "rare",
     "class": "neutral",
-    "type": "minion",
-    "manaCost": 5
+    "manaCost": 5,
+    "minion": {
+        "attack": 3,
+        "hp": 5,
+        "taunt": "true",
+        "deathRattle": {
+            "class": "MinionEventActions.summonMinionRight",
+            "minion": "Slime"
+        }
+    }
 }

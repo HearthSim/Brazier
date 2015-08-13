@@ -2,7 +2,11 @@
     "name": "Gnoll",
     "description": "Taunt",
     "class": "neutral",
-    "type": "minion",
     "collectible": false,
-    "manaCost": 2
+    "manaCost": 2,
+    "minion": {
+        "attack": 2,
+        "hp": 2,
+        "taunt": true
+    }
 }

@@ -2,7 +2,6 @@
     "name": "Edwin VanCleef",
     "description": "Combo: Gain +2/+2 for each card played earlier this turn.",
     "class": "rouge",
-    "type": "minion",
     "rarity": "legendary",
     "manaCost": 3,
     "playActions": {
@@ -12,5 +11,9 @@
             "attack": 2,
             "hp": 2
         }
+    },
+    "minion": {
+        "attack": 2,
+        "hp": 2
     }
 }

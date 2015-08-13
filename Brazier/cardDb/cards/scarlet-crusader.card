@@ -2,6 +2,10 @@
     "name": "Scarlet Crusader",
     "description": "Divine Shield",
     "class": "neutral",
-    "type": "minion",
-    "manaCost": 3
+    "manaCost": 3,
+    "minion": {
+        "attack": 3,
+        "hp": 1,
+        "divineShield": true
+    }
 }

@@ -3,6 +3,23 @@
     "description": "Charge. Battlecry: Summon two 1/1 Whelps for your opponent.",
     "rarity": "legendary",
     "class": "neutral",
-    "type": "minion",
-    "manaCost": 5
+    "manaCost": 5,
+    "minion": {
+        "attack": 6,
+        "hp": 2,
+        "charge": true,
+        "battleCries": {
+            "class": "PlayerActions.doForOpponent",
+            "action": [
+                {
+                    "class": "PlayerActions.summonMinion",
+                    "minion": "Whelp"
+                },
+                {
+                    "class": "PlayerActions.summonMinion",
+                    "minion": "Whelp"
+                }
+            ]
+        }
+    }
 }

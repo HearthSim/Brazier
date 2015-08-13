@@ -2,7 +2,12 @@
     "name": "Bloodsail Corsair",
     "description": "Battlecry: Remove 1 Durability from your opponent's weapon.",
     "class": "neutral",
-    "type": "minion",
     "rarity": "rare",
-    "manaCost": 1
+    "manaCost": 1,
+    "keywords": "pirate",
+    "minion": {
+        "attack": 1,
+        "hp": 2,
+        "battleCries": "PlayerActions.REDUCE_OPPONENT_WEAPON_DURABILITY"
+    }
 }

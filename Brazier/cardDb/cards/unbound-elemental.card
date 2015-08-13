@@ -2,6 +2,25 @@
     "name": "Unbound Elemental",
     "description": "Whenever you play a card with Overload, gain +1/+1.",
     "class": "shaman",
-    "type": "minion",
-    "manaCost": 3
+    "manaCost": 3,
+    "minion": {
+        "attack": 2,
+        "hp": 4,
+        "triggers": {
+            "start-play-card": {
+                "filter": {
+                    "class": "BasicFilters.eventSourceHasKeyword",
+                    "keywords": "overload"
+                },
+                "action": {
+                    "class": "MinionEventActions.applyTargetedActionToSelf",
+                    "action": {
+                        "class": "MinionActions.buff",
+                        "attack": 1,
+                        "hp": 1
+                    }
+                }
+            }
+        }
+    }
 }

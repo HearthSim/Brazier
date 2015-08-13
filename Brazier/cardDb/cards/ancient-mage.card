@@ -3,6 +3,16 @@
     "description": "Battlecry: Give adjacent minions Spell Damage +1.",
     "rarity": "rare",
     "class": "neutral",
-    "type": "minion",
-    "manaCost": 4
+    "manaCost": 4,
+    "minion": {
+        "attack": 2,
+        "hp": 5,
+        "battleCries": {
+            "class": "MinionActions.addAbilityToNeighbours",
+            "ability": {
+                "class": "MinionAbilities.spellPower",
+                "spellPower": 1
+            }
+        }
+    }
 }

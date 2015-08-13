@@ -2,6 +2,11 @@
     "name": "Silvermoon Guardian",
     "class": "neutral",
     "description": "Divine Shield",
-    "type": "minion",
-    "manaCost": 4
+    "manaCost": 4,
+    "keywords": "horde-warrior",
+    "minion": {
+        "attack": 3,
+        "hp": 3,
+        "divineShield": true
+    }
 }

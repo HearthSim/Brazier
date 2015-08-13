@@ -1,7 +1,10 @@
 {
     "name": "Violet Apprentice",
     "class": "neutral",
-    "type": "minion",
     "collectible": false,
-    "manaCost": 0
+    "manaCost": 0,
+    "minion": {
+        "attack": 1,
+        "hp": 1
+    }
 }

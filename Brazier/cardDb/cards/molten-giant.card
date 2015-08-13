@@ -3,7 +3,10 @@
     "description": "Costs (1) less for each damage your hero has taken.",
     "class": "neutral",
     "rarity": "epic",
-    "type": "minion",
     "manaCost": 20,
-    "manaCostAdjusters": "ManaCostAdjusters.REDUCE_BY_HERO_DAMAGE"
+    "manaCostAdjusters": "ManaCostAdjusters.REDUCE_BY_HERO_DAMAGE",
+    "minion": {
+        "attack": 8,
+        "hp": 8
+    }
 }

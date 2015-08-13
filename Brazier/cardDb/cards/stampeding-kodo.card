@@ -2,7 +2,19 @@
     "name": "Stampeding Kodo",
     "description": "Battlecry: Destroy a random enemy minion with 2 or less Attack.",
     "class": "neutral",
-    "type": "minion",
     "rarity": "rare",
-    "manaCost": 5
+    "manaCost": 5,
+    "keywords": "beast",
+    "minion": {
+        "attack": 3,
+        "hp": 5,
+        "battleCries": {
+            "class": "PlayerActions.applyTargetedActionToRandomMinion",
+            "filter": {
+                "class": "BasicFilters.targetAttackIsLess",
+                "attack": 3
+            },
+            "action": "ActorlessTargetedActions.KILL_TARGET"
+        }
+    }
 }

@@ -3,6 +3,20 @@
     "description": "Whenever a minion takes damage, gain +1 Attack.",
     "rarity": "rare",
     "class": "warrior",
-    "type": "minion",
-    "manaCost": 3
+    "manaCost": 3,
+    "minion": {
+        "attack": 2,
+        "hp": 4,
+        "triggers": {
+            "minion-damaged": {
+                "action": {
+                    "class": "MinionEventActions.applyTargetedActionToSelf",
+                    "action": {
+                        "class": "MinionActions.buffAttack",
+                        "attack": 1
+                    }
+                }
+            }
+        }
+    }
 }

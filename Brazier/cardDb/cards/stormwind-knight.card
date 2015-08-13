@@ -2,6 +2,10 @@
     "name": "Stormwind Knight",
     "description": "Charge",
     "class": "neutral",
-    "type": "minion",
-    "manaCost": 4
+    "manaCost": 4,
+    "minion": {
+        "attack": 2,
+        "hp": 5,
+        "charge": true
+    }
 }

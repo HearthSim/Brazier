@@ -3,6 +3,14 @@
     "description": "At the end of each turn, summon all friendly minions that died this turn.",
     "rarity": "legendary",
     "class": "neutral",
-    "type": "minion",
-    "manaCost": 8
+    "manaCost": 8,
+    "minion": {
+        "attack": 6,
+        "hp": 8,
+        "triggers": {
+            "turn-ends": {
+                "action": "PlayerActions.RESURRECT_DEAD_MINIONS"
+            }
+        }
+    }
 }

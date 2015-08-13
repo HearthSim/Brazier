@@ -1,6 +1,0 @@
-{
-    "name": "Kezan Mystic",
-    "attack": 4,
-    "hp": 3,
-    "battleCries": "PlayerActions.STEAL_SECRET"
-}

@@ -2,7 +2,14 @@
     "name": "Vol'jin",
     "description": "Battlecry: Swap Health with another minion.",
     "class": "priest",
-    "type": "minion",
     "rarity": "legendary",
-    "manaCost": 5
+    "manaCost": 5,
+    "minion": {
+        "attack": 6,
+        "hp": 2,
+        "battleCries": {
+            "targets": "all-minions",
+            "class": "TargetedMinionActions.SWAP_HP_WITH_TARGET"
+        }
+    }
 }

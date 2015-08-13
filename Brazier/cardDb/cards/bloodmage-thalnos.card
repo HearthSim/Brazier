@@ -3,6 +3,14 @@
     "description": "Spell Damage +1. Deathrattle: Draw a card.",
     "class": "neutral",
     "rarity": "legendary",
-    "type": "minion",
-    "manaCost": 2
+    "manaCost": 2,
+    "minion": {
+        "attack": 1,
+        "hp": 1,
+        "ability": {
+            "class": "MinionAbilities.spellPower",
+            "spellPower": 1
+        },
+        "deathRattle": "PlayerActions.DRAW_FOR_SELF"
+    }
 }

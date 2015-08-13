@@ -3,6 +3,13 @@
     "description": "Battlecry: Deal 4 damage to a random enemy minion.",
     "rarity": "rare",
     "class": "neutral",
-    "type": "minion",
-    "manaCost": 5
+    "manaCost": 5,
+    "minion": {
+        "attack": 3,
+        "hp": 3,
+        "battleCries": {
+            "class": "DamageActions.damageRandomEnemyMinion",
+            "damage": 4
+        }
+    }
 }

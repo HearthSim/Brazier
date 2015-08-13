@@ -1,6 +1,10 @@
 {
     "name": "Puddlestomper",
     "class": "neutral",
-    "type": "minion",
-    "manaCost": 2
+    "manaCost": 2,
+    "keywords": "murloc",
+    "minion": {
+        "attack": 3,
+        "hp": 2
+    }
 }

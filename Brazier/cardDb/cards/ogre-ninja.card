@@ -2,7 +2,17 @@
     "name": "Ogre Ninja",
     "description": "Stealth 50% chance to attack the wrong enemy.",
     "class": "rouge",
-    "type": "minion",
     "rarity": "rare",
-    "manaCost": 5
+    "manaCost": 5,
+    "minion": {
+        "attack": 6,
+        "hp": 6,
+        "stealth": true,
+        "triggers": {
+            "attack-initiated": {
+                "filter": "BasicFilters.ATTACKER_IS_SELF",
+                "action": "AttackEventActions.MISS_TARGET_SOMETIMES"
+            }
+        }
+    }
 }

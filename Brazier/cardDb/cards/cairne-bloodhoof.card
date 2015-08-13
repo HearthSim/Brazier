@@ -3,6 +3,14 @@
     "description": "Deathrattle: Summon a 4/5 Baine Bloodhoof.",
     "rarity": "legendary",
     "class": "neutral",
-    "type": "minion",
-    "manaCost": 6
+    "manaCost": 6,
+    "keywords": "horde-warrior",
+    "minion": {
+        "attack": 4,
+        "hp": 5,
+        "deathRattle": {
+            "class": "MinionEventActions.summonMinionRight",
+            "minion": "Baine Bloodhoof"
+        }
+    }
 }

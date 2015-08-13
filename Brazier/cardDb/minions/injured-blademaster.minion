@@ -1,9 +1,0 @@
-{
-    "name": "Injured Blademaster",
-    "attack": 4,
-    "hp": 7,
-    "battleCries": {
-        "class": "MinionActions.damageSelf",
-        "damage": 4
-    }
-}

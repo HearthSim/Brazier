@@ -6,7 +6,6 @@ import com.github.kelemen.hearthstone.emulator.parsing.CardParser;
 import com.github.kelemen.hearthstone.emulator.parsing.EntityParser;
 import com.github.kelemen.hearthstone.emulator.parsing.HeroPowerParser;
 import com.github.kelemen.hearthstone.emulator.parsing.JsonDeserializer;
-import com.github.kelemen.hearthstone.emulator.parsing.MinionParser;
 import com.github.kelemen.hearthstone.emulator.parsing.ObjectParsingException;
 import com.github.kelemen.hearthstone.emulator.parsing.ParserUtils;
 import com.github.kelemen.hearthstone.emulator.parsing.UseTrackerJsonTree;
@@ -24,7 +23,6 @@ import java.nio.file.Paths;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.concurrent.atomic.AtomicReference;
-import java.util.function.Supplier;
 import org.jtrim.utils.ExceptionHelper;
 
 public final class HearthStoneDb {
@@ -34,17 +32,26 @@ public final class HearthStoneDb {
     private final HearthStoneEntityDatabase<HeroPowerDef> heroPowerDb;
 
     public HearthStoneDb(
-            HearthStoneEntityDatabase<MinionDescr> minionDb,
             HearthStoneEntityDatabase<CardDescr> cardDb,
             HearthStoneEntityDatabase<HeroPowerDef> heroPowerDb) {
-        ExceptionHelper.checkNotNullArgument(minionDb, "minionDb");
         ExceptionHelper.checkNotNullArgument(cardDb, "cardDb");
         ExceptionHelper.checkNotNullArgument(heroPowerDb, "heroPowerDb");
 
         this.weaponDb = toWeaponDb(cardDb);
-        this.minionDb = minionDb;
+        this.minionDb = toMinionDb(cardDb);
         this.cardDb = cardDb;
         this.heroPowerDb = heroPowerDb;
+    }
+
+    private static HearthStoneEntityDatabase<MinionDescr> toMinionDb(HearthStoneEntityDatabase<CardDescr> cardDb) {
+        HearthStoneEntityDatabase.Builder<MinionDescr> result = new HearthStoneEntityDatabase.Builder<>();
+        for (CardDescr card: cardDb.getAll()) {
+            MinionDescr minion = card.getMinion();
+            if (minion != null) {
+                result.addEntity(minion);
+            }
+        }
+        return result.create();
     }
 
     private static HearthStoneEntityDatabase<WeaponDescr> toWeaponDb(HearthStoneEntityDatabase<CardDescr> cardDb) {
@@ -118,16 +125,14 @@ public final class HearthStoneDb {
 
         JsonDeserializer objectParser = ParserUtils.createDefaultDeserializer(resultRef::get);
 
-        HearthStoneEntityDatabase<MinionDescr> minionDb
-                = createMinionDb(minionDir, objectParser, cardDbRef::get);
         HearthStoneEntityDatabase<CardDescr> cardDb
-                = createCardDb(cardDir, objectParser, minionDb);
+                = createCardDb(cardDir, objectParser);
         HearthStoneEntityDatabase<HeroPowerDef> heroPowerDb
                 = createHeroPowerDb(powerDir, objectParser);
 
         cardDbRef.set(cardDb);
 
-        HearthStoneDb result = new HearthStoneDb(minionDb, cardDb, heroPowerDb);
+        HearthStoneDb result = new HearthStoneDb(cardDb, heroPowerDb);
         resultRef.set(result);
 
         return result;
@@ -138,20 +143,11 @@ public final class HearthStoneDb {
         return fileName.endsWith(ext);
     }
 
-    private static HearthStoneEntityDatabase<MinionDescr> createMinionDb(
-            Path minionDir,
-            JsonDeserializer objectParser,
-            Supplier<HearthStoneEntityDatabase<CardDescr>> cardDbRef) throws IOException, ObjectParsingException {
-
-        return createEntityDb(minionDir, ".minion", new MinionParser(cardDbRef, objectParser));
-    }
-
     private static HearthStoneEntityDatabase<CardDescr> createCardDb(
             Path cardDir,
-            JsonDeserializer objectParser,
-            HearthStoneEntityDatabase<MinionDescr> minionDb) throws IOException, ObjectParsingException {
+            JsonDeserializer objectParser) throws IOException, ObjectParsingException {
 
-        return createEntityDb(cardDir, ".card", new CardParser(minionDb, objectParser));
+        return createEntityDb(cardDir, ".card", new CardParser(objectParser));
     }
 
     private static HearthStoneEntityDatabase<HeroPowerDef> createHeroPowerDb(

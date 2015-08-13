@@ -2,6 +2,17 @@
     "name": "Venture Co. Mercenary",
     "description": "Your minions cost (3) more.",
     "class": "neutral",
-    "type": "minion",
-    "manaCost": 5
+    "manaCost": 5,
+    "minion": {
+        "attack": 7,
+        "hp": 6,
+        "ability": {
+            "class": "Auras.ownCardAura",
+            "filter": "CardAuras.TARGET_IS_MINION",
+            "aura": {
+                "class": "CardAuras.increaseManaCost",
+                "amount": 3
+            }
+        }
+    }
 }

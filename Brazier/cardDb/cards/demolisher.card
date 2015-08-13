@@ -3,6 +3,22 @@
     "description": "At the start of your turn, deal 2 damage to a random enemy.",
     "class": "neutral",
     "rarity": "rare",
-    "type": "minion",
-    "manaCost": 3
+    "manaCost": 3,
+    "keywords": "mech",
+    "minion": {
+        "attack": 1,
+        "hp": 4,
+        "triggers": {
+            "turn-starts": {
+                "filter": "BasicFilters.HAS_SAME_OWNER_PLAYER",
+                "action": {
+                    "class": "MinionEventActions.applyTargetedActionToRandomEnemy",
+                    "action": {
+                        "class": "TargetedMinionActions.damageTarget",
+                        "damage": 2
+                    }
+                }
+            }
+        }
+    }
 }

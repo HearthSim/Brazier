@@ -3,11 +3,15 @@
     "description": "When you draw this, deal 2 damage to all characters.",
     "class": "mage",
     "rarity": "legendary",
-    "type": "minion",
     "manaCost": 7,
     "drawActions": {
         "class": "PlayerActions.dealDamageToAllTargets",
         "spell": false,
         "damage": 2
+    },
+    "keywords": "mech",
+    "minion": {
+        "attack": 7,
+        "hp": 7
     }
 }

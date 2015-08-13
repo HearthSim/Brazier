@@ -2,6 +2,24 @@
     "name": "Cruel Taskmaster",
     "description": "Battlecry: Deal 1 damage to a minion and give it +2 Attack.",
     "class": "warrior",
-    "type": "minion",
-    "manaCost": 2
+    "manaCost": 2,
+    "minion": {
+        "attack": 2,
+        "hp": 2,
+        "battleCries": [
+            {
+                "targets": "all-minions",
+                "class": "BattleCries.dealDamageToTarget",
+                "damage": 1
+            },
+            {
+                "targets": "all-minions",
+                "class": "ActorlessTargetedActions.applyToMinionTarget",
+                "action": {
+                    "class": "MinionActions.buffAttack",
+                    "attack": 2
+                }
+            }
+        ]
+    }
 }

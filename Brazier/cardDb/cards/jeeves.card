@@ -3,6 +3,21 @@
     "description": "At the end of each player's turn, that player draws until they have 3 cards.",
     "class": "neutral",
     "rarity": "rare",
-    "type": "minion",
-    "manaCost": 4
+    "manaCost": 4,
+    "keywords": "mech",
+    "minion": {
+        "attack": 1,
+        "hp": 4,
+        "triggers": {
+            "turn-ends": {
+                "action": {
+                    "class": "MinionEventActions.doForEventSourcePlayer",
+                    "action": {
+                        "class": "PlayerActions.drawCardToFillHand",
+                        "targetHandSize": 3
+                    }
+                }
+            }
+        }
+    }
 }

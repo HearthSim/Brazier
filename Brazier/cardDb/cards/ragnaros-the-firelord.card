@@ -2,7 +2,23 @@
     "name": "Ragnaros the Firelord",
     "description": "Can't Attack. At the end of your turn, deal 8 damage to a random enemy.",
     "class": "neutral",
-    "type": "minion",
     "rarity": "legendary",
-    "manaCost": 8
+    "manaCost": 8,
+    "minion": {
+        "attack": 8,
+        "hp": 8,
+        "canAttack": false,
+        "triggers": {
+            "turn-ends": {
+                "filter": "BasicFilters.HAS_SAME_OWNER_PLAYER",
+                "action": {
+                    "class": "MinionEventActions.applyTargetedActionToRandomEnemy",
+                    "action": {
+                        "class": "TargetedMinionActions.damageTarget",
+                        "damage": 8
+                    }
+                }
+            }
+        }
+    }
 }

@@ -3,6 +3,15 @@
     "description": "Spell Damage +1. Battlecry: Draw a card.",
     "rarity": "rare",
     "class": "neutral",
-    "type": "minion",
-    "manaCost": 5
+    "manaCost": 5,
+    "keywords": "dragon",
+    "minion": {
+        "attack": 4,
+        "hp": 4,
+        "ability": {
+            "class": "MinionAbilities.spellPower",
+            "spellPower": 1
+        },
+        "battleCries": "PlayerActions.DRAW_FOR_SELF"
+    }
 }

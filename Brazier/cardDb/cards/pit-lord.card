@@ -2,7 +2,15 @@
     "name": "Pit Lord",
     "class": "warlock",
     "description": "Battlecry: Deal 5 damage to your hero.",
-    "type": "minion",
     "rarity": "epic",
-    "manaCost": 4
+    "manaCost": 4,
+    "keywords": "demon",
+    "minion": {
+        "attack": 5,
+        "hp": 6,
+        "battleCries": {
+            "class": "DamageActions.damageOwnHero",
+            "damage": 5
+        }
+    }
 }

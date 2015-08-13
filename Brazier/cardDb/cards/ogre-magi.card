@@ -2,6 +2,13 @@
     "name": "Ogre Magi",
     "description": "Spell Damage +1",
     "class": "neutral",
-    "type": "minion",
-    "manaCost": 4
+    "manaCost": 4,
+    "minion": {
+        "attack": 4,
+        "hp": 4,
+        "ability": {
+            "class": "MinionAbilities.spellPower",
+            "spellPower": 1
+        }
+    }
 }

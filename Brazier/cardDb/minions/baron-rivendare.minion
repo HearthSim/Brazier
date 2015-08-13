@@ -1,9 +1,0 @@
-{
-    "name": "Baron Rivendare",
-    "attack": 1,
-    "hp": 7,
-    "ability": {
-        "class": "Auras.ownPlayerAura",
-        "aura": "HeroAuras.DUPLICATE_DEATH_RATTLE"
-    }
-}

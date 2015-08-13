@@ -3,6 +3,21 @@
     "description": "Battlecry: Give your other minions Windfury, Taunt, or Divine Shield. (at random)",
     "class": "neutral",
     "rarity": "epic",
-    "type": "minion",
-    "manaCost": 4
+    "manaCost": 4,
+    "keywords": "mech",
+    "minion": {
+        "attack": 3,
+        "hp": 2,
+        "battleCries": {
+            "class": "MinionActions.forOwnMinions",
+            "action": {
+                "class": "TargetedMinionActions.randomAction",
+                "action": [
+                    "MinionActions.GIVE_DIVINE_SHIELD",
+                    "MinionActions.WIND_FURY",
+                    "MinionActions.TAUNT"
+                ]
+            }
+        }
+    }
 }

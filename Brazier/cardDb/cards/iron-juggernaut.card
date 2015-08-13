@@ -3,6 +3,17 @@
     "description": "Battlecry: Shuffle a Mine into your opponent's deck. When drawn, it explodes for 10 damage.",
     "class": "warrior",
     "rarity": "legendary",
-    "type": "minion",
-    "manaCost": 6
+    "manaCost": 6,
+    "keywords": "mech",
+    "minion": {
+        "attack": 6,
+        "hp": 5,
+        "battleCries": {
+            "class": "PlayerActions.doForOpponent",
+            "action": {
+                "class": "PlayerActions.shuffleCardIntoDeck",
+                "card": "Burrowing Mine"
+            }
+        }
+    }
 }

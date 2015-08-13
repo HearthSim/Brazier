@@ -1,7 +1,0 @@
-{
-    "name": "Bloodsail Corsair",
-    "attack": 1,
-    "hp": 2,
-    "keywords": "pirate",
-    "battleCries": "PlayerActions.REDUCE_OPPONENT_WEAPON_DURABILITY"
-}

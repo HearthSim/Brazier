@@ -3,7 +3,13 @@
     "description": "Choose One - Give your other minions +2/+2; or Summon two 2/2 Treants with Taunt.",
     "class": "druid",
     "rarity": "legendary",
-    "type": "minion",
     "manaCost": 9,
-    "chooseOne": ["Demigod's Favor", "Shan'do's Lesson"]
+    "chooseOne": [
+        "Demigod's Favor",
+        "Shan'do's Lesson"
+    ],
+    "minion": {
+        "attack": 5,
+        "hp": 8
+    }
 }

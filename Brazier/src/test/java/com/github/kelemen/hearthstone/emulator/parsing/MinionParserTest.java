@@ -3,7 +3,6 @@ package com.github.kelemen.hearthstone.emulator.parsing;
 import com.github.kelemen.hearthstone.emulator.Keyword;
 import com.github.kelemen.hearthstone.emulator.minions.MinionDescr;
 import com.github.kelemen.hearthstone.emulator.minions.MinionId;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import org.junit.Test;
@@ -11,9 +10,12 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class MinionParserTest {
-    private void assertKeywords(MinionDescr minion, Keyword... expectedKeywords) {
-        Set<Keyword> expected = new HashSet<>(Arrays.asList(expectedKeywords));
-        assertEquals("keywords", expected, minion.getKeywords());
+    private void assertKeywords(MinionDescr minion, String... expectedKeywords) {
+        Set<Keyword> keywordSet = new HashSet<>(expectedKeywords.length);
+        for (String keyword: expectedKeywords) {
+            keywordSet.add(Keyword.create(keyword));
+        }
+        assertEquals("keywords", keywordSet, minion.getKeywords());
     }
 
     private static MinionDescr getMinion(String minionName) {
@@ -30,6 +32,6 @@ public class MinionParserTest {
         assertEquals(5, minion.getHp());
         assertFalse("taunt", minion.isTaunt());
 
-        assertKeywords(minion);
+        assertKeywords(minion, "collectible", "4-cost", "common", "minion", "neutral");
     }
 }

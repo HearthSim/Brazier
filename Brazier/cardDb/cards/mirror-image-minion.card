@@ -3,7 +3,12 @@
     "displayName": "Mirror Image",
     "description": "Taunt",
     "class": "mage",
-    "type": "minion",
     "collectible": false,
-    "manaCost": 0
+    "manaCost": 0,
+    "minion": {
+        "displayName": "Mirror Image",
+        "attack": 0,
+        "hp": 2,
+        "taunt": true
+    }
 }

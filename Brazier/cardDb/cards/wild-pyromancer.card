@@ -2,7 +2,25 @@
     "name": "Wild Pyromancer",
     "description": "After you cast a spell, deal 1 damage to ALL minions.",
     "class": "neutral",
-    "type": "minion",
     "rarity": "rare",
-    "manaCost": 2
+    "manaCost": 2,
+    "minion": {
+        "attack": 3,
+        "hp": 2,
+        "triggers": {
+            "done-play-card": {
+                "filter": [
+                    "BasicFilters.HAS_SAME_OWNER_PLAYER",
+                    "BasicFilters.EVENT_SOURCE_IS_SPELL"
+                ],
+                "action": {
+                    "class": "MinionEventActions.doSelf",
+                    "action": {
+                        "class": "DamageActions.dealDamageToAllMinions",
+                        "damage": 1
+                    }
+                }
+            }
+        }
+    }
 }

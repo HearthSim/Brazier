@@ -2,6 +2,14 @@
     "name": "Abusive Sergeant",
     "description": "Battlecry: Give a minion +2 Attack this turn.",
     "class": "neutral",
-    "type": "minion",
-    "manaCost": 1
+    "manaCost": 1,
+    "minion": {
+        "attack": 2,
+        "hp": 1,
+        "battleCries": {
+            "class": "ActorlessTargetedActions.addTemporaryAttack",
+            "targets": "all-minions",
+            "attack": 2
+        }
+    }
 }

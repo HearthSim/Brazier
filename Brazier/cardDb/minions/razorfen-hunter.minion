@@ -1,9 +1,0 @@
-{
-    "name": "Razorfen Hunter",
-    "attack": 2,
-    "hp": 3,
-    "battleCries": {
-        "class": "MinionActions.summonMinionRight",
-        "minion": "Boar"
-    }
-}

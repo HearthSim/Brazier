@@ -3,6 +3,12 @@
     "description": "Taunt Can't be targeted by spells or Hero Powers.",
     "class": "neutral",
     "rarity": "rare",
-    "type": "minion",
-    "manaCost": 4
+    "manaCost": 4,
+    "keywords": "mech",
+    "minion": {
+        "attack": 2,
+        "hp": 5,
+        "taunt": "true",
+        "targetable": false
+    }
 }

@@ -3,6 +3,24 @@
     "description": "Whenever you cast a spell, gain +2 Attack this turn.",
     "rarity": "rare",
     "class": "neutral",
-    "type": "minion",
-    "manaCost": 2
+    "manaCost": 2,
+    "minion": {
+        "attack": 1,
+        "hp": 3,
+        "triggers": {
+            "start-play-card": {
+                "filter": [
+                    "BasicFilters.HAS_SAME_OWNER_PLAYER",
+                    "BasicFilters.EVENT_SOURCE_IS_SPELL"
+                ],
+                "action": {
+                    "class": "MinionEventActions.applyTargetedActionToSelf",
+                    "action": {
+                        "class": "ActorlessTargetedActions.addTemporaryAttack",
+                        "attack": 2
+                    }
+                }
+            }
+        }
+    }
 }

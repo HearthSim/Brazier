@@ -3,6 +3,11 @@
     "description": "Taunt",
     "class": "neutral",
     "rarity": "rare",
-    "type": "minion",
-    "manaCost": 0
+    "manaCost": 0,
+    "keywords": "mech",
+    "minion": {
+        "attack": 0,
+        "hp": 2,
+        "taunt": true
+    }
 }

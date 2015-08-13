@@ -2,7 +2,15 @@
     "name": "Malorne",
     "description": "Deathrattle: Shuffle this minion into your deck.",
     "class": "druid",
-    "type": "minion",
     "rarity": "legendary",
-    "manaCost": 7
+    "manaCost": 7,
+    "keywords": "beast",
+    "minion": {
+        "attack": 9,
+        "hp": 7,
+        "deathRattle": {
+            "class": "MinionEventActions.doSelf",
+            "action": "MinionActions.SHUFFLE_MINION"
+        }
+    }
 }

@@ -2,6 +2,19 @@
     "name": "Drakonid Crusher",
     "description": "Battlecry: If your opponent has 15 or less Health, gain +3/+3.",
     "class": "neutral",
-    "type": "minion",
-    "manaCost": 6
+    "manaCost": 6,
+    "keywords": "dragon",
+    "minion": {
+        "attack": 6,
+        "hp": 6,
+        "battleCries": {
+            "actionCondition": {
+                "class": "PlayActionRequirements.opponentsHpIsLess",
+                "hp": 16
+            },
+            "class": "MinionActions.buff",
+            "attack": 3,
+            "hp": 3
+        }
+    }
 }

@@ -3,6 +3,17 @@
     "description": "Taunt. Deathrattle: Deal 2 damage to ALL characters.",
     "rarity": "rare",
     "class": "neutral",
-    "type": "minion",
-    "manaCost": 5
+    "manaCost": 5,
+    "minion": {
+        "attack": 4,
+        "hp": 4,
+        "taunt": true,
+        "deathRattle": {
+            "class": "MinionEventActions.doSelf",
+            "action": {
+                "class": "DamageActions.dealDamageToAllTargets",
+                "damage": 2
+            }
+        }
+    }
 }

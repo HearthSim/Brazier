@@ -3,6 +3,11 @@
     "description": "Charge, Divine Shield",
     "rarity": "rare",
     "class": "neutral",
-    "type": "minion",
-    "manaCost": 6
+    "manaCost": 6,
+    "minion": {
+        "attack": 4,
+        "hp": 2,
+        "charge": true,
+        "divineShield": true
+    }
 }

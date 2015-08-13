@@ -2,7 +2,12 @@
     "name": "Twilight Drake",
     "description": "Battlecry: Gain +1 Health for each card in your hand.",
     "class": "neutral",
-    "type": "minion",
     "rarity": "rare",
-    "manaCost": 4
+    "manaCost": 4,
+    "keywords": "dragon",
+    "minion": {
+        "attack": 4,
+        "hp": 1,
+        "battleCries": "MinionActions.TWILIGHT_BUFF"
+    }
 }

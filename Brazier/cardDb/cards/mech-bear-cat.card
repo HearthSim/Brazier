@@ -3,6 +3,19 @@
     "description": "Whenever this minion takes damage, add a Spare Part card to your hand.",
     "class": "druid",
     "rarity": "rare",
-    "type": "minion",
-    "manaCost": 6
+    "manaCost": 6,
+    "keywords": "mech",
+    "minion": {
+        "attack": 7,
+        "hp": 6,
+        "triggers": {
+            "minion-damaged": {
+                "filter": "BasicFilters.TARGET_SELF",
+                "action": {
+                    "class": "PlayerActions.addRandomCard",
+                    "keywords": "spare-part"
+                }
+            }
+        }
+    }
 }

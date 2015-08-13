@@ -2,6 +2,16 @@
     "name": "Zombie Chow",
     "description": "Deathrattle: Restore 5 Health to the enemy hero.",
     "class": "neutral",
-    "type": "minion",
-    "manaCost": 1
+    "manaCost": 1,
+    "minion": {
+        "attack": 2,
+        "hp": 3,
+        "deathRattle": {
+            "class": "MinionEventActions.doSelf",
+            "action": {
+                "class": "DamageActions.damageOpponentHero",
+                "damage": -5
+            }
+        }
+    }
 }

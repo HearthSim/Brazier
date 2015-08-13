@@ -3,6 +3,20 @@
     "description": "Whenever your opponent plays a card, discard the top 3 cards of your deck.",
     "class": "neutral",
     "rarity": "epic",
-    "type": "minion",
-    "manaCost": 5
+    "manaCost": 5,
+    "keywords": "mech",
+    "minion": {
+        "attack": 8,
+        "hp": 8,
+        "triggers": {
+            "start-play-card": {
+                "filter": "BasicFilters.HAS_DIFFERENT_OWNER_PLAYER",
+                "action": [
+                    "PlayerActions.DISCARD_FROM_DECK",
+                    "PlayerActions.DISCARD_FROM_DECK",
+                    "PlayerActions.DISCARD_FROM_DECK"
+                ]
+            }
+        }
+    }
 }

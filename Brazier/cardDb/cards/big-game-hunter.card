@@ -2,7 +2,20 @@
     "name": "Big Game Hunter",
     "description": "Battlecry: Destroy a minion with an Attack of 7 or more.",
     "class": "neutral",
-    "type": "minion",
     "rarity": "epic",
-    "manaCost": 3
+    "manaCost": 3,
+    "minion": {
+        "attack": 4,
+        "hp": 2,
+        "battleCries": {
+            "class": "ActorlessTargetedActions.KILL_TARGET",
+            "targets": [
+                "all-minions",
+                {
+                    "class": "TargetNeeds.attackIsMoreThan",
+                    "attack": 6
+                }
+            ]
+        }
+    }
 }

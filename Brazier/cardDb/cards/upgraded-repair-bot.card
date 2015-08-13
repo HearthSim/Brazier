@@ -3,6 +3,24 @@
     "description": "Battlecry: Give a friendly Mech +4 Health.",
     "class": "priest",
     "rarity": "rare",
-    "type": "minion",
-    "manaCost": 5
+    "manaCost": 5,
+    "keywords": "mech",
+    "minion": {
+        "attack": 5,
+        "hp": 5,
+        "battleCries": {
+            "targets": [
+                "self-minions",
+                {
+                    "class": "TargetNeeds.hasKeyword",
+                    "keywords": "mech"
+                }
+            ],
+            "class": "ActorlessTargetedActions.applyToMinionTarget",
+            "action": {
+                "class": "MinionActions.buffHp",
+                "hp": 4
+            }
+        }
+    }
 }

@@ -2,6 +2,11 @@
     "name": "Force-Tank MAX",
     "description": "Divine Shield",
     "class": "neutral",
-    "type": "minion",
-    "manaCost": 8
+    "manaCost": 8,
+    "keywords": "mech",
+    "minion": {
+        "attack": 7,
+        "hp": 7,
+        "divineShield": true
+    }
 }

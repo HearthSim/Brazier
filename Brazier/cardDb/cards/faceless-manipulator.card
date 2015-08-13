@@ -3,6 +3,13 @@
     "description": "Battlecry: Choose a minion and become a copy of it.",
     "rarity": "epic",
     "class": "neutral",
-    "type": "minion",
-    "manaCost": 5
+    "manaCost": 5,
+    "minion": {
+        "attack": 3,
+        "hp": 3,
+        "battleCries": {
+            "class": "BattleCries.copyOther",
+            "targets": "all-minions"
+        }
+    }
 }

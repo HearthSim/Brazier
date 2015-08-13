@@ -3,6 +3,29 @@
     "description": "Whenever a character is healed, deal 1 damage to a random enemy.",
     "class": "priest",
     "rarity": "rare",
-    "type": "minion",
-    "manaCost": 2
+    "manaCost": 2,
+    "minion": {
+        "attack": 2,
+        "hp": 3,
+        "triggers": {
+            "minion-healed": {
+                "action": {
+                    "class": "MinionEventActions.applyTargetedActionToRandomEnemy",
+                    "action": {
+                        "class": "TargetedMinionActions.damageTarget",
+                        "damage": 1
+                    }
+                }
+            },
+            "hero-healed": {
+                "action": {
+                    "class": "MinionEventActions.applyTargetedActionToRandomEnemy",
+                    "action": {
+                        "class": "TargetedMinionActions.damageTarget",
+                        "damage": 1
+                    }
+                }
+            }
+        }
+    }
 }

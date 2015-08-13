@@ -3,6 +3,13 @@
     "description": "Battlecry: Swap the Attack and Health of a minion.",
     "rarity": "rare",
     "class": "neutral",
-    "type": "minion",
-    "manaCost": 2
+    "manaCost": 2,
+    "minion": {
+        "attack": 2,
+        "hp": 2,
+        "battleCries": {
+            "class": "ActorlessTargetedActions.ATTACK_HP_SWITCH",
+            "targets": "all-minions"
+        }
+    }
 }

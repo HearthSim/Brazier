@@ -2,6 +2,18 @@
     "name": "Warbot",
     "description": "Enrage: +1 Attack.",
     "class": "warrior",
-    "type": "minion",
-    "manaCost": 1
+    "manaCost": 1,
+    "keywords": "mech",
+    "minion": {
+        "attack": 1,
+        "hp": 3,
+        "ability": {
+            "class": "Auras.selfAura",
+            "filter": "MinionAuras.SELF_DAMAGED",
+            "aura": {
+                "class": "MinionAuras.attackBuff",
+                "attack": 1
+            }
+        }
+    }
 }

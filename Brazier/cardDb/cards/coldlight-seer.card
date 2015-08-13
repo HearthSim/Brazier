@@ -2,7 +2,19 @@
     "name": "Coldlight Seer",
     "description": "Battlecry: Give ALL other Murlocs +2 Health.",
     "class": "neutral",
-    "type": "minion",
     "rarity": "rare",
-    "manaCost": 3
+    "manaCost": 3,
+    "keywords": "murloc",
+    "minion": {
+        "attack": 2,
+        "hp": 3,
+        "battleCries": {
+            "class": "MinionActions.forAllMinions",
+            "filter": "MinionAuras.TARGET_IS_MURLOC",
+            "action": {
+                "class": "MinionActions.buffHp",
+                "hp": 2
+            }
+        }
+    }
 }

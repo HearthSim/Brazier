@@ -3,6 +3,12 @@
     "description": "Also damages the minions next to whomever he attacks.",
     "class": "neutral",
     "rarity": "legendary",
-    "type": "minion",
-    "manaCost": 8
+    "manaCost": 8,
+    "keywords": "mech",
+    "minion": {
+        "attack": 6,
+        "hp": 9,
+        "attackLeft": true,
+        "attackRight": true
+    }
 }

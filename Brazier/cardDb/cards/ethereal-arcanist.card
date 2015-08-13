@@ -2,7 +2,26 @@
     "name": "Ethereal Arcanist",
     "description": "If you control a Secret at the end of your turn, gain +2/+2.",
     "class": "mage",
-    "type": "minion",
     "rarity": "rare",
-    "manaCost": 4
+    "manaCost": 4,
+    "minion": {
+        "attack": 3,
+        "hp": 3,
+        "triggers": {
+            "turn-ends": {
+                "filter": [
+                    "BasicFilters.HAS_SAME_OWNER_PLAYER",
+                    "BasicFilters.HAS_SECRET"
+                ],
+                "action": {
+                    "class": "MinionEventActions.applyTargetedActionToSelf",
+                    "action": {
+                        "class": "MinionActions.buff",
+                        "attack": 2,
+                        "hp": 2
+                    }
+                }
+            }
+        }
+    }
 }

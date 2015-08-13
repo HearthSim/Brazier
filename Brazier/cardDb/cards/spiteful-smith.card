@@ -2,6 +2,17 @@
     "name": "Spiteful Smith",
     "description": "Enrage: Your weapon has +2 Attack.",
     "class": "neutral",
-    "type": "minion",
-    "manaCost": 5
+    "manaCost": 5,
+    "minion": {
+        "attack": 4,
+        "hp": 6,
+        "ability": {
+            "class": "Auras.ownWeaponAura",
+            "filter": "MinionAuras.SELF_DAMAGED",
+            "aura": {
+                "class": "WeaponAuras.attackBuff",
+                "attack": 2
+            }
+        }
+    }
 }

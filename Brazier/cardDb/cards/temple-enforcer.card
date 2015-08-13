@@ -2,6 +2,17 @@
     "name": "Temple Enforcer",
     "description": "Battlecry: Give a friendly minion +3 Health.",
     "class": "priest",
-    "type": "minion",
-    "manaCost": 6
+    "manaCost": 6,
+    "minion": {
+        "attack": 6,
+        "hp": 6,
+        "battleCries": {
+            "targets": "self-minions",
+            "class": "ActorlessTargetedActions.applyToMinionTarget",
+            "action": {
+                "class": "MinionActions.buffHp",
+                "hp": 3
+            }
+        }
+    }
 }

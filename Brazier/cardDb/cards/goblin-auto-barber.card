@@ -2,6 +2,15 @@
     "name": "Goblin Auto-Barber",
     "description": "Battlecry: Give your weapon +1 Attack.",
     "class": "rouge",
-    "type": "minion",
-    "manaCost": 2
+    "manaCost": 2,
+    "keywords": "mech",
+    "minion": {
+        "attack": 3,
+        "hp": 2,
+        "battleCries": {
+            "class": "PlayerActions.buffWeapon",
+            "attack": 1,
+            "charges": 0
+        }
+    }
 }

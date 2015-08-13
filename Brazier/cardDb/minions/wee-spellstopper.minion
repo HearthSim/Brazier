@@ -1,9 +1,0 @@
-{
-    "name": "Wee Spellstopper",
-    "attack": 2,
-    "hp": 5,
-    "ability": {
-        "class": "MinionAbilities.neighboursAura",
-        "aura": "MinionAuras.UNTARGETABLE"
-    }
-}

@@ -3,7 +3,11 @@
     "description": "Costs (1) less for each card in your opponent's hand.",
     "class": "neutral",
     "rarity": "epic",
-    "type": "minion",
     "manaCost": 12,
-    "manaCostAdjusters": "ManaCostAdjusters.REDUCE_BY_OPPONENTS_HAND_SIZE"
+    "manaCostAdjusters": "ManaCostAdjusters.REDUCE_BY_OPPONENTS_HAND_SIZE",
+    "keywords": "mech",
+    "minion": {
+        "attack": 8,
+        "hp": 8
+    }
 }

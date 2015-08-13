@@ -2,6 +2,10 @@
     "name": "Dancing Swords",
     "class": "neutral",
     "description": "Deathrattle: Your opponent draws a card.",
-    "type": "minion",
-    "manaCost": 3
+    "manaCost": 3,
+    "minion": {
+        "attack": 4,
+        "hp": 4,
+        "deathRattle": "PlayerActions.DRAW_FOR_OPPONENT"
+    }
 }

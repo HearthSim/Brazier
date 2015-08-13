@@ -2,7 +2,18 @@
     "name": "Toshley",
     "description": "Battlecry and Deathrattle: Add a Spare Part card to your hand.",
     "class": "neutral",
-    "type": "minion",
     "rarity": "legendary",
-    "manaCost": 6
+    "manaCost": 6,
+    "minion": {
+        "attack": 5,
+        "hp": 7,
+        "deathRattle": {
+            "class": "PlayerActions.addRandomCard",
+            "keywords": "spare-part"
+        },
+        "battleCries": {
+            "class": "PlayerActions.addRandomCard",
+            "keywords": "spare-part"
+        }
+    }
 }

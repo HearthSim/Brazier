@@ -2,6 +2,24 @@
     "name": "Ship's Cannon",
     "description": "Whenever you summon a Pirate, deal 2 damage to a random enemy.",
     "class": "neutral",
-    "type": "minion",
-    "manaCost": 2
+    "manaCost": 2,
+    "minion": {
+        "attack": 2,
+        "hp": 3,
+        "triggers": {
+            "on-summon": {
+                "filter": {
+                    "class": "BasicFilters.eventSourceHasKeyword",
+                    "keywords": "pirate"
+                },
+                "action": {
+                    "class": "MinionEventActions.applyTargetedActionToRandomEnemy",
+                    "action": {
+                        "class": "TargetedMinionActions.damageTarget",
+                        "damage": 2
+                    }
+                }
+            }
+        }
+    }
 }

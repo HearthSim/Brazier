@@ -2,6 +2,17 @@
     "name": "Dark Cultist",
     "description": "Deathrattle: Give a random friendly minion +3 Health.",
     "class": "priest",
-    "type": "minion",
-    "manaCost": 3
+    "manaCost": 3,
+    "minion": {
+        "attack": 3,
+        "hp": 4,
+        "deathRattle": {
+            "class": "MinionEventActions.applyTargetedActionToRandomOwnMinion",
+            "filter": "BasicFilters.NOT_SELF",
+            "action": {
+                "class": "MinionActions.buffHp",
+                "hp": 3
+            }
+        }
+    }
 }

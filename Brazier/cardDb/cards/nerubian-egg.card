@@ -2,7 +2,14 @@
     "name": "Nerubian Egg",
     "description": "Deathrattle: Summon a 4/4 Nerubian.",
     "class": "neutral",
-    "type": "minion",
     "rarity": "rare",
-    "manaCost": 2
+    "manaCost": 2,
+    "minion": {
+        "attack": 0,
+        "hp": 2,
+        "deathRattle": {
+            "class": "MinionEventActions.summonMinionRight",
+            "minion": "Nerubian"
+        }
+    }
 }

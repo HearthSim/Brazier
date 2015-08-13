@@ -1,6 +1,6 @@
 package com.github.kelemen.hearthstone.emulator.parsing;
 
-import com.github.kelemen.hearthstone.emulator.HearthStoneEntityDatabase;
+import com.github.kelemen.hearthstone.emulator.Keyword;
 import com.github.kelemen.hearthstone.emulator.Keywords;
 import com.github.kelemen.hearthstone.emulator.World;
 import com.github.kelemen.hearthstone.emulator.actions.BattleCryAction;
@@ -10,36 +10,22 @@ import com.github.kelemen.hearthstone.emulator.actions.PlayActionRequirement;
 import com.github.kelemen.hearthstone.emulator.actions.TargetNeed;
 import com.github.kelemen.hearthstone.emulator.actions.UndoAction;
 import com.github.kelemen.hearthstone.emulator.cards.CardDescr;
-import com.github.kelemen.hearthstone.emulator.cards.CardId;
 import com.github.kelemen.hearthstone.emulator.minions.Minion;
 import com.github.kelemen.hearthstone.emulator.minions.MinionDescr;
 import com.github.kelemen.hearthstone.emulator.minions.MinionId;
+import java.util.Set;
 import java.util.function.Supplier;
 import org.jtrim.utils.ExceptionHelper;
 
-public final class MinionParser implements EntityParser<MinionDescr> {
-    private final Supplier<HearthStoneEntityDatabase<CardDescr>> cardDbRef;
+public final class MinionParser {
     private final EventNotificationParser<Minion> eventNotificationParser;
     private final JsonDeserializer objectParser;
 
-    public MinionParser(
-            Supplier<HearthStoneEntityDatabase<CardDescr>> cardDbRef,
-            JsonDeserializer objectParser) {
-        ExceptionHelper.checkNotNullArgument(cardDbRef, "cardDbRef");
+    public MinionParser(JsonDeserializer objectParser) {
         ExceptionHelper.checkNotNullArgument(objectParser, "objectParser");
 
-        this.cardDbRef = cardDbRef;
         this.eventNotificationParser = new EventNotificationParser<>(Minion.class, objectParser);
         this.objectParser = objectParser;
-    }
-
-    private CardDescr getCard(CardId cardId) {
-        HearthStoneEntityDatabase<CardDescr> cardDb = cardDbRef.get();
-        if (cardDb == null) {
-            return null;
-        }
-
-        return cardDb.getById(cardId);
     }
 
     private static BattleCryTargetedAction addCondition(
@@ -93,21 +79,17 @@ public final class MinionParser implements EntityParser<MinionDescr> {
         }
     }
 
-    @Override
-    public MinionDescr fromJson(JsonTree root) throws ObjectParsingException {
-        String name = ParserUtils.getStringField(root, "name");
+    public MinionDescr fromJson(
+            JsonTree root,
+            String name,
+            Set<Keyword> keywords,
+            Supplier<CardDescr> cardRef) throws ObjectParsingException {
         int attack = ParserUtils.getIntField(root, "attack");
         int hp = ParserUtils.getIntField(root, "hp");
 
-        String cardName = ParserUtils.tryGetStringField(root, "cardId");
-        if (cardName == null) {
-            cardName = name;
-        }
-
         MinionId minionId = new MinionId(name);
-        CardId cardId = new CardId(cardName);
 
-        MinionDescr.Builder result = new MinionDescr.Builder(minionId, attack, hp, () -> getCard(cardId));
+        MinionDescr.Builder result = new MinionDescr.Builder(minionId, attack, hp, cardRef);
 
         JsonTree maxAttackCountElement = root.getChild("maxAttackCount");
         if (maxAttackCountElement != null) {
@@ -166,10 +148,7 @@ public final class MinionParser implements EntityParser<MinionDescr> {
             result.setAttackRight(attackRightElement.getAsBoolean());
         }
 
-        JsonTree keywords = root.getChild("keywords");
-        if (keywords != null) {
-            ParserUtils.parseKeywords(keywords, result::addKeyword);
-        }
+        keywords.forEach(result::addKeyword);
 
         if (parseBattleCries(root.getChild("battleCries"), result)) {
             result.addKeyword(Keywords.BATTLE_CRY);

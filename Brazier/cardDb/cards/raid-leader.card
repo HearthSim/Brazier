@@ -2,6 +2,16 @@
     "name": "Raid Leader",
     "description": "Your other minions have +1 Attack.",
     "class": "neutral",
-    "type": "minion",
-    "manaCost": 3
+    "manaCost": 3,
+    "minion": {
+        "attack": 2,
+        "hp": 2,
+        "ability": {
+            "class": "MinionAbilities.sameBoardOthersAura",
+            "aura": {
+                "class": "MinionAuras.attackBuff",
+                "attack": 1
+            }
+        }
+    }
 }

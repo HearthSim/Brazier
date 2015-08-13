@@ -2,6 +2,20 @@
     "name": "Raging Worgen",
     "description": "Enrage: Windfury and +1 Attack",
     "class": "neutral",
-    "type": "minion",
-    "manaCost": 3
+    "manaCost": 3,
+    "minion": {
+        "attack": 3,
+        "hp": 3,
+        "ability": {
+            "class": "Auras.selfAura",
+            "filter": "MinionAuras.SELF_DAMAGED",
+            "aura": [
+                {
+                    "class": "MinionAuras.attackBuff",
+                    "attack": 1
+                },
+                "MinionAuras.WIND_FURY"
+            ]
+        }
+    }
 }

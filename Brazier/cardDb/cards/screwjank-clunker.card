@@ -3,6 +3,25 @@
     "description": "Battlecry: Give a friendly Mech +2/+2.",
     "class": "neutral",
     "rarity": "rare",
-    "type": "minion",
-    "manaCost": 4
+    "manaCost": 4,
+    "keywords": "mech",
+    "minion": {
+        "attack": 2,
+        "hp": 5,
+        "battleCries": {
+            "targets": [
+                "self-minions",
+                {
+                    "class": "TargetNeeds.hasKeyword",
+                    "keywords": "mech"
+                }
+            ],
+            "class": "ActorlessTargetedActions.applyToMinionTarget",
+            "action": {
+                "class": "MinionActions.buff",
+                "attack": 2,
+                "hp": 2
+            }
+        }
+    }
 }

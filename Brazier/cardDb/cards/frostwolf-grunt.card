@@ -2,6 +2,11 @@
     "name": "Frostwolf Grunt",
     "class": "neutral",
     "description": "Taunt",
-    "type": "minion",
-    "manaCost": 2
+    "manaCost": 2,
+    "keywords": "horde-warrior",
+    "minion": {
+        "attack": 2,
+        "hp": 2,
+        "taunt": "true"
+    }
 }

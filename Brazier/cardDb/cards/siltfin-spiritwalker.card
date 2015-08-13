@@ -2,8 +2,24 @@
     "name": "Siltfin Spiritwalker",
     "description": "Whenever another friendly Murloc dies, draw a card. Overload: (1)",
     "class": "shaman",
-    "type": "minion",
     "rarity": "epic",
     "manaCost": 4,
-    "overload": 1
+    "overload": 1,
+    "keywords": "murloc",
+    "minion": {
+        "attack": 2,
+        "hp": 5,
+        "triggers": {
+            "minion-killed": {
+                "filter": [
+                    "BasicFilters.HAS_SAME_OWNER_PLAYER",
+                    {
+                        "class": "BasicFilters.eventSourceHasKeyword",
+                        "keywords": "murloc"
+                    }
+                ],
+                "action": "PlayerActions.DRAW_FOR_SELF"
+            }
+        }
+    }
 }

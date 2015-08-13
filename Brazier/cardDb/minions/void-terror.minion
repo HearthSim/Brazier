@@ -1,7 +1,0 @@
-{
-    "name": "Void Terror",
-    "attack": 3,
-    "hp": 3,
-    "keywords": "demon",
-    "battleCries": "BattleCries.CONSUME_NEIGHBOURS"
-}

@@ -1,9 +1,0 @@
-{
-    "name": "Dragonling Mechanic",
-    "attack": 2,
-    "hp": 4,
-    "battleCries": {
-        "class": "MinionActions.summonMinionRight",
-        "minion": "Mechanical Dragonling"
-    }
-}

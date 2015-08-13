@@ -3,7 +3,17 @@
     "displayName": "Treant",
     "description": "Charge. At the end of the turn, destroy this minion.",
     "class": "druid",
-    "type": "minion",
     "collectible": false,
-    "manaCost": 1
+    "manaCost": 1,
+    "minion": {
+        "displayName": "Treant",
+        "attack": 2,
+        "hp": 2,
+        "triggers": {
+            "turn-ends": {
+                "filter": "BasicFilters.HAS_SAME_OWNER_PLAYER",
+                "action": "MinionEventActions.SELF_DESTRUCT"
+            }
+        }
+    }
 }

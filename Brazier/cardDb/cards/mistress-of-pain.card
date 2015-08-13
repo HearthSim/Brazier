@@ -2,7 +2,21 @@
     "name": "Mistress of Pain",
     "class": "warlock",
     "description": "Whenever this minion deals damage, restore that much Health to your hero.",
-    "type": "minion",
     "rarity": "rare",
-    "manaCost": 2
+    "manaCost": 2,
+    "keywords": "demon",
+    "minion": {
+        "attack": 1,
+        "hp": 4,
+        "triggers": {
+            "minion-damaged": {
+                "filter": "BasicFilters.DAMAGE_SOURCE_SELF",
+                "action": "MinionEventActions.LIFE_STEAL_FOR_HERO"
+            },
+            "hero-damaged": {
+                "filter": "BasicFilters.DAMAGE_SOURCE_SELF",
+                "action": "MinionEventActions.LIFE_STEAL_FOR_HERO"
+            }
+        }
+    }
 }

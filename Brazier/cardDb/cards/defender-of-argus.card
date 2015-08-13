@@ -3,6 +3,20 @@
     "description": "Battlecry: Give adjacent minions +1/+1 and Taunt.",
     "rarity": "rare",
     "class": "neutral",
-    "type": "minion",
-    "manaCost": 4
+    "manaCost": 4,
+    "minion": {
+        "attack": 2,
+        "hp": 3,
+        "battleCries": {
+            "class": "MinionActions.buffNeighbours",
+            "buff": [
+                "ActorlessTargetedActions.TAUNT_MINION",
+                {
+                    "class": "MinionActions.buff",
+                    "attack": 1,
+                    "hp": 1
+                }
+            ]
+        }
+    }
 }

@@ -3,6 +3,19 @@
     "description": "Battlecry: Summon two 1/1 Boom Bots. WARNING: Bots may explode.",
     "rarity": "legendary",
     "class": "neutral",
-    "type": "minion",
-    "manaCost": 7
+    "manaCost": 7,
+    "minion": {
+        "attack": 7,
+        "hp": 7,
+        "battleCries": [
+            {
+                "class": "MinionActions.summonMinionRight",
+                "minion": "Boom Bot"
+            },
+            {
+                "class": "MinionActions.summonMinionLeft",
+                "minion": "Boom Bot"
+            }
+        ]
+    }
 }

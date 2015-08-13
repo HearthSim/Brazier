@@ -3,6 +3,18 @@
     "description": "Charge Enrage: +6 Attack",
     "class": "warrior",
     "rarity": "legendary",
-    "type": "minion",
-    "manaCost": 8
+    "manaCost": 8,
+    "minion": {
+        "attack": 4,
+        "hp": 9,
+        "charge": true,
+        "ability": {
+            "class": "Auras.selfAura",
+            "filter": "MinionAuras.SELF_DAMAGED",
+            "aura": {
+                "class": "MinionAuras.attackBuff",
+                "attack": 6
+            }
+        }
+    }
 }

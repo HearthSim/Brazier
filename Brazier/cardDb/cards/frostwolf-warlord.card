@@ -2,6 +2,10 @@
     "name": "Frostwolf Warlord",
     "class": "neutral",
     "description": "Battlecry: Gain +1/+1 for each other friendly minion on the battlefield.",
-    "type": "minion",
-    "manaCost": 5
+    "manaCost": 5,
+    "minion": {
+        "attack": 4,
+        "hp": 4,
+        "battleCries": "MinionActions.WARLORD_BUFF"
+    }
 }

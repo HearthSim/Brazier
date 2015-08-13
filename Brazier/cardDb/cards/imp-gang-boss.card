@@ -2,6 +2,19 @@
     "name": "Imp Gang Boss",
     "class": "warlock",
     "description": "Whenever this minion takes damage, summon a 1/1 Imp.",
-    "type": "minion",
-    "manaCost": 3
+    "manaCost": 3,
+    "keywords": "demon",
+    "minion": {
+        "attack": 2,
+        "hp": 4,
+        "triggers": {
+            "minion-damaged": {
+                "filter": "BasicFilters.TARGET_SELF",
+                "action": {
+                    "class": "MinionEventActions.summonMinionRight",
+                    "minion": "Imp"
+                }
+            }
+        }
+    }
 }

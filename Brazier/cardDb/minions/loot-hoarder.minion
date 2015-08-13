@@ -1,6 +1,0 @@
-{
-    "name": "Loot Hoarder",
-    "attack": 2,
-    "hp": 1,
-    "deathRattle": "PlayerActions.DRAW_FOR_SELF"
-}

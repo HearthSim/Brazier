@@ -2,7 +2,11 @@
     "name": "Slime",
     "description": "Taunt",
     "class": "neutral",
-    "type": "minion",
     "collectible": false,
-    "manaCost": 1
+    "manaCost": 1,
+    "minion": {
+        "attack": 1,
+        "hp": 2,
+        "taunt": "true"
+    }
 }

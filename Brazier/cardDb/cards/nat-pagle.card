@@ -2,7 +2,16 @@
     "name": "Nat Pagle",
     "description": "At the start of your turn, you have a 50% chance to draw an extra card.",
     "class": "neutral",
-    "type": "minion",
     "rarity": "legendary",
-    "manaCost": 2
+    "manaCost": 2,
+    "minion": {
+        "attack": 0,
+        "hp": 4,
+        "triggers": {
+            "turn-starts": {
+                "filter": "BasicFilters.HAS_SAME_OWNER_PLAYER",
+                "action": "PlayerActions.FISH_CARD_FOR_SELF"
+            }
+        }
+    }
 }

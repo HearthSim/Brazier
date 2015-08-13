@@ -1,7 +1,11 @@
 {
     "name": "Devlisaur",
     "class": "neutral",
-    "type": "minion",
     "collectible": false,
-    "manaCost": 5
+    "manaCost": 5,
+    "keywords": "beast",
+    "minion": {
+        "attack": 5,
+        "hp": 5
+    }
 }

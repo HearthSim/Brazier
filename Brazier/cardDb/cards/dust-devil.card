@@ -2,7 +2,11 @@
     "name": "Dust Devil",
     "description": "Windfury. Overload: (2)",
     "class": "shaman",
-    "type": "minion",
     "manaCost": 1,
-    "overload": 2
+    "overload": 2,
+    "minion": {
+        "attack": 3,
+        "hp": 1,
+        "maxAttackCount": 2
+    }
 }

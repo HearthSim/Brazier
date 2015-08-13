@@ -1,6 +1,9 @@
 {
     "name": "Magma Rager",
     "class": "neutral",
-    "type": "minion",
-    "manaCost": 3
+    "manaCost": 3,
+    "minion": {
+        "attack": 5,
+        "hp": 1
+    }
 }

@@ -3,6 +3,22 @@
     "description": "Whenever you gain Armor, give this minion +1 Attack.",
     "class": "warrior",
     "rarity": "rare",
-    "type": "minion",
-    "manaCost": 5
+    "manaCost": 5,
+    "keywords": "mech",
+    "minion": {
+        "attack": 5,
+        "hp": 5,
+        "triggers": {
+            "armor-gained": {
+                "filter": "BasicFilters.HAS_SAME_OWNER_PLAYER",
+                "action": {
+                    "class": "MinionEventActions.applyTargetedActionToSelf",
+                    "action": {
+                        "class": "MinionActions.buffAttack",
+                        "attack": 1
+                    }
+                }
+            }
+        }
+    }
 }

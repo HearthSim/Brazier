@@ -3,6 +3,18 @@
     "description": "Battlecry: Enemy spells cost (0) next turn.",
     "rarity": "legendary",
     "class": "neutral",
-    "type": "minion",
-    "manaCost": 2
+    "manaCost": 2,
+    "minion": {
+        "attack": 4,
+        "hp": 4,
+        "battleCries": {
+            "class": "PlayerActions.untilTurnStartsAura",
+            "target": "CardAuras.OPPONENT_CARD_PROVIDER",
+            "filter": "CardAuras.TARGET_IS_SPELL",
+            "aura": {
+                "class": "CardAuras.setManaCost",
+                "manaCost": 0
+            }
+        }
+    }
 }

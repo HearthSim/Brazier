@@ -2,7 +2,15 @@
     "name": "Huffer",
     "description": "Charge",
     "class": "hunter",
-    "type": "minion",
     "manaCost": 3,
-    "collectible": false
+    "collectible": false,
+    "keywords": [
+        "beast",
+        "animal-companion"
+    ],
+    "minion": {
+        "attack": 4,
+        "hp": 2,
+        "charge": true
+    }
 }

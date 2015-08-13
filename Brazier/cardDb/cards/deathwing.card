@@ -2,7 +2,15 @@
     "name": "Deathwing",
     "description": "Battlecry: Destroy all other minions and discard your hand.",
     "class": "neutral",
-    "type": "minion",
     "rarity": "legendary",
-    "manaCost": 10
+    "manaCost": 10,
+    "keywords": "dragon",
+    "minion": {
+        "attack": 12,
+        "hp": 12,
+        "battleCries": [
+            "PlayerActions.KILL_ALL_MINIONS",
+            "PlayerActions.DISCARD_HAND"
+        ]
+    }
 }

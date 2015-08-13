@@ -2,6 +2,10 @@
     "name": "Windfury Harpy",
     "description": "Windfury",
     "class": "neutral",
-    "type": "minion",
-    "manaCost": 6
+    "manaCost": 6,
+    "minion": {
+        "attack": 4,
+        "hp": 5,
+        "maxAttackCount": 2
+    }
 }

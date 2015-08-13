@@ -1,7 +1,0 @@
-{
-    "name": "Frog",
-    "attack": 0,
-    "hp": 1,
-    "taunt": true,
-    "keywords": "beast"
-}

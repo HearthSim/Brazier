@@ -2,6 +2,10 @@
     "name": "Fen Creeper",
     "description": "Taunt",
     "class": "neutral",
-    "type": "minion",
-    "manaCost": 5
+    "manaCost": 5,
+    "minion": {
+        "attack": 3,
+        "hp": 6,
+        "taunt": true
+    }
 }

@@ -2,6 +2,17 @@
     "name": "Amani Berserker",
     "class": "neutral",
     "description": "Enrage: +3 Attack",
-    "type": "minion",
-    "manaCost": 2
+    "manaCost": 2,
+    "minion": {
+        "attack": 2,
+        "hp": 3,
+        "ability": {
+            "class": "Auras.selfAura",
+            "filter": "MinionAuras.SELF_DAMAGED",
+            "aura": {
+                "class": "MinionAuras.attackBuff",
+                "attack": 3
+            }
+        }
+    }
 }

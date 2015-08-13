@@ -2,7 +2,21 @@
     "name": "Pint-Sized Summoner",
     "description": "The first minion you play each turn costs (1) less.",
     "class": "neutral",
-    "type": "minion",
     "rarity": "rare",
-    "manaCost": 2
+    "manaCost": 2,
+    "minion": {
+        "attack": 2,
+        "hp": 2,
+        "ability": {
+            "class": "Auras.ownCardAura",
+            "filter": [
+                "CardAuras.TARGET_IS_MINION",
+                "Auras.NOT_PLAYED_MINION_THIS_TURN"
+            ],
+            "aura": {
+                "class": "CardAuras.increaseManaCost",
+                "amount": -1
+            }
+        }
+    }
 }

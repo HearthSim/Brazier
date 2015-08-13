@@ -3,6 +3,17 @@
     "description": "Deathrattle: Summon a random 4-Cost minion.",
     "class": "neutral",
     "rarity": "epic",
-    "type": "minion",
-    "manaCost": 6
+    "manaCost": 6,
+    "keywords": "mech",
+    "minion": {
+        "attack": 6,
+        "hp": 4,
+        "deathRattle": {
+            "class": "MinionEventActions.summonRandomMinionRight",
+            "keywords": [
+                "4-cost",
+                "collectible"
+            ]
+        }
+    }
 }

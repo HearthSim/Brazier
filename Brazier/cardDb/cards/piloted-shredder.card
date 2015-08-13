@@ -2,6 +2,17 @@
     "name": "Piloted Shredder",
     "description": "Deathrattle: Summon a random 2-Cost minion.",
     "class": "neutral",
-    "type": "minion",
-    "manaCost": 4
+    "manaCost": 4,
+    "keywords": "mech",
+    "minion": {
+        "attack": 4,
+        "hp": 3,
+        "deathRattle": {
+            "class": "MinionEventActions.summonRandomMinionRight",
+            "keywords": [
+                "2-cost",
+                "collectible"
+            ]
+        }
+    }
 }

@@ -1,6 +1,0 @@
-{
-    "name": "Gnomish Inventor",
-    "attack": 2,
-    "hp": 4,
-    "battleCries": "PlayerActions.DRAW_FOR_SELF"
-}

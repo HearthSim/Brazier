@@ -2,6 +2,22 @@
     "name": "Starving Buzzard",
     "description": "Whenever you summon a Beast, draw a card.",
     "class": "hunter",
-    "type": "minion",
-    "manaCost": 5
+    "manaCost": 5,
+    "keywords": "beast",
+    "minion": {
+        "attack": 3,
+        "hp": 2,
+        "triggers": {
+            "on-summon": {
+                "filter": [
+                    "BasicFilters.HAS_SAME_OWNER_PLAYER",
+                    {
+                        "class": "BasicFilters.eventSourceHasKeyword",
+                        "keywords": "beast"
+                    }
+                ],
+                "action": "PlayerActions.DRAW_FOR_SELF"
+            }
+        }
+    }
 }

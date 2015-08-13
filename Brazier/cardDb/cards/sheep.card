@@ -1,7 +1,11 @@
 {
     "name": "Sheep",
     "class": "neutral",
-    "type": "minion",
     "collectible": false,
-    "manaCost": 0
+    "manaCost": 0,
+    "keywords": "beast",
+    "minion": {
+        "attack": 1,
+        "hp": 1
+    }
 }

@@ -1,7 +1,11 @@
 {
     "name": "Whelp",
     "class": "neutral",
-    "type": "minion",
     "collectible": false,
-    "manaCost": 1
+    "manaCost": 1,
+    "keywords": "dragon",
+    "minion": {
+        "attack": 1,
+        "hp": 1
+    }
 }

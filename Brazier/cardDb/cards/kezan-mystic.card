@@ -2,7 +2,11 @@
     "name": "Kezan Mystic",
     "description": "Battlecry: Take control of a random enemy Secret.",
     "class": "neutral",
-    "type": "minion",
     "rarity": "rare",
-    "manaCost": 4
+    "manaCost": 4,
+    "minion": {
+        "attack": 4,
+        "hp": 3,
+        "battleCries": "PlayerActions.STEAL_SECRET"
+    }
 }

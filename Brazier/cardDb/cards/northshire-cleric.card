@@ -2,6 +2,14 @@
     "name": "Northshire Cleric",
     "description": "Whenever a minion is healed, draw a card.",
     "class": "priest",
-    "type": "minion",
-    "manaCost": 1
+    "manaCost": 1,
+    "minion": {
+        "attack": 1,
+        "hp": 3,
+        "triggers": {
+            "minion-healed": {
+                "action": "PlayerActions.DRAW_FOR_SELF"
+            }
+        }
+    }
 }

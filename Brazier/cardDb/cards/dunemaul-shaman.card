@@ -2,8 +2,18 @@
     "name": "Dunemaul Shaman",
     "description": "Windfury, Overload: (1) 50% chance to attack the wrong enemy.",
     "class": "shaman",
-    "type": "minion",
     "rarity": "rare",
     "manaCost": 4,
-    "overload": 1
+    "overload": 1,
+    "minion": {
+        "attack": 5,
+        "hp": 4,
+        "maxAttackCount": 2,
+        "triggers": {
+            "attack-initiated": {
+                "filter": "BasicFilters.ATTACKER_IS_SELF",
+                "action": "AttackEventActions.MISS_TARGET_SOMETIMES"
+            }
+        }
+    }
 }

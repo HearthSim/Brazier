@@ -2,6 +2,13 @@
     "name": "Druid of the Fang",
     "description": "Battlecry: If you have a Beast, transform this minion into a 7/7.",
     "class": "druid",
-    "type": "minion",
-    "manaCost": 5
+    "manaCost": 5,
+    "minion": {
+        "attack": 7,
+        "hp": 7,
+        "battleCries": {
+            "class": "MinionActions.transformMinion",
+            "minion": "Druid of the Fang/Beast"
+        }
+    }
 }

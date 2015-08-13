@@ -2,6 +2,23 @@
     "name": "Mechanical Yeti",
     "description": "Deathrattle: Give each player a Spare Part.",
     "class": "neutral",
-    "type": "minion",
-    "manaCost": 4
+    "manaCost": 4,
+    "keywords": "mech",
+    "minion": {
+        "attack": 4,
+        "hp": 5,
+        "deathRattle": [
+            {
+                "class": "PlayerActions.addRandomCard",
+                "keywords": "spare-part"
+            },
+            {
+                "class": "PlayerActions.doForOpponent",
+                "action": {
+                    "class": "PlayerActions.addRandomCard",
+                    "keywords": "spare-part"
+                }
+            }
+        ]
+    }
 }

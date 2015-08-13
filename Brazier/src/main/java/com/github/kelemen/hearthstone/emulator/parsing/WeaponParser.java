@@ -1,11 +1,10 @@
 package com.github.kelemen.hearthstone.emulator.parsing;
 
 import com.github.kelemen.hearthstone.emulator.Keyword;
-import com.github.kelemen.hearthstone.emulator.Keywords;
 import com.github.kelemen.hearthstone.emulator.weapons.Weapon;
 import com.github.kelemen.hearthstone.emulator.weapons.WeaponDescr;
 import com.github.kelemen.hearthstone.emulator.weapons.WeaponId;
-import java.util.HashSet;
+import java.util.Collections;
 import java.util.Set;
 import org.jtrim.utils.ExceptionHelper;
 
@@ -24,11 +23,10 @@ public final class WeaponParser implements EntityParser<WeaponDescr> {
     public WeaponDescr fromJson(JsonTree root) throws ObjectParsingException {
         String name = ParserUtils.getStringField(root, "name");
 
-        Set<Keyword> keywords = new HashSet<>();
         JsonTree keywordsElement = root.getChild("keywords");
-        if (keywordsElement != null) {
-            ParserUtils.parseKeywords(keywordsElement, keywords::add);
-        }
+        Set<Keyword> keywords = keywordsElement != null
+                ? ParserUtils.parseKeywords(keywordsElement)
+                : Collections.emptySet();
 
         return fromJson(root, name, keywords);
     }

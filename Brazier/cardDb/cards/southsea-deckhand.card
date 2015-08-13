@@ -2,6 +2,15 @@
     "name": "Southsea Deckhand",
     "description": "Has Charge while you have a weapon equipped.",
     "class": "neutral",
-    "type": "minion",
-    "manaCost": 1
+    "manaCost": 1,
+    "keywords": "pirate",
+    "minion": {
+        "attack": 2,
+        "hp": 1,
+        "ability": {
+            "class": "Auras.selfAura",
+            "filter": "Auras.OWNER_HAS_WEAPON",
+            "aura": "MinionAuras.CHARGE"
+        }
+    }
 }

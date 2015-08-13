@@ -1,8 +1,0 @@
-{
-    "name": "Foe Reaper 4000",
-    "attack": 6,
-    "hp": 9,
-    "keywords": "mech",
-    "attackLeft": true,
-    "attackRight": true
-}

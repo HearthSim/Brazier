@@ -2,7 +2,14 @@
     "name": "Anodized Robo Cub",
     "description": "Taunt. Choose One - +1 Attack; or +1 Health.",
     "class": "druid",
-    "type": "minion",
     "manaCost": 2,
-    "chooseOne": ["Attack Mode", "Tank Mode"]
+    "chooseOne": [
+        "Attack Mode",
+        "Tank Mode"
+    ],
+    "minion": {
+        "attack": 2,
+        "hp": 2,
+        "taunt": true
+    }
 }

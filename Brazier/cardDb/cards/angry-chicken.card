@@ -3,6 +3,18 @@
     "description": "Enrage: +5 Attack.",
     "class": "neutral",
     "rarity": "rare",
-    "type": "minion",
-    "manaCost": 1
+    "manaCost": 1,
+    "keywords": "beast",
+    "minion": {
+        "attack": 1,
+        "hp": 1,
+        "ability": {
+            "class": "Auras.selfAura",
+            "filter": "MinionAuras.SELF_DAMAGED",
+            "aura": {
+                "class": "MinionAuras.attackBuff",
+                "attack": 5
+            }
+        }
+    }
 }

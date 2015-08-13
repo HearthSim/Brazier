@@ -2,7 +2,14 @@
     "name": "Sunfury Protector",
     "description": "Battlecry: Give adjacent minions Taunt.",
     "class": "neutral",
-    "type": "minion",
     "rarity": "rare",
-    "manaCost": 2
+    "manaCost": 2,
+    "minion": {
+        "attack": 2,
+        "hp": 3,
+        "battleCries": {
+            "class": "MinionActions.buffNeighbours",
+            "buff": "ActorlessTargetedActions.TAUNT_MINION"
+        }
+    }
 }

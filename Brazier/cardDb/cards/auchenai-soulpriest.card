@@ -2,7 +2,14 @@
     "name": "Auchenai Soulpriest",
     "description": "Your cards and powers that restore Health now deal damage instead.",
     "class": "priest",
-    "type": "minion",
     "rarity": "rare",
-    "manaCost": 4
+    "manaCost": 4,
+    "minion": {
+        "attack": 3,
+        "hp": 5,
+        "ability": {
+            "class": "Auras.ownPlayerAura",
+            "aura": "HeroAuras.DAMAGING_HEAL"
+        }
+    }
 }

@@ -2,6 +2,27 @@
     "name": "Houndmaster",
     "description": "Battlecry: Give a friendly Beast +2/+2 and Taunt.",
     "class": "hunter",
-    "type": "minion",
-    "manaCost": 4
+    "manaCost": 4,
+    "minion": {
+        "attack": 4,
+        "hp": 3,
+        "battleCries": {
+            "targets": [
+                "self-minions",
+                {
+                    "class": "TargetNeeds.hasKeyword",
+                    "keywords": "beast"
+                }
+            ],
+            "class": "ActorlessTargetedActions.applyToMinionTarget",
+            "action": [
+                {
+                    "class": "MinionActions.buff",
+                    "attack": 2,
+                    "hp": 2
+                },
+                "MinionActions.TAUNT"
+            ]
+        }
+    }
 }

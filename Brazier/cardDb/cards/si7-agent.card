@@ -3,12 +3,15 @@
     "description": "Combo: Deal 2 damage.",
     "class": "rouge",
     "rarity": "rare",
-    "type": "minion",
     "manaCost": 3,
     "playActions": {
         "class": "CardPlayActions.dealMinionDamage",
         "targets": "all",
         "requires": "PlayActionRequirements.COMBO",
         "damage": 2
+    },
+    "minion": {
+        "attack": 3,
+        "hp": 3
     }
 }

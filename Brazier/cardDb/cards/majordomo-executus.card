@@ -3,6 +3,16 @@
     "description": "Deathrattle: Replace your hero with Ragnaros, the Firelord.",
     "rarity": "legendary",
     "class": "neutral",
-    "type": "minion",
-    "manaCost": 9
+    "manaCost": 9,
+    "minion": {
+        "attack": 9,
+        "hp": 7,
+        "deathRattle": {
+            "class": "PlayerActions.replaceHero",
+            "maxHp": 8,
+            "armor": 0,
+            "heroPower": "DIE, INSECT!",
+            "heroClass": "boss-class"
+        }
+    }
 }

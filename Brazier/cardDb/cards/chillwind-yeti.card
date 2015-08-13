@@ -1,6 +1,9 @@
 {
     "name": "Chillwind Yeti",
     "class": "neutral",
-    "type": "minion",
-    "manaCost": 4
+    "manaCost": 4,
+    "minion": {
+        "attack": 4,
+        "hp": 5
+    }
 }

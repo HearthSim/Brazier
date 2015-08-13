@@ -3,6 +3,23 @@
     "description": "At the end of your turn, give another friendly Mech +2/+2.",
     "class": "rouge",
     "rarity": "rare",
-    "type": "minion",
-    "manaCost": 3
+    "manaCost": 3,
+    "keywords": "mech",
+    "minion": {
+        "attack": 2,
+        "hp": 2,
+        "triggers": {
+            "turn-ends": {
+                "filter": "BasicFilters.HAS_SAME_OWNER_PLAYER",
+                "action": {
+                    "class": "MinionEventActions.applyTargetedActionToRandomEnemy",
+                    "action": {
+                        "class": "MinionActions.buff",
+                        "attack": 2,
+                        "hp": 2
+                    }
+                }
+            }
+        }
+    }
 }

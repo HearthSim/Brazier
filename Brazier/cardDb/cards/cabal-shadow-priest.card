@@ -2,7 +2,24 @@
     "name": "Cabal Shadow Priest",
     "description": "Battlecry: Take control of an enemy minion that has 2 or less Attack.",
     "class": "priest",
-    "type": "minion",
     "rarity": "epic",
-    "manaCost": 6
+    "manaCost": 6,
+    "minion": {
+        "attack": 4,
+        "hp": 5,
+        "battleCries": {
+            "targets": [
+                "enemy-minions",
+                {
+                    "class": "TargetNeeds.attackIsLessThan",
+                    "attack": 3
+                }
+            ],
+            "requires": {
+                "class": "PlayActionRequirements.stealBattleCryNeeds",
+                "maxAttack": 2
+            },
+            "class": "ActorlessTargetedActions.TAKE_CONTROL"
+        }
+    }
 }

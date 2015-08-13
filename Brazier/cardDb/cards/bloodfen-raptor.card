@@ -1,6 +1,10 @@
 {
     "name": "Bloodfen Raptor",
     "class": "neutral",
-    "type": "minion",
-    "manaCost": 2
+    "manaCost": 2,
+    "keywords": "beast",
+    "minion": {
+        "attack": 3,
+        "hp": 2
+    }
 }

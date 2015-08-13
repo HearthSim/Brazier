@@ -2,6 +2,18 @@
     "name": "Timber Wolf",
     "description": "Your other Beasts have +1 Attack.",
     "class": "hunter",
-    "type": "minion",
-    "manaCost": 1
+    "manaCost": 1,
+    "keywords": "beast",
+    "minion": {
+        "attack": 1,
+        "hp": 1,
+        "ability": {
+            "class": "MinionAbilities.sameBoardOthersAura",
+            "filter": "MinionAuras.TARGET_IS_BEAST",
+            "aura": {
+                "class": "MinionAuras.attackBuff",
+                "attack": 1
+            }
+        }
+    }
 }

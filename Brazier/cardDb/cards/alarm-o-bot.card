@@ -3,6 +3,19 @@
     "description": "At the start of your turn, swap this minion with a random one in your hand.",
     "class": "neutral",
     "rarity": "rare",
-    "type": "minion",
-    "manaCost": 3
+    "manaCost": 3,
+    "keywords": "mech",
+    "minion": {
+        "attack": 0,
+        "hp": 3,
+        "triggers": {
+            "turn-starts": {
+                "filter": "BasicFilters.HAS_SAME_OWNER_PLAYER",
+                "action": {
+                    "class": "MinionEventActions.doSelf",
+                    "action": "MinionActions.SWAP_WITH_MINION_IN_HAND"
+                }
+            }
+        }
+    }
 }

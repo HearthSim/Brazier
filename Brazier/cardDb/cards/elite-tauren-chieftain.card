@@ -3,6 +3,22 @@
     "description": "Battlecry: Give both players the power to ROCK! (with a Power Chord card)",
     "rarity": "legendary",
     "class": "neutral",
-    "type": "minion",
-    "manaCost": 5
+    "manaCost": 5,
+    "minion": {
+        "attack": 5,
+        "hp": 5,
+        "battleCries": [
+            {
+                "class": "PlayerActions.addCard",
+                "keywords": "power-chord"
+            },
+            {
+                "class": "PlayerActions.doForOpponent",
+                "action": {
+                    "class": "PlayerActions.addCard",
+                    "keywords": "power-chord"
+                }
+            }
+        ]
+    }
 }

@@ -2,6 +2,17 @@
     "name": "Cogmaster",
     "class": "neutral",
     "description": "Has +2 Attack while you have a Mech.",
-    "type": "minion",
-    "manaCost": 1
+    "manaCost": 1,
+    "minion": {
+        "attack": 1,
+        "hp": 2,
+        "ability": {
+            "class": "Auras.selfAura",
+            "filter": "MinionAuras.OWN_BOARD_HAS_MECH",
+            "aura": {
+                "class": "MinionAuras.attackBuff",
+                "attack": 2
+            }
+        }
+    }
 }

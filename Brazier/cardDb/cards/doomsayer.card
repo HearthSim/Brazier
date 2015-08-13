@@ -3,6 +3,15 @@
     "description": "At the start of your turn, destroy ALL minions.",
     "rarity": "epic",
     "class": "neutral",
-    "type": "minion",
-    "manaCost": 2
+    "manaCost": 2,
+    "minion": {
+        "attack": 0,
+        "hp": 7,
+        "triggers": {
+            "turn-starts": {
+                "filter": "BasicFilters.HAS_SAME_OWNER_PLAYER",
+                "action": "PlayerActions.KILL_ALL_MINIONS"
+            }
+        }
+    }
 }

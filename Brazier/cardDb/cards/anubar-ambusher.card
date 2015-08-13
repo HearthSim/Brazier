@@ -2,6 +2,13 @@
     "name": "Anub'ar Ambusher",
     "description": "Deathrattle: Return a random friendly minion to your hand.",
     "class": "rouge",
-    "type": "minion",
-    "manaCost": 4
+    "manaCost": 4,
+    "minion": {
+        "attack": 5,
+        "hp": 5,
+        "deathRattle": {
+            "class": "PlayerActions.applyTargetedActionToRandomOwnMinion",
+            "action": "MinionActions.RETURN_MINION"
+        }
+    }
 }

@@ -1,7 +1,11 @@
 {
     "name": "Imp",
     "class": "warlock",
-    "type": "minion",
     "collectible": false,
-    "manaCost": 1
+    "manaCost": 1,
+    "keywords": "demon",
+    "minion": {
+        "attack": 1,
+        "hp": 1
+    }
 }

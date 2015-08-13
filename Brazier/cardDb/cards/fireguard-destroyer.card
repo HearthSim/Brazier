@@ -2,7 +2,15 @@
     "name": "Fireguard Destroyer",
     "description": "Battlecry: Gain 1-4 Attack. Overload: (1)",
     "class": "shaman",
-    "type": "minion",
     "manaCost": 4,
-    "overload": 1
+    "overload": 1,
+    "minion": {
+        "attack": 3,
+        "hp": 6,
+        "battleCries": {
+            "class": "MinionActions.buffAttack",
+            "minAttack": 1,
+            "maxAttack": 4
+        }
+    }
 }

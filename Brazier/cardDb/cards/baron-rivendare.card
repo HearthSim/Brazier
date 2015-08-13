@@ -3,6 +3,13 @@
     "description": "Your minions trigger their Deathrattles twice.",
     "class": "neutral",
     "rarity": "legendary",
-    "type": "minion",
-    "manaCost": 4
+    "manaCost": 4,
+    "minion": {
+        "attack": 1,
+        "hp": 7,
+        "ability": {
+            "class": "Auras.ownPlayerAura",
+            "aura": "HeroAuras.DUPLICATE_DEATH_RATTLE"
+        }
+    }
 }

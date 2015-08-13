@@ -2,7 +2,17 @@
     "name": "Patient Assassin",
     "description": "Stealth. Destroy any minion damaged by this minion.",
     "class": "rouge",
-    "type": "minion",
     "rarity": "epic",
-    "manaCost": 2
+    "manaCost": 2,
+    "minion": {
+        "attack": 1,
+        "hp": 1,
+        "stealth": true,
+        "triggers": {
+            "minion-damaged": {
+                "filter": "BasicFilters.DAMAGE_SOURCE_SELF",
+                "action": "DamageEventActions.KILL_DAMAGE_TARGET_MINION"
+            }
+        }
+    }
 }

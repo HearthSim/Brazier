@@ -2,6 +2,11 @@
     "name": "Whirling Zap-o-matic",
     "description": "Windfury",
     "class": "shaman",
-    "type": "minion",
-    "manaCost": 2
+    "manaCost": 2,
+    "keywords": "mech",
+    "minion": {
+        "attack": 3,
+        "hp": 2,
+        "maxAttackCount": 2
+    }
 }

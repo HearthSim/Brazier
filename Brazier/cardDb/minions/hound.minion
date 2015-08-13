@@ -1,7 +1,0 @@
-{
-    "name": "Hound",
-    "attack": 1,
-    "hp": 1,
-    "charge": "true",
-    "keywords": "beast"
-}

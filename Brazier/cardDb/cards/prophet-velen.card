@@ -2,7 +2,14 @@
     "name": "Prophet Velen",
     "description": "Double the damage and healing of your spells and Hero Power.",
     "class": "priest",
-    "type": "minion",
     "rarity": "legendary",
-    "manaCost": 7
+    "manaCost": 7,
+    "minion": {
+        "attack": 7,
+        "hp": 7,
+        "ability": {
+            "class": "MinionAbilities.spellMultiplier",
+            "mul": 2
+        }
+    }
 }

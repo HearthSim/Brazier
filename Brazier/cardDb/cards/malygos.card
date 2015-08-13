@@ -2,7 +2,15 @@
     "name": "Malygos",
     "description": "Spell Damage +5",
     "class": "neutral",
-    "type": "minion",
     "rarity": "legendary",
-    "manaCost": 9
+    "manaCost": 9,
+    "keywords": "dragon",
+    "minion": {
+        "attack": 4,
+        "hp": 12,
+        "ability": {
+            "class": "MinionAbilities.spellPower",
+            "spellPower": 5
+        }
+    }
 }

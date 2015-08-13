@@ -1,7 +1,11 @@
 {
     "name": "Panther",
     "class": "druid",
-    "type": "minion",
     "collectible": false,
-    "manaCost": 2
+    "manaCost": 2,
+    "keywords": "beast",
+    "minion": {
+        "attack": 3,
+        "hp": 2
+    }
 }

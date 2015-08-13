@@ -2,6 +2,21 @@
     "name": "Micro Machine",
     "description": "At the start of each turn, gain +1 Attack.",
     "class": "neutral",
-    "type": "minion",
-    "manaCost": 2
+    "manaCost": 2,
+    "keywords": "mech",
+    "minion": {
+        "attack": 1,
+        "hp": 2,
+        "triggers": {
+            "turn-starts": {
+                "action": {
+                    "class": "MinionEventActions.doSelf",
+                    "action": {
+                        "class": "MinionActions.buffAttack",
+                        "attack": 1
+                    }
+                }
+            }
+        }
+    }
 }

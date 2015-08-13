@@ -2,6 +2,26 @@
     "name": "Floating Watcher",
     "class": "warlock",
     "description": "Whenever your hero takes damage on your turn, gain +2/+2.",
-    "type": "minion",
-    "manaCost": 5
+    "manaCost": 5,
+    "keywords": "demon",
+    "minion": {
+        "attack": 4,
+        "hp": 4,
+        "triggers": {
+            "hero-damaged": {
+                "filter": [
+                    "BasicFilters.TARGET_HAS_SAME_OWNER_PLAYER",
+                    "BasicFilters.SELF_TURN"
+                ],
+                "action": {
+                    "class": "MinionEventActions.applyTargetedActionToSelf",
+                    "action": {
+                        "class": "MinionActions.buff",
+                        "attack": 2,
+                        "hp": 2
+                    }
+                }
+            }
+        }
+    }
 }

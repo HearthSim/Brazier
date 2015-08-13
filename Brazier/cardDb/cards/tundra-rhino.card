@@ -2,6 +2,15 @@
     "name": "Tundra Rhino",
     "description": "Your Beasts have Charge.",
     "class": "hunter",
-    "type": "minion",
-    "manaCost": 5
+    "manaCost": 5,
+    "keywords": "beast",
+    "minion": {
+        "attack": 2,
+        "hp": 5,
+        "ability": {
+            "class": "Auras.sameBoardAura",
+            "filter": "MinionAuras.TARGET_IS_BEAST",
+            "aura": "MinionAuras.CHARGE"
+        }
+    }
 }

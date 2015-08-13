@@ -2,6 +2,10 @@
     "name": "Wolfrider",
     "class": "neutral",
     "description": "Charge",
-    "type": "minion",
-    "manaCost": 3
+    "manaCost": 3,
+    "minion": {
+        "attack": 3,
+        "hp": 1,
+        "charge": true
+    }
 }

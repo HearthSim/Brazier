@@ -2,6 +2,14 @@
     "name": "Fire Elemental",
     "description": "Battlecry: Deal 3 damage.",
     "class": "shaman",
-    "type": "minion",
-    "manaCost": 6
+    "manaCost": 6,
+    "minion": {
+        "attack": 6,
+        "hp": 5,
+        "battleCries": {
+            "targets": "all",
+            "class": "TargetedActions.damageTarget",
+            "damage": 3
+        }
+    }
 }

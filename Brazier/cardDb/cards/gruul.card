@@ -3,6 +3,21 @@
     "description": "At the end of each turn, gain +1/+1 .",
     "rarity": "legendary",
     "class": "neutral",
-    "type": "minion",
-    "manaCost": 8
+    "manaCost": 8,
+    "minion": {
+        "attack": 7,
+        "hp": 7,
+        "triggers": {
+            "turn-ends": {
+                "action": {
+                    "class": "MinionEventActions.applyTargetedActionToSelf",
+                    "action": {
+                        "class": "MinionActions.buff",
+                        "attack": 1,
+                        "hp": 1
+                    }
+                }
+            }
+        }
+    }
 }

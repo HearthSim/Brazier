@@ -3,6 +3,14 @@
     "description": "Battlecry: Give a friendly minion Stealth.",
     "rarity": "rare",
     "class": "rouge",
-    "type": "minion",
-    "manaCost": 4
+    "manaCost": 4,
+    "minion": {
+        "attack": 4,
+        "hp": 4,
+        "battleCries": {
+            "targets": "self-minions",
+            "class": "ActorlessTargetedActions.applyToMinionTarget",
+            "action": "MinionActions.STEALTH"
+        }
+    }
 }

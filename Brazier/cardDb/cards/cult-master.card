@@ -2,6 +2,15 @@
     "name": "Cult Master",
     "description": "Whenever one of your other minions dies, draw a card.",
     "class": "neutral",
-    "type": "minion",
-    "manaCost": 4
+    "manaCost": 4,
+    "minion": {
+        "attack": 4,
+        "hp": 2,
+        "triggers": {
+            "minion-killed": {
+                "filter": "BasicFilters.HAS_SAME_OWNER_PLAYER",
+                "action": "PlayerActions.DRAW_FOR_SELF"
+            }
+        }
+    }
 }

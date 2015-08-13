@@ -2,6 +2,20 @@
     "name": "Flesheating Ghoul",
     "class": "neutral",
     "description": "Whenever a minion dies, gain +1 Attack.",
-    "type": "minion",
-    "manaCost": 3
+    "manaCost": 3,
+    "minion": {
+        "attack": 2,
+        "hp": 3,
+        "triggers": {
+            "minion-killed": {
+                "action": {
+                    "class": "MinionEventActions.applyTargetedActionToSelf",
+                    "action": {
+                        "class": "MinionActions.buffAttack",
+                        "attack": 1
+                    }
+                }
+            }
+        }
+    }
 }

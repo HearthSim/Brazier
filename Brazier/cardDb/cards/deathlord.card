@@ -3,6 +3,13 @@
     "description": "Taunt. Deathrattle: Your opponent puts a minion from their deck into the battlefield.",
     "rarity": "rare",
     "class": "neutral",
-    "type": "minion",
-    "manaCost": 3
+    "manaCost": 3,
+    "minion": {
+        "attack": 2,
+        "hp": 8,
+        "deathRattle": {
+            "class": "PlayerActions.doForOpponent",
+            "action": "PlayerActions.SUMMON_RANDOM_MINION_FROM_DECK"
+        }
+    }
 }

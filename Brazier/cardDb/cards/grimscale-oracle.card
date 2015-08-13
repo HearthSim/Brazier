@@ -2,6 +2,21 @@
     "name": "Grimscale Oracle",
     "description": "ALL other Murlocs have +1 Attack.",
     "class": "neutral",
-    "type": "minion",
-    "manaCost": 1
+    "manaCost": 1,
+    "keywords": "murloc",
+    "minion": {
+        "attack": 1,
+        "hp": 1,
+        "ability": {
+            "class": "Auras.boardAura",
+            "filter": [
+                "MinionAuras.TARGET_IS_MURLOC",
+                "Auras.NOT_SELF"
+            ],
+            "aura": {
+                "class": "MinionAuras.attackBuff",
+                "attack": 1
+            }
+        }
+    }
 }

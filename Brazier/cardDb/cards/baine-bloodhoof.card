@@ -2,7 +2,10 @@
     "name": "Baine Bloodhoof",
     "class": "neutral",
     "rarity": "legendary",
-    "type": "minion",
     "collectible": false,
-    "manaCost": 4
+    "manaCost": 4,
+    "minion": {
+        "attack": 4,
+        "hp": 5
+    }
 }

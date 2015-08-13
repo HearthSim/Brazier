@@ -3,6 +3,19 @@
     "description": "Battlecry: Summon an AWESOME invention.",
     "rarity": "legendary",
     "class": "neutral",
-    "type": "minion",
-    "manaCost": 6
+    "manaCost": 6,
+    "minion": {
+        "attack": 6,
+        "hp": 6,
+        "battleCries": [
+            {
+                "class": "PlayerActions.summonRandomMinion",
+                "keywords": "awesome-invention"
+            },
+            {
+                "class": "PlayerActions.summonRandomMinion",
+                "keywords": "awesome-invention"
+            }
+        ]
+    }
 }

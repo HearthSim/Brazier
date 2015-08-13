@@ -3,6 +3,14 @@
     "description": "Battlecry: Change an enemy minion's Attack to 1.",
     "rarity": "rare",
     "class": "paladin",
-    "type": "minion",
-    "manaCost": 3
+    "manaCost": 3,
+    "minion": {
+        "attack": 3,
+        "hp": 3,
+        "battleCries": {
+            "class": "ActorlessTargetedActions.setMinionAttackTo",
+            "targets": "enemy-minions",
+            "attack": 1
+        }
+    }
 }

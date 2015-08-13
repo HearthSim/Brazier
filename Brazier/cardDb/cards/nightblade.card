@@ -2,6 +2,13 @@
     "name": "Nightblade",
     "description": "Battlecry: Deal 3 damage to the enemy hero.",
     "class": "neutral",
-    "type": "minion",
-    "manaCost": 4
+    "manaCost": 4,
+    "minion": {
+        "attack": 4,
+        "hp": 4,
+        "battleCries": {
+            "class": "DamageActions.damageOpponentHero",
+            "damage": 3
+        }
+    }
 }

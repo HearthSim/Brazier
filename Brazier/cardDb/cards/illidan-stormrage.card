@@ -3,6 +3,19 @@
     "description": "Whenever you play a card, summon a 2/1 Flame of Azzinoth.",
     "rarity": "legendary",
     "class": "neutral",
-    "type": "minion",
-    "manaCost": 6
+    "manaCost": 6,
+    "keywords": "demon",
+    "minion": {
+        "attack": 7,
+        "hp": 5,
+        "triggers": {
+            "start-play-card": {
+                "filter": "BasicFilters.HAS_SAME_OWNER_PLAYER",
+                "action": {
+                    "class": "MinionEventActions.summonMinionRight",
+                    "minion": "Flame of Azzinoth"
+                }
+            }
+        }
+    }
 }

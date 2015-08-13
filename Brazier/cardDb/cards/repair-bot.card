@@ -2,7 +2,24 @@
     "name": "Repair Bot",
     "description": "At the end of your turn, restore 6 Health to a damaged character.",
     "class": "neutral",
-    "type": "minion",
     "collectible": false,
-    "manaCost": 1
+    "manaCost": 1,
+    "keywords": "awesome-invention",
+    "minion": {
+        "attack": 0,
+        "hp": 4,
+        "triggers": {
+            "turn-ends": {
+                "filter": "BasicFilters.HAS_SAME_OWNER_PLAYER",
+                "action": {
+                    "class": "MinionEventActions.applyTargetedActionToRandomTarget",
+                    "filter": "BasicFilters.EVENT_SOURCE_DAMAGED",
+                    "action": {
+                        "class": "TargetedMinionActions.damageTarget",
+                        "damage": -6
+                    }
+                }
+            }
+        }
+    }
 }

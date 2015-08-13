@@ -2,7 +2,19 @@
     "name": "Feugen",
     "description": "Deathrattle: If Stalagg also died this game, summon Thaddius.",
     "class": "neutral",
-    "type": "minion",
     "rarity": "legendary",
-    "manaCost": 5
+    "manaCost": 5,
+    "keywords": "feugen",
+    "minion": {
+        "attack": 4,
+        "hp": 7,
+        "deathRattleCondition": {
+            "class": "BasicFilters.minionDiedWithKeyword",
+            "keywords": "stalagg"
+        },
+        "deathRattle": {
+            "class": "MinionEventActions.summonMinionRight",
+            "minion": "Thaddius"
+        }
+    }
 }

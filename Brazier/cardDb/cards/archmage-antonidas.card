@@ -2,7 +2,22 @@
     "name": "Archmage Antonidas",
     "description": "Whenever you cast a spell, put a 'Fireball' spell into your hand.",
     "class": "mage",
-    "type": "minion",
     "rarity": "legendary",
-    "manaCost": 7
+    "manaCost": 7,
+    "minion": {
+        "attack": 5,
+        "hp": 7,
+        "triggers": {
+            "start-play-card": {
+                "filter": [
+                    "BasicFilters.HAS_SAME_OWNER_PLAYER",
+                    "BasicFilters.EVENT_SOURCE_IS_SPELL"
+                ],
+                "action": {
+                    "class": "PlayerActions.addCard",
+                    "card": "Fireball"
+                }
+            }
+        }
+    }
 }

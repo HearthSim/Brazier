@@ -2,6 +2,13 @@
     "name": "Razorfen Hunter",
     "description": "Battlecry: Summon a 1/1 Boar.",
     "class": "neutral",
-    "type": "minion",
-    "manaCost": 3
+    "manaCost": 3,
+    "minion": {
+        "attack": 2,
+        "hp": 3,
+        "battleCries": {
+            "class": "MinionActions.summonMinionRight",
+            "minion": "Boar"
+        }
+    }
 }

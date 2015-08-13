@@ -2,8 +2,12 @@
     "name": "Laughing Sister",
     "description": "Can't be targeted by spells or Hero Powers.",
     "class": "neutral",
-    "type": "minion",
     "collectible": false,
     "keywords": "emerald-dream",
-    "manaCost": 3
+    "manaCost": 3,
+    "minion": {
+        "attack": 3,
+        "hp": 5,
+        "targetable": false
+    }
 }

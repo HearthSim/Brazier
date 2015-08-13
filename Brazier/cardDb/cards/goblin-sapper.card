@@ -2,7 +2,21 @@
     "name": "Goblin Sapper",
     "description": "Has +4 Attack while your opponent has 6 or more cards in hand.",
     "class": "neutral",
-    "type": "minion",
     "rarity": "rare",
-    "manaCost": 3
+    "manaCost": 3,
+    "minion": {
+        "attack": 2,
+        "hp": 4,
+        "ability": {
+            "class": "Auras.selfAura",
+            "filter": {
+                "class": "Auras.opponentsHandLarger",
+                "limit": 5
+            },
+            "aura": {
+                "class": "MinionAuras.attackBuff",
+                "attack": 4
+            }
+        }
+    }
 }

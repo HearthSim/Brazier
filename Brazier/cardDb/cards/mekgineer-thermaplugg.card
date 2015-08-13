@@ -3,6 +3,22 @@
     "description": "Whenever an enemy minion dies, summon a Leper Gnome.",
     "class": "neutral",
     "rarity": "legendary",
-    "type": "minion",
-    "manaCost": 9
+    "manaCost": 9,
+    "keywords": "mech",
+    "minion": {
+        "attack": 9,
+        "hp": 7,
+        "triggers": {
+            "minion-killed": {
+                "filter": [
+                    "BasicFilters.NOT_SELF",
+                    "BasicFilters.HAS_DIFFERENT_OWNER_PLAYER"
+                ],
+                "action": {
+                    "class": "MinionEventActions.summonMinionRight",
+                    "minion": "Leper Gnome"
+                }
+            }
+        }
+    }
 }

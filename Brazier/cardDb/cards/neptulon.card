@@ -2,8 +2,41 @@
     "name": "Neptulon",
     "description": "Battlecry: Add 4 random Murlocs to your hand. Overload: (3)",
     "class": "shaman",
-    "type": "minion",
     "rarity": "legendary",
     "manaCost": 7,
-    "overload": 3
+    "overload": 3,
+    "minion": {
+        "attack": 7,
+        "hp": 7,
+        "battleCries": [
+            {
+                "class": "PlayerActions.addCard",
+                "keywords": [
+                    "murloc",
+                    "collectible"
+                ]
+            },
+            {
+                "class": "PlayerActions.addCard",
+                "keywords": [
+                    "murloc",
+                    "collectible"
+                ]
+            },
+            {
+                "class": "PlayerActions.addCard",
+                "keywords": [
+                    "murloc",
+                    "collectible"
+                ]
+            },
+            {
+                "class": "PlayerActions.addCard",
+                "keywords": [
+                    "murloc",
+                    "collectible"
+                ]
+            }
+        ]
+    }
 }

@@ -1,7 +1,0 @@
-{
-    "name": "Succubus",
-    "attack": 4,
-    "hp": 3,
-    "keywords": "demon",
-    "battleCries": "PlayerActions.DISCARD_RANDOM_CARD"
-}

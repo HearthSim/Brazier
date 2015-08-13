@@ -3,6 +3,16 @@
     "description": "Destroy any minion damaged by this minion.",
     "class": "neutral",
     "rarity": "rare",
-    "type": "minion",
-    "manaCost": 3
+    "manaCost": 3,
+    "keywords": "beast",
+    "minion": {
+        "attack": 2,
+        "hp": 3,
+        "triggers": {
+            "minion-damaged": {
+                "filter": "BasicFilters.DAMAGE_SOURCE_SELF",
+                "action": "DamageEventActions.KILL_DAMAGE_TARGET_MINION"
+            }
+        }
+    }
 }

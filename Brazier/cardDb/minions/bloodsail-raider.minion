@@ -1,7 +1,0 @@
-{
-    "name": "Bloodsail Raider",
-    "attack": 2,
-    "hp": 3,
-    "keywords": "pirate",
-    "battleCries": "MinionActions.WEAPON_BASED_BUFF"
-}

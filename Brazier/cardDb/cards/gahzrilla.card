@@ -2,7 +2,20 @@
     "name": "Gahz'rilla",
     "description": "Whenever this minion takes damage, double its Attack.",
     "class": "hunter",
-    "type": "minion",
     "rarity": "legendary",
-    "manaCost": 7
+    "manaCost": 7,
+    "keywords": "beast",
+    "minion": {
+        "attack": 6,
+        "hp": 9,
+        "triggers": {
+            "minion-damaged": {
+                "filter": "BasicFilters.TARGET_SELF",
+                "action": {
+                    "class": "MinionEventActions.applyTargetedActionToSelf",
+                    "action": "MinionActions.DOUBLE_ATTACK"
+                }
+            }
+        }
+    }
 }

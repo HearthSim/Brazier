@@ -2,6 +2,10 @@
     "name": "Reckless Rocketeer",
     "description": "Charge",
     "class": "neutral",
-    "type": "minion",
-    "manaCost": 6
+    "manaCost": 6,
+    "minion": {
+        "attack": 5,
+        "hp": 2,
+        "charge": true
+    }
 }

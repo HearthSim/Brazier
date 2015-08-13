@@ -2,7 +2,25 @@
     "name": "Illuminator",
     "description": "If you control a Secret at the end of your turn, restore 4 health to your hero.",
     "class": "neutral",
-    "type": "minion",
     "rarity": "rare",
-    "manaCost": 3
+    "manaCost": 3,
+    "minion": {
+        "attack": 2,
+        "hp": 4,
+        "triggers": {
+            "turn-ends": {
+                "filter": [
+                    "BasicFilters.HAS_SAME_OWNER_PLAYER",
+                    "BasicFilters.OWNER_HAS_SECRET"
+                ],
+                "action": {
+                    "class": "MinionEventActions.doSelf",
+                    "action": {
+                        "class": "DamageActions.damageOwnHero",
+                        "damage": -4
+                    }
+                }
+            }
+        }
+    }
 }

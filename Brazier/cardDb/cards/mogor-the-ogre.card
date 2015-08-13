@@ -3,6 +3,14 @@
     "description": "All minions have a 50% chance to attack the wrong enemy.",
     "rarity": "legendary",
     "class": "neutral",
-    "type": "minion",
-    "manaCost": 6
+    "manaCost": 6,
+    "minion": {
+        "attack": 7,
+        "hp": 6,
+        "triggers": {
+            "attack-initiated": {
+                "action": "AttackEventActions.MISS_TARGET_SOMETIMES"
+            }
+        }
+    }
 }

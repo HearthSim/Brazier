@@ -3,6 +3,30 @@
     "description": "Whenever a friendly Mech dies, gain +2/+2.",
     "class": "neutral",
     "rarity": "epic",
-    "type": "minion",
-    "manaCost": 5
+    "manaCost": 5,
+    "keywords": "mech",
+    "minion": {
+        "attack": 1,
+        "hp": 5,
+        "triggers": {
+            "minion-killed": {
+                "filter": [
+                    "BasicFilters.NOT_SELF",
+                    "BasicFilters.HAS_SAME_OWNER_PLAYER",
+                    {
+                        "class": "BasicFilters.targetHasKeyword",
+                        "keywords": "mech"
+                    }
+                ],
+                "action": {
+                    "class": "MinionEventActions.applyTargetedActionToSelf",
+                    "action": {
+                        "class": "MinionActions.buff",
+                        "attack": 2,
+                        "hp": 2
+                    }
+                }
+            }
+        }
+    }
 }

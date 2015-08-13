@@ -3,6 +3,22 @@
     "description": "At the start of your turn, if you have at least 3 Mechs, destroy them all and form V-07-TR-0N.",
     "class": "neutral",
     "rarity": "legendary",
-    "type": "minion",
-    "manaCost": 5
+    "manaCost": 5,
+    "keywords": "mech",
+    "minion": {
+        "attack": 4,
+        "hp": 5,
+        "triggers": {
+            "turn-starts": {
+                "filter": "BasicFilters.HAS_SAME_OWNER_PLAYER",
+                "action": {
+                    "class": "MinionEventActions.doSelf",
+                    "action": {
+                        "class": "MinionActions.mimironTransformation",
+                        "minion": "V-07-TR-0N"
+                    }
+                }
+            }
+        }
+    }
 }

@@ -2,6 +2,21 @@
     "name": "Gurubashi Berserker",
     "description": "Whenever this minion takes damage, gain +3 Attack.",
     "class": "neutral",
-    "type": "minion",
-    "manaCost": 5
+    "manaCost": 5,
+    "minion": {
+        "attack": 2,
+        "hp": 7,
+        "triggers": {
+            "minion-damaged": {
+                "filter": "BasicFilters.TARGET_SELF",
+                "action": {
+                    "class": "MinionEventActions.applyTargetedActionToSelf",
+                    "action": {
+                        "class": "MinionActions.buffAttack",
+                        "attack": 3
+                    }
+                }
+            }
+        }
+    }
 }

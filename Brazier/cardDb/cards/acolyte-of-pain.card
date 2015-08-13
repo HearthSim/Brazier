@@ -2,6 +2,15 @@
     "name": "Acolyte of Pain",
     "description": "Whenever this minion takes damage, draw a card.",
     "class": "neutral",
-    "type": "minion",
-    "manaCost": 3
+    "manaCost": 3,
+    "minion": {
+        "attack": 1,
+        "hp": 3,
+        "triggers": {
+            "minion-damaged": {
+                "filter": "BasicFilters.TARGET_SELF",
+                "action": "PlayerActions.DRAW_FOR_SELF"
+            }
+        }
+    }
 }

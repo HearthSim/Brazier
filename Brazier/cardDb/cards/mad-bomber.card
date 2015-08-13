@@ -2,6 +2,13 @@
     "name": "Mad Bomber",
     "description": "Battlecry: Deal 3 damage randomly split between all other characters.",
     "class": "neutral",
-    "type": "minion",
-    "manaCost": 2
+    "manaCost": 2,
+    "minion": {
+        "attack": 3,
+        "hp": 2,
+        "battleCries": {
+            "class": "DamageActions.throwBombs",
+            "bombCount": 3
+        }
+    }
 }

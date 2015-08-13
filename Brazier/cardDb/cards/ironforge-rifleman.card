@@ -2,6 +2,14 @@
     "name": "Ironforge Rifleman",
     "description": "Battlecry: Deal 1 damage.",
     "class": "neutral",
-    "type": "minion",
-    "manaCost": 8
+    "manaCost": 8,
+    "minion": {
+        "attack": 2,
+        "hp": 2,
+        "battleCries": {
+            "class": "BattleCries.dealDamageToTarget",
+            "targets": "all",
+            "damage": 1
+        }
+    }
 }

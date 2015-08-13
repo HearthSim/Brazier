@@ -3,6 +3,17 @@
     "description": "ALL minions cost (1) more.",
     "class": "neutral",
     "rarity": "rare",
-    "type": "minion",
-    "manaCost": 2
+    "manaCost": 2,
+    "minion": {
+        "attack": 2,
+        "hp": 2,
+        "ability": {
+            "class": "Auras.cardAura",
+            "filter": "CardAuras.TARGET_IS_MINION",
+            "aura": {
+                "class": "CardAuras.increaseManaCost",
+                "amount": 1
+            }
+        }
+    }
 }

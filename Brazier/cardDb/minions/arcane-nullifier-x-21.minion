@@ -1,8 +1,0 @@
-{
-    "name": "Arcane Nullifier X-21",
-    "attack": 2,
-    "hp": 5,
-    "keywords": "mech",
-    "taunt": "true",
-    "targetable": false
-}

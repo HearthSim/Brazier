@@ -3,6 +3,13 @@
     "description": "Adjacent minions can't be targeted by spells or Hero Powers.",
     "class": "neutral",
     "rarity": "epic",
-    "type": "minion",
-    "manaCost": 4
+    "manaCost": 4,
+    "minion": {
+        "attack": 2,
+        "hp": 5,
+        "ability": {
+            "class": "MinionAbilities.neighboursAura",
+            "aura": "MinionAuras.UNTARGETABLE"
+        }
+    }
 }

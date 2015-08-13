@@ -2,7 +2,11 @@
     "name": "Volcanic Drake",
     "description": "Costs (1) less for each minion that died this turn.",
     "class": "neutral",
-    "type": "minion",
     "manaCost": 9,
-    "manaCostAdjusters": "ManaCostAdjusters.REDUCE_BY_DEATH_THIS_TURN"
+    "manaCostAdjusters": "ManaCostAdjusters.REDUCE_BY_DEATH_THIS_TURN",
+    "keywords": "dragon",
+    "minion": {
+        "attack": 6,
+        "hp": 4
+    }
 }

@@ -1,7 +1,0 @@
-{
-    "name": "Bluegill Warrior",
-    "attack": 2,
-    "hp": 1,
-    "charge": true,
-    "keywords": ["murloc"]
-}

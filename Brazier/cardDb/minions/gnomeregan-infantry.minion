@@ -1,7 +1,0 @@
-{
-    "name": "Gnomeregan Infantry",
-    "attack": 1,
-    "hp": 4,
-    "charge": true,
-    "taunt": true
-}

@@ -2,7 +2,28 @@
     "name": "Murloc Tidecaller",
     "description": "Whenever a Murloc is summoned, gain +1 Attack.",
     "class": "neutral",
-    "type": "minion",
     "rarity": "rare",
-    "manaCost": 1
+    "manaCost": 1,
+    "minion": {
+        "attack": 1,
+        "hp": 2,
+        "triggers": {
+            "on-summon": {
+                "filter": [
+                    "BasicFilters.HAS_SAME_OWNER_PLAYER",
+                    {
+                        "class": "BasicFilters.eventSourceHasKeyword",
+                        "keywords": "murloc"
+                    }
+                ],
+                "action": {
+                    "class": "MinionEventActions.applyTargetedActionToSelf",
+                    "action": {
+                        "class": "MinionActions.buffAttack",
+                        "attack": 1
+                    }
+                }
+            }
+        }
+    }
 }

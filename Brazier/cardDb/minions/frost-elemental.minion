@@ -1,9 +1,0 @@
-{
-    "name": "Frost Elemental",
-    "attack": 5,
-    "hp": 5,
-    "battleCries": {
-        "class": "ActorlessTargetedActions.FREEZE_TARGET",
-        "targets": "all"
-    }
-}

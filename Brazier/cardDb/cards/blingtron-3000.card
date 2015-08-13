@@ -3,6 +3,23 @@
     "description": "Battlecry: Equip a random weapon for each player.",
     "class": "neutral",
     "rarity": "legendary",
-    "type": "minion",
-    "manaCost": 5
+    "manaCost": 5,
+    "keywords": "mech",
+    "minion": {
+        "attack": 3,
+        "hp": 4,
+        "battleCries": [
+            {
+                "class": "PlayerActions.equipRandomWeapon",
+                "keywords": "collectible"
+            },
+            {
+                "class": "PlayerActions.doForOpponent",
+                "action": {
+                    "class": "PlayerActions.equipRandomWeapon",
+                    "keywords": "collectible"
+                }
+            }
+        ]
+    }
 }

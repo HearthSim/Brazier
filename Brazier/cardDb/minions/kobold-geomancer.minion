@@ -1,9 +1,0 @@
-{
-    "name": "Kobold Geomancer",
-    "attack": 2,
-    "hp": 2,
-    "ability": {
-        "class": "MinionAbilities.spellPower",
-        "spellPower": 1
-    }
-}

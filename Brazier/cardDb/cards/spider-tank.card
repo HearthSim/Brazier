@@ -1,6 +1,10 @@
 {
     "name": "Spider Tank",
     "class": "neutral",
-    "type": "minion",
-    "manaCost": 3
+    "manaCost": 3,
+    "keywords": "mech",
+    "minion": {
+        "attack": 3,
+        "hp": 4
+    }
 }

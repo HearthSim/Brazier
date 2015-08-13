@@ -2,6 +2,11 @@
     "name": "Voidwalker",
     "class": "warlock",
     "description": "Taunt",
-    "type": "minion",
-    "manaCost": 1
+    "manaCost": 1,
+    "keywords": "demon",
+    "minion": {
+        "attack": 1,
+        "hp": 3,
+        "taunt": true
+    }
 }

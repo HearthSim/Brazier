@@ -2,6 +2,11 @@
     "name": "Stonetusk Boar",
     "description": "Charge",
     "class": "neutral",
-    "type": "minion",
-    "manaCost": 1
+    "manaCost": 1,
+    "keywords": "beast",
+    "minion": {
+        "attack": 1,
+        "hp": 1,
+        "charge": "true"
+    }
 }

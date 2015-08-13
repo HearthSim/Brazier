@@ -55,8 +55,10 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -388,6 +390,12 @@ public final class ParserUtils {
                 throw new IOException("The JsonElement is not an object in " + file);
             }
         }
+    }
+
+    public static Set<Keyword> parseKeywords(JsonTree keywordsElement) {
+        Set<Keyword> keywords = new HashSet<>();
+        ParserUtils.parseKeywords(keywordsElement, keywords::add);
+        return keywords;
     }
 
     public static void parseKeywords(JsonTree keywords, Consumer<? super Keyword> keywordAdder) {

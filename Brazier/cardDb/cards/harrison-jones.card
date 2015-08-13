@@ -3,6 +3,10 @@
     "description": "Battlecry: Destroy your opponent's weapon and draw cards equal to its Durability.",
     "rarity": "legendary",
     "class": "neutral",
-    "type": "minion",
-    "manaCost": 5
+    "manaCost": 5,
+    "minion": {
+        "attack": 5,
+        "hp": 4,
+        "battleCries": "PlayerActions.DRAW_CARD_FOR_OPPONENTS_WEAPON"
+    }
 }

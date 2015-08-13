@@ -2,6 +2,11 @@
     "name": "Gnomeregan Infantry",
     "description": "Charge Taunt",
     "class": "neutral",
-    "type": "minion",
-    "manaCost": 3
+    "manaCost": 3,
+    "minion": {
+        "attack": 1,
+        "hp": 4,
+        "charge": true,
+        "taunt": true
+    }
 }

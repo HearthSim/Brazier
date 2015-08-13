@@ -1,7 +1,6 @@
 package com.github.kelemen.hearthstone.emulator.parsing;
 
 import com.github.kelemen.hearthstone.emulator.EntityId;
-import com.github.kelemen.hearthstone.emulator.HearthStoneEntityDatabase;
 import com.github.kelemen.hearthstone.emulator.Keyword;
 import com.github.kelemen.hearthstone.emulator.Keywords;
 import com.github.kelemen.hearthstone.emulator.Player;
@@ -15,7 +14,6 @@ import com.github.kelemen.hearthstone.emulator.actions.CardPlayArg;
 import com.github.kelemen.hearthstone.emulator.actions.ManaCostAdjuster;
 import com.github.kelemen.hearthstone.emulator.actions.PlayActionRequirement;
 import com.github.kelemen.hearthstone.emulator.actions.PlayerAction;
-import com.github.kelemen.hearthstone.emulator.actions.PlayerActions;
 import com.github.kelemen.hearthstone.emulator.actions.TargetNeed;
 import com.github.kelemen.hearthstone.emulator.actions.UndoAction;
 import com.github.kelemen.hearthstone.emulator.actions.WorldEventActionDefs;
@@ -27,7 +25,6 @@ import com.github.kelemen.hearthstone.emulator.cards.CardProvider;
 import com.github.kelemen.hearthstone.emulator.cards.CardRarity;
 import com.github.kelemen.hearthstone.emulator.cards.CardType;
 import com.github.kelemen.hearthstone.emulator.minions.MinionDescr;
-import com.github.kelemen.hearthstone.emulator.minions.MinionId;
 import com.github.kelemen.hearthstone.emulator.weapons.WeaponDescr;
 import java.util.Collections;
 import java.util.HashSet;
@@ -39,18 +36,15 @@ import org.jtrim.utils.ExceptionHelper;
 
 public final class CardParser implements EntityParser<CardDescr> {
     private final JsonDeserializer objectParser;
-    private final HearthStoneEntityDatabase<MinionDescr> minionDb;
+    private final MinionParser minionParser;
     private final WeaponParser weaponParser;
     private final EventNotificationParser<Secret> secretParser;
 
-    public CardParser(
-            HearthStoneEntityDatabase<MinionDescr> minionDb,
-            JsonDeserializer objectParser) {
-        ExceptionHelper.checkNotNullArgument(minionDb, "minionDb");
+    public CardParser(JsonDeserializer objectParser) {
         ExceptionHelper.checkNotNullArgument(objectParser, "objectParser");
 
-        this.minionDb = minionDb;
         this.objectParser = objectParser;
+        this.minionParser = new MinionParser(objectParser);
         this.weaponParser = new WeaponParser(objectParser);
         this.secretParser = new EventNotificationParser<>(
                 Secret.class,
@@ -82,17 +76,6 @@ public final class CardParser implements EntityParser<CardDescr> {
                 ActivatableAbility.class,
                 TypeCheckers.genericTypeChecker(ActivatableAbility.class, Card.class));
         abilities.setInHandAbility(ability);
-    }
-
-    private boolean parseMinion(JsonTree minionElement, CardDescr.Builder result) {
-        if (minionElement == null) {
-            return false;
-        }
-
-        String minionId = minionElement.getAsString();
-        MinionDescr minion = minionDb.getById(new MinionId(minionId));
-        result.setMinion(minion);
-        return true;
     }
 
     private static CardType parseCardType(JsonTree cardTypeElement) throws ObjectParsingException {
@@ -310,21 +293,6 @@ public final class CardParser implements EntityParser<CardDescr> {
         parsePlayActions(root.getChild("playActions"), result);
         parseCardAdjusters(root.getChild("manaCostAdjusters"), result);
 
-        if (minionElement == null && cardType == CardType.MINION) {
-            MinionDescr minion = minionDb.getById(new MinionId(name));
-            result.setMinion(minion);
-        }
-        else if (parseMinion(minionElement, result)) {
-            if (cardType != CardType.MINION) {
-                throw new ObjectParsingException("Card type must be minion to allow having an explicit minion declaration.");
-            }
-        }
-        else {
-            if (cardType == CardType.MINION) {
-                throw new ObjectParsingException("Minion cards must have an explicit minion declaration.");
-            }
-        }
-
         AtomicReference<CardDescr> cardRef = new AtomicReference<>();
         if (parseSecretPlayAction(root.getChild("secret"), cardId, cardRef::get, result)) {
             keywords.add(Keywords.SECRET);
@@ -335,6 +303,16 @@ public final class CardParser implements EntityParser<CardDescr> {
         keywords.forEach(result::addKeyword);
         // To ensure that we no longer add keywords from here on by accident.
         keywords = Collections.unmodifiableSet(keywords);
+
+
+        if (minionElement == null && cardType == CardType.MINION) {
+            throw new ObjectParsingException("Minion cards must have an explicit minion declaration.");
+        }
+
+        if (minionElement != null) {
+            MinionDescr minion = minionParser.fromJson(minionElement, name, keywords, cardRef::get);
+            result.setMinion(minion);
+        }
 
         if (weaponElement != null) {
             WeaponDescr weapon = weaponParser.fromJson(weaponElement, name, keywords);

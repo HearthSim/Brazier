@@ -3,6 +3,16 @@
     "description": "Battlecry: If your opponent has 4 or more minions, take control of one at random.",
     "class": "neutral",
     "rarity": "rare",
-    "type": "minion",
-    "manaCost": 3
+    "manaCost": 3,
+    "minion": {
+        "attack": 3,
+        "hp": 3,
+        "battleCries": {
+            "class": "PlayerActions.STEAL_RANDOM_MINION",
+            "actionCondition": {
+                "class": "PlayActionRequirements.opponentBoardIsLarger",
+                "minionCount": 3
+            }
+        }
+    }
 }

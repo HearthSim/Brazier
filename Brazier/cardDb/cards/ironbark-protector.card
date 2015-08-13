@@ -2,6 +2,10 @@
     "name": "Ironbark Protector",
     "description": "Taunt",
     "class": "druid",
-    "type": "minion",
-    "manaCost": 8
+    "manaCost": 8,
+    "minion": {
+        "attack": 8,
+        "hp": 8,
+        "taunt": true
+    }
 }

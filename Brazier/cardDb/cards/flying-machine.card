@@ -2,6 +2,11 @@
     "name": "Flying Machine",
     "description": "Windfury",
     "class": "neutral",
-    "type": "minion",
-    "manaCost": 3
+    "manaCost": 3,
+    "keywords": "mech",
+    "minion": {
+        "attack": 1,
+        "hp": 4,
+        "maxAttackCount": 2
+    }
 }

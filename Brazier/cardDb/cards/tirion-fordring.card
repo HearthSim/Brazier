@@ -3,6 +3,15 @@
     "description": "Divine Shield. Taunt. Deathrattle: Equip a 5/3 Ashbringer.",
     "rarity": "legendary",
     "class": "paladin",
-    "type": "minion",
-    "manaCost": 8
+    "manaCost": 8,
+    "minion": {
+        "attack": 6,
+        "hp": 6,
+        "taunt": true,
+        "divineShield": true,
+        "deathRattle": {
+            "class": "PlayerActions.equipWeapon",
+            "weapon": "Ashbringer"
+        }
+    }
 }

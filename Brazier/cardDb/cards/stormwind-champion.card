@@ -2,6 +2,17 @@
     "name": "Stormwind Champion",
     "description": "Your other minions have +1/+1.",
     "class": "neutral",
-    "type": "minion",
-    "manaCost": 7
+    "manaCost": 7,
+    "minion": {
+        "attack": 6,
+        "hp": 6,
+        "ability": {
+            "class": "MinionAbilities.sameBoardOthersAura",
+            "aura": {
+                "class": "MinionAuras.bodyBuff",
+                "attack": 1,
+                "hp": 1
+            }
+        }
+    }
 }

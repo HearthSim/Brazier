@@ -3,6 +3,10 @@
     "description": "Taunt Battlecry: Gain +1/+1 for each enemy Deathrattle minion.",
     "rarity": "rare",
     "class": "neutral",
-    "type": "minion",
-    "manaCost": 3
+    "manaCost": 3,
+    "minion": {
+        "attack": 2,
+        "hp": 3,
+        "battleCries": "BattleCries.EXORCIST_BUFF"
+    }
 }

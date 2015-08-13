@@ -2,6 +2,17 @@
     "name": "Nerub'ar Weblord",
     "description": "Minions with Battlecry cost (2) more.",
     "class": "neutral",
-    "type": "minion",
-    "manaCost": 2
+    "manaCost": 2,
+    "minion": {
+        "attack": 1,
+        "hp": 4,
+        "ability": {
+            "class": "Auras.cardAura",
+            "filter": "CardAuras.TARGET_HAS_BATTLE_CRY",
+            "aura": {
+                "class": "CardAuras.increaseManaCost",
+                "amount": 2
+            }
+        }
+    }
 }

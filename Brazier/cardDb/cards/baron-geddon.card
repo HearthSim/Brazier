@@ -3,6 +3,21 @@
     "description": "At the end of your turn, deal 2 damage to ALL other characters.",
     "class": "neutral",
     "rarity": "legendary",
-    "type": "minion",
-    "manaCost": 7
+    "manaCost": 7,
+    "minion": {
+        "attack": 7,
+        "hp": 5,
+        "triggers": {
+            "turn-ends": {
+                "filter": "BasicFilters.HAS_SAME_OWNER_PLAYER",
+                "action": {
+                    "class": "MinionEventActions.doSelf",
+                    "action": {
+                        "class": "DamageActions.dealDamageToOthers",
+                        "damage": 2
+                    }
+                }
+            }
+        }
+    }
 }

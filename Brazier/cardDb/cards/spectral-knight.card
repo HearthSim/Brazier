@@ -2,6 +2,10 @@
     "name": "Spectral Knight",
     "description": "Can't be targeted by spells or Hero Powers.",
     "class": "neutral",
-    "type": "minion",
-    "manaCost": 5
+    "manaCost": 5,
+    "minion": {
+        "attack": 4,
+        "hp": 6,
+        "targetable": false
+    }
 }
