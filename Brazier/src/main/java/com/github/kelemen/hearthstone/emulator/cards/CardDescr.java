@@ -11,6 +11,7 @@ import com.github.kelemen.hearthstone.emulator.actions.PlayerAction;
 import com.github.kelemen.hearthstone.emulator.actions.TargetNeed;
 import com.github.kelemen.hearthstone.emulator.actions.UndoableUnregisterRef;
 import com.github.kelemen.hearthstone.emulator.minions.MinionDescr;
+import com.github.kelemen.hearthstone.emulator.weapons.WeaponDescr;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -42,6 +43,7 @@ public final class CardDescr implements HearthStoneEntity {
         private final Set<Keyword> keywords;
 
         private MinionDescr minion;
+        private WeaponDescr weapon;
 
         public Builder(CardId cardId, CardType cardType, int manaCost) {
             ExceptionHelper.checkNotNullArgument(cardId, "cardId");
@@ -60,6 +62,7 @@ public final class CardDescr implements HearthStoneEntity {
             this.keywords = new HashSet<>();
             this.rarity = CardRarity.COMMON;
             this.minion = null;
+            this.weapon = null;
             this.overload = 0;
             this.inHandAbility = null;
         }
@@ -122,6 +125,25 @@ public final class CardDescr implements HearthStoneEntity {
             this.minion = minion;
         }
 
+        public void setWeapon(WeaponDescr weapon) {
+            this.weapon = weapon;
+        }
+
+        private Set<Keyword> getCombinedKeywords() {
+            if (minion == null && weapon == null) {
+                return keywords;
+            }
+
+            Set<Keyword> result = new HashSet<>(keywords);
+            if (minion != null) {
+                result.addAll(minion.getKeywords());
+            }
+            if (weapon != null) {
+                result.addAll(weapon.getKeywords());
+            }
+            return result;
+        }
+
         public CardDescr create() {
             return new CardDescr(this);
         }
@@ -137,6 +159,7 @@ public final class CardDescr implements HearthStoneEntity {
     private final Keyword cardClass;
     private final Set<Keyword> keywords;
     private final MinionDescr minion;
+    private final WeaponDescr weapon;
 
     private final List<PlayerAction> onDrawActions;
     private final List<CardPlayActionDef> onPlayActions;
@@ -156,9 +179,8 @@ public final class CardDescr implements HearthStoneEntity {
         this.rarity = builder.rarity;
         this.cardClass = builder.cardClass;
         this.minion = builder.minion;
-        this.keywords = this.minion != null
-                ? readOnlyCopySet(combine(builder.keywords, this.minion.getKeywords()))
-                : readOnlyCopySet(builder.keywords);
+        this.weapon = builder.weapon;
+        this.keywords = readOnlyCopySet(builder.getCombinedKeywords());
         this.onDrawActions = CollectionsEx.readOnlyCopy(builder.onDrawActions);
         this.onPlayActions = CollectionsEx.readOnlyCopy(builder.onPlayActions);
         this.inHandAbility = builder.inHandAbility;
@@ -172,13 +194,6 @@ public final class CardDescr implements HearthStoneEntity {
         if (this.cardType != CardType.MINION && this.minion != null) {
             throw new IllegalStateException("May not have a minion when the card tpye is not MINION.");
         }
-    }
-
-    private <T> Collection<T> combine(Collection<? extends T> src1, Collection<? extends T> src2) {
-        List<T> result = new ArrayList<>(src1.size() + src2.size());
-        result.addAll(src1);
-        result.addAll(src2);
-        return result;
     }
 
     private <T> Set<T> readOnlyCopySet(Collection<? extends T> src) {
@@ -299,6 +314,10 @@ public final class CardDescr implements HearthStoneEntity {
 
     public MinionDescr getMinion() {
         return minion;
+    }
+
+    public WeaponDescr getWeapon() {
+        return weapon;
     }
 
     @Override
