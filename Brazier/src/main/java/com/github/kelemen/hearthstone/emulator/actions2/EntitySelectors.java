@@ -21,7 +21,7 @@ public final class EntitySelectors {
         return (World world, Actor actor, Target target) -> Stream.of(actor);
     }
 
-    public static <Actor, Target, Selection> EntitySelector<Actor, Target, Selection> filter(
+    public static <Actor, Target, Selection> EntitySelector<Actor, Target, Selection> filtered(
             @NamedArg("filter") EntityFilter<Selection> filter,
             @NamedArg("selector") EntitySelector<? super Actor, ? super Target, ? extends Selection> selector) {
         ExceptionHelper.checkNotNullArgument(filter, "filter");
@@ -71,6 +71,18 @@ public final class EntitySelectors {
                     return Stream.empty();
                 }
             }
+        };
+    }
+
+    public static <Actor, Target extends PlayerProperty> EntitySelector<Actor, Target, Minion> targetsBoard() {
+        return (World world, Actor actor, Target target) -> {
+            return target.getOwner().getBoard().getAllMinions().stream();
+        };
+    }
+
+    public static <Actor extends PlayerProperty, Target> EntitySelector<Actor, Target, Minion> actorsBoard() {
+        return (World world, Actor actor, Target target) -> {
+            return actor.getOwner().getBoard().getAllMinions().stream();
         };
     }
 
