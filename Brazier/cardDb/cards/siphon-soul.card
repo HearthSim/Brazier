@@ -7,7 +7,7 @@
     "manaCost": 6,
     "playActions": [
         {
-            "class": "TargetedActions.KILL_TARGET",
+            "class": "ActorlessTargetedActions.KILL_TARGET",
             "targets": "all-minions"
         },
         {

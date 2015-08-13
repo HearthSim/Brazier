@@ -7,11 +7,11 @@
     "manaCost": 4,
     "playActions": [
         {
-            "class": "TargetedActions.KILL_TARGET",
+            "class": "ActorlessTargetedActions.KILL_TARGET",
             "targets": "self-minions"
         },
         {
-            "class": "TargetedActions.SHADOW_FLAME_DAMAGE",
+            "class": "ActorlessTargetedActions.SHADOW_FLAME_DAMAGE",
             "targets": "self-minions"
         }
     ]

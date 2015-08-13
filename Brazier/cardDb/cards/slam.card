@@ -6,7 +6,7 @@
     "manaCost": 2,
     "playActions": [
         {
-            "class": "TargetedActions.slam",
+            "class": "ActorlessTargetedActions.slam",
             "targets": "all-minions",
             "damage": 2
         }

@@ -6,7 +6,7 @@
     "manaCost": 4,
     "playActions": [
         {
-            "class": "TargetedActions.implosion",
+            "class": "ActorlessTargetedActions.implosion",
             "targets": "all-minions",
             "minDamage": 2,
             "maxDamage": 4,

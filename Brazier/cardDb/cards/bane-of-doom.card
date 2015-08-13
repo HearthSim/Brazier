@@ -7,7 +7,7 @@
     "manaCost": 5,
     "playActions": [
         {
-            "class": "TargetedActions.damageAndSummonOnDeath",
+            "class": "ActorlessTargetedActions.damageAndSummonOnDeath",
             "targets": "all",
             "damage": 2,
             "keywords": ["demon", "collectible"]

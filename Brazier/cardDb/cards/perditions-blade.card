@@ -8,13 +8,13 @@
         {
             "targets": "all",
             "requires": "PlayActionRequirements.NO_COMBO",
-            "class": "TargetedActions.dealBasicDamage",
+            "class": "ActorlessTargetedActions.dealBasicDamage",
             "damage": 1
         },
         {
             "targets": "all",
             "requires": "PlayActionRequirements.COMBO",
-            "class": "TargetedActions.dealBasicDamage",
+            "class": "ActorlessTargetedActions.dealBasicDamage",
             "damage": 2
         },
         {

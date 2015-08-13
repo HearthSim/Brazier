@@ -7,15 +7,15 @@
     "playActions": [
         {
             "targets": "all",
-            "class": "TargetedActions.applyIfFrozen",
+            "class": "ActorlessTargetedActions.applyIfFrozen",
             "action": {
-                "class": "TargetedActions.dealSpellDamage",
+                "class": "ActorlessTargetedActions.dealSpellDamage",
                 "damage": 4
             }
         },
         {
             "targets": "all",
-            "class": "TargetedActions.FREEZE_TARGET"
+            "class": "ActorlessTargetedActions.FREEZE_TARGET"
         }
     ]
 }

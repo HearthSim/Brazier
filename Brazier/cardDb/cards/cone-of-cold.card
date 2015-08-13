@@ -8,13 +8,13 @@
         "targets": "all-minions",
         "class": "CardPlayActions.doAtomic",
         "action": {
-            "class": "TargetedActions.applyToAdjacentTargets",
+            "class": "ActorlessTargetedActions.applyToAdjacentTargets",
             "action": [
                 {
-                    "class": "TargetedActions.dealSpellDamage",
+                    "class": "ActorlessTargetedActions.dealSpellDamage",
                     "damage": 1
                 },
-                "TargetedActions.FREEZE_TARGET"]
+                "ActorlessTargetedActions.FREEZE_TARGET"]
         }
     }
 }

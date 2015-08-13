@@ -12,7 +12,7 @@
         },
         {
             "class": "PlayerActions.forEnemyMinions",
-            "action": "TargetedActions.FREEZE_TARGET"
+            "action": "ActorlessTargetedActions.FREEZE_TARGET"
         }
     ]
 }

@@ -12,6 +12,6 @@
                 "attack": 4
             }
         ],
-        "class": "TargetedActions.KILL_TARGET"
+        "class": "ActorlessTargetedActions.KILL_TARGET"
     }
 }

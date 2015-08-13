@@ -41,14 +41,14 @@ public final class BattleCries {
         if (left != null) {
             attackBuff += left.getAttackTool().getAttack();
             hpBuff += left.getBody().getCurrentHp();
-            result.addUndo(TargetedActions.KILL_TARGET.alterWorld(world, left));
+            result.addUndo(ActorlessTargetedActions.KILL_TARGET.alterWorld(world, left));
         }
 
         Minion right = tryGetRight(minion);
         if (right != null) {
             attackBuff += right.getAttackTool().getAttack();
             hpBuff += right.getBody().getCurrentHp();
-            result.addUndo(TargetedActions.KILL_TARGET.alterWorld(world, right));
+            result.addUndo(ActorlessTargetedActions.KILL_TARGET.alterWorld(world, right));
         }
 
         if (hpBuff != 0 && attackBuff != 0) {

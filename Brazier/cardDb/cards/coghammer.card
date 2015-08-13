@@ -9,7 +9,7 @@
         {
             "class": "PlayerActions.applyTargetedActionToRandomOwnMinion",
             "action": {
-                "class": "TargetedActions.applyToMinionTarget",
+                "class": "ActorlessTargetedActions.applyToMinionTarget",
                 "action": ["MinionActions.GIVE_DIVINE_SHIELD", "MinionActions.TAUNT"]
             }
         },

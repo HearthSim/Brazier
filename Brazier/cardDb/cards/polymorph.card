@@ -6,7 +6,7 @@
     "manaCost": 4,
     "playActions": {
         "targets": "all-minions",
-        "class": "TargetedActions.applyToMinionTarget",
+        "class": "ActorlessTargetedActions.applyToMinionTarget",
         "action": {
             "class": "MinionActions.transformMinion",
             "minion": "Sheep"

@@ -6,7 +6,7 @@
     "manaCost": 2,
     "playActions": {
         "targets": ["all-minions", "TargetNeeds.TARGET_DAMAGED"],
-        "class": "TargetedActions.applyToMinionTarget",
+        "class": "ActorlessTargetedActions.applyToMinionTarget",
         "action": {
             "class": "MinionActions.buff",
             "attack": 3,

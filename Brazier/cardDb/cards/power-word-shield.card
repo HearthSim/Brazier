@@ -6,7 +6,7 @@
     "manaCost": 1,
     "playActions": [{
             "targets": "all-minions",
-            "class": "TargetedActions.applyToMinionTarget",
+            "class": "ActorlessTargetedActions.applyToMinionTarget",
             "action": {
                 "class": "MinionActions.buffHp",
                 "hp": 2

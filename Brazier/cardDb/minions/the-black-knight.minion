@@ -3,7 +3,7 @@
     "attack": 4,
     "hp": 5,
     "battleCries": {
-        "class": "TargetedActions.KILL_TARGET",
+        "class": "ActorlessTargetedActions.KILL_TARGET",
         "targets": ["enemy-minions", "TargetNeeds.IS_TAUNT"]
     }
 }

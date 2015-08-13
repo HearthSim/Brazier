@@ -6,7 +6,7 @@
     "rarity": "epic",
     "manaCost": 5,
     "playActions": {
-        "class": "TargetedActions.demonBuff",
+        "class": "ActorlessTargetedActions.demonBuff",
         "targets": "all-minions",
         "buff": 5
     }

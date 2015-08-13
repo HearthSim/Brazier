@@ -7,6 +7,6 @@
     "playActions": {
         "targets": "enemy-minions",
         "requires": "PlayActionRequirements.HAS_SPACE_ON_OWN_BOARD",
-        "class": "TargetedActions.TAKE_CONTROL"
+        "class": "ActorlessTargetedActions.TAKE_CONTROL"
     }
 }

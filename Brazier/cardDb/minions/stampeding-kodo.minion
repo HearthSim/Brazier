@@ -9,6 +9,6 @@
             "class": "BasicFilters.targetAttackIsLess",
             "attack": 3
         },
-        "action": "TargetedActions.KILL_TARGET"
+        "action": "ActorlessTargetedActions.KILL_TARGET"
     }
 }

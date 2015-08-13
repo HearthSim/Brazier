@@ -10,7 +10,7 @@
                 "class": "TargetNeeds.hasKeyword",
                 "keywords": "mech"
             }],
-        "class": "TargetedActions.applyToMinionTarget",
+        "class": "ActorlessTargetedActions.applyToMinionTarget",
         "action": {
             "class": "MinionActions.buffHp",
             "hp": 4

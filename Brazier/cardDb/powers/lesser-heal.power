@@ -3,7 +3,7 @@
     "description": "Restore 2 health.",
     "manaCost": 2,
     "action": {
-        "class": "TargetedActions.dealBasicDamage",
+        "class": "ActorlessTargetedActions.dealBasicDamage",
         "targets": "all",
         "damage": -2
     }

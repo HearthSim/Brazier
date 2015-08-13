@@ -6,10 +6,10 @@
     "manaCost": 1,
     "playActions": [
         {
-            "class": "TargetedActions.dealSpellDamage",
+            "class": "ActorlessTargetedActions.dealSpellDamage",
             "targets": "all",
             "damage": 1
         },
-        "TargetedActions.FREEZE_TARGET"
+        "ActorlessTargetedActions.FREEZE_TARGET"
     ]
 }

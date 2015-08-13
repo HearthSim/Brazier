@@ -9,7 +9,7 @@
         {
             "requires": "PlayActionRequirements.OPPONENT_BOARD_NOT_EMPTY",
             "class": "PlayerActions.applyTargetedActionToRandomEnemyMinion",
-            "action": "TargetedActions.KILL_TARGET"
+            "action": "ActorlessTargetedActions.KILL_TARGET"
         },
         {
             "requires": "PlayActionRequirements.COMBO",

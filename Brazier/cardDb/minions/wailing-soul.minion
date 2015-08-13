@@ -4,6 +4,6 @@
     "hp": 5,
     "battleCries": {
         "class": "PlayerActions.forOwnMinions",
-        "action": "TargetedActions.SILENCE"
+        "action": "ActorlessTargetedActions.SILENCE"
     }
 }

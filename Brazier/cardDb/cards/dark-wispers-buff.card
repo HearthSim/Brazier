@@ -13,6 +13,6 @@
             "attack": 5,
             "hp": 5
         },
-        "TargetedActions.TAUNT_MINION"
+        "ActorlessTargetedActions.TAUNT_MINION"
     ]
 }

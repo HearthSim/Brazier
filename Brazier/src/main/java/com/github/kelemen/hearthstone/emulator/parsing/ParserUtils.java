@@ -65,6 +65,7 @@ public final class ParserUtils {
     private static final String[] DEFAULT_PACKAGES = {
         "com.github.kelemen.hearthstone.emulator.actions",
         "com.github.kelemen.hearthstone.emulator.abilities",
+        "com.github.kelemen.hearthstone.emulator.actions2",
     };
 
     public static JsonDeserializer createDefaultDeserializer(Supplier<HearthStoneDb> dbRef) {

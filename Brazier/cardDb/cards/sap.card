@@ -7,7 +7,7 @@
     "playActions": [
         {
             "targets": "enemy-minions",
-            "class": "TargetedActions.applyToMinionTarget",
+            "class": "ActorlessTargetedActions.applyToMinionTarget",
             "action": "MinionActions.RETURN_MINION"
         }
     ]

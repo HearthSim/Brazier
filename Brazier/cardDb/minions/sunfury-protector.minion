@@ -4,6 +4,6 @@
     "hp": 3,
     "battleCries": {
         "class": "MinionActions.buffNeighbours",
-        "buff": "TargetedActions.TAUNT_MINION"
+        "buff": "ActorlessTargetedActions.TAUNT_MINION"
     }
 }

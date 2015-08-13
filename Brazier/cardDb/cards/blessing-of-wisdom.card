@@ -6,7 +6,7 @@
     "manaCost": 1,
     "playActions": [
         {
-            "class": "TargetedActions.blessingOfWisdom",
+            "class": "ActorlessTargetedActions.blessingOfWisdom",
             "targets": "all-minions"
         }
     ]

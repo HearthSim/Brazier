@@ -31,7 +31,7 @@ import java.util.List;
 import java.util.function.Function;
 import org.jtrim.utils.ExceptionHelper;
 
-public final class TargetedActions {
+public final class ActorlessTargetedActions {
     public static final ActorlessTargetedAction TAKE_CONTROL = (World world, PlayTarget playTarget) -> {
         TargetableCharacter target = playTarget.getTarget();
         if (target instanceof Minion) {
@@ -632,7 +632,7 @@ public final class TargetedActions {
         };
     }
 
-    private TargetedActions() {
+    private ActorlessTargetedActions() {
         throw new AssertionError();
     }
 }

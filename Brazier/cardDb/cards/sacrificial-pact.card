@@ -6,7 +6,7 @@
     "manaCost": 0,
     "playActions": [
         {
-            "class": "TargetedActions.KILL_TARGET",
+            "class": "ActorlessTargetedActions.KILL_TARGET",
             "targets": {
                 "class": "TargetNeeds.hasKeyword",
                 "keywords": "demon"

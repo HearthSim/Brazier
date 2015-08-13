@@ -9,7 +9,7 @@
             "keywords": "mech"
         },
         "action": {
-            "class": "TargetedActions.applyToMinionTarget",
+            "class": "ActorlessTargetedActions.applyToMinionTarget",
             "action": {
                 "class": "MinionActions.buff",
                 "attack": 2,

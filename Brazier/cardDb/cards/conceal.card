@@ -6,6 +6,6 @@
     "manaCost": 1,
     "playActions": {
         "class": "PlayerActions.forOwnMinions",
-        "action": "TargetedActions.STEALTH_FOR_A_TURN"
+        "action": "ActorlessTargetedActions.STEALTH_FOR_A_TURN"
     }
 }

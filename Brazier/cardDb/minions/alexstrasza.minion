@@ -5,7 +5,7 @@
     "keywords": "dragon",
     "battleCries": {
         "targets": "all-heroes",
-        "class": "TargetedActions.applyToTargetOwner",
+        "class": "ActorlessTargetedActions.applyToTargetOwner",
         "action": {
             "class": "PlayerActions.setHeroHp",
             "hp": 15

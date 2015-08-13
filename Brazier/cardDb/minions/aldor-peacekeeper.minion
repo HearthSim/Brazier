@@ -3,7 +3,7 @@
     "attack": 3,
     "hp": 3,
     "battleCries": {
-        "class": "TargetedActions.setMinionAttackTo",
+        "class": "ActorlessTargetedActions.setMinionAttackTo",
         "targets": "enemy-minions",
         "attack": 1
     }

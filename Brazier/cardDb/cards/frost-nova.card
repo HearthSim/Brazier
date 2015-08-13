@@ -6,6 +6,6 @@
     "manaCost": 3,
     "playActions": {
         "class": "PlayerActions.forEnemyMinions",
-        "action": "TargetedActions.FREEZE_TARGET"
+        "action": "ActorlessTargetedActions.FREEZE_TARGET"
     }
 }

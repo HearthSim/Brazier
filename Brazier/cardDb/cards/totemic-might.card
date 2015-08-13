@@ -7,7 +7,7 @@
     "playActions": {
         "class": "PlayerActions.forOwnMinions",
         "action": {
-            "class": "TargetedActions.applyToMinionTarget",
+            "class": "ActorlessTargetedActions.applyToMinionTarget",
             "action": {
                 "class": "MinionActions.buffHp",
                 "hp": 2

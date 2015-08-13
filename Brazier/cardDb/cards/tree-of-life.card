@@ -7,6 +7,6 @@
     "manaCost": 9,
     "playActions": {
         "class": "PlayerActions.forAllTargets",
-        "action": "TargetedActions.FULL_HEAL"
+        "action": "ActorlessTargetedActions.FULL_HEAL"
     }
 }

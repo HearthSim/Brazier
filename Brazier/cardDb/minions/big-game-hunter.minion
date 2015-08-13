@@ -3,7 +3,7 @@
     "attack": 4,
     "hp": 2,
     "battleCries": {
-        "class": "TargetedActions.KILL_TARGET",
+        "class": "ActorlessTargetedActions.KILL_TARGET",
         "targets": [
             "all-minions",
             {

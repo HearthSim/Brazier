@@ -7,6 +7,6 @@
     "manaCost": 5,
     "playActions": {
         "targets": "all",
-        "class": "TargetedActions.HOLY_WRATH"
+        "class": "ActorlessTargetedActions.HOLY_WRATH"
     }
 }

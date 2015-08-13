@@ -9,7 +9,7 @@
                 "class": "TargetNeeds.hasKeyword",
                 "keywords": "beast"
             }],
-        "class": "TargetedActions.applyToMinionTarget",
+        "class": "ActorlessTargetedActions.applyToMinionTarget",
         "action": [
             {
                 "class": "MinionActions.buff",

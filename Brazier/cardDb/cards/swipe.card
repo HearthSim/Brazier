@@ -8,13 +8,13 @@
         "targets": "enemy",
         "class": "CardPlayActions.doAtomic",
         "action": {
-            "class": "TargetedActions.swipeAction",
+            "class": "ActorlessTargetedActions.swipeAction",
             "mainAction": {
-                "class": "TargetedActions.dealSpellDamage",
+                "class": "ActorlessTargetedActions.dealSpellDamage",
                 "damage": 4
             },
             "othersAction": {
-                "class": "TargetedActions.dealSpellDamage",
+                "class": "ActorlessTargetedActions.dealSpellDamage",
                 "damage": 1
             }
         }

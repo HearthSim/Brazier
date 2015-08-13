@@ -7,6 +7,6 @@
     "manaCost": 1,
     "playActions": {
         "targets": "all-minions",
-        "class": "TargetedActions.SHIELD_SLAM"
+        "class": "ActorlessTargetedActions.SHIELD_SLAM"
     }
 }

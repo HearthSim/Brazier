@@ -6,6 +6,7 @@ import com.github.kelemen.hearthstone.emulator.TargetableCharacter;
 import com.github.kelemen.hearthstone.emulator.UndoableIntResult;
 import com.github.kelemen.hearthstone.emulator.UndoableResult;
 import com.github.kelemen.hearthstone.emulator.World;
+import com.github.kelemen.hearthstone.emulator.actions.UndoAction;
 import com.github.kelemen.hearthstone.emulator.actions.UndoBuilder;
 import com.github.kelemen.hearthstone.emulator.cards.Card;
 import com.github.kelemen.hearthstone.emulator.minions.Minion;
@@ -56,6 +57,10 @@ public final class TargetedActions {
             @NamedArg("minDamage") int minDamage,
             @NamedArg("maxDamage") int maxDamage) {
         return (World world, DamageSource actor, TargetableCharacter target) -> {
+            if (target == null) {
+                return UndoAction.DO_NOTHING;
+            }
+
             int damage = world.getRandomProvider().roll(minDamage, maxDamage);
             UndoableResult<Damage> damageRef = actor.createDamage(damage);
             UndoableIntResult damageUndo = target.damage(damageRef.getResult());

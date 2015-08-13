@@ -13,6 +13,6 @@
             "class": "PlayActionRequirements.stealBattleCryNeeds",
             "maxAttack": 2
         },
-        "class": "TargetedActions.TAKE_CONTROL"
+        "class": "ActorlessTargetedActions.TAKE_CONTROL"
     }
 }

@@ -4,7 +4,7 @@
     "hp": 5,
     "battleCries": {
         "targets": "all",
-        "class": "com.github.kelemen.hearthstone.emulator.actions2.TargetedActions.damageTarget",
+        "class": "TargetedActions.damageTarget",
         "damage": 3
     }
 }

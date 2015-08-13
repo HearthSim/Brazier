@@ -13,7 +13,7 @@
                 "attack": 2
             },
             {
-                "class": "TargetedActions.applyToMinionTarget",
+                "class": "ActorlessTargetedActions.applyToMinionTarget",
                 "action": "MinionActions.CHARGE"
             }
         ]

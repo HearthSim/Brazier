@@ -8,7 +8,7 @@
         "requires": "PlayActionRequirements.OPPONENT_BOARD_NOT_EMPTY",
         "class": "PlayerActions.applyTargetedActionToRandomEnemyMinion",
         "action": {
-            "class": "TargetedActions.dealSpellDamage",
+            "class": "ActorlessTargetedActions.dealSpellDamage",
             "damage": 4
         }
     }

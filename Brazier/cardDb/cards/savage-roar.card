@@ -8,7 +8,7 @@
         {
             "class": "PlayerActions.forOwnMinions",
             "action": {
-                "class": "TargetedActions.addTemporaryAttack",
+                "class": "ActorlessTargetedActions.addTemporaryAttack",
                 "attack": 2
             }
         },

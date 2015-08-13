@@ -5,7 +5,7 @@
     "type": "spell",
     "manaCost": 1,
     "playActions": {
-        "class": "TargetedActions.addTemporaryAttack",
+        "class": "ActorlessTargetedActions.addTemporaryAttack",
         "targets": "self",
         "attack": 3
     }

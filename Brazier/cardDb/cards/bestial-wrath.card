@@ -15,11 +15,11 @@
         "class": "CardPlayActions.combine",
         "actions": [
             {
-                "class": "TargetedActions.addTemporaryAttack",
+                "class": "ActorlessTargetedActions.addTemporaryAttack",
                 "attack": 2
             },
             {
-                "class": "TargetedActions.applyToMinionTarget",
+                "class": "ActorlessTargetedActions.applyToMinionTarget",
                 "action": "MinionActions.IMMUNE_THIS_TURN"
             }
         ]

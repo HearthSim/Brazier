@@ -10,7 +10,7 @@
         },
         {
             "targets": "all-minions",
-            "class": "TargetedActions.applyToMinionTarget",
+            "class": "ActorlessTargetedActions.applyToMinionTarget",
             "action": {
                 "class": "MinionActions.buffAttack",
                 "attack": 2

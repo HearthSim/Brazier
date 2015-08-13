@@ -72,7 +72,7 @@ public final class AttackEventActions {
             @NamedArg("costReduction") int costReduction) {
 
         CharacterTargetedAction returnMinionAction
-                = TargetedActions.applyToMinionTarget(MinionActions.returnMinion(costReduction));
+                = ActorlessTargetedActions.applyToMinionTarget(MinionActions.returnMinion(costReduction));
         return (world, self, eventSource) -> {
             return returnMinionAction.alterWorld(world, eventSource.getAttacker());
         };

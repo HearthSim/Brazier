@@ -7,7 +7,7 @@
     "playActions": [
         {
             "targets": "all-minions",
-            "class": "TargetedActions.dealSpellDamage",
+            "class": "ActorlessTargetedActions.dealSpellDamage",
             "damage": 3
         },
         {

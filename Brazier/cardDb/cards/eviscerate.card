@@ -6,13 +6,13 @@
     "manaCost": 2,
     "playActions": [
         {
-            "class": "TargetedActions.dealSpellDamage",
+            "class": "ActorlessTargetedActions.dealSpellDamage",
             "targets": "all",
             "requires": "PlayActionRequirements.NO_COMBO",
             "damage": 2
         },
         {
-            "class": "TargetedActions.dealSpellDamage",
+            "class": "ActorlessTargetedActions.dealSpellDamage",
             "targets": "all",
             "requires": "PlayActionRequirements.COMBO",
             "damage": 4

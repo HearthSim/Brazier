@@ -18,7 +18,7 @@
                 "flag": "stead-shot-snipe"
             },
             "targets": "all",
-            "class": "TargetedActions.dealBasicDamage",
+            "class": "ActorlessTargetedActions.dealBasicDamage",
             "damage": 2
         }]
 }

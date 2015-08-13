@@ -7,7 +7,7 @@
     "manaCostAdjusters": "ManaCostAdjusters.REDUCE_BY_DEATH_THIS_TURN",
     "playActions": [
         {
-            "class": "TargetedActions.dealSpellDamage",
+            "class": "ActorlessTargetedActions.dealSpellDamage",
             "targets": "all",
             "damage": 4
         }

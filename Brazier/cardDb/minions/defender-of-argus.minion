@@ -5,7 +5,7 @@
     "battleCries": {
         "class": "MinionActions.buffNeighbours",
         "buff": [
-            "TargetedActions.TAUNT_MINION",
+            "ActorlessTargetedActions.TAUNT_MINION",
             {
                 "class": "MinionActions.buff",
                 "attack": 1,

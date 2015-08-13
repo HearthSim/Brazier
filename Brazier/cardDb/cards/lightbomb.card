@@ -7,6 +7,6 @@
     "manaCost": 6,
     "playActions": {
         "class": "PlayerActions.forAllMinions",
-        "action": "TargetedActions.OWN_ATTACK_DAMAGE"
+        "action": "ActorlessTargetedActions.OWN_ATTACK_DAMAGE"
     }
 }

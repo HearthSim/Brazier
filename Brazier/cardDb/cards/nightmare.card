@@ -8,7 +8,7 @@
     "collectible": false,
     "playActions": {
         "targets": "self-minions",
-        "class": "TargetedActions.applyToMinionTarget",
+        "class": "ActorlessTargetedActions.applyToMinionTarget",
         "action": [
             {
                 "class": "MinionActions.buff",

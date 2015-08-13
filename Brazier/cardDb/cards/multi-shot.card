@@ -12,7 +12,7 @@
         "class": "PlayerActions.forRandomEnemyMinions",
         "minionCount": 2,
         "action": {
-            "class": "TargetedActions.dealSpellDamage",
+            "class": "ActorlessTargetedActions.dealSpellDamage",
             "damage": 3
         }
     }

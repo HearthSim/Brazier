@@ -4,7 +4,7 @@
     "hp": 1,
     "keywords": "beast",
     "battleCries": {
-        "class": "TargetedActions.SILENCE",
+        "class": "ActorlessTargetedActions.SILENCE",
         "targets": "all-minions"
     }
 }

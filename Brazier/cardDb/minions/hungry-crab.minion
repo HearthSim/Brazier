@@ -11,7 +11,7 @@
             }],
         "class": "BattleCries.combined",
         "actions": [
-            "TargetedActions.KILL_TARGET",
+            "ActorlessTargetedActions.KILL_TARGET",
             {
                 "class": "MinionActions.buff",
                 "attack": 2,

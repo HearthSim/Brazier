@@ -7,7 +7,7 @@
     "playActions": [
         {
             "targets": "all",
-            "class": "TargetedActions.dealSpellDamage",
+            "class": "ActorlessTargetedActions.dealSpellDamage",
             "damage": 3
         },
         {

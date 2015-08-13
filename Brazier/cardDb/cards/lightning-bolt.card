@@ -6,7 +6,7 @@
     "manaCost": 1,
     "overload": 1,
     "playActions": {
-        "class": "TargetedActions.dealSpellDamage",
+        "class": "ActorlessTargetedActions.dealSpellDamage",
         "targets": "all",
         "damage": 3
     }

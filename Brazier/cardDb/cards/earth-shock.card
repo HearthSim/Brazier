@@ -7,11 +7,11 @@
     "playActions": [
         {
             "targets": "all-minions",
-            "class": "TargetedActions.SILENCE"
+            "class": "ActorlessTargetedActions.SILENCE"
         },
         {
             "targets": "all-minions",
-            "class": "TargetedActions.dealSpellDamage",
+            "class": "ActorlessTargetedActions.dealSpellDamage",
             "damage": 1
         }]
 }

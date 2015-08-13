@@ -6,7 +6,7 @@
     "manaCost": 0,
     "collectible": false,
     "playActions": {
-        "class": "TargetedActions.SILENCE",
+        "class": "ActorlessTargetedActions.SILENCE",
         "targets": "all-minions"
     }
 }

@@ -6,7 +6,7 @@
     "manaCost": 2,
     "playActions": [
         {
-            "class": "TargetedActions.demonBuff",
+            "class": "ActorlessTargetedActions.demonBuff",
             "targets": "all-minions",
             "buff": 2
         }

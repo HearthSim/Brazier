@@ -11,7 +11,7 @@
                 "class": "GenericEventActions.applyTargetedActionToRandomOwnMinion",
                 "filter": "BasicFilters.NOT_SELF",
                 "action": {
-                    "class": "TargetedActions.applyToMinionTarget",
+                    "class": "ActorlessTargetedActions.applyToMinionTarget",
                     "action": {
                         "class": "MinionActions.buff",
                         "attack": 3,

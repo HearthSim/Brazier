@@ -7,7 +7,7 @@
     "playActions": [
         {
             "targets": "all",
-            "class": "TargetedActions.dealSpellDamage",
+            "class": "ActorlessTargetedActions.dealSpellDamage",
             "requires": {
                 "class": "PlayActionRequirements.doesntHaveOnOwnBoard",
                 "keywords": "beast"
@@ -16,7 +16,7 @@
         },
         {
             "targets": "all",
-            "class": "TargetedActions.dealSpellDamage",
+            "class": "ActorlessTargetedActions.dealSpellDamage",
             "requires": {
                 "class": "PlayActionRequirements.hasOnOwnBoard",
                 "keywords": "beast"

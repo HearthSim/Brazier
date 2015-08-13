@@ -8,13 +8,13 @@
         "targets": "all-minions",
         "class": "CardPlayActions.doAtomic",
         "action": {
-            "class": "TargetedActions.applyToAdjacentTargets",
+            "class": "ActorlessTargetedActions.applyToAdjacentTargets",
             "mainAction": {
-                "class": "TargetedActions.dealSpellDamage",
+                "class": "ActorlessTargetedActions.dealSpellDamage",
                 "damage": 5
             },
             "sideAction": {
-                "class": "TargetedActions.dealSpellDamage",
+                "class": "ActorlessTargetedActions.dealSpellDamage",
                 "damage": 2
             }
         }

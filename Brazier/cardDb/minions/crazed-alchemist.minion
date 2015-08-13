@@ -3,7 +3,7 @@
     "attack": 2,
     "hp": 2,
     "battleCries": {
-        "class": "TargetedActions.ATTACK_HP_SWITCH",
+        "class": "ActorlessTargetedActions.ATTACK_HP_SWITCH",
         "targets": "all-minions"
     }
 }
