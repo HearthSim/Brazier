@@ -1,12 +1,9 @@
 {
     "name": "Assassin's Blade",
     "class": "rouge",
-    "type": "weapon",
     "manaCost": 5,
-    "playActions": [
-        {
-            "class": "PlayerActions.equipWeapon",
-            "weapon": "Assassin's Blade"
-        }
-    ]
+    "weapon": {
+        "attack": 3,
+        "charges": 4
+    }
 }

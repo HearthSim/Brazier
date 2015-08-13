@@ -1,9 +1,12 @@
 package com.github.kelemen.hearthstone.emulator.parsing;
 
+import com.github.kelemen.hearthstone.emulator.Keyword;
 import com.github.kelemen.hearthstone.emulator.Keywords;
 import com.github.kelemen.hearthstone.emulator.weapons.Weapon;
 import com.github.kelemen.hearthstone.emulator.weapons.WeaponDescr;
 import com.github.kelemen.hearthstone.emulator.weapons.WeaponId;
+import java.util.HashSet;
+import java.util.Set;
 import org.jtrim.utils.ExceptionHelper;
 
 public final class WeaponParser implements EntityParser<WeaponDescr> {
@@ -20,15 +23,23 @@ public final class WeaponParser implements EntityParser<WeaponDescr> {
     @Override
     public WeaponDescr fromJson(JsonTree root) throws ObjectParsingException {
         String name = ParserUtils.getStringField(root, "name");
+
+        Set<Keyword> keywords = new HashSet<>();
+        JsonTree keywordsElement = root.getChild("keywords");
+        if (keywordsElement != null) {
+            ParserUtils.parseKeywords(keywordsElement, keywords::add);
+        }
+
+        return fromJson(root, name, keywords);
+    }
+
+    public WeaponDescr fromJson(JsonTree root, String name, Set<Keyword> keywords) throws ObjectParsingException {
         int attack = ParserUtils.getIntField(root, "attack");
         int charges = ParserUtils.getIntField(root, "charges");
 
         WeaponDescr.Builder result = new WeaponDescr.Builder(new WeaponId(name), attack, charges);
 
-        JsonTree keywords = root.getChild("keywords");
-        if (keywords != null) {
-            ParserUtils.parseKeywords(keywords, result::addKeyword);
-        }
+        keywords.forEach(result::addKeyword);
 
         JsonTree maxAttackCountElement = root.getChild("maxAttackCount");
         if (maxAttackCountElement != null) {
@@ -44,10 +55,6 @@ public final class WeaponParser implements EntityParser<WeaponDescr> {
         if (canTargetRetaliate != null) {
             result.setCanTargetRetaliate(canTargetRetaliate.getAsBoolean());
         }
-
-        JsonTree collectibleElement = root.getChild("collectible");
-        boolean collectible = collectibleElement != null ? collectibleElement.getAsBoolean() : true;
-        result.addKeyword(collectible ? Keywords.COLLECTIBLE : Keywords.NON_COLLECTIBLE);
 
         result.setAbilities(ParserUtils.parseAbilities(Weapon.class, objectParser, notificationParser, root));
 

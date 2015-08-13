@@ -1,13 +1,10 @@
 {
     "name": "Blood Fury",
     "class": "warlock",
-    "type": "weapon",
     "collectible": false,
     "manaCost": 3,
-    "playActions": [
-        {
-            "class": "PlayerActions.equipWeapon",
-            "weapon": "Blood Fury"
-        }
-    ]
+    "weapon": {
+        "attack": 3,
+        "charges": 8
+    }
 }

@@ -1,14 +1,11 @@
 {
     "name": "Ashbringer",
     "class": "paladin",
-    "type": "weapon",
     "rarity": "legendary",
     "collectible": false,
     "manaCost": 5,
-    "playActions": [
-        {
-            "class": "PlayerActions.equipWeapon",
-            "weapon": "Ashbringer"
-        }
-    ]
+    "weapon": {
+        "attack": 5,
+        "charges": 3
+    }
 }

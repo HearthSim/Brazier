@@ -1,12 +1,9 @@
 {
     "name": "Light's Justice",
     "class": "paladin",
-    "type": "weapon",
     "manaCost": 1,
-    "playActions": [
-        {
-            "class": "PlayerActions.equipWeapon",
-            "weapon": "Light's Justice"
-        }
-    ]
+    "weapon": {
+        "attack": 1,
+        "charges": 4
+    }
 }

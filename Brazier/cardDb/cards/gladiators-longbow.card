@@ -2,13 +2,11 @@
     "name": "Gladiator's Longbow",
     "description": "Your hero is Immune while attacking.",
     "class": "hunter",
-    "type": "weapon",
     "rarity": "epic",
     "manaCost": 7,
-    "playActions": [
-        {
-            "class": "PlayerActions.equipWeapon",
-            "weapon": "Gladiator's Longbow"
-        }
-    ]
+    "weapon": {
+        "attack": 5,
+        "charges": 2,
+        "canTargetRetaliate": false
+    }
 }

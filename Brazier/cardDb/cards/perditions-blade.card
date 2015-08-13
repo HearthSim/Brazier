@@ -1,25 +1,11 @@
 {
     "name": "Perdition's Blade",
     "class": "rouge",
-    "type": "weapon",
     "rarity": "rare",
     "manaCost": 3,
-    "playActions": [
-        {
-            "targets": "all",
-            "requires": "PlayActionRequirements.NO_COMBO",
-            "class": "ActorlessTargetedActions.dealBasicDamage",
-            "damage": 1
-        },
-        {
-            "targets": "all",
-            "requires": "PlayActionRequirements.COMBO",
-            "class": "ActorlessTargetedActions.dealBasicDamage",
-            "damage": 2
-        },
-        {
-            "class": "PlayerActions.equipWeapon",
-            "weapon": "Perdition's Blade"
-        }
-    ]
+    "keywords": "battlecry",
+    "weapon": {
+        "attack": 2,
+        "charges": 2
+    }
 }

@@ -10,7 +10,6 @@ import com.github.kelemen.hearthstone.emulator.parsing.MinionParser;
 import com.github.kelemen.hearthstone.emulator.parsing.ObjectParsingException;
 import com.github.kelemen.hearthstone.emulator.parsing.ParserUtils;
 import com.github.kelemen.hearthstone.emulator.parsing.UseTrackerJsonTree;
-import com.github.kelemen.hearthstone.emulator.parsing.WeaponParser;
 import com.github.kelemen.hearthstone.emulator.weapons.WeaponDescr;
 import com.google.gson.JsonObject;
 import java.io.IOException;
@@ -35,19 +34,28 @@ public final class HearthStoneDb {
     private final HearthStoneEntityDatabase<HeroPowerDef> heroPowerDb;
 
     public HearthStoneDb(
-            HearthStoneEntityDatabase<WeaponDescr> weaponDb,
             HearthStoneEntityDatabase<MinionDescr> minionDb,
             HearthStoneEntityDatabase<CardDescr> cardDb,
             HearthStoneEntityDatabase<HeroPowerDef> heroPowerDb) {
         ExceptionHelper.checkNotNullArgument(minionDb, "minionDb");
         ExceptionHelper.checkNotNullArgument(cardDb, "cardDb");
-        ExceptionHelper.checkNotNullArgument(weaponDb, "weaponDb");
         ExceptionHelper.checkNotNullArgument(heroPowerDb, "heroPowerDb");
 
-        this.weaponDb = weaponDb;
+        this.weaponDb = toWeaponDb(cardDb);
         this.minionDb = minionDb;
         this.cardDb = cardDb;
         this.heroPowerDb = heroPowerDb;
+    }
+
+    private static HearthStoneEntityDatabase<WeaponDescr> toWeaponDb(HearthStoneEntityDatabase<CardDescr> cardDb) {
+        HearthStoneEntityDatabase.Builder<WeaponDescr> result = new HearthStoneEntityDatabase.Builder<>();
+        for (CardDescr card: cardDb.getAll()) {
+            WeaponDescr weapon = card.getWeapon();
+            if (weapon != null) {
+                result.addEntity(weapon);
+            }
+        }
+        return result.create();
     }
 
     private static Path tryGetDefaultCardDbPath() {
@@ -101,7 +109,6 @@ public final class HearthStoneDb {
     }
 
     private static HearthStoneDb fromRoot(Path root) throws IOException, ObjectParsingException {
-        Path weaponDir = root.resolve("weapons");
         Path minionDir = root.resolve("minions");
         Path cardDir = root.resolve("cards");
         Path powerDir = root.resolve("powers");
@@ -111,8 +118,6 @@ public final class HearthStoneDb {
 
         JsonDeserializer objectParser = ParserUtils.createDefaultDeserializer(resultRef::get);
 
-        HearthStoneEntityDatabase<WeaponDescr> weaponDb
-                = createWeaponDb(weaponDir, objectParser);
         HearthStoneEntityDatabase<MinionDescr> minionDb
                 = createMinionDb(minionDir, objectParser, cardDbRef::get);
         HearthStoneEntityDatabase<CardDescr> cardDb
@@ -122,7 +127,7 @@ public final class HearthStoneDb {
 
         cardDbRef.set(cardDb);
 
-        HearthStoneDb result = new HearthStoneDb(weaponDb, minionDb, cardDb, heroPowerDb);
+        HearthStoneDb result = new HearthStoneDb(minionDb, cardDb, heroPowerDb);
         resultRef.set(result);
 
         return result;
@@ -131,13 +136,6 @@ public final class HearthStoneDb {
     private static boolean hasExt(Path path, String ext) {
         String fileName = path.getFileName().toString().toLowerCase(Locale.ROOT);
         return fileName.endsWith(ext);
-    }
-
-    private static HearthStoneEntityDatabase<WeaponDescr> createWeaponDb(
-            Path weaponDir,
-            JsonDeserializer objectParser) throws IOException, ObjectParsingException {
-
-        return createEntityDb(weaponDir, ".weapon", new WeaponParser(objectParser));
     }
 
     private static HearthStoneEntityDatabase<MinionDescr> createMinionDb(

@@ -1,12 +1,9 @@
 {
     "name": "Fiery War Axe",
     "class": "warrior",
-    "type": "weapon",
     "manaCost": 2,
-    "playActions": [
-        {
-            "class": "PlayerActions.equipWeapon",
-            "weapon": "Fiery War Axe"
-        }
-    ]
+    "weapon": {
+        "attack": 3,
+        "charges": 2
+    }
 }

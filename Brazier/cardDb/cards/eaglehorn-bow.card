@@ -2,13 +2,19 @@
     "name": "Eaglehorn Bow",
     "description": "Whenever a friendly Secret is revealed, gain +1 Durability.",
     "class": "hunter",
-    "type": "weapon",
     "rarity": "rare",
     "manaCost": 3,
-    "playActions": [
-        {
-            "class": "PlayerActions.equipWeapon",
-            "weapon": "Eaglehorn Bow"
+    "weapon": {
+        "attack": 3,
+        "charges": 2,
+        "triggers": {
+            "secret-revealed": {
+                "filter": "BasicFilters.HAS_SAME_OWNER_PLAYER",
+                "action": {
+                    "class": "WeaponEventActions.doSelf",
+                    "action": "WeaponActions.INCREASE_CHARGE"
+                }
+            }
         }
-    ]
+    }
 }

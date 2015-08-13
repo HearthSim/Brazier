@@ -2,12 +2,16 @@
     "name": "Death's Bite",
     "description": "Deathrattle: Deal 1 damage to all minions.",
     "class": "warrior",
-    "type": "weapon",
     "manaCost": 4,
-    "playActions": [
-        {
-            "class": "PlayerActions.equipWeapon",
-            "weapon": "Death's Bite"
+    "weapon": {
+        "attack": 4,
+        "charges": 2,
+        "deathRattle": {
+            "class": "WeaponEventActions.doSelf",
+            "action": {
+                "class": "DamageActions.dealDamageToAllMinions",
+                "damage": 1
+            }
         }
-    ]
+    }
 }

@@ -2,13 +2,10 @@
     "name": "Stormforged Axe",
     "description": "Overload: (1)",
     "class": "shaman",
-    "type": "weapon",
     "manaCost": 2,
     "overload": 1,
-    "playActions": [
-        {
-            "class": "PlayerActions.equipWeapon",
-            "weapon": "Stormforged Axe"
-        }
-    ]
+    "weapon": {
+        "attack": 2,
+        "charges": 3
+    }
 }

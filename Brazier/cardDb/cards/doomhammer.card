@@ -2,12 +2,12 @@
     "name": "Doomhammer",
     "description": "Windfury, Overload: (2)",
     "class": "shaman",
-    "type": "weapon",
     "rarity": "epic",
     "manaCost": 5,
     "overload": 2,
-    "playActions": {
-        "class": "PlayerActions.equipWeapon",
-        "weapon": "Doomhammer"
+    "weapon": {
+        "attack": 2,
+        "charges": 8,
+        "maxAttackCount": 2
     }
 }

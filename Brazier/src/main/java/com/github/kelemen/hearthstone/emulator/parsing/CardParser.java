@@ -15,6 +15,7 @@ import com.github.kelemen.hearthstone.emulator.actions.CardPlayArg;
 import com.github.kelemen.hearthstone.emulator.actions.ManaCostAdjuster;
 import com.github.kelemen.hearthstone.emulator.actions.PlayActionRequirement;
 import com.github.kelemen.hearthstone.emulator.actions.PlayerAction;
+import com.github.kelemen.hearthstone.emulator.actions.PlayerActions;
 import com.github.kelemen.hearthstone.emulator.actions.TargetNeed;
 import com.github.kelemen.hearthstone.emulator.actions.UndoAction;
 import com.github.kelemen.hearthstone.emulator.actions.WorldEventActionDefs;
@@ -27,7 +28,11 @@ import com.github.kelemen.hearthstone.emulator.cards.CardRarity;
 import com.github.kelemen.hearthstone.emulator.cards.CardType;
 import com.github.kelemen.hearthstone.emulator.minions.MinionDescr;
 import com.github.kelemen.hearthstone.emulator.minions.MinionId;
+import com.github.kelemen.hearthstone.emulator.weapons.WeaponDescr;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Locale;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Supplier;
 import org.jtrim.utils.ExceptionHelper;
@@ -35,6 +40,7 @@ import org.jtrim.utils.ExceptionHelper;
 public final class CardParser implements EntityParser<CardDescr> {
     private final JsonDeserializer objectParser;
     private final HearthStoneEntityDatabase<MinionDescr> minionDb;
+    private final WeaponParser weaponParser;
     private final EventNotificationParser<Secret> secretParser;
 
     public CardParser(
@@ -45,6 +51,7 @@ public final class CardParser implements EntityParser<CardDescr> {
 
         this.minionDb = minionDb;
         this.objectParser = objectParser;
+        this.weaponParser = new WeaponParser(objectParser);
         this.secretParser = new EventNotificationParser<>(
                 Secret.class,
                 objectParser,
@@ -191,55 +198,68 @@ public final class CardParser implements EntityParser<CardDescr> {
         };
     }
 
-    private void parseSecretPlayAction(
+    private boolean parseSecretPlayAction(
             JsonTree secretElement,
             EntityId secretId,
             Supplier<CardDescr> cardRef,
             CardDescr.Builder result) throws ObjectParsingException {
 
         if (secretElement == null) {
-            return;
+            return false;
         }
 
         WorldEventActionDefs<Secret> secretActionDef = secretParser.fromJson(secretElement);
-
-        result.addKeyword(Keywords.SECRET);
 
         result.addOnPlayAction(new CardPlayActionDef(
                 TargetNeed.NO_NEED,
                 secretRequirement(secretId),
                 secretAction(cardRef, secretActionDef)));
+        return true;
     }
 
     @Override
     public CardDescr fromJson(JsonTree root) throws ObjectParsingException {
         String name = ParserUtils.getStringField(root, "name");
         int manaCost = ParserUtils.getIntField(root, "manaCost");
+        Set<Keyword> keywords = new HashSet<>();
         CardType cardType = parseCardType(root.getChild("type"));
 
         JsonTree minionElement = root.getChild("minion");
         if (minionElement != null && cardType == CardType.UNKNOWN) {
+           if (cardType != CardType.UNKNOWN && cardType != CardType.MINION) {
+                throw new ObjectParsingException("Minion containing card cannot have this type: " + cardType);
+            }
             cardType = CardType.MINION;
         }
+
+        JsonTree weaponElement = root.getChild("weapon");
+        if (weaponElement != null) {
+            if (cardType != CardType.UNKNOWN && cardType != CardType.WEAPON) {
+                throw new ObjectParsingException("Weapon containing card cannot have this type: " + cardType);
+            }
+            cardType = CardType.WEAPON;
+        }
+
+        keywords.add(cardType.getKeyword());
 
         CardId cardId = new CardId(name);
         CardDescr.Builder result = new CardDescr.Builder(cardId, cardType, manaCost);
 
-        result.addKeyword(cardType.getKeyword());
-        result.addKeyword(Keywords.manaCost(manaCost));
+        keywords.add(cardType.getKeyword());
+        keywords.add(Keywords.manaCost(manaCost));
 
         String description = ParserUtils.tryGetStringField(root, "description");
         if (description != null) {
             result.setDescription(description);
         }
 
-        result.addKeyword(isCollectible(root.getChild("collectible"))
+        keywords.add(isCollectible(root.getChild("collectible"))
                 ? Keywords.COLLECTIBLE
                 : Keywords.NON_COLLECTIBLE);
 
-        JsonTree keywords = root.getChild("keywords");
-        if (keywords != null) {
-            ParserUtils.parseKeywords(keywords, result::addKeyword);
+        JsonTree keywordsElement = root.getChild("keywords");
+        if (keywordsElement != null) {
+            ParserUtils.parseKeywords(keywordsElement, keywords::add);
         }
 
         JsonTree rarityElement = root.getChild("rarity");
@@ -249,7 +269,7 @@ public final class CardParser implements EntityParser<CardDescr> {
         }
 
         result.setRarity(rarity);
-        result.addKeyword(Keyword.create(rarity.name()));
+        keywords.add(Keyword.create(rarity.name()));
 
         JsonTree displayName = root.getChild("displayName");
         if (displayName != null) {
@@ -260,7 +280,7 @@ public final class CardParser implements EntityParser<CardDescr> {
         if (overloadElement != null) {
             int overload = overloadElement.getAsInt();
             if (overload > 0) {
-                result.addKeyword(Keywords.OVERLOAD);
+                keywords.add(Keywords.OVERLOAD);
             }
             result.setOverload(overload);
         }
@@ -285,7 +305,7 @@ public final class CardParser implements EntityParser<CardDescr> {
         }
         Keyword cardClass = Keyword.create(classElement.getAsString());
         result.setCardClass(cardClass);
-        result.addKeyword(cardClass);
+        keywords.add(cardClass);
 
         parsePlayActions(root.getChild("playActions"), result);
         parseCardAdjusters(root.getChild("manaCostAdjusters"), result);
@@ -306,9 +326,24 @@ public final class CardParser implements EntityParser<CardDescr> {
         }
 
         AtomicReference<CardDescr> cardRef = new AtomicReference<>();
-        parseSecretPlayAction(root.getChild("secret"), cardId, cardRef::get, result);
+        if (parseSecretPlayAction(root.getChild("secret"), cardId, cardRef::get, result)) {
+            keywords.add(Keywords.SECRET);
+        }
 
         parseAbility(root.getChild("inHandAbility"), result);
+
+        keywords.forEach(result::addKeyword);
+        // To ensure that we no longer add keywords from here on by accident.
+        keywords = Collections.unmodifiableSet(keywords);
+
+        if (weaponElement != null) {
+            WeaponDescr weapon = weaponParser.fromJson(weaponElement, name, keywords);
+            result.setWeapon(weapon);
+            result.addOnPlayAction(new CardPlayActionDef(TargetNeed.NO_NEED, PlayActionRequirement.ALLOWED, (world, arg) -> {
+                Player player = arg.getTarget().getCastingPlayer();
+                return player.equipWeapon(weapon);
+            }));
+        }
 
         CardDescr card = result.create();
         cardRef.set(card);

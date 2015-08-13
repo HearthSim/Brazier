@@ -2,10 +2,15 @@
     "name": "Ogre Warmaul",
     "description": "50% chance to attack the wrong enemy.",
     "class": "warrior",
-    "type": "weapon",
     "manaCost": 3,
-    "playActions": {
-        "class": "PlayerActions.equipWeapon",
-        "weapon": "Ogre Warmaul"
+    "weapon": {
+        "attack": 4,
+        "charges": 2,
+        "triggers": {
+            "attack-initiated": {
+                "filter": ["BasicFilters.ATTACKER_IS_OWNER", "BasicFilters.ATTACKER_IS_HERO"],
+                "action": "AttackEventActions.MISS_TARGET_SOMETIMES"
+            }
+        }
     }
 }

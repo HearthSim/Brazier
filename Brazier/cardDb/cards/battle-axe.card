@@ -1,13 +1,11 @@
 {
     "name": "Battle Axe",
     "class": "warrior",
-    "type": "weapon",
     "collectible": false,
     "manaCost": 1,
-    "playActions": [
-        {
-            "class": "PlayerActions.equipWeapon",
-            "weapon": "Battle Axe"
-        }
-    ]
+    "weapon": {
+        "attack": 2,
+        "charges": 2
+    }
+
 }
