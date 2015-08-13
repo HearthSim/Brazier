@@ -1,7 +1,7 @@
 {
     "name": "Archmage",
-    "class": "neutral",
     "description": "Spell Damage +1",
+    "class": "neutral",
     "manaCost": 6,
     "minion": {
         "attack": 4,

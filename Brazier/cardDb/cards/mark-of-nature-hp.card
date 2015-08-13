@@ -13,6 +13,7 @@
                 "class": "MinionActions.buffHp",
                 "hp": 4
             },
-            "MinionActions.TAUNT"]
+            "MinionActions.TAUNT"
+        ]
     }
 }

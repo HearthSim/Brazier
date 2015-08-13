@@ -2,9 +2,9 @@
     "name": "Druid of the Flame/Firehawk",
     "displayName": "Druid of the Flame",
     "class": "druid",
-    "manaCost": 3,
-    "collectible": false,
     "keywords": "beast",
+    "collectible": false,
+    "manaCost": 3,
     "minion": {
         "displayName": "Druid of the Flame",
         "attack": 2,

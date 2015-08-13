@@ -1,16 +1,17 @@
 {
     "name": "Bane of Doom",
+    "description": "Deal 10 damage.",
     "class": "warlock",
     "type": "spell",
     "rarity": "epic",
-    "description": "Deal 10 damage.",
     "manaCost": 5,
-    "playActions": [
-        {
-            "class": "ActorlessTargetedActions.damageAndSummonOnDeath",
-            "targets": "all",
-            "damage": 2,
-            "keywords": ["demon", "collectible"]
-        }
-    ]
+    "playActions": {
+        "targets": "all",
+        "class": "ActorlessTargetedActions.damageAndSummonOnDeath",
+        "damage": 2,
+        "keywords": [
+            "demon",
+            "collectible"
+        ]
+    }
 }

@@ -1,8 +1,8 @@
 {
     "name": "Gelbin Mekkatorque",
     "description": "Battlecry: Summon an AWESOME invention.",
-    "rarity": "legendary",
     "class": "neutral",
+    "rarity": "legendary",
     "manaCost": 6,
     "minion": {
         "attack": 6,

@@ -2,9 +2,9 @@
     "name": "Iron Sensei",
     "description": "At the end of your turn, give another friendly Mech +2/+2.",
     "class": "rouge",
+    "keywords": "mech",
     "rarity": "rare",
     "manaCost": 3,
-    "keywords": "mech",
     "minion": {
         "attack": 2,
         "hp": 2,

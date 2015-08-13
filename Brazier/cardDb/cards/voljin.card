@@ -8,8 +8,8 @@
         "attack": 6,
         "hp": 2,
         "battleCries": {
-            "targets": "all-minions",
-            "class": "TargetedMinionActions.SWAP_HP_WITH_TARGET"
+            "class": "TargetedMinionActions.SWAP_HP_WITH_TARGET",
+            "targets": "all-minions"
         }
     }
 }

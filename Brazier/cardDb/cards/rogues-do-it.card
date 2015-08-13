@@ -8,9 +8,10 @@
     "manaCost": 4,
     "playActions": [
         {
-            "class": "ActorlessTargetedActions.dealSpellDamage",
             "targets": "all",
+            "class": "ActorlessTargetedActions.dealSpellDamage",
             "damage": 4
         },
-        "PlayerActions.DRAW_FOR_SELF"]
+        "PlayerActions.DRAW_FOR_SELF"
+    ]
 }

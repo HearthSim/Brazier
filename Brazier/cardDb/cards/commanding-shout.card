@@ -16,5 +16,6 @@
                 }
             }
         },
-        "PlayerActions.DRAW_FOR_SELF"]
+        "PlayerActions.DRAW_FOR_SELF"
+    ]
 }

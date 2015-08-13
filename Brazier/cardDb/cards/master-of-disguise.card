@@ -1,16 +1,16 @@
 {
     "name": "Master of Disguise",
     "description": "Battlecry: Give a friendly minion Stealth.",
-    "rarity": "rare",
     "class": "rouge",
+    "rarity": "rare",
     "manaCost": 4,
     "minion": {
         "attack": 4,
         "hp": 4,
         "battleCries": {
-            "targets": "self-minions",
             "class": "ActorlessTargetedActions.applyToMinionTarget",
-            "action": "MinionActions.STEALTH"
+            "action": "MinionActions.STEALTH",
+            "targets": "self-minions"
         }
     }
 }

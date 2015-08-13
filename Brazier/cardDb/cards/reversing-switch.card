@@ -7,7 +7,7 @@
     "collectible": false,
     "manaCost": 1,
     "playActions": {
-        "class": "ActorlessTargetedActions.ATTACK_HP_SWITCH",
-        "targets": "all-minions"
+        "targets": "all-minions",
+        "class": "ActorlessTargetedActions.ATTACK_HP_SWITCH"
     }
 }

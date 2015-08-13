@@ -8,8 +8,8 @@
         "hp": 1,
         "battleCries": {
             "class": "ActorlessTargetedActions.addTemporaryAttack",
-            "targets": "all-minions",
-            "attack": 2
+            "attack": 2,
+            "targets": "all-minions"
         }
     }
 }

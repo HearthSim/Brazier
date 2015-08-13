@@ -1,8 +1,8 @@
 {
     "name": "Defender of Argus",
     "description": "Battlecry: Give adjacent minions +1/+1 and Taunt.",
-    "rarity": "rare",
     "class": "neutral",
+    "rarity": "rare",
     "manaCost": 4,
     "minion": {
         "attack": 2,

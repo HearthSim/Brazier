@@ -1,8 +1,8 @@
 {
     "name": "Blizzard",
+    "description": "Deal 2 damage to all enemy minions and Freeze them.",
     "class": "mage",
     "type": "spell",
-    "description": "Deal 2 damage to all enemy minions and Freeze them.",
     "rarity": "rare",
     "manaCost": 6,
     "playActions": [

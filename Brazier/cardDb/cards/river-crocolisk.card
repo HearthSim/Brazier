@@ -1,8 +1,8 @@
 {
     "name": "River Crocolisk",
     "class": "neutral",
-    "manaCost": 2,
     "keywords": "beast",
+    "manaCost": 2,
     "minion": {
         "attack": 2,
         "hp": 3

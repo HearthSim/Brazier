@@ -2,9 +2,9 @@
     "name": "Chromaggus",
     "description": "Whenever you draw a card, put another copy into your hand.",
     "class": "neutral",
+    "keywords": "dragon",
     "rarity": "legendary",
     "manaCost": 8,
-    "keywords": "dragon",
     "minion": {
         "attack": 6,
         "hp": 8,

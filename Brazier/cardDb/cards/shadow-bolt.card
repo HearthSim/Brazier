@@ -1,12 +1,12 @@
 {
     "name": "Shadow Bolt",
+    "description": "Deal 4 damage to a minion.",
     "class": "warlock",
     "type": "spell",
-    "description": "Deal 4 damage to a minion.",
     "manaCost": 3,
     "playActions": {
-        "class": "ActorlessTargetedActions.dealSpellDamage",
         "targets": "all-minions",
+        "class": "ActorlessTargetedActions.dealSpellDamage",
         "damage": 4
     }
 }

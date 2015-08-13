@@ -1,9 +1,9 @@
 {
     "name": "Faerie Dragon",
-    "class": "neutral",
     "description": "Can't be targeted by spells or Hero Powers.",
-    "manaCost": 2,
+    "class": "neutral",
     "keywords": "dragon",
+    "manaCost": 2,
     "minion": {
         "attack": 3,
         "hp": 2,

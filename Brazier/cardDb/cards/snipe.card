@@ -1,8 +1,8 @@
 {
     "name": "Snipe",
+    "description": "Secret: When your opponent plays a minion, deal 4 damage to it.",
     "class": "hunter",
     "type": "spell",
-    "description": "Secret: When your opponent plays a minion, deal 4 damage to it.",
     "manaCost": 2,
     "secret": {
         "done-play-card": {
@@ -11,7 +11,8 @@
                 {
                     "class": "BasicFilters.eventSourceHasKeyword",
                     "keywords": "minion"
-                }],
+                }
+            ],
             "action": {
                 "class": "CardEventActions.damageCardMinionWithSpell",
                 "damage": 4

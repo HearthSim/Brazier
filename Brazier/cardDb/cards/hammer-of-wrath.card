@@ -1,13 +1,13 @@
 {
     "name": "Hammer of Wrath",
+    "description": "Deal 3 damage. Draw a card.",
     "class": "paladin",
     "type": "spell",
-    "description": "Deal 3 damage. Draw a card.",
     "manaCost": 4,
     "playActions": [
         {
-            "class": "ActorlessTargetedActions.dealSpellDamage",
             "targets": "all",
+            "class": "ActorlessTargetedActions.dealSpellDamage",
             "damage": 3
         },
         "PlayerActions.DRAW_FOR_SELF"

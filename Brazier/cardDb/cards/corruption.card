@@ -1,8 +1,8 @@
 {
     "name": "Corruption",
+    "description": "Choose an enemy minion. At the start of your turn, destroy it.",
     "class": "warlock",
     "type": "spell",
-    "description": "Choose an enemy minion. At the start of your turn, destroy it.",
     "manaCost": 1,
     "playActions": {
         "targets": "enemy-minions",

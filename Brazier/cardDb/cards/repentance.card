@@ -1,8 +1,8 @@
 {
     "name": "Repentance",
+    "description": "Secret: When your opponent plays a minion, reduce its Health to 1.",
     "class": "paladin",
     "type": "spell",
-    "description": "Secret: When your opponent plays a minion, reduce its Health to 1.",
     "manaCost": 1,
     "secret": {
         "done-play-card": {
@@ -11,7 +11,8 @@
                 {
                     "class": "BasicFilters.eventSourceHasKeyword",
                     "keywords": "minion"
-                }],
+                }
+            ],
             "action": {
                 "class": "CardEventActions.applyToCardMinion",
                 "action": {

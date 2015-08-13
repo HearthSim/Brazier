@@ -1,15 +1,13 @@
 {
     "name": "Pyroblast",
+    "description": "Deal 10 damage.",
     "class": "mage",
     "type": "spell",
     "rarity": "epic",
-    "description": "Deal 10 damage.",
     "manaCost": 10,
-    "playActions": [
-        {
-            "class": "ActorlessTargetedActions.dealSpellDamage",
-            "targets": "all",
-            "damage": 10
-        }
-    ]
+    "playActions": {
+        "targets": "all",
+        "class": "ActorlessTargetedActions.dealSpellDamage",
+        "damage": 10
+    }
 }

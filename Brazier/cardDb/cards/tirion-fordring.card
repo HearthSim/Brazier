@@ -1,8 +1,8 @@
 {
     "name": "Tirion Fordring",
     "description": "Divine Shield. Taunt. Deathrattle: Equip a 5/3 Ashbringer.",
-    "rarity": "legendary",
     "class": "paladin",
+    "rarity": "legendary",
     "manaCost": 8,
     "minion": {
         "attack": 6,

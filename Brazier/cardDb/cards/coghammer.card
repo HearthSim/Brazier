@@ -2,14 +2,17 @@
     "name": "Coghammer",
     "description": "Battlecry: Give a random friendly minion Divine Shield and Taunt.",
     "class": "paladin",
+    "keywords": "battlecry",
     "rarity": "epic",
     "manaCost": 3,
-    "keywords": "battlecry",
     "playActions": {
         "class": "PlayerActions.applyTargetedActionToRandomOwnMinion",
         "action": {
             "class": "ActorlessTargetedActions.applyToMinionTarget",
-            "action": ["MinionActions.GIVE_DIVINE_SHIELD", "MinionActions.TAUNT"]
+            "action": [
+                "MinionActions.GIVE_DIVINE_SHIELD",
+                "MinionActions.TAUNT"
+            ]
         }
     },
     "weapon": {

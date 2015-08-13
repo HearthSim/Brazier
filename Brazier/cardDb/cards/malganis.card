@@ -1,10 +1,10 @@
 {
     "name": "Mal'Ganis",
     "description": "Your other Demons have +2/+2. Your hero is Immune.",
-    "rarity": "legendary",
     "class": "warlock",
-    "manaCost": 9,
     "keywords": "demon",
+    "rarity": "legendary",
+    "manaCost": 9,
     "minion": {
         "attack": 9,
         "hp": 7,

@@ -4,8 +4,8 @@
     "class": "rouge",
     "manaCost": 2,
     "playActions": {
-        "class": "CardPlayActions.summonMinionRight",
         "requires": "PlayActionRequirements.COMBO",
+        "class": "CardPlayActions.summonMinionRight",
         "minion": "Defias Bandit"
     },
     "minion": {

@@ -2,8 +2,8 @@
     "name": "Thaddius",
     "class": "neutral",
     "rarity": "legendary",
-    "manaCost": 10,
     "collectible": false,
+    "manaCost": 10,
     "minion": {
         "attack": 11,
         "hp": 11

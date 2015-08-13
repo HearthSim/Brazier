@@ -1,8 +1,8 @@
 {
     "name": "Salty Dog",
     "class": "neutral",
-    "manaCost": 5,
     "keywords": "pirate",
+    "manaCost": 5,
     "minion": {
         "attack": 7,
         "hp": 4

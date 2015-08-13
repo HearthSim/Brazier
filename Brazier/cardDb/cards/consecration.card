@@ -1,8 +1,8 @@
 {
     "name": "Consecration",
+    "description": "Deal 2 damage to all enemies.",
     "class": "paladin",
     "type": "spell",
-    "description": "Deal 2 damage to all enemies.",
     "manaCost": 4,
     "playActions": {
         "class": "PlayerActions.dealDamageToEnemyTargets",

@@ -1,11 +1,11 @@
 {
     "name": "Nightmare",
+    "description": "Give a minion +5/+5. At the start of your next turn, destroy it.",
     "class": "neutral",
     "type": "spell",
-    "description": "Give a minion +5/+5. At the start of your next turn, destroy it.",
-    "manaCost": 0,
     "keywords": "emerald-dream",
     "collectible": false,
+    "manaCost": 0,
     "playActions": {
         "targets": "self-minions",
         "class": "ActorlessTargetedActions.applyToMinionTarget",
@@ -22,6 +22,7 @@
                     "filter": "BasicFilters.SELF_TURN",
                     "action": "MinionEventActions.SELF_DESTRUCT"
                 }
-            }]
+            }
+        ]
     }
 }

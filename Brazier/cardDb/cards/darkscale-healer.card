@@ -1,7 +1,7 @@
 {
     "name": "Darkscale Healer",
-    "class": "neutral",
     "description": "Battlecry: Restore 2 Health to all friendly characters.",
+    "class": "neutral",
     "manaCost": 5,
     "minion": {
         "attack": 4,

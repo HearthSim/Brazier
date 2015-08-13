@@ -9,11 +9,11 @@
         "hp": 3,
         "battleCries": {
             "class": "TargetedMinionActions.forEnemyMinions",
-            "filter": "BasicFilters.EVENT_SOURCE_IS_NOT_DAMAGED",
             "action": {
                 "class": "TargetedMinionActions.damageTarget",
                 "damage": 2
-            }
+            },
+            "filter": "BasicFilters.EVENT_SOURCE_IS_NOT_DAMAGED"
         }
     }
 }

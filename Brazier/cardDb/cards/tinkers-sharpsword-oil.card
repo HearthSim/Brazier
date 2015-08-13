@@ -1,8 +1,8 @@
 {
     "name": "Tinker's Sharpsword Oil",
+    "description": "Give your weapon +3 Attack. Combo: Give a random friendly minion +3 Attack.",
     "class": "rouge",
     "type": "spell",
-    "description": "Give your weapon +3 Attack. Combo: Give a random friendly minion +3 Attack.",
     "manaCost": 4,
     "playActions": [
         {

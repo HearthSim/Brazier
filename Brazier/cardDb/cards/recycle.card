@@ -1,8 +1,8 @@
 {
     "name": "Recycle",
+    "description": "Shuffle an enemy minion into your opponent's deck.",
     "class": "druid",
     "type": "spell",
-    "description": "Shuffle an enemy minion into your opponent's deck.",
     "rarity": "rare",
     "manaCost": 6,
     "playActions": {

@@ -1,8 +1,8 @@
 {
     "name": "Hellfire",
+    "description": "Deal 3 damage to ALL characters.",
     "class": "warlock",
     "type": "spell",
-    "description": "Deal 3 damage to ALL characters.",
     "manaCost": 4,
     "playActions": {
         "class": "PlayerActions.dealDamageToAllTargets",

@@ -1,7 +1,7 @@
 {
     "name": "Voidcaller",
-    "class": "warlock",
     "description": "Deathrattle: Put a random Demon from your hand into the battlefield.",
+    "class": "warlock",
     "manaCost": 4,
     "minion": {
         "attack": 3,

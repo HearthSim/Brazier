@@ -2,9 +2,9 @@
     "name": "Lord Jaraxxus",
     "description": "Battlecry: Destroy your hero and replace it with Lord Jaraxxus.",
     "class": "warlock",
+    "keywords": "demon",
     "rarity": "legendary",
     "manaCost": 9,
-    "keywords": "demon",
     "minion": {
         "attack": 3,
         "hp": 15,

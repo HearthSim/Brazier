@@ -13,11 +13,11 @@
                 "keywords": "mech"
             },
             "class": "BattleCries.doMultipleTimes",
-            "actionCount": 4,
             "action": {
                 "class": "DamageActions.damageRandomEnemyTarget",
                 "damage": 1
-            }
+            },
+            "actionCount": 4
         }
     }
 }

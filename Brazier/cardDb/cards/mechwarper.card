@@ -2,8 +2,8 @@
     "name": "Mechwarper",
     "description": "Your Mechs cost (1) less.",
     "class": "neutral",
-    "manaCost": 2,
     "keywords": "mech",
+    "manaCost": 2,
     "minion": {
         "attack": 2,
         "hp": 3,

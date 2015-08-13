@@ -1,10 +1,10 @@
 {
     "name": "Illidan Stormrage",
     "description": "Whenever you play a card, summon a 2/1 Flame of Azzinoth.",
-    "rarity": "legendary",
     "class": "neutral",
-    "manaCost": 6,
     "keywords": "demon",
+    "rarity": "legendary",
+    "manaCost": 6,
     "minion": {
         "attack": 7,
         "hp": 5,

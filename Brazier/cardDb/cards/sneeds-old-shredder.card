@@ -2,9 +2,9 @@
     "name": "Sneed's Old Shredder",
     "description": "Deathrattle: Summon a random legendary minion.",
     "class": "neutral",
+    "keywords": "mech",
     "rarity": "legendary",
     "manaCost": 8,
-    "keywords": "mech",
     "minion": {
         "attack": 5,
         "hp": 7,

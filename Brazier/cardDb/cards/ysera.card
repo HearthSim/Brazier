@@ -2,9 +2,9 @@
     "name": "Ysera",
     "description": "At the end of your turn, add a Dream Card to your hand.",
     "class": "neutral",
+    "keywords": "dragon",
     "rarity": "legendary",
     "manaCost": 9,
-    "keywords": "dragon",
     "minion": {
         "attack": 4,
         "hp": 12,

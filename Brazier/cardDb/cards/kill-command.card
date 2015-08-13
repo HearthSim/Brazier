@@ -1,26 +1,26 @@
 {
     "name": "Kill Command",
+    "description": "Deal 3 damage. If you have a Beast, deal 5 damage instead.",
     "class": "hunter",
     "type": "spell",
-    "description": "Deal 3 damage. If you have a Beast, deal 5 damage instead.",
     "manaCost": 3,
     "playActions": [
         {
             "targets": "all",
-            "class": "ActorlessTargetedActions.dealSpellDamage",
             "requires": {
                 "class": "PlayActionRequirements.doesntHaveOnOwnBoard",
                 "keywords": "beast"
             },
+            "class": "ActorlessTargetedActions.dealSpellDamage",
             "damage": 3
         },
         {
             "targets": "all",
-            "class": "ActorlessTargetedActions.dealSpellDamage",
             "requires": {
                 "class": "PlayActionRequirements.hasOnOwnBoard",
                 "keywords": "beast"
             },
+            "class": "ActorlessTargetedActions.dealSpellDamage",
             "damage": 5
         }
     ]

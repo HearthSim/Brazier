@@ -1,9 +1,9 @@
 {
     "name": "Worthless Imp",
     "class": "warlock",
+    "keywords": "demon",
     "collectible": false,
     "manaCost": 1,
-    "keywords": "demon",
     "minion": {
         "attack": 1,
         "hp": 1

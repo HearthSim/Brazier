@@ -1,13 +1,14 @@
 {
     "name": "Execute",
+    "description": "Destroy a damaged enemy minion.",
     "class": "warrior",
     "type": "spell",
-    "description": "Destroy a damaged enemy minion.",
     "manaCost": 1,
-    "playActions": [
-        {
-            "class": "ActorlessTargetedActions.KILL_TARGET",
-            "targets": ["enemy-minions", "TargetNeeds.TARGET_DAMAGED"]
-        }
-    ]
+    "playActions": {
+        "targets": [
+            "enemy-minions",
+            "TargetNeeds.TARGET_DAMAGED"
+        ],
+        "class": "ActorlessTargetedActions.KILL_TARGET"
+    }
 }

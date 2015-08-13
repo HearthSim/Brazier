@@ -6,10 +6,12 @@
     "type": "spell",
     "collectible": false,
     "manaCost": 0,
-    "playActions": [{
+    "playActions": [
+        {
             "targets": "all-minions",
             "class": "ActorlessTargetedActions.dealSpellDamage",
             "damage": 1
         },
-        "PlayerActions.DRAW_FOR_SELF"]
+        "PlayerActions.DRAW_FOR_SELF"
+    ]
 }

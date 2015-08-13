@@ -2,8 +2,8 @@
     "name": "Jungle Panther",
     "description": "Stealth",
     "class": "neutral",
-    "manaCost": 3,
     "keywords": "beast",
+    "manaCost": 3,
     "minion": {
         "attack": 4,
         "hp": 2,

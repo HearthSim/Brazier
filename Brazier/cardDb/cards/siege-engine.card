@@ -2,9 +2,9 @@
     "name": "Siege Engine",
     "description": "Whenever you gain Armor, give this minion +1 Attack.",
     "class": "warrior",
+    "keywords": "mech",
     "rarity": "rare",
     "manaCost": 5,
-    "keywords": "mech",
     "minion": {
         "attack": 5,
         "hp": 5,

@@ -2,9 +2,9 @@
     "name": "Alarm-o-Bot",
     "description": "At the start of your turn, swap this minion with a random one in your hand.",
     "class": "neutral",
+    "keywords": "mech",
     "rarity": "rare",
     "manaCost": 3,
-    "keywords": "mech",
     "minion": {
         "attack": 0,
         "hp": 3,

@@ -8,18 +8,18 @@
         "attack": 4,
         "hp": 5,
         "battleCries": {
+            "requires": {
+                "class": "PlayActionRequirements.stealBattleCryNeeds",
+                "maxAttack": 2
+            },
+            "class": "ActorlessTargetedActions.TAKE_CONTROL",
             "targets": [
                 "enemy-minions",
                 {
                     "class": "TargetNeeds.attackIsLessThan",
                     "attack": 3
                 }
-            ],
-            "requires": {
-                "class": "PlayActionRequirements.stealBattleCryNeeds",
-                "maxAttack": 2
-            },
-            "class": "ActorlessTargetedActions.TAKE_CONTROL"
+            ]
         }
     }
 }

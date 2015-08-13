@@ -5,8 +5,8 @@
     "rarity": "epic",
     "manaCost": 6,
     "playActions": {
-        "requires": "PlayActionRequirements.COMBO",
         "targets": "enemy-minions",
+        "requires": "PlayActionRequirements.COMBO",
         "class": "ActorlessTargetedActions.applyToMinionTarget",
         "action": "MinionActions.RETURN_MINION"
     },

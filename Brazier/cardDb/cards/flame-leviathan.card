@@ -2,6 +2,7 @@
     "name": "Flame Leviathan",
     "description": "When you draw this, deal 2 damage to all characters.",
     "class": "mage",
+    "keywords": "mech",
     "rarity": "legendary",
     "manaCost": 7,
     "drawActions": {
@@ -9,7 +10,6 @@
         "spell": false,
         "damage": 2
     },
-    "keywords": "mech",
     "minion": {
         "attack": 7,
         "hp": 7

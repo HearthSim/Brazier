@@ -1,8 +1,8 @@
 {
     "name": "Lightwarden",
     "description": "Whenever a character is healed, gain +2 Attack.",
-    "rarity": "rare",
     "class": "neutral",
+    "rarity": "rare",
     "manaCost": 1,
     "minion": {
         "attack": 1,

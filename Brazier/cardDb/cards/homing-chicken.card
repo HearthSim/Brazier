@@ -2,9 +2,9 @@
     "name": "Homing Chicken",
     "description": "At the end of your turn, give a random minion +1/+1.",
     "class": "neutral",
+    "keywords": "awesome-invention",
     "collectible": false,
     "manaCost": 1,
-    "keywords": "awesome-invention",
     "minion": {
         "attack": 0,
         "hp": 1,

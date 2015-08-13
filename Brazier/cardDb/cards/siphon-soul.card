@@ -1,14 +1,14 @@
 {
     "name": "Siphon Soul",
+    "description": "Destroy a minion. Restore 3 Health to your hero.",
     "class": "warlock",
     "type": "spell",
     "rarity": "rare",
-    "description": "Destroy a minion. Restore 3 Health to your hero.",
     "manaCost": 6,
     "playActions": [
         {
-            "class": "ActorlessTargetedActions.KILL_TARGET",
-            "targets": "all-minions"
+            "targets": "all-minions",
+            "class": "ActorlessTargetedActions.KILL_TARGET"
         },
         {
             "class": "PlayerActions.damageOwnHero",

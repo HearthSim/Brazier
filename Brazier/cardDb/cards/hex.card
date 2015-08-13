@@ -1,8 +1,8 @@
 {
     "name": "Hex",
+    "description": "Transform a minion into a 0/1 Frog with Taunt.",
     "class": "shaman",
     "type": "spell",
-    "description": "Transform a minion into a 0/1 Frog with Taunt.",
     "manaCost": 3,
     "playActions": {
         "targets": "all-minions",

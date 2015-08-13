@@ -1,8 +1,8 @@
 {
     "name": "Mogor the Ogre",
     "description": "All minions have a 50% chance to attack the wrong enemy.",
-    "rarity": "legendary",
     "class": "neutral",
+    "rarity": "legendary",
     "manaCost": 6,
     "minion": {
         "attack": 7,

@@ -2,8 +2,8 @@
     "name": "Ironfur Grizzly",
     "description": "Taunt",
     "class": "neutral",
-    "manaCost": 3,
     "keywords": "beast",
+    "manaCost": 3,
     "minion": {
         "attack": 3,
         "hp": 3,

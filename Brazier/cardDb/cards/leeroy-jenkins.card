@@ -1,8 +1,8 @@
 {
     "name": "Leeroy Jenkins",
     "description": "Charge. Battlecry: Summon two 1/1 Whelps for your opponent.",
-    "rarity": "legendary",
     "class": "neutral",
+    "rarity": "legendary",
     "manaCost": 5,
     "minion": {
         "attack": 6,

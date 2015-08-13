@@ -7,7 +7,7 @@
     "collectible": false,
     "manaCost": 1,
     "playActions": {
-        "class": "ActorlessTargetedActions.STEALTH_FOR_A_TURN",
-        "targets": "self-minions"
+        "targets": "self-minions",
+        "class": "ActorlessTargetedActions.STEALTH_FOR_A_TURN"
     }
 }

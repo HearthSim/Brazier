@@ -1,12 +1,12 @@
 {
     "name": "Darkbomb",
+    "description": "Deal 3 damage.",
     "class": "warlock",
     "type": "spell",
-    "description": "Deal 3 damage.",
     "manaCost": 2,
     "playActions": {
-        "class": "ActorlessTargetedActions.dealSpellDamage",
         "targets": "all",
+        "class": "ActorlessTargetedActions.dealSpellDamage",
         "damage": 3
     }
 }

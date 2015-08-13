@@ -14,10 +14,11 @@
         {
             "targets": "all",
             "class": "CardPlayActions.doIfTarget",
-            "condition": "BasicFilters.EVENT_SOURCE_DAMAGED",
             "action": {
                 "class": "PlayerActions.summonMinion",
                 "minion": "Lightwarden"
-            }
-        }]
+            },
+            "condition": "BasicFilters.EVENT_SOURCE_DAMAGED"
+        }
+    ]
 }

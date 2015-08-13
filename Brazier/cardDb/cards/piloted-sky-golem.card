@@ -2,9 +2,9 @@
     "name": "Piloted Sky Golem",
     "description": "Deathrattle: Summon a random 4-Cost minion.",
     "class": "neutral",
+    "keywords": "mech",
     "rarity": "epic",
     "manaCost": 6,
-    "keywords": "mech",
     "minion": {
         "attack": 6,
         "hp": 4,

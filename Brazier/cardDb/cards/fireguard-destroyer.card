@@ -9,8 +9,8 @@
         "hp": 6,
         "battleCries": {
             "class": "MinionActions.buffAttack",
-            "minAttack": 1,
-            "maxAttack": 4
+            "maxAttack": 4,
+            "minAttack": 1
         }
     }
 }

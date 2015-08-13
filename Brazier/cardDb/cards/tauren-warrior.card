@@ -2,8 +2,8 @@
     "name": "Tauren Warrior",
     "description": "Taunt. Enrage: +3 Attack",
     "class": "neutral",
-    "manaCost": 3,
     "keywords": "horde-warrior",
+    "manaCost": 3,
     "minion": {
         "attack": 2,
         "hp": 3,

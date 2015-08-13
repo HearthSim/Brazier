@@ -2,8 +2,8 @@
     "name": "Murloc Tidehunter",
     "description": "Battlecry: Summon a 1/1 Murloc Scout.",
     "class": "neutral",
-    "manaCost": 2,
     "keywords": "murloc",
+    "manaCost": 2,
     "minion": {
         "attack": 2,
         "hp": 1,

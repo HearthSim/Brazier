@@ -1,8 +1,8 @@
 {
     "name": "Core Hound",
     "class": "neutral",
-    "manaCost": 7,
     "keywords": "beast",
+    "manaCost": 7,
     "minion": {
         "attack": 9,
         "hp": 5

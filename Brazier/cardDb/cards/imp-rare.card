@@ -2,10 +2,10 @@
     "name": "Imp/Rare",
     "displayName": "Imp",
     "class": "warlock",
+    "keywords": "demon",
     "rarity": "rare",
     "collectible": false,
     "manaCost": 1,
-    "keywords": "demon",
     "minion": {
         "displayName": "Imp",
         "attack": 1,

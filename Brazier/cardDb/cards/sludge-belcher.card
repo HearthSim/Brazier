@@ -1,8 +1,8 @@
 {
     "name": "Sludge Belcher",
     "description": "Taunt. Deathrattle: Summon a 1/2 Slime with Taunt.",
-    "rarity": "rare",
     "class": "neutral",
+    "rarity": "rare",
     "manaCost": 5,
     "minion": {
         "attack": 3,

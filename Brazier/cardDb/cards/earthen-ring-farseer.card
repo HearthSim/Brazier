@@ -1,15 +1,15 @@
 {
     "name": "Earthen Ring Farseer",
-    "class": "neutral",
     "description": "Battlecry: Restore 3 Health.",
+    "class": "neutral",
     "manaCost": 3,
     "minion": {
         "attack": 3,
         "hp": 3,
         "battleCries": {
             "class": "BattleCries.dealDamageToTarget",
-            "targets": "all",
-            "damage": -3
+            "damage": -3,
+            "targets": "all"
         }
     }
 }

@@ -1,8 +1,8 @@
 {
     "name": "Counterspell",
+    "description": "Secret: When your opponent casts a spell, Counter it.",
     "class": "mage",
     "type": "spell",
-    "description": "Secret: When your opponent casts a spell, Counter it.",
     "rarity": "rare",
     "manaCost": 3,
     "secret": {
@@ -12,7 +12,8 @@
                 {
                     "class": "BasicFilters.eventSourceHasKeyword",
                     "keywords": "spell"
-                }],
+                }
+            ],
             "action": "CardEventActions.PREVENT_CARD_PLAY"
         }
     }

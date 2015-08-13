@@ -1,8 +1,8 @@
 {
     "name": "Deathlord",
     "description": "Taunt. Deathrattle: Your opponent puts a minion from their deck into the battlefield.",
-    "rarity": "rare",
     "class": "neutral",
+    "rarity": "rare",
     "manaCost": 3,
     "minion": {
         "attack": 2,

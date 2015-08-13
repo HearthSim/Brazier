@@ -2,15 +2,15 @@
     "name": "Core Rager",
     "description": "Battlecry: If your hand is empty, gain +3/+3.",
     "class": "hunter",
+    "keywords": "beast",
     "rarity": "rare",
     "manaCost": 4,
-    "keywords": "beast",
     "minion": {
         "attack": 4,
         "hp": 4,
         "battleCries": {
-            "class": "MinionActions.buff",
             "actionCondition": "PlayActionRequirements.EMPTY_HAND",
+            "class": "MinionActions.buff",
             "attack": 3,
             "hp": 3
         }

@@ -1,8 +1,8 @@
 {
     "name": "Bananas",
+    "description": "Give a minion +1/+1.",
     "class": "neutral",
     "type": "spell",
-    "description": "Give a minion +1/+1.",
     "collectible": false,
     "manaCost": 1,
     "playActions": {

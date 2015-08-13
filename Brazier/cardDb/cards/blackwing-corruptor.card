@@ -7,13 +7,13 @@
         "attack": 5,
         "hp": 4,
         "battleCries": {
-            "class": "BattleCries.dealDamageToTarget",
-            "targets": "all",
             "requires": {
                 "class": "PlayActionRequirements.hasCardInHand",
                 "keywords": "dragon"
             },
-            "damage": 3
+            "class": "BattleCries.dealDamageToTarget",
+            "damage": 3,
+            "targets": "all"
         }
     }
 }

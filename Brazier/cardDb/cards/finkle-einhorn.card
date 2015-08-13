@@ -2,8 +2,8 @@
     "name": "Finkle Einhorn",
     "class": "neutral",
     "rarity": "legendary",
-    "manaCost": 2,
     "collectible": false,
+    "manaCost": 2,
     "minion": {
         "attack": 3,
         "hp": 3

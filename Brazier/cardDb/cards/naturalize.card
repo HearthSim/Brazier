@@ -1,8 +1,8 @@
 {
     "name": "Naturalize",
+    "description": "Destroy a minion. Your opponent draws 2 cards.",
     "class": "druid",
     "type": "spell",
-    "description": "Destroy a minion. Your opponent draws 2 cards.",
     "manaCost": 1,
     "playActions": [
         {
@@ -10,5 +10,6 @@
             "class": "ActorlessTargetedActions.KILL_TARGET"
         },
         "PlayerActions.DRAW_FOR_OPPONENT",
-        "PlayerActions.DRAW_FOR_OPPONENT"]
+        "PlayerActions.DRAW_FOR_OPPONENT"
+    ]
 }

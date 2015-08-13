@@ -4,7 +4,8 @@
     "class": "priest",
     "type": "spell",
     "manaCost": 1,
-    "playActions": [{
+    "playActions": [
+        {
             "targets": "all-minions",
             "class": "ActorlessTargetedActions.applyToMinionTarget",
             "action": {
@@ -12,5 +13,6 @@
                 "hp": 2
             }
         },
-        "PlayerActions.DRAW_FOR_SELF"]
+        "PlayerActions.DRAW_FOR_SELF"
+    ]
 }

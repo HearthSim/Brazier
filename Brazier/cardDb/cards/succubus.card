@@ -1,9 +1,9 @@
 {
     "name": "Succubus",
-    "class": "warlock",
     "description": "Battlecry: Discard a random card.",
-    "manaCost": 2,
+    "class": "warlock",
     "keywords": "demon",
+    "manaCost": 2,
     "minion": {
         "attack": 4,
         "hp": 3,

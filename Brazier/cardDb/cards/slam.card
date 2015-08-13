@@ -1,14 +1,12 @@
 {
     "name": "Slam",
+    "description": "Deal 2 damage to a minion. If it survives, draw a card.",
     "class": "warrior",
     "type": "spell",
-    "description": "Deal 2 damage to a minion. If it survives, draw a card.",
     "manaCost": 2,
-    "playActions": [
-        {
-            "class": "ActorlessTargetedActions.slam",
-            "targets": "all-minions",
-            "damage": 2
-        }
-    ]
+    "playActions": {
+        "targets": "all-minions",
+        "class": "ActorlessTargetedActions.slam",
+        "damage": 2
+    }
 }

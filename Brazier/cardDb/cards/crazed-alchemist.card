@@ -1,8 +1,8 @@
 {
     "name": "Crazed Alchemist",
     "description": "Battlecry: Swap the Attack and Health of a minion.",
-    "rarity": "rare",
     "class": "neutral",
+    "rarity": "rare",
     "manaCost": 2,
     "minion": {
         "attack": 2,

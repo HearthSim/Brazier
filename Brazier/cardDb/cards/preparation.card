@@ -1,15 +1,13 @@
 {
     "name": "Preparation",
+    "description": "The next spell you cast this turn costs (3) less.",
     "class": "rouge",
     "type": "spell",
     "rarity": "epic",
-    "description": "The next spell you cast this turn costs (3) less.",
     "manaCost": 0,
-    "playActions": [
-        {
-            "class": "PlayerActions.reduceManaCostThisTurn",
-            "filter": "CardAuras.TARGET_IS_SPELL",
-            "amount": 3
-        }
-    ]
+    "playActions": {
+        "class": "PlayerActions.reduceManaCostThisTurn",
+        "amount": 3,
+        "filter": "CardAuras.TARGET_IS_SPELL"
+    }
 }

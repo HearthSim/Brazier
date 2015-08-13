@@ -8,8 +8,8 @@
     "manaCost": 4,
     "playActions": {
         "class": "PlayerActions.summonMinion",
-        "minMinionCount": 3,
         "maxMinionCount": 5,
+        "minMinionCount": 3,
         "minion": "Murloc"
     }
 }

@@ -1,7 +1,7 @@
 {
     "name": "Amani Berserker",
-    "class": "neutral",
     "description": "Enrage: +3 Attack",
+    "class": "neutral",
     "manaCost": 2,
     "minion": {
         "attack": 2,

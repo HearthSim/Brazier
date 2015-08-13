@@ -2,8 +2,8 @@
     "name": "Micro Machine",
     "description": "At the start of each turn, gain +1 Attack.",
     "class": "neutral",
-    "manaCost": 2,
     "keywords": "mech",
+    "manaCost": 2,
     "minion": {
         "attack": 1,
         "hp": 2,

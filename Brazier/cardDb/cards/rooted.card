@@ -7,10 +7,12 @@
     "manaCost": 0,
     "playActions": {
         "class": "CardPlayActions.doForPlayedMinion",
-        "action": [{
-            "class": "MinionActions.buffHp",
-            "hp": 5
-        },
-        "MinionActions.TAUNT"]
+        "action": [
+            {
+                "class": "MinionActions.buffHp",
+                "hp": 5
+            },
+            "MinionActions.TAUNT"
+        ]
     }
 }

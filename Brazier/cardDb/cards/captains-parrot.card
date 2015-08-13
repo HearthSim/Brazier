@@ -2,9 +2,9 @@
     "name": "Captain's Parrot",
     "description": "Battlecry: Put a random Pirate from your deck into your hand.",
     "class": "neutral",
+    "keywords": "beast",
     "rarity": "epic",
     "manaCost": 2,
-    "keywords": "beast",
     "minion": {
         "attack": 1,
         "hp": 1,

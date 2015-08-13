@@ -2,9 +2,9 @@
     "name": "Malorne",
     "description": "Deathrattle: Shuffle this minion into your deck.",
     "class": "druid",
+    "keywords": "beast",
     "rarity": "legendary",
     "manaCost": 7,
-    "keywords": "beast",
     "minion": {
         "attack": 9,
         "hp": 7,

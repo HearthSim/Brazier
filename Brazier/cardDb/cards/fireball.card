@@ -1,14 +1,12 @@
 {
     "name": "Fireball",
+    "description": "Deal 6 damage.",
     "class": "mage",
     "type": "spell",
-    "description": "Deal 6 damage.",
     "manaCost": 4,
-    "playActions": [
-        {
-            "class": "ActorlessTargetedActions.dealSpellDamage",
-            "targets": "all",
-            "damage": 6
-        }
-    ]
+    "playActions": {
+        "targets": "all",
+        "class": "ActorlessTargetedActions.dealSpellDamage",
+        "damage": 6
+    }
 }

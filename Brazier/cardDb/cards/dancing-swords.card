@@ -1,7 +1,7 @@
 {
     "name": "Dancing Swords",
-    "class": "neutral",
     "description": "Deathrattle: Your opponent draws a card.",
+    "class": "neutral",
     "manaCost": 3,
     "minion": {
         "attack": 4,

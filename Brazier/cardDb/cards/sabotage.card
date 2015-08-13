@@ -14,5 +14,6 @@
         {
             "requires": "PlayActionRequirements.COMBO",
             "class": "PlayerActions.DESTROY_OPPONENTS_WEAPON"
-        }]
+        }
+    ]
 }

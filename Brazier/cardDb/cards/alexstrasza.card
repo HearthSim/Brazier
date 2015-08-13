@@ -1,20 +1,20 @@
 {
     "name": "Alexstrasza",
     "description": "Battlecry: Set a hero's remaining Health to 15.",
-    "rarity": "legendary",
     "class": "neutral",
-    "manaCost": 9,
     "keywords": "dragon",
+    "rarity": "legendary",
+    "manaCost": 9,
     "minion": {
         "attack": 8,
         "hp": 8,
         "battleCries": {
-            "targets": "all-heroes",
             "class": "ActorlessTargetedActions.applyToTargetOwner",
             "action": {
                 "class": "PlayerActions.setHeroHp",
                 "hp": 15
-            }
+            },
+            "targets": "all-heroes"
         }
     }
 }

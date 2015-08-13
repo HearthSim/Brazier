@@ -5,5 +5,8 @@
     "type": "spell",
     "rarity": "rare",
     "manaCost": 5,
-    "chooseOne": ["Nourish/Mana", "Nourish/Draw"]
+    "chooseOne": [
+        "Nourish/Mana",
+        "Nourish/Draw"
+    ]
 }

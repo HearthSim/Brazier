@@ -1,8 +1,8 @@
 {
     "name": "Hogger",
     "description": "At the end of your turn, summon a 2/2 Gnoll with Taunt.",
-    "rarity": "legendary",
     "class": "neutral",
+    "rarity": "legendary",
     "manaCost": 6,
     "minion": {
         "attack": 4,

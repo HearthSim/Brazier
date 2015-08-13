@@ -2,8 +2,8 @@
     "name": "Southsea Deckhand",
     "description": "Has Charge while you have a weapon equipped.",
     "class": "neutral",
-    "manaCost": 1,
     "keywords": "pirate",
+    "manaCost": 1,
     "minion": {
         "attack": 2,
         "hp": 1,

@@ -2,9 +2,9 @@
     "name": "Mana Tide Totem",
     "description": "At the end of your turn, draw a card.",
     "class": "shaman",
+    "keywords": "totem",
     "rarity": "rare",
     "manaCost": 3,
-    "keywords": "totem",
     "minion": {
         "attack": 0,
         "hp": 3,

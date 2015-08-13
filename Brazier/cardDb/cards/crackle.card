@@ -1,14 +1,14 @@
 {
     "name": "Crackle",
+    "description": "Deal 3-6 damage. Overload: (1)",
     "class": "shaman",
     "type": "spell",
-    "description": "Deal 3-6 damage. Overload: (1)",
     "manaCost": 2,
     "overload": 1,
     "playActions": {
-        "class": "ActorlessTargetedActions.dealSpellDamage",
         "targets": "all",
-        "minDamage": 3,
-        "maxDamage": 6
+        "class": "ActorlessTargetedActions.dealSpellDamage",
+        "maxDamage": 6,
+        "minDamage": 3
     }
 }

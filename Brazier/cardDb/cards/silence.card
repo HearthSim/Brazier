@@ -1,13 +1,11 @@
 {
     "name": "Silence",
+    "description": "Silence a minion.",
     "class": "priest",
     "type": "spell",
-    "description": "Silence a minion.",
     "manaCost": 0,
-    "playActions": [
-        {
-            "class": "ActorlessTargetedActions.SILENCE",
-            "targets": "all-minions"
-        }
-    ]
+    "playActions": {
+        "targets": "all-minions",
+        "class": "ActorlessTargetedActions.SILENCE"
+    }
 }

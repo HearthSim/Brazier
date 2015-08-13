@@ -5,10 +5,8 @@
     "type": "spell",
     "rarity": "epic",
     "manaCost": 7,
-    "playActions": [
-        {
-            "requires": "PlayActionRequirements.BOARD_IS_NOT_EMPTY",
-            "class": "PlayerActions.BRAWL"
-        }
-    ]
+    "playActions": {
+        "requires": "PlayActionRequirements.BOARD_IS_NOT_EMPTY",
+        "class": "PlayerActions.BRAWL"
+    }
 }

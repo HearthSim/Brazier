@@ -1,16 +1,14 @@
 {
     "name": "Imp-losion",
+    "description": "Deal 2-4 damage to a minion. Summon a 1/1 Imp for each damage dealt.",
     "class": "warlock",
     "type": "spell",
-    "description": "Deal 2-4 damage to a minion. Summon a 1/1 Imp for each damage dealt.",
     "manaCost": 4,
-    "playActions": [
-        {
-            "class": "ActorlessTargetedActions.implosion",
-            "targets": "all-minions",
-            "minDamage": 2,
-            "maxDamage": 4,
-            "minion": "Imp"
-        }
-    ]
+    "playActions": {
+        "targets": "all-minions",
+        "class": "ActorlessTargetedActions.implosion",
+        "maxDamage": 4,
+        "minDamage": 2,
+        "minion": "Imp"
+    }
 }

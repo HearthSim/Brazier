@@ -2,19 +2,19 @@
     "name": "Dragon Consort",
     "description": "Battlecry: The next Dragon you play costs (2) less.",
     "class": "paladin",
+    "keywords": "dragon",
     "rarity": "rare",
     "manaCost": 5,
-    "keywords": "dragon",
     "minion": {
         "attack": 5,
         "hp": 5,
         "battleCries": {
             "class": "PlayerActions.reduceManaCostNextCard",
+            "amount": 2,
             "filter": {
                 "class": "Auras.targetHasKeyword",
                 "keywords": "dragon"
-            },
-            "amount": 2
+            }
         }
     }
 }

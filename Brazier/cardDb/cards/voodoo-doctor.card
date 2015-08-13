@@ -1,15 +1,15 @@
 {
     "name": "Voodoo Doctor",
-    "class": "neutral",
     "description": "Battlecry: Restore 2 Health.",
+    "class": "neutral",
     "manaCost": 1,
     "minion": {
         "attack": 2,
         "hp": 1,
         "battleCries": {
             "class": "BattleCries.dealDamageToTarget",
-            "targets": "all",
-            "damage": -2
+            "damage": -2,
+            "targets": "all"
         }
     }
 }

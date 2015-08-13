@@ -2,9 +2,9 @@
     "name": "Frog",
     "description": "Taunt",
     "class": "neutral",
-    "manaCost": 0,
-    "collectible": false,
     "keywords": "beast",
+    "collectible": false,
+    "manaCost": 0,
     "minion": {
         "attack": 0,
         "hp": 1,

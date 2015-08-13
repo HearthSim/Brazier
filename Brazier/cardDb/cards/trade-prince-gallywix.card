@@ -1,8 +1,8 @@
 {
     "name": "Trade Prince Gallywix",
     "description": "Whenever your opponent casts a spell, gain a copy of it and give them a Coin.",
-    "rarity": "legendary",
     "class": "rouge",
+    "rarity": "legendary",
     "manaCost": 6,
     "minion": {
         "attack": 5,

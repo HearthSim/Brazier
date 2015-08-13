@@ -2,8 +2,8 @@
     "name": "Warbot",
     "description": "Enrage: +1 Attack.",
     "class": "warrior",
-    "manaCost": 1,
     "keywords": "mech",
+    "manaCost": 1,
     "minion": {
         "attack": 1,
         "hp": 3,

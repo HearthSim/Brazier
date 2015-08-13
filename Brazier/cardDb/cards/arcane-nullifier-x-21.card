@@ -2,9 +2,9 @@
     "name": "Arcane Nullifier X-21",
     "description": "Taunt Can't be targeted by spells or Hero Powers.",
     "class": "neutral",
+    "keywords": "mech",
     "rarity": "rare",
     "manaCost": 4,
-    "keywords": "mech",
     "minion": {
         "attack": 2,
         "hp": 5,

@@ -17,7 +17,8 @@
                     "class": "PrepareDamageEventActions.adjustDamage",
                     "damage": 0
                 },
-                "PlayerActions.HERO_IS_IMMUNE_THIS_TURN"]
+                "PlayerActions.HERO_IS_IMMUNE_THIS_TURN"
+            ]
         }
     }
 }

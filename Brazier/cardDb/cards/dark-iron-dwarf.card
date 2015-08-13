@@ -1,15 +1,15 @@
 {
     "name": "Dark Iron Dwarf",
-    "class": "neutral",
     "description": "Battlecry: Give a minion +2 Attack this turn.",
+    "class": "neutral",
     "manaCost": 4,
     "minion": {
         "attack": 4,
         "hp": 4,
         "battleCries": {
             "class": "ActorlessTargetedActions.addTemporaryAttack",
-            "targets": "all-minions",
-            "attack": 2
+            "attack": 2,
+            "targets": "all-minions"
         }
     }
 }

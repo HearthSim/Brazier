@@ -2,9 +2,9 @@
     "name": "Felguard",
     "description": "Taunt. Battlecry: Destroy one of your Mana Crystals.",
     "class": "warlock",
+    "keywords": "demon",
     "rarity": "rare",
     "manaCost": 3,
-    "keywords": "demon",
     "minion": {
         "attack": 3,
         "hp": 5,

@@ -1,15 +1,15 @@
 {
     "name": "Ancient Brewmaster",
-    "class": "neutral",
     "description": "Battlecry: Return a friendly minion from the battlefield to your hand.",
+    "class": "neutral",
     "manaCost": 4,
     "minion": {
         "attack": 5,
         "hp": 4,
         "battleCries": {
-            "targets": "self-minions",
             "class": "ActorlessTargetedActions.applyToMinionTarget",
-            "action": "MinionActions.RETURN_MINION"
+            "action": "MinionActions.RETURN_MINION",
+            "targets": "self-minions"
         }
     }
 }

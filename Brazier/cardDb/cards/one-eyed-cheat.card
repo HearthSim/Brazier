@@ -2,9 +2,9 @@
     "name": "One-eyed Cheat",
     "description": "Whenever you summon a Pirate, gain Stealth.",
     "class": "neutral",
+    "keywords": "pirate",
     "rarity": "rare",
     "manaCost": 2,
-    "keywords": "pirate",
     "minion": {
         "attack": 4,
         "hp": 1,

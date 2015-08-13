@@ -5,9 +5,9 @@
     "rarity": "rare",
     "manaCost": 3,
     "playActions": {
-        "class": "CardPlayActions.dealMinionDamage",
         "targets": "all",
         "requires": "PlayActionRequirements.COMBO",
+        "class": "CardPlayActions.dealMinionDamage",
         "damage": 2
     },
     "minion": {

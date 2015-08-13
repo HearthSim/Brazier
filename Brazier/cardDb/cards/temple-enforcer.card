@@ -7,12 +7,12 @@
         "attack": 6,
         "hp": 6,
         "battleCries": {
-            "targets": "self-minions",
             "class": "ActorlessTargetedActions.applyToMinionTarget",
             "action": {
                 "class": "MinionActions.buffHp",
                 "hp": 3
-            }
+            },
+            "targets": "self-minions"
         }
     }
 }

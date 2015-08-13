@@ -10,5 +10,6 @@
             "class": "PlayerActions.forEnemyMinions",
             "action": "ActorlessTargetedActions.SILENCE"
         },
-        "PlayerActions.DRAW_FOR_SELF"]
+        "PlayerActions.DRAW_FOR_SELF"
+    ]
 }

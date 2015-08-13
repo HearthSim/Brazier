@@ -12,5 +12,6 @@
         {
             "targets": "all-minions",
             "class": "MinionActions.TAUNT"
-        }]
+        }
+    ]
 }

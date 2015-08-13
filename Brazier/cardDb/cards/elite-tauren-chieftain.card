@@ -1,8 +1,8 @@
 {
     "name": "Elite Tauren Chieftain",
     "description": "Battlecry: Give both players the power to ROCK! (with a Power Chord card)",
-    "rarity": "legendary",
     "class": "neutral",
+    "rarity": "legendary",
     "manaCost": 5,
     "minion": {
         "attack": 5,

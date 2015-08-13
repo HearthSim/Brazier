@@ -2,8 +2,8 @@
     "name": "Bloodsail Raider",
     "description": "Battlecry: Gain Attack equal to the Attack of your weapon.",
     "class": "neutral",
-    "manaCost": 2,
     "keywords": "pirate",
+    "manaCost": 2,
     "minion": {
         "attack": 2,
         "hp": 3,

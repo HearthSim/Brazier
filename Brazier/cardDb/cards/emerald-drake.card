@@ -1,12 +1,12 @@
 {
     "name": "Emerald Drake",
     "class": "neutral",
-    "manaCost": 4,
     "keywords": [
         "emerald-dream",
         "dragon"
     ],
     "collectible": false,
+    "manaCost": 4,
     "minion": {
         "attack": 7,
         "hp": 6

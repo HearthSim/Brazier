@@ -1,14 +1,12 @@
 {
     "name": "Shadowstep",
+    "description": "Return a friendly minion to your hand. It costs (2) less.",
     "class": "rouge",
     "type": "spell",
-    "description": "Return a friendly minion to your hand. It costs (2) less.",
     "manaCost": 0,
-    "playActions": [
-        {
-            "targets": "self-minions",
-            "class": "MinionActions.returnMinion",
-            "costReduction": 2
-        }
-    ]
+    "playActions": {
+        "targets": "self-minions",
+        "class": "MinionActions.returnMinion",
+        "costReduction": 2
+    }
 }

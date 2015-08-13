@@ -2,8 +2,8 @@
     "name": "Sen'jin Shieldmasta",
     "description": "Taunt",
     "class": "neutral",
-    "manaCost": 4,
     "keywords": "horde-warrior",
+    "manaCost": 4,
     "minion": {
         "attack": 3,
         "hp": 5,

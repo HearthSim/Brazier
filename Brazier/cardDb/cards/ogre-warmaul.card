@@ -8,7 +8,10 @@
         "charges": 2,
         "triggers": {
             "attack-initiated": {
-                "filter": ["BasicFilters.ATTACKER_IS_OWNER", "BasicFilters.ATTACKER_IS_HERO"],
+                "filter": [
+                    "BasicFilters.ATTACKER_IS_OWNER",
+                    "BasicFilters.ATTACKER_IS_HERO"
+                ],
                 "action": "AttackEventActions.MISS_TARGET_SOMETIMES"
             }
         }

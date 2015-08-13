@@ -1,10 +1,10 @@
 {
     "name": "Mistress of Pain",
-    "class": "warlock",
     "description": "Whenever this minion deals damage, restore that much Health to your hero.",
+    "class": "warlock",
+    "keywords": "demon",
     "rarity": "rare",
     "manaCost": 2,
-    "keywords": "demon",
     "minion": {
         "attack": 1,
         "hp": 4,

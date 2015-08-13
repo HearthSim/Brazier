@@ -8,8 +8,8 @@
         "hp": 1,
         "battleCries": {
             "class": "BattleCries.dealDamageToTarget",
-            "targets": "all",
-            "damage": 1
+            "damage": 1,
+            "targets": "all"
         }
     }
 }

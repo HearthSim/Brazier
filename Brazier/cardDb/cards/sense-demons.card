@@ -1,13 +1,13 @@
 {
     "name": "Sense Demons",
+    "description": "Put 2 random Demons from your deck into your hand.",
     "class": "warlock",
     "type": "spell",
-    "description": "Put 2 random Demons from your deck into your hand.",
     "manaCost": 3,
     "playActions": {
         "class": "PlayerActions.getRandomFromDeck",
         "cardCount": 2,
-        "keywords": "demon",
-        "fallbackCard": "Worthless Imp"
+        "fallbackCard": "Worthless Imp",
+        "keywords": "demon"
     }
 }

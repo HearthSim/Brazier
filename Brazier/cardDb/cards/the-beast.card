@@ -2,8 +2,8 @@
     "name": "The Beast",
     "description": "Deathrattle: Summon a 3/3 Finkle Einhorn for your opponent.",
     "class": "neutral",
-    "manaCost": 6,
     "keywords": "beast",
+    "manaCost": 6,
     "minion": {
         "attack": 9,
         "hp": 7,

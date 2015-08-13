@@ -1,8 +1,8 @@
 {
     "name": "Knife Juggler",
     "description": "After you summon a minion, deal 1 damage to a random enemy.",
-    "rarity": "rare",
     "class": "neutral",
+    "rarity": "rare",
     "manaCost": 2,
     "minion": {
         "attack": 3,

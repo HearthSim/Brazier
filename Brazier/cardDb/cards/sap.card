@@ -4,11 +4,9 @@
     "class": "rouge",
     "type": "spell",
     "manaCost": 2,
-    "playActions": [
-        {
-            "targets": "enemy-minions",
-            "class": "ActorlessTargetedActions.applyToMinionTarget",
-            "action": "MinionActions.RETURN_MINION"
-        }
-    ]
+    "playActions": {
+        "targets": "enemy-minions",
+        "class": "ActorlessTargetedActions.applyToMinionTarget",
+        "action": "MinionActions.RETURN_MINION"
+    }
 }

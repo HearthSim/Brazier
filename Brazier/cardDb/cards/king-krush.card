@@ -2,9 +2,9 @@
     "name": "King Krush",
     "description": "Charge",
     "class": "hunter",
+    "keywords": "beast",
     "rarity": "legendary",
     "manaCost": 9,
-    "keywords": "beast",
     "minion": {
         "attack": 8,
         "hp": 8,

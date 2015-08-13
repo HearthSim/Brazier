@@ -1,8 +1,8 @@
 {
     "name": "Explosive Trap",
+    "description": "Secret: When your hero is attacked, deal 2 damage to all enemies.",
     "class": "hunter",
     "type": "spell",
-    "description": "Secret: When your hero is attacked, deal 2 damage to all enemies.",
     "manaCost": 2,
     "secret": {
         "attack-initiated": {

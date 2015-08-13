@@ -1,16 +1,16 @@
 {
     "name": "Sacrificial Pact",
+    "description": "Destroy a Demon. Restore 5 Health to your hero.",
     "class": "warlock",
     "type": "spell",
-    "description": "Destroy a Demon. Restore 5 Health to your hero.",
     "manaCost": 0,
     "playActions": [
         {
-            "class": "ActorlessTargetedActions.KILL_TARGET",
             "targets": {
                 "class": "TargetNeeds.hasKeyword",
                 "keywords": "demon"
-            }
+            },
+            "class": "ActorlessTargetedActions.KILL_TARGET"
         },
         {
             "class": "PlayerActions.damageOwnHero",

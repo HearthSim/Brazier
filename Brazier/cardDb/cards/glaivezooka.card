@@ -2,9 +2,9 @@
     "name": "Glaivezooka",
     "description": "Battlecry: Give a random friendly minion +1 Attack.",
     "class": "hunter",
+    "keywords": "battlecry",
     "rarity": "rare",
     "manaCost": 2,
-    "keywords": "battlecry",
     "playActions": {
         "class": "PlayerActions.applyTargetedActionToRandomOwnMinion",
         "action": {

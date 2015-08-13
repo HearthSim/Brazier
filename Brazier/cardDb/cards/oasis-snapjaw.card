@@ -1,8 +1,8 @@
 {
     "name": "Oasis Snapjaw",
     "class": "neutral",
-    "manaCost": 4,
     "keywords": "beast",
+    "manaCost": 4,
     "minion": {
         "attack": 2,
         "hp": 7

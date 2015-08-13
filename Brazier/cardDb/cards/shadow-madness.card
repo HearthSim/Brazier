@@ -4,18 +4,15 @@
     "class": "priest",
     "type": "spell",
     "manaCost": 4,
-    "playActions": [
-        {
-            "class": "ActorlessTargetedActions.SHADOW_MADNESS",
-            "requires": "PlayActionRequirements.HAS_SPACE_ON_OWN_BOARD",
-            "targets": [
-                "enemy-minions",
-                {
-                    "class": "TargetNeeds.attackIsLessThan",
-                    "attack": 4
-                }
-            ]
-
-        }
-    ]
+    "playActions": {
+        "targets": [
+            "enemy-minions",
+            {
+                "class": "TargetNeeds.attackIsLessThan",
+                "attack": 4
+            }
+        ],
+        "requires": "PlayActionRequirements.HAS_SPACE_ON_OWN_BOARD",
+        "class": "ActorlessTargetedActions.SHADOW_MADNESS"
+    }
 }

@@ -1,8 +1,8 @@
 {
     "name": "Duplicate",
+    "description": "Secret: When a friendly minion dies, put 2 copies of it into your hand.",
     "class": "mage",
     "type": "spell",
-    "description": "Secret: When a friendly minion dies, put 2 copies of it into your hand.",
     "manaCost": 3,
     "secret": {
         "minion-killed": {

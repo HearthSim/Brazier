@@ -1,12 +1,12 @@
 {
     "name": "Blade Flurry",
+    "description": "Destroy your weapon and deal its damage to all enemies.",
     "class": "rouge",
     "type": "spell",
     "rarity": "rare",
-    "description": "Destroy your weapon and deal its damage to all enemies.",
     "manaCost": 2,
     "playActions": {
-        "class": "PlayerActions.BLADE_FLURRY",
-        "requires": "PlayActionRequirements.HAS_WEAPON"
+        "requires": "PlayActionRequirements.HAS_WEAPON",
+        "class": "PlayerActions.BLADE_FLURRY"
     }
 }

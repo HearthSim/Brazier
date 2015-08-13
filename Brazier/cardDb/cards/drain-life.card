@@ -1,13 +1,13 @@
 {
     "name": "Drain Life",
+    "description": "Deal 2 damage. Restore 2 Health to your hero.",
     "class": "warlock",
     "type": "spell",
-    "description": "Deal 2 damage. Restore 2 Health to your hero.",
     "manaCost": 3,
     "playActions": [
         {
-            "class": "ActorlessTargetedActions.dealSpellDamage",
             "targets": "all",
+            "class": "ActorlessTargetedActions.dealSpellDamage",
             "damage": 2
         },
         {

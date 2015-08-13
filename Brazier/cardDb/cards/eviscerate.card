@@ -1,20 +1,20 @@
 {
     "name": "Eviscerate",
+    "description": "Deal 2 damage. Combo: Deal 4 damage instead.",
     "class": "rouge",
     "type": "spell",
-    "description": "Deal 2 damage. Combo: Deal 4 damage instead.",
     "manaCost": 2,
     "playActions": [
         {
-            "class": "ActorlessTargetedActions.dealSpellDamage",
             "targets": "all",
             "requires": "PlayActionRequirements.NO_COMBO",
+            "class": "ActorlessTargetedActions.dealSpellDamage",
             "damage": 2
         },
         {
-            "class": "ActorlessTargetedActions.dealSpellDamage",
             "targets": "all",
             "requires": "PlayActionRequirements.COMBO",
+            "class": "ActorlessTargetedActions.dealSpellDamage",
             "damage": 4
         }
     ]

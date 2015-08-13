@@ -1,9 +1,9 @@
 {
     "name": "Black Whelp",
     "class": "neutral",
+    "keywords": "dragon",
     "collectible": false,
     "manaCost": 1,
-    "keywords": "dragon",
     "minion": {
         "attack": 2,
         "hp": 1

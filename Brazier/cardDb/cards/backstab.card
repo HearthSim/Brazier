@@ -4,11 +4,12 @@
     "class": "rouge",
     "type": "spell",
     "manaCost": 0,
-    "playActions": [
-        {
-            "targets": ["all-minions", "TargetNeeds.TARGET_NOT_DAMAGED"],
-            "class": "ActorlessTargetedActions.dealSpellDamage",
-            "damage": 2
-        }
-    ]
+    "playActions": {
+        "targets": [
+            "all-minions",
+            "TargetNeeds.TARGET_NOT_DAMAGED"
+        ],
+        "class": "ActorlessTargetedActions.dealSpellDamage",
+        "damage": 2
+    }
 }

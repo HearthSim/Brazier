@@ -12,7 +12,8 @@
                 "filter": [
                     "BasicFilters.ATTACKER_IS_OWNER",
                     "BasicFilters.ATTACKER_IS_HERO",
-                    "BasicFilters.ATTACK_TARGET_IS_MINION"],
+                    "BasicFilters.ATTACK_TARGET_IS_MINION"
+                ],
                 "action": {
                     "class": "PlayerActions.buffWeapon",
                     "attack": -1,

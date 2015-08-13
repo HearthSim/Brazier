@@ -1,8 +1,8 @@
 {
     "name": "Ice Lance",
+    "description": "Freeze a character. If it was already Frozen, deal 4 damage instead.",
     "class": "mage",
     "type": "spell",
-    "description": "Freeze a character. If it was already Frozen, deal 4 damage instead.",
     "manaCost": 1,
     "playActions": [
         {

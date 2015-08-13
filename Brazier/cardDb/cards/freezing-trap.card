@@ -1,12 +1,15 @@
 {
     "name": "Freezing Trap",
+    "description": "Secret: When an enemy minion attacks, return it to its owner's hand and it costs (2) more.",
     "class": "hunter",
     "type": "spell",
-    "description": "Secret: When an enemy minion attacks, return it to its owner's hand and it costs (2) more.",
     "manaCost": 2,
     "secret": {
         "attack-initiated": {
-            "filter": ["BasicFilters.ATTACKER_IS_ENEMY", "BasicFilters.ATTACKER_IS_ALIVE"],
+            "filter": [
+                "BasicFilters.ATTACKER_IS_ENEMY",
+                "BasicFilters.ATTACKER_IS_ALIVE"
+            ],
             "action": {
                 "class": "AttackEventActions.returnAttacker",
                 "costReduction": -2

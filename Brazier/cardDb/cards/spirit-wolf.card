@@ -2,8 +2,8 @@
     "name": "Spirit Wolf",
     "description": "Taunt",
     "class": "shaman",
-    "manaCost": 2,
     "collectible": false,
+    "manaCost": 2,
     "minion": {
         "attack": 2,
         "hp": 3,

@@ -7,8 +7,8 @@
     "manaCost": 2,
     "playActions": [
         {
-            "class": "ActorlessTargetedActions.dealSpellDamage",
             "targets": "all",
+            "class": "ActorlessTargetedActions.dealSpellDamage",
             "damage": 2
         },
         "PlayerActions.REMOVE_OVERLOAD"

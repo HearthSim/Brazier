@@ -4,10 +4,12 @@
     "class": "druid",
     "type": "spell",
     "manaCost": 6,
-    "playActions": [{
+    "playActions": [
+        {
             "targets": "all",
             "class": "ActorlessTargetedActions.dealSpellDamage",
             "damage": 5
         },
-        "PlayerActions.DRAW_FOR_SELF"]
+        "PlayerActions.DRAW_FOR_SELF"
+    ]
 }

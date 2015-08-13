@@ -7,11 +7,11 @@
     "minion": {
         "attack": 5,
         "hp": 7,
-        "deathRattle": {
+        "battleCries": {
             "class": "PlayerActions.addRandomCard",
             "keywords": "spare-part"
         },
-        "battleCries": {
+        "deathRattle": {
             "class": "PlayerActions.addRandomCard",
             "keywords": "spare-part"
         }

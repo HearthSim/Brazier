@@ -7,7 +7,7 @@
     "manaCost": 6,
     "playActions": {
         "class": "PlayerActions.summonMinion",
-        "minionCount": 3,
-        "minion": "Treant/Charge"
+        "minion": "Treant/Charge",
+        "minionCount": 3
     }
 }

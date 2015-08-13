@@ -1,8 +1,8 @@
 {
     "name": "Inner Rage",
+    "description": "Deal 1 damage to a minion and give it +2 Attack.",
     "class": "warrior",
     "type": "spell",
-    "description": "Deal 1 damage to a minion and give it +2 Attack.",
     "manaCost": 0,
     "playActions": [
         {

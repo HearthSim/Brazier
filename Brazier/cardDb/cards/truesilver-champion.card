@@ -9,7 +9,10 @@
         "triggers": {
             "attack-initiated": {
                 "priority": "low",
-                "filter": ["BasicFilters.ATTACKER_IS_OWNER", "BasicFilters.ATTACKER_IS_HERO"],
+                "filter": [
+                    "BasicFilters.ATTACKER_IS_OWNER",
+                    "BasicFilters.ATTACKER_IS_HERO"
+                ],
                 "action": {
                     "class": "WeaponEventActions.doSelf",
                     "action": {

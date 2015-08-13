@@ -2,9 +2,9 @@
     "name": "Old Murk-Eye",
     "description": "Charge. Has +1 Attack for each other Murloc on the battlefield.",
     "class": "neutral",
+    "keywords": "murloc",
     "rarity": "legendary",
     "manaCost": 4,
-    "keywords": "murloc",
     "minion": {
         "attack": 2,
         "hp": 4,

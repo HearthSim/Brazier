@@ -1,8 +1,8 @@
 {
     "name": "Dr. Boom",
     "description": "Battlecry: Summon two 1/1 Boom Bots. WARNING: Bots may explode.",
-    "rarity": "legendary",
     "class": "neutral",
+    "rarity": "legendary",
     "manaCost": 7,
     "minion": {
         "attack": 7,

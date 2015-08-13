@@ -2,8 +2,8 @@
     "name": "Dragonkin Sorcerer",
     "description": "Whenever you target this minion with a spell, gain +1/+1.",
     "class": "neutral",
-    "manaCost": 4,
     "keywords": "dragon",
+    "manaCost": 4,
     "minion": {
         "attack": 3,
         "hp": 5,

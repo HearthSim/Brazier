@@ -1,9 +1,9 @@
 {
     "name": "Voidwalker",
-    "class": "warlock",
     "description": "Taunt",
-    "manaCost": 1,
+    "class": "warlock",
     "keywords": "demon",
+    "manaCost": 1,
     "minion": {
         "attack": 1,
         "hp": 3,

@@ -1,8 +1,8 @@
 {
     "name": "Ice Barrier",
+    "description": "Secret: When your hero is attacked, gain 8 Armor.",
     "class": "mage",
     "type": "spell",
-    "description": "Secret: When your hero is attacked, gain 8 Armor.",
     "manaCost": 3,
     "secret": {
         "attack-initiated": {

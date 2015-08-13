@@ -2,9 +2,9 @@
     "name": "Captain Greenskin",
     "description": "Battlecry: Give your weapon +1/+1.",
     "class": "neutral",
+    "keywords": "pirate",
     "rarity": "legendary",
     "manaCost": 5,
-    "keywords": "pirate",
     "minion": {
         "attack": 5,
         "hp": 4,

@@ -2,9 +2,9 @@
     "name": "Maexxna",
     "description": "Destroy any minion damaged by this minion.",
     "class": "neutral",
+    "keywords": "beast",
     "rarity": "legendary",
     "manaCost": 6,
-    "keywords": "beast",
     "minion": {
         "attack": 2,
         "hp": 8,

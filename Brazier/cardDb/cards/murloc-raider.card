@@ -1,8 +1,8 @@
 {
     "name": "Murloc Raider",
     "class": "neutral",
-    "manaCost": 1,
     "keywords": "murloc",
+    "manaCost": 1,
     "minion": {
         "attack": 2,
         "hp": 1

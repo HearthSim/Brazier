@@ -7,7 +7,7 @@
     "manaCost": 0,
     "playActions": {
         "class": "PlayerActions.addManaCrystal",
-        "empty": false,
-        "amount": 2
+        "amount": 2,
+        "empty": false
     }
 }

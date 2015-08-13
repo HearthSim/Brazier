@@ -2,8 +2,8 @@
     "name": "Clockwork Gnome",
     "description": "Deathrattle: Add a Spare Part card to your hand.",
     "class": "neutral",
-    "manaCost": 1,
     "keywords": "mech",
+    "manaCost": 1,
     "minion": {
         "attack": 2,
         "hp": 1,

@@ -2,17 +2,17 @@
     "name": "Twilight Whelp",
     "description": "Battlecry: If you're holding a Dragon, gain +2 Health.",
     "class": "priest",
-    "manaCost": 1,
     "keywords": "dragon",
+    "manaCost": 1,
     "minion": {
         "attack": 2,
         "hp": 1,
         "battleCries": {
-            "class": "MinionActions.buffHp",
             "requires": {
                 "class": "PlayActionRequirements.hasCardInHand",
                 "keywords": "dragon"
             },
+            "class": "MinionActions.buffHp",
             "hp": 2
         }
     }

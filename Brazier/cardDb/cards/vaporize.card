@@ -10,7 +10,8 @@
             "filter": [
                 "BasicFilters.ATTACK_TARGET_IS_OWN_HERO",
                 "BasicFilters.ATTACKER_IS_MINION",
-                "BasicFilters.ATTACKER_IS_ENEMY"],
+                "BasicFilters.ATTACKER_IS_ENEMY"
+            ],
             "action": {
                 "class": "AttackEventActions.doForAttacker",
                 "action": "ActorlessTargetedActions.KILL_TARGET"

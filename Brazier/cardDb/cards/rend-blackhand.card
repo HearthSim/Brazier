@@ -8,6 +8,10 @@
         "attack": 8,
         "hp": 4,
         "battleCries": {
+            "requires": {
+                "class": "PlayActionRequirements.hasCardInHand",
+                "keywords": "dragon"
+            },
             "class": "ActorlessTargetedActions.KILL_TARGET",
             "targets": [
                 "all-minions",
@@ -15,11 +19,7 @@
                     "class": "TargetNeeds.hasKeyword",
                     "keywords": "legendary"
                 }
-            ],
-            "requires": {
-                "class": "PlayActionRequirements.hasCardInHand",
-                "keywords": "dragon"
-            }
+            ]
         }
     }
 }

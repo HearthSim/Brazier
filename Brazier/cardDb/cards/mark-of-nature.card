@@ -1,8 +1,11 @@
 {
     "name": "Mark of Nature",
+    "description": "Choose One - Give a minion +4 Attack; or +4 Health and Taunt.",
     "class": "druid",
     "type": "spell",
-    "description": "Choose One - Give a minion +4 Attack; or +4 Health and Taunt.",
     "manaCost": 3,
-    "chooseOne": ["Mark of Nature/AttackBuff", "Mark of Nature/HpBuff"]
+    "chooseOne": [
+        "Mark of Nature/AttackBuff",
+        "Mark of Nature/HpBuff"
+    ]
 }

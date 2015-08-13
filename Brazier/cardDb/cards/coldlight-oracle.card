@@ -2,9 +2,9 @@
     "name": "Coldlight Oracle",
     "description": "Battlecry: Each player draws 2 cards.",
     "class": "neutral",
+    "keywords": "murloc",
     "rarity": "rare",
     "manaCost": 3,
-    "keywords": "murloc",
     "minion": {
         "attack": 2,
         "hp": 2,

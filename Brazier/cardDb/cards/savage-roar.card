@@ -15,5 +15,6 @@
         {
             "class": "PlayerActions.addHeroAttackForThisTurn",
             "attack": 2
-        }]
+        }
+    ]
 }

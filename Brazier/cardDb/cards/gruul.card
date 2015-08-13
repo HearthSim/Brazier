@@ -1,8 +1,8 @@
 {
     "name": "Gruul",
     "description": "At the end of each turn, gain +1/+1 .",
-    "rarity": "legendary",
     "class": "neutral",
+    "rarity": "legendary",
     "manaCost": 8,
     "minion": {
         "attack": 7,

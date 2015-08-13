@@ -2,9 +2,9 @@
     "name": "Angry Chicken",
     "description": "Enrage: +5 Attack.",
     "class": "neutral",
+    "keywords": "beast",
     "rarity": "rare",
     "manaCost": 1,
-    "keywords": "beast",
     "minion": {
         "attack": 1,
         "hp": 1,

@@ -5,11 +5,9 @@
     "type": "spell",
     "manaCost": 3,
     "overload": 2,
-    "playActions": [
-        {
-            "class": "ActorlessTargetedActions.dealSpellDamage",
-            "targets": "all",
-            "damage": 5
-        }
-    ]
+    "playActions": {
+        "targets": "all",
+        "class": "ActorlessTargetedActions.dealSpellDamage",
+        "damage": 5
+    }
 }

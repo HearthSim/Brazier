@@ -3,7 +3,7 @@
     "description": "Put a copy of each friendly minion into your hand.",
     "class": "mage",
     "type": "spell",
-    "manaCost": 4,
     "rarity": "epic",
+    "manaCost": 4,
     "playActions": "PlayerActions.ECHO_MINIONS"
 }

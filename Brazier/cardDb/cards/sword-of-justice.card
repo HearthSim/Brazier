@@ -9,7 +9,10 @@
         "charges": 5,
         "triggers": {
             "done-summoning": {
-                "filter": ["BasicFilters.HAS_SAME_OWNER_PLAYER", "BasicFilters.SOURCE_WEAPON_HAS_CHARGE"],
+                "filter": [
+                    "BasicFilters.HAS_SAME_OWNER_PLAYER",
+                    "BasicFilters.SOURCE_WEAPON_HAS_CHARGE"
+                ],
                 "action": [
                     {
                         "class": "WeaponEventActions.doSelf",
@@ -22,7 +25,8 @@
                             "attack": 1,
                             "hp": 1
                         }
-                    }]
+                    }
+                ]
             }
         }
     }

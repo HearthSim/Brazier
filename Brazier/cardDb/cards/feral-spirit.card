@@ -8,7 +8,7 @@
     "overload": 2,
     "playActions": {
         "class": "PlayerActions.summonMinion",
-        "minionCount": 2,
-        "minion": "Spirit Wolf"
+        "minion": "Spirit Wolf",
+        "minionCount": 2
     }
 }

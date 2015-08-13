@@ -1,13 +1,11 @@
 {
     "name": "Blessing of Wisdom",
+    "description": "Choose a minion. Whenever it attacks, draw a card.",
     "class": "paladin",
     "type": "spell",
-    "description": "Choose a minion. Whenever it attacks, draw a card.",
     "manaCost": 1,
-    "playActions": [
-        {
-            "class": "ActorlessTargetedActions.blessingOfWisdom",
-            "targets": "all-minions"
-        }
-    ]
+    "playActions": {
+        "targets": "all-minions",
+        "class": "ActorlessTargetedActions.blessingOfWisdom"
+    }
 }

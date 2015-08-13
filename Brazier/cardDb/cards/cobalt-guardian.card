@@ -2,9 +2,9 @@
     "name": "Cobalt Guardian",
     "description": "Whenever you summon a Mech, gain Divine Shield.",
     "class": "neutral",
+    "keywords": "mech",
     "rarity": "rare",
     "manaCost": 5,
-    "keywords": "mech",
     "minion": {
         "attack": 6,
         "hp": 3,

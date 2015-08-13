@@ -7,7 +7,7 @@
     "manaCost": 3,
     "playActions": {
         "class": "PlayerActions.bouncingBlade",
-        "maxBounces": 80,
-        "baseDamage": 1
+        "baseDamage": 1,
+        "maxBounces": 80
     }
 }

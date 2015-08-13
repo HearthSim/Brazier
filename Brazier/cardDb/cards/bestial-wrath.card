@@ -9,9 +9,10 @@
         "targets": [
             "self-minions",
             {
-                "class":  "TargetNeeds.hasKeyword",
+                "class": "TargetNeeds.hasKeyword",
                 "keywords": "beast"
-            }],
+            }
+        ],
         "class": "CardPlayActions.combine",
         "actions": [
             {

@@ -8,7 +8,7 @@
     "overload": 2,
     "playActions": {
         "class": "PlayerActions.dealDamageToEnemyMinions",
-        "minDamage": 2,
-        "maxDamage": 3
+        "maxDamage": 3,
+        "minDamage": 2
     }
 }

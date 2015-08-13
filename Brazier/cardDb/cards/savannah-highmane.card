@@ -2,9 +2,9 @@
     "name": "Savannah Highmane",
     "description": "Deathrattle: Summon two 2/2 Hyenas.",
     "class": "hunter",
+    "keywords": "beast",
     "rarity": "rare",
     "manaCost": 6,
-    "keywords": "beast",
     "minion": {
         "attack": 6,
         "hp": 5,

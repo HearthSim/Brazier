@@ -1,9 +1,9 @@
 {
     "name": "Dark Wispers/Buff",
     "displayName": "Dark Wispers",
+    "description": "+5/+5 and Taunt.",
     "class": "druid",
     "type": "spell",
-    "description": "+5/+5 and Taunt.",
     "collectible": false,
     "manaCost": 0,
     "playActions": [

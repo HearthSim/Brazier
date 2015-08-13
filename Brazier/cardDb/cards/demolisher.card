@@ -2,9 +2,9 @@
     "name": "Demolisher",
     "description": "At the start of your turn, deal 2 damage to a random enemy.",
     "class": "neutral",
+    "keywords": "mech",
     "rarity": "rare",
     "manaCost": 3,
-    "keywords": "mech",
     "minion": {
         "attack": 1,
         "hp": 4,

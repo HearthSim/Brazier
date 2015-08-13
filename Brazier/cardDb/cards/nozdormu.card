@@ -2,9 +2,9 @@
     "name": "Nozdormu",
     "description": "Players only have 15 seconds to take their turns.",
     "class": "neutral",
+    "keywords": "dragon",
     "rarity": "legendary",
     "manaCost": 9,
-    "keywords": "dragon",
     "minion": {
         "attack": 8,
         "hp": 8

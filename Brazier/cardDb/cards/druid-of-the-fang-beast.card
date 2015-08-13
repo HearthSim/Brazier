@@ -2,9 +2,9 @@
     "name": "Druid of the Fang/Beast",
     "displayName": "Druid of the Fang",
     "class": "druid",
-    "manaCost": 5,
-    "collectible": false,
     "keywords": "beast",
+    "collectible": false,
+    "manaCost": 5,
     "minion": {
         "displayName": "Druid of the Fang",
         "attack": 7,

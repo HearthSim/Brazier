@@ -2,8 +2,8 @@
     "name": "Shielded Minibot",
     "description": "Divine Shield",
     "class": "paladin",
-    "manaCost": 2,
     "keywords": "mech",
+    "manaCost": 2,
     "minion": {
         "attack": 2,
         "hp": 2,

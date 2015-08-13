@@ -2,9 +2,9 @@
     "name": "Blingtron 3000",
     "description": "Battlecry: Equip a random weapon for each player.",
     "class": "neutral",
+    "keywords": "mech",
     "rarity": "legendary",
     "manaCost": 5,
-    "keywords": "mech",
     "minion": {
         "attack": 3,
         "hp": 4,

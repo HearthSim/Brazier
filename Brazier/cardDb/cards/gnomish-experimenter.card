@@ -1,8 +1,8 @@
 {
     "name": "Gnomish Experimenter",
     "description": "Battlecry: Draw a card. If it's a minion, transform it into a Chicken.",
-    "rarity": "rare",
     "class": "neutral",
+    "rarity": "rare",
     "manaCost": 3,
     "minion": {
         "attack": 3,

@@ -1,9 +1,9 @@
 {
     "name": "Murloc Scout",
     "class": "neutral",
+    "keywords": "murloc",
     "collectible": false,
     "manaCost": 0,
-    "keywords": "murloc",
     "minion": {
         "attack": 1,
         "hp": 1

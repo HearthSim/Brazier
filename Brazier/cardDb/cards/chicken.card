@@ -1,9 +1,9 @@
 {
     "name": "Chicken",
     "class": "neutral",
+    "keywords": "beast",
     "collectible": false,
     "manaCost": 1,
-    "keywords": "beast",
     "minion": {
         "attack": 1,
         "hp": 1

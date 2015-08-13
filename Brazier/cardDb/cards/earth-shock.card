@@ -13,5 +13,6 @@
             "targets": "all-minions",
             "class": "ActorlessTargetedActions.dealSpellDamage",
             "damage": 1
-        }]
+        }
+    ]
 }

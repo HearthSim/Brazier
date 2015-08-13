@@ -1,8 +1,8 @@
 {
     "name": "Madder Bomber",
     "description": "Battlecry: Deal 6 damage randomly split between all other characters.",
-    "rarity": "rare",
     "class": "neutral",
+    "rarity": "rare",
     "manaCost": 5,
     "minion": {
         "attack": 5,

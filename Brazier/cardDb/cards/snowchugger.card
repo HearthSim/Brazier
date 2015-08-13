@@ -2,8 +2,8 @@
     "name": "Snowchugger",
     "description": "Freeze any character damaged by this minion.",
     "class": "mage",
-    "manaCost": 2,
     "keywords": "mech",
+    "manaCost": 2,
     "minion": {
         "attack": 2,
         "hp": 3,

@@ -2,8 +2,8 @@
     "name": "Mechanical Yeti",
     "description": "Deathrattle: Give each player a Spare Part.",
     "class": "neutral",
-    "manaCost": 4,
     "keywords": "mech",
+    "manaCost": 4,
     "minion": {
         "attack": 4,
         "hp": 5,

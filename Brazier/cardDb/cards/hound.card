@@ -2,9 +2,9 @@
     "name": "Hound",
     "description": "Charge",
     "class": "hunter",
+    "keywords": "beast",
     "collectible": false,
     "manaCost": 1,
-    "keywords": "beast",
     "minion": {
         "attack": 1,
         "hp": 1,

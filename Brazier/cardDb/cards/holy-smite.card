@@ -5,8 +5,8 @@
     "type": "spell",
     "manaCost": 1,
     "playActions": {
-        "class": "ActorlessTargetedActions.dealSpellDamage",
         "targets": "all",
+        "class": "ActorlessTargetedActions.dealSpellDamage",
         "damage": 2
     }
 }

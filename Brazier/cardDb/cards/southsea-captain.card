@@ -2,9 +2,9 @@
     "name": "Southsea Captain",
     "description": "Your other Pirates have +1/+1.",
     "class": "neutral",
+    "keywords": "pirate",
     "rarity": "epic",
     "manaCost": 3,
-    "keywords": "pirate",
     "minion": {
         "attack": 3,
         "hp": 3,

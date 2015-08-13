@@ -1,8 +1,8 @@
 {
     "name": "Faceless Manipulator",
     "description": "Battlecry: Choose a minion and become a copy of it.",
-    "rarity": "epic",
     "class": "neutral",
+    "rarity": "epic",
     "manaCost": 5,
     "minion": {
         "attack": 3,

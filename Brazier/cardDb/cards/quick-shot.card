@@ -12,8 +12,8 @@
         },
         {
             "class": "CardPlayActions.doIf",
-            "condition": "PlayActionRequirements.EMPTY_HAND",
-            "action": "PlayerActions.DRAW_FOR_SELF"
+            "action": "PlayerActions.DRAW_FOR_SELF",
+            "condition": "PlayActionRequirements.EMPTY_HAND"
         }
     ]
 }

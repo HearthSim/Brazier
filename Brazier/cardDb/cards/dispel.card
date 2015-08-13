@@ -3,10 +3,10 @@
     "description": "Silence a minion.",
     "class": "druid",
     "type": "spell",
-    "manaCost": 0,
     "collectible": false,
+    "manaCost": 0,
     "playActions": {
-        "class": "ActorlessTargetedActions.SILENCE",
-        "targets": "all-minions"
+        "targets": "all-minions",
+        "class": "ActorlessTargetedActions.SILENCE"
     }
 }

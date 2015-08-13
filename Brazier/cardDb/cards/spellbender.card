@@ -1,8 +1,8 @@
 {
     "name": "Spellbender",
+    "description": "Secret: When an enemy casts a spell on a minion, summon a 1/3 as the new target.",
     "class": "mage",
     "type": "spell",
-    "description": "Secret: When an enemy casts a spell on a minion, summon a 1/3 as the new target.",
     "manaCost": 3,
     "secret": {
         "start-play-card": {
@@ -10,7 +10,8 @@
                 "BasicFilters.HAS_DIFFERENT_OWNER_PLAYER",
                 "BasicFilters.SELF_BOARD_IS_NOT_FULL",
                 "BasicFilters.CARD_TARGET_IS_MINION",
-                "BasicFilters.EVENT_SOURCE_IS_SPELL"],
+                "BasicFilters.EVENT_SOURCE_IS_SPELL"
+            ],
             "action": {
                 "class": "CardEventActions.summonNewTargetForCard",
                 "minion": "Spellbender/Minion"

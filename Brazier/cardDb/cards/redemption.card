@@ -1,8 +1,8 @@
 {
     "name": "Redemption",
+    "description": "Secret: When one of your minions dies, return it to life with 1 Health.",
     "class": "paladin",
     "type": "spell",
-    "description": "Secret: When one of your minions dies, return it to life with 1 Health.",
     "manaCost": 1,
     "secret": {
         "minion-killed": {

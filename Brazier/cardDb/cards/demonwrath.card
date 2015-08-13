@@ -1,14 +1,12 @@
 {
     "name": "Demonwrath",
+    "description": "Deal 2 damage to all non-Demon minions.",
     "class": "warlock",
     "type": "spell",
-    "description": "Deal 2 damage to all non-Demon minions.",
     "manaCost": 3,
-    "playActions": [
-        {
-            "class": "PlayerActions.dealDamageToAllMinions",
-            "damage": 2,
-            "excludedKeywords": "demon"
-        }
-    ]
+    "playActions": {
+        "class": "PlayerActions.dealDamageToAllMinions",
+        "damage": 2,
+        "excludedKeywords": "demon"
+    }
 }

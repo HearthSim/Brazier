@@ -2,9 +2,9 @@
     "name": "Repair Bot",
     "description": "At the end of your turn, restore 6 Health to a damaged character.",
     "class": "neutral",
+    "keywords": "awesome-invention",
     "collectible": false,
     "manaCost": 1,
-    "keywords": "awesome-invention",
     "minion": {
         "attack": 0,
         "hp": 4,

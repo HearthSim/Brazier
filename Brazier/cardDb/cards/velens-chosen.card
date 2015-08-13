@@ -19,6 +19,7 @@
                     "class": "MinionAbilities.spellPower",
                     "spellPower": 1
                 }
-            }]
+            }
+        ]
     }
 }

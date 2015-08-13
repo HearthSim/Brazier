@@ -1,8 +1,8 @@
 {
     "name": "Bolvar Fordragon",
     "description": "Whenever a friendly minion dies while this is in your hand, gain +1 Attack.",
-    "rarity": "legendary",
     "class": "paladin",
+    "rarity": "legendary",
     "manaCost": 5,
     "inHandAbility": {
         "class": "CardAbilities.onMinionKilledAbility",

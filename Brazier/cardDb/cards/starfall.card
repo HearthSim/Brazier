@@ -4,5 +4,8 @@
     "class": "druid",
     "type": "spell",
     "manaCost": 5,
-    "chooseOne": ["Starfall/Single", "Starfall/Aoe"]
+    "chooseOne": [
+        "Starfall/Single",
+        "Starfall/Aoe"
+    ]
 }

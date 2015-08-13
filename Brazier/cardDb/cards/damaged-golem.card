@@ -1,9 +1,9 @@
 {
     "name": "Damaged Golem",
     "class": "neutral",
-    "manaCost": 1,
-    "collectible": 1,
     "keywords": "mech",
+    "collectible": 1,
+    "manaCost": 1,
     "minion": {
         "attack": 2,
         "hp": 1

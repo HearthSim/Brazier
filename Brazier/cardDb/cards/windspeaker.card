@@ -7,9 +7,9 @@
         "attack": 3,
         "hp": 3,
         "battleCries": {
-            "targets": "self-minions",
             "class": "ActorlessTargetedActions.applyToMinionTarget",
-            "action": "MinionActions.WIND_FURY"
+            "action": "MinionActions.WIND_FURY",
+            "targets": "self-minions"
         }
     }
 }

@@ -2,8 +2,8 @@
     "name": "Tundra Rhino",
     "description": "Your Beasts have Charge.",
     "class": "hunter",
-    "manaCost": 5,
     "keywords": "beast",
+    "manaCost": 5,
     "minion": {
         "attack": 2,
         "hp": 5,

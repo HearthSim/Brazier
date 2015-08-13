@@ -10,5 +10,6 @@
         {
             "class": "PlayerActions.doForOpponent",
             "action": "PlayerActions.SUMMON_RANDOM_MINION_FROM_HAND"
-        }]
+        }
+    ]
 }

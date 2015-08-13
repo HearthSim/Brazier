@@ -1,9 +1,9 @@
 {
     "name": "Blood Imp",
-    "class": "warlock",
     "description": "Stealth. At the end of your turn, give another random friendly minion +1 Health.",
-    "manaCost": 1,
+    "class": "warlock",
     "keywords": "demon",
+    "manaCost": 1,
     "minion": {
         "attack": 0,
         "hp": 1,

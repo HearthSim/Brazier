@@ -2,9 +2,9 @@
     "name": "Gahz'rilla",
     "description": "Whenever this minion takes damage, double its Attack.",
     "class": "hunter",
+    "keywords": "beast",
     "rarity": "legendary",
     "manaCost": 7,
-    "keywords": "beast",
     "minion": {
         "attack": 6,
         "hp": 9,

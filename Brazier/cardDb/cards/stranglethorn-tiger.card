@@ -2,8 +2,8 @@
     "name": "Stranglethorn Tiger",
     "description": "Stealth",
     "class": "neutral",
-    "manaCost": 5,
     "keywords": "beast",
+    "manaCost": 5,
     "minion": {
         "attack": 5,
         "hp": 5,

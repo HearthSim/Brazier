@@ -2,9 +2,9 @@
     "name": "Target Dummy",
     "description": "Taunt",
     "class": "neutral",
+    "keywords": "mech",
     "rarity": "rare",
     "manaCost": 0,
-    "keywords": "mech",
     "minion": {
         "attack": 0,
         "hp": 2,
