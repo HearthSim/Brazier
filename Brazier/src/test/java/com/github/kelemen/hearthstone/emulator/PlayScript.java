@@ -267,8 +267,11 @@ public final class PlayScript {
             Player player = state.world.getPlayer(playerId);
             Deck deck = player.getBoard().getDeck();
 
-            List<CardDescr> deckCards = deck.getCards();
-            assertEquals("deck", expectedCards, deckCards);
+            List<Card> deckCards = deck.getCards();
+            List<CardDescr> deckCardDescrs = new ArrayList<>(deckCards.size());
+            deckCards.forEach((card) -> deckCardDescrs.add(card.getCardDescr()));
+
+            assertEquals("deck", expectedCards, deckCardDescrs);
         });
     }
 

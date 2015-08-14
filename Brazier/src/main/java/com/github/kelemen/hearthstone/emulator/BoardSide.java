@@ -32,7 +32,7 @@ public final class BoardSide {
         ExceptionHelper.checkArgumentInRange(maxSize, 0, Integer.MAX_VALUE, "maxSize");
 
         this.owner = owner;
-        this.deck = new Deck();
+        this.deck = new Deck(owner);
         this.maxSize = maxSize;
         this.minionRefs = new RefLinkedList<>();
 

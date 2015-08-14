@@ -150,15 +150,7 @@ public final class Player implements PlayerProperty {
         return minionsPlayedThisTurn;
     }
 
-    public boolean canPlayCard(Card card) {
-        if (getMana() < card.getActiveManaCost()) {
-            return false;
-        }
-
-        return card.getCardDescr().doesSomethingWhenPlayed(this);
-    }
-
-    private void getOnPlayActions(CardDescr cardDescr, List<CardPlayActionDef> result) {
+    private void getOnPlayActions(CardPlayArg arg, CardDescr cardDescr, List<CardPlayActionDef> result) {
         for (CardPlayActionDef action: cardDescr.getOnPlayActions()) {
             if (action.getRequirement().meetsRequirement(this)) {
                 result.add(action);
@@ -173,9 +165,9 @@ public final class Player implements PlayerProperty {
                 + (chooseOneChoice != null ? chooseOneChoice.getOnPlayActions().size() : 0);
 
         List<CardPlayActionDef> result = new ArrayList<>(playActionCount);
-        getOnPlayActions(cardDescr, result);
+        getOnPlayActions(arg, arg.getCard().getCardDescr(), result);
         if (chooseOneChoice != null) {
-            getOnPlayActions(chooseOneChoice, result);
+            getOnPlayActions(arg, chooseOneChoice, result);
         }
 
         return result;
@@ -193,12 +185,12 @@ public final class Player implements PlayerProperty {
         return result;
     }
 
-    public UndoAction playCardEffect(Card card, int manaCost) {
-        return playCard(card, manaCost, new PlayTargetRequest(playerId), false);
+    public UndoAction playCardEffect(Card card) {
+        return playCard(card, 0, new PlayTargetRequest(playerId), false);
     }
 
-    public UndoAction playCardEffect(Card card, int manaCost, PlayTargetRequest targetRequest) {
-        return playCard(card, manaCost, targetRequest, false);
+    public UndoAction playCardEffect(Card card, PlayTargetRequest targetRequest) {
+        return playCard(card, 0, targetRequest, false);
     }
 
     public UndoAction playCard(Card card, int manaCost, PlayTargetRequest targetRequest) {
@@ -400,8 +392,8 @@ public final class Player implements PlayerProperty {
         };
     }
 
-    public UndoableResult<CardDescr> drawFromDeck() {
-        UndoableResult<CardDescr> drawnCard = getBoard().getDeck().tryDrawOneCard();
+    public UndoableResult<Card> drawFromDeck() {
+        UndoableResult<Card> drawnCard = getBoard().getDeck().tryDrawOneCard();
         if (drawnCard == null) {
             UndoAction fatiqueUndo = doFatiqueDamage();
             return new UndoableResult<>(null, fatiqueUndo);
@@ -409,9 +401,9 @@ public final class Player implements PlayerProperty {
         return drawnCard;
     }
 
-    public UndoableResult<CardDescr> drawCardToHand() {
-        UndoableResult<CardDescr> cardRef = drawFromDeck();
-        CardDescr card = cardRef.getResult();
+    public UndoableResult<Card> drawCardToHand() {
+        UndoableResult<Card> cardRef = drawFromDeck();
+        Card card = cardRef.getResult();
         if (card == null) {
             return cardRef;
         }

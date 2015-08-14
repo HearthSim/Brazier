@@ -15,6 +15,7 @@ import com.github.kelemen.hearthstone.emulator.UndoableRegistry;
 import com.github.kelemen.hearthstone.emulator.UndoableResult;
 import com.github.kelemen.hearthstone.emulator.World;
 import com.github.kelemen.hearthstone.emulator.abilities.ActivatableAbility;
+import com.github.kelemen.hearthstone.emulator.cards.Card;
 import com.github.kelemen.hearthstone.emulator.cards.CardDescr;
 import com.github.kelemen.hearthstone.emulator.minions.Minion;
 import com.github.kelemen.hearthstone.emulator.minions.MinionDescr;
@@ -154,9 +155,9 @@ public final class ActionUtils {
         player.getBoard().collectMinions(result, (minion) -> !minion.isScheduledToDestroy() && filter.test(minion));
     }
 
-    public static UndoableResult<CardDescr> pollDeckForCard(
+    public static UndoableResult<Card> pollDeckForCard(
             Player player,
-            Predicate<? super CardDescr> cardFilter) {
+            Predicate<? super Card> cardFilter) {
         return player.getBoard().getDeck().tryDrawRandom(player.getWorld().getRandomProvider(), cardFilter);
     }
 

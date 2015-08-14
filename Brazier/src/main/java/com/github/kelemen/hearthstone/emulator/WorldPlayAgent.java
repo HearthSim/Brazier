@@ -1,5 +1,6 @@
 package com.github.kelemen.hearthstone.emulator;
 
+import com.github.kelemen.hearthstone.emulator.actions.PlayTarget;
 import com.github.kelemen.hearthstone.emulator.actions.PlayTargetRequest;
 import com.github.kelemen.hearthstone.emulator.actions.UndoAction;
 import com.github.kelemen.hearthstone.emulator.actions.WorldAction;
@@ -55,10 +56,13 @@ public final class WorldPlayAgent {
         return doWorldAction((currentWorld) -> currentWorld.attack(attacker, defender));
     }
 
-    public DeathResolutionResult playHeroPower(PlayTargetRequest playTarget) {
+    public DeathResolutionResult playHeroPower(PlayTargetRequest targetRequest) {
         return doWorldAction((currentWorld) -> {
-            Player castingPlayer = currentWorld.getPlayer(playTarget.getCastingPlayerId());
-            return castingPlayer.getHero().getHeroPower().play(playTarget);
+            Player castingPlayer = currentWorld.getPlayer(targetRequest.getCastingPlayerId());
+            TargetableCharacter target = currentWorld.findTarget(targetRequest.getTargetId());
+
+            HeroPower selectedPower = castingPlayer.getHero().getHeroPower();
+            return selectedPower.alterWorld(currentWorld, new PlayTarget(castingPlayer, target));
         });
     }
 

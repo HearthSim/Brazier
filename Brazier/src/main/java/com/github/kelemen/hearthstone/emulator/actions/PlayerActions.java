@@ -202,7 +202,7 @@ public final class PlayerActions {
             return UndoAction.DO_NOTHING;
         }
 
-        UndoableResult<CardDescr> cardRef = deck.tryDrawOneCard();
+        UndoableResult<Card> cardRef = deck.tryDrawOneCard();
         // TODO: Show discarded card to the opponent.
         return cardRef != null ? cardRef.getUndoAction() : UndoAction.DO_NOTHING;
     };
@@ -386,16 +386,18 @@ public final class PlayerActions {
     public static PlayerAction experiment(
             @NamedArg("replaceCard") CardProvider replaceCard) {
         return (World world, Player player) -> {
-            UndoableResult<CardDescr> cardRef = player.drawFromDeck();
-            CardDescr card = cardRef.getResult();
+            UndoableResult<Card> cardRef = player.drawFromDeck();
+            Card card = cardRef.getResult();
             if (card == null) {
                 return cardRef.getUndoAction();
             }
 
-            if (card.getCardType() == CardType.MINION) {
-                UndoAction drawActionsUndo = WorldActionList.executeActionsNow(world, player, card.getOnDrawActions());
+            CardDescr cardDescr = card.getCardDescr();
+
+            if (cardDescr.getCardType() == CardType.MINION) {
+                UndoAction drawActionsUndo = WorldActionList.executeActionsNow(world, player, cardDescr.getOnDrawActions());
                 UndoAction addCardUndo = player.getHand().addCard(replaceCard.getCard());
-                UndoAction eventUndo = world.getEvents().drawCardListeners().triggerEvent(new Card(player, card));
+                UndoAction eventUndo = world.getEvents().drawCardListeners().triggerEvent(card);
 
                 return () -> {
                     eventUndo.undo();
@@ -418,15 +420,15 @@ public final class PlayerActions {
             @NamedArg("cardCount") int cardCount) {
         return (World world, Player player) -> {
             Player opponent = player.getOpponent();
-            List<CardDescr> picked = ActionUtils.pickMultipleRandom(
+            List<Card> picked = ActionUtils.pickMultipleRandom(
                     world,
                     cardCount,
                     opponent.getBoard().getDeck().getCards());
 
             UndoBuilder result = new UndoBuilder(picked.size());
             Hand hand = player.getHand();
-            for (CardDescr card: picked) {
-                result.addUndo(hand.addCard(card));
+            for (Card card: picked) {
+                result.addUndo(hand.addCard(card.getCardDescr()));
             }
             return result;
         };
@@ -669,7 +671,7 @@ public final class PlayerActions {
 
     public static PlayerAction getRandomFromDeck(
             int cardCount,
-            Predicate<? super CardDescr> cardFilter,
+            Predicate<? super Card> cardFilter,
             CardProvider fallbackCard) {
         ExceptionHelper.checkArgumentInRange(cardCount, 1, Integer.MAX_VALUE, "cardCount");
         ExceptionHelper.checkNotNullArgument(cardFilter, "cardFilter");
@@ -679,14 +681,16 @@ public final class PlayerActions {
 
             boolean mayHaveCard = true;
             for (int i = 0; i < cardCount; i++) {
-                UndoableResult<CardDescr> selectedRef = mayHaveCard
+                UndoableResult<Card> selectedRef = mayHaveCard
                         ? ActionUtils.pollDeckForCard(player, cardFilter)
                         : null;
 
-                CardDescr selected;
+                Card selected;
                 if (selectedRef == null) {
                     mayHaveCard = false;
-                    selected = fallbackCard != null ? fallbackCard.getCard() : null;
+                    selected = fallbackCard != null
+                            ? new Card(player, fallbackCard.getCard())
+                            : null;
                 }
                 else {
                     result.addUndo(selectedRef.getUndoAction());
@@ -754,13 +758,12 @@ public final class PlayerActions {
         }
 
         return (World world, Player player) -> {
-            UndoableResult<CardDescr> cardRef = player.drawFromDeck();
-            CardDescr cardDescr = cardRef.getResult();
-            if (cardDescr == null) {
+            UndoableResult<Card> cardRef = player.drawFromDeck();
+            Card card = cardRef.getResult();
+            if (card == null) {
                 return cardRef.getUndoAction();
             }
 
-            Card card = new Card(player, cardRef.getResult());
             if (costReductionFilter.applies(world, player, card)) {
                 card.decreaseManaCost(costReduction);
             }
@@ -775,15 +778,15 @@ public final class PlayerActions {
     public static PlayerAction summonRandomMinionFromDeck(
             @NamedArg("fallbackMinion") MinionProvider fallbackMinion) {
 
-        Predicate<CardDescr> appliedFilter = (card) -> card.getMinion() != null;
+        Predicate<Card> appliedFilter = (card) -> card.getMinion() != null;
         return (World world, Player player) -> {
-            UndoableResult<CardDescr> cardRef = ActionUtils.pollDeckForCard(player, appliedFilter);
+            UndoableResult<Card> cardRef = ActionUtils.pollDeckForCard(player, appliedFilter);
             if (cardRef == null && fallbackMinion == null) {
                 return UndoAction.DO_NOTHING;
             }
 
             MinionDescr minion = cardRef != null
-                    ? cardRef.getResult().getMinion()
+                    ? cardRef.getResult().getMinion().getBaseDescr()
                     : fallbackMinion.getMinion();
             assert minion != null;
 
@@ -799,10 +802,10 @@ public final class PlayerActions {
 
     public static PlayerAction summonRandomMinionFromDeck(
             boolean opponent,
-            Predicate<? super CardDescr> cardFilter) {
+            Predicate<? super Card> cardFilter) {
         ExceptionHelper.checkNotNullArgument(cardFilter, "cardFilter");
 
-        Predicate<CardDescr> appliedFilter = (card) -> {
+        Predicate<Card> appliedFilter = (card) -> {
             return card.getMinion() != null && cardFilter.test(card);
         };
 
@@ -812,13 +815,12 @@ public final class PlayerActions {
                 return UndoAction.DO_NOTHING;
             }
 
-            UndoableResult<CardDescr> cardRef = ActionUtils.pollDeckForCard(summoner, appliedFilter);
+            UndoableResult<Card> cardRef = ActionUtils.pollDeckForCard(summoner, appliedFilter);
             if (cardRef == null) {
                 return UndoAction.DO_NOTHING;
             }
 
-            MinionDescr minion = cardRef.getResult().getMinion();
-            assert minion != null;
+            MinionDescr minion = cardRef.getResult().getMinion().getBaseDescr();
 
             UndoAction summonUndo = summoner.summonMinion(minion);
             return () -> {
@@ -849,16 +851,16 @@ public final class PlayerActions {
         return drawAndPlayCard(cardFilter);
     }
 
-    public static PlayerAction drawAndPlayCard(Predicate<? super CardDescr> cardFilter) {
+    public static PlayerAction drawAndPlayCard(Predicate<? super Card> cardFilter) {
         ExceptionHelper.checkNotNullArgument(cardFilter, "cardFilter");
 
         return (World world, Player player) -> {
-            UndoableResult<CardDescr> cardRef = ActionUtils.pollDeckForCard(player, cardFilter);
+            UndoableResult<Card> cardRef = ActionUtils.pollDeckForCard(player, cardFilter);
             if (cardRef == null) {
                 return UndoAction.DO_NOTHING;
             }
 
-            UndoAction playUndo = player.playCardEffect(new Card(player, cardRef.getResult()), 0);
+            UndoAction playUndo = player.playCardEffect(cardRef.getResult());
 
             return () -> {
                 playUndo.undo();
@@ -932,13 +934,13 @@ public final class PlayerActions {
             UndoBuilder result = new UndoBuilder();
             List<CardDescr> choosenCards = new ArrayList<>(cardCount);
             for (int i = 0; i < cardCount; i++) {
-                UndoableResult<CardDescr> cardRef = deck.tryDrawOneCard();
+                UndoableResult<Card> cardRef = deck.tryDrawOneCard();
                 if (cardRef == null) {
                     break;
                 }
 
                 result.addUndo(cardRef.getUndoAction());
-                choosenCards.add(cardRef.getResult());
+                choosenCards.add(cardRef.getResult().getCardDescr());
             }
 
             CardDescr chosenCard = chooseCard(world, choosenCards);

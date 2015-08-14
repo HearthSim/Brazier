@@ -19,6 +19,7 @@ import com.github.kelemen.hearthstone.emulator.UndoableResult;
 import com.github.kelemen.hearthstone.emulator.World;
 import com.github.kelemen.hearthstone.emulator.WorldEvents;
 import com.github.kelemen.hearthstone.emulator.abilities.ActivatableAbility;
+import com.github.kelemen.hearthstone.emulator.cards.Card;
 import com.github.kelemen.hearthstone.emulator.cards.CardDescr;
 import com.github.kelemen.hearthstone.emulator.minions.Minion;
 import com.github.kelemen.hearthstone.emulator.minions.MinionBody;
@@ -174,10 +175,10 @@ public final class ActorlessTargetedActions {
     public static final ActorlessTargetedAction HOLY_WRATH = (world, arg) -> {
         Player player = arg.getCastingPlayer();
 
-        UndoableResult<CardDescr> cardRef = player.drawCardToHand();
-        CardDescr card = cardRef.getResult();
+        UndoableResult<Card> cardRef = player.drawCardToHand();
+        Card card = cardRef.getResult();
 
-        int damage = card != null ? card.getManaCost() : 0;
+        int damage = card != null ? card.getCardDescr().getManaCost() : 0;
         UndoAction damageUndo = dealSpellDamage(arg, damage);
 
         return () -> {

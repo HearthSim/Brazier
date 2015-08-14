@@ -1,12 +1,13 @@
 package com.github.kelemen.hearthstone.emulator.minions;
 
+import com.github.kelemen.brazier.ZoneRef;
+import com.github.kelemen.brazier.ZonedEntity;
 import com.github.kelemen.hearthstone.emulator.Damage;
 import com.github.kelemen.hearthstone.emulator.DestroyableEntity;
 import com.github.kelemen.hearthstone.emulator.Hero;
 import com.github.kelemen.hearthstone.emulator.Keyword;
 import com.github.kelemen.hearthstone.emulator.Player;
 import com.github.kelemen.hearthstone.emulator.PreparedResult;
-import com.github.kelemen.hearthstone.emulator.PropertyContainer;
 import com.github.kelemen.hearthstone.emulator.Silencable;
 import com.github.kelemen.hearthstone.emulator.SummonLocationRef;
 import com.github.kelemen.hearthstone.emulator.TargetId;
@@ -25,18 +26,17 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 import org.jtrim.utils.ExceptionHelper;
 
-public final class Minion implements TargetableCharacter, DestroyableEntity, Silencable {
+public final class Minion implements TargetableCharacter, DestroyableEntity, Silencable, ZonedEntity {
     private Player owner;
     private final TargetId minionId;
     private MinionProperties properties;
+    private final ZoneRef zoneRef;
 
     private SummonLocationRef locationRef;
     private final long birthDate;
 
     private final AtomicBoolean scheduledToDestroy;
     private final AtomicBoolean destroyed;
-
-    private final PropertyContainer externalProperties;
 
     public Minion(Player owner, MinionDescr baseDescr) {
         ExceptionHelper.checkNotNullArgument(owner, "owner");
@@ -46,10 +46,15 @@ public final class Minion implements TargetableCharacter, DestroyableEntity, Sil
         this.minionId = new TargetId();
         this.properties = new MinionProperties(this, baseDescr);
         this.locationRef = null;
+        this.zoneRef = new ZoneRef();
         this.birthDate = owner.getWorld().getCurrentTime();
         this.destroyed = new AtomicBoolean(false);
         this.scheduledToDestroy = new AtomicBoolean(false);
-        this.externalProperties = new PropertyContainer();
+    }
+
+    @Override
+    public ZoneRef getZoneRef() {
+        return zoneRef;
     }
 
     @Override
@@ -77,10 +82,6 @@ public final class Minion implements TargetableCharacter, DestroyableEntity, Sil
     @Override
     public UndoAction destroy() {
         return getLocationRef().destroy();
-    }
-
-    public PropertyContainer getExternalProperties() {
-        return externalProperties;
     }
 
     public UndoAction transformTo(MinionDescr newDescr) {

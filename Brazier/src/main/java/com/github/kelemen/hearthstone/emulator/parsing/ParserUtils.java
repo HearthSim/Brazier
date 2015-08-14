@@ -1,5 +1,10 @@
 package com.github.kelemen.hearthstone.emulator.parsing;
 
+import com.github.kelemen.brazier.actions.EntityFilter;
+import com.github.kelemen.brazier.actions.EntitySelector;
+import com.github.kelemen.brazier.actions.TargetedAction;
+import com.github.kelemen.brazier.actions.TargetedEntitySelector;
+import com.github.kelemen.brazier.actions.TargetlessAction;
 import com.github.kelemen.hearthstone.emulator.HearthStoneDb;
 import com.github.kelemen.hearthstone.emulator.Keyword;
 import com.github.kelemen.hearthstone.emulator.PlayerProperty;
@@ -29,11 +34,6 @@ import com.github.kelemen.hearthstone.emulator.actions.WorldEventAction;
 import com.github.kelemen.hearthstone.emulator.actions.WorldEventActionDefs;
 import com.github.kelemen.hearthstone.emulator.actions.WorldEventFilter;
 import com.github.kelemen.hearthstone.emulator.actions.WorldObjectAction;
-import com.github.kelemen.hearthstone.emulator.actions2.EntityFilter;
-import com.github.kelemen.hearthstone.emulator.actions2.EntitySelector;
-import com.github.kelemen.hearthstone.emulator.actions2.TargetedAction;
-import com.github.kelemen.hearthstone.emulator.actions2.TargetedEntitySelector;
-import com.github.kelemen.hearthstone.emulator.actions2.TargetlessAction;
 import com.github.kelemen.hearthstone.emulator.cards.Card;
 import com.github.kelemen.hearthstone.emulator.cards.CardDescr;
 import com.github.kelemen.hearthstone.emulator.cards.CardId;
@@ -67,7 +67,7 @@ public final class ParserUtils {
     private static final String[] DEFAULT_PACKAGES = {
         "com.github.kelemen.hearthstone.emulator.actions",
         "com.github.kelemen.hearthstone.emulator.abilities",
-        "com.github.kelemen.hearthstone.emulator.actions2",
+        "com.github.kelemen.brazier.actions",
     };
 
     public static JsonDeserializer createDefaultDeserializer(Supplier<HearthStoneDb> dbRef) {

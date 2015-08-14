@@ -1,4 +1,4 @@
-package com.github.kelemen.hearthstone.emulator.actions2;
+package com.github.kelemen.brazier.actions;
 
 import com.github.kelemen.hearthstone.emulator.Keyword;
 import com.github.kelemen.hearthstone.emulator.LabeledEntity;

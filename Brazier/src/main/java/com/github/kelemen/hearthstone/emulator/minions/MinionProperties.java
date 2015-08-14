@@ -12,7 +12,6 @@ import com.github.kelemen.hearthstone.emulator.abilities.OwnedIntPropertyBuff;
 import com.github.kelemen.hearthstone.emulator.actions.UndoAction;
 import com.github.kelemen.hearthstone.emulator.actions.UndoBuilder;
 import com.github.kelemen.hearthstone.emulator.actions.UndoableUnregisterRef;
-import com.github.kelemen.hearthstone.emulator.actions.WorldActionEvents;
 import com.github.kelemen.hearthstone.emulator.actions.WorldEventAction;
 import com.github.kelemen.hearthstone.emulator.weapons.AttackTool;
 import java.util.ArrayList;
@@ -225,32 +224,6 @@ public final class MinionProperties implements Silencable {
         deathRattles.add(deathRattle);
         return () -> {
             deathRattles.remove(deathRattles.size() - 1);
-        };
-    }
-
-    private static ActivatableAbility<Minion> deathRattleToAbility(
-            WorldEventAction<? super Minion, ? super Minion> deathRattle) {
-        ExceptionHelper.checkNotNullArgument(deathRattle, "deathRattle");
-
-        return (Minion self) -> {
-            WorldActionEvents<Minion> listeners = self.getWorld().getEvents().minionKilledListeners();
-            return listeners.addAction((World world, Minion target) -> {
-                if (target == self && self.getLocationRef().isOnBoard()) {
-                    int triggerCount = self.getOwner().getDeathRattleTriggerCount().getValue();
-                    if (triggerCount == 1) {
-                        return deathRattle.alterWorld(world, self, self);
-                    }
-
-                    UndoBuilder result = new UndoBuilder(triggerCount);
-                    for (int i = 0; i < triggerCount; i++) {
-                        result.addUndo(deathRattle.alterWorld(world, self, self));
-                    }
-                    return result;
-                }
-                else {
-                    return UndoAction.DO_NOTHING;
-                }
-            });
         };
     }
 

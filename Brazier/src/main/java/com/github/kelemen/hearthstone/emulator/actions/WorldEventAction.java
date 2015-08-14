@@ -13,19 +13,6 @@ public interface WorldEventAction<Self extends PlayerProperty, EventSource> {
 
     public UndoAction alterWorld(World world, Self self, EventSource eventSource);
 
-    public default WorldEventAction<Self, EventSource> withFilter(WorldEventFilter<? super Self, ? super EventSource> filter) {
-        ExceptionHelper.checkNotNullArgument(filter, "filter");
-
-        return (World world, Self self, EventSource eventSource) -> {
-            if (filter.applies(world, self, eventSource)) {
-                return alterWorld(world, self, eventSource);
-            }
-            else {
-                return UndoAction.DO_NOTHING;
-            }
-        };
-    }
-
     public static <Self extends PlayerProperty, EventSource> WorldEventAction<? super Self, ? super EventSource> merge(
             Collection<? extends WorldEventAction<? super Self, ? super EventSource>> actions) {
 
