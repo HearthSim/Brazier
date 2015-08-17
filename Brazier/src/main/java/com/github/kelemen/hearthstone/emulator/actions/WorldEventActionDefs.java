@@ -14,7 +14,7 @@ import com.github.kelemen.hearthstone.emulator.abilities.ActivatableAbility;
 import com.github.kelemen.hearthstone.emulator.cards.Card;
 import com.github.kelemen.hearthstone.emulator.minions.Minion;
 import com.github.kelemen.hearthstone.emulator.weapons.Weapon;
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import org.jtrim.collections.CollectionsEx;
@@ -171,35 +171,51 @@ public final class WorldEventActionDefs<Self extends PlayerProperty> implements 
     private final List<WorldEventBasedActionDef<Self, AttackRequest>> onAttackActionDefs;
     private final List<WorldEventBasedActionDef<Self, Secret>> onSecretRevealedActionDefs;
 
+    private final List<RegTask<Self>> regTasks;
     private final boolean hasAnyActionDef;
 
     private WorldEventActionDefs(Builder<Self> builder) {
-        BoolRef hasListeners = new BoolRef(false);
+        this.regTasks = new ArrayList<>(20);
+        this.onDrawCardActionDefs = importListeners(builder.onDrawCardActionDefs);
+        this.onStartPlayingCardActionDefs = importListeners(builder.onStartPlayingCardActionDefs);
+        this.onDonePlayingCardActionDefs = importListeners(builder.onDonePlayingCardActionDefs);
+        this.onSummoningActionDefs = importCompletableListeners(builder.onSummoningActionDefs);
+        this.onPrepareDamageListeners = importListeners(builder.onPrepareDamageListeners);
+        this.onHeroDamagedActionDefs = importListeners(builder.onHeroDamagedActionDefs);
+        this.onMinionDamagedActionDefs = importListeners(builder.onMinionDamagedActionDefs);
+        this.onMinionKilledActionDefs = importListeners(builder.onMinionKilledActionDefs);
+        this.onWeaponDestroyedActionDefs = importListeners(builder.onWeaponDestroyedActionDefs);
+        this.onArmorGainedActionDefs = importListeners(builder.onArmorGainedActionDefs);
+        this.onHeroHealedActionDefs = importListeners(builder.onHeroHealedActionDefs);
+        this.onMinionHealedActionDefs = importListeners(builder.onMinionHealedActionDefs);
+        this.onTurnStartsActionDefs = importListeners(builder.onTurnStartsActionDefs);
+        this.onTurnEndsActionDefs = importListeners(builder.onTurnEndsActionDefs);
+        this.onAttackActionDefs = importListeners(builder.onAttackActionDefs);
+        this.onSecretRevealedActionDefs = importListeners(builder.onSecretRevealedActionDefs);
 
-        this.onDrawCardActionDefs = importListeners(builder.onDrawCardActionDefs, hasListeners);
-        this.onStartPlayingCardActionDefs = importListeners(builder.onStartPlayingCardActionDefs, hasListeners);
-        this.onDonePlayingCardActionDefs = importListeners(builder.onDonePlayingCardActionDefs, hasListeners);
-        this.onSummoningActionDefs = importListeners(builder.onSummoningActionDefs, hasListeners);
-        this.onPrepareDamageListeners = importListeners(builder.onPrepareDamageListeners, hasListeners);
-        this.onHeroDamagedActionDefs = importListeners(builder.onHeroDamagedActionDefs, hasListeners);
-        this.onMinionDamagedActionDefs = importListeners(builder.onMinionDamagedActionDefs, hasListeners);
-        this.onMinionKilledActionDefs = importListeners(builder.onMinionKilledActionDefs, hasListeners);
-        this.onWeaponDestroyedActionDefs = importListeners(builder.onWeaponDestroyedActionDefs, hasListeners);
-        this.onArmorGainedActionDefs = importListeners(builder.onArmorGainedActionDefs, hasListeners);
-        this.onHeroHealedActionDefs = importListeners(builder.onHeroHealedActionDefs, hasListeners);
-        this.onMinionHealedActionDefs = importListeners(builder.onMinionHealedActionDefs, hasListeners);
-        this.onTurnStartsActionDefs = importListeners(builder.onTurnStartsActionDefs, hasListeners);
-        this.onTurnEndsActionDefs = importListeners(builder.onTurnEndsActionDefs, hasListeners);
-        this.onAttackActionDefs = importListeners(builder.onAttackActionDefs, hasListeners);
-        this.onSecretRevealedActionDefs = importListeners(builder.onSecretRevealedActionDefs, hasListeners);
-
-        this.hasAnyActionDef = hasListeners.value;
+        this.hasAnyActionDef = !regTasks.isEmpty();
     }
 
-    private <E> List<E> importListeners(Collection<? extends E> c, BoolRef hasListeners) {
-        List<E> result = CollectionsEx.readOnlyCopy(c);
+    private <E> List<CompletableWorldEventBasedActionDef<Self, E>> importCompletableListeners(
+            List<CompletableWorldEventBasedActionDef<Self, E>> actionDefs) {
+
+        List<CompletableWorldEventBasedActionDef<Self, E>> result = CollectionsEx.readOnlyCopy(actionDefs);
         if (!result.isEmpty()) {
-            hasListeners.value = true;
+            regTasks.add((WorldEvents worldEvents, Self self) -> {
+                return CompletableWorldEventBasedActionDef.registerAll(actionDefs, worldEvents, self);
+            });
+        }
+        return result;
+    }
+
+    private <E> List<WorldEventBasedActionDef<Self, E>> importListeners(
+            List<WorldEventBasedActionDef<Self, E>> actionDefs) {
+
+        List<WorldEventBasedActionDef<Self, E>> result = CollectionsEx.readOnlyCopy(actionDefs);
+        if (!result.isEmpty()) {
+            regTasks.add((WorldEvents worldEvents, Self self) -> {
+                return WorldEventBasedActionDef.registerAll(actionDefs, worldEvents, self);
+            });
         }
         return result;
     }
@@ -276,24 +292,10 @@ public final class WorldEventActionDefs<Self extends PlayerProperty> implements 
 
         WorldEvents worldEvents = self.getWorld().getEvents();
 
-        UndoableUnregisterRefBuilder result = new UndoableUnregisterRefBuilder();
-        result.addRef(registerOnDrawCardAction(worldEvents, self));
-        result.addRef(registerOnStartPlayingCardAction(worldEvents, self));
-        result.addRef(registerOnDonePlayingCardAction(worldEvents, self));
-        result.addRef(registerOnSummoningAction(worldEvents, self));
-        result.addRef(registerOnPrepareDamageAction(worldEvents, self));
-        result.addRef(registerOnHeroDamagedAction(worldEvents, self));
-        result.addRef(registerOnMinionDamagedAction(worldEvents, self));
-        result.addRef(registerOnMinionKilledAction(worldEvents, self));
-        result.addRef(registerOnWeaponDestroyedAction(worldEvents, self));
-        result.addRef(registerOnArmorGainedAction(worldEvents, self));
-        result.addRef(registerOnHeroHealedAction(worldEvents, self));
-        result.addRef(registerOnMinionHealedAction(worldEvents, self));
-        result.addRef(registerOnMinionHealedAction(worldEvents, self));
-        result.addRef(registerOnTurnStartsAction(worldEvents, self));
-        result.addRef(registerOnTurnEndsAction(worldEvents, self));
-        result.addRef(registerOnAttackAction(worldEvents, self));
-        result.addRef(registerOnSecretRevealedAction(worldEvents, self));
+        UndoableUnregisterRefBuilder result = new UndoableUnregisterRefBuilder(regTasks.size());
+        for (RegTask<Self> regTask: regTasks) {
+            result.addRef(regTask.register(worldEvents, self));
+        }
         return result;
     }
 
@@ -301,11 +303,7 @@ public final class WorldEventActionDefs<Self extends PlayerProperty> implements 
         return hasAnyActionDef;
     }
 
-    private static final class BoolRef {
-        private boolean value;
-
-        public BoolRef(boolean value) {
-            this.value = value;
-        }
+    private interface RegTask<Self> {
+        public UndoableUnregisterRef register(WorldEvents worldEvents, Self self);
     }
 }

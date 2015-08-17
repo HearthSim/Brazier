@@ -18,6 +18,10 @@ public final class UndoableUnregisterRefBuilder implements UndoableUnregisterRef
     public void addRef(UndoableUnregisterRef ref) {
         ExceptionHelper.checkNotNullArgument(ref, "ref");
 
+        if (ref == UndoableUnregisterRef.UNREGISTERED_REF) {
+            return;
+        }
+
         if (refs.length >= count) {
             int newLength = Math.max(count + 1, 2 * count);
             UndoableUnregisterRef[] newRefs = new UndoableUnregisterRef[newLength];
