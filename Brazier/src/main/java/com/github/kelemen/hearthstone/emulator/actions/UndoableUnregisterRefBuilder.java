@@ -23,7 +23,7 @@ public final class UndoableUnregisterRefBuilder implements UndoableUnregisterRef
         }
 
         if (refs.length >= count) {
-            int newLength = Math.max(count + 1, 2 * count);
+            int newLength = Math.max(count + 1, 2 * refs.length);
             UndoableUnregisterRef[] newRefs = new UndoableUnregisterRef[newLength];
             System.arraycopy(refs, 0, newRefs, 0, count);
             refs = newRefs;
