@@ -15,6 +15,7 @@ import com.github.kelemen.hearthstone.emulator.UndoableRegistry;
 import com.github.kelemen.hearthstone.emulator.UndoableResult;
 import com.github.kelemen.hearthstone.emulator.World;
 import com.github.kelemen.hearthstone.emulator.abilities.ActivatableAbility;
+import com.github.kelemen.hearthstone.emulator.abilities.HpProperty;
 import com.github.kelemen.hearthstone.emulator.cards.Card;
 import com.github.kelemen.hearthstone.emulator.cards.CardDescr;
 import com.github.kelemen.hearthstone.emulator.minions.Minion;
@@ -29,6 +30,24 @@ import java.util.function.Predicate;
 import org.jtrim.utils.ExceptionHelper;
 
 public final class ActionUtils {
+    public static UndoAction adjustHp(TargetableCharacter character, Function<HpProperty, UndoAction> action) {
+        HpProperty hp = tryGetHp(character);
+        if (hp == null) {
+            return UndoAction.DO_NOTHING;
+        }
+        return action.apply(hp);
+    }
+
+    public static HpProperty tryGetHp(TargetableCharacter character) {
+        if (character instanceof Hero) {
+            return ((Hero)character).getHp();
+        }
+        else if (character instanceof Minion) {
+            return ((Minion)character).getBody().getHp();
+        }
+        return null;
+    }
+
     public static Function<World, MinionDescr> randomMinionProvider(Keyword[] keywords) {
         Function<World, List<CardDescr>> cardProvider = minionCardProvider(keywords);
         return (world) -> {

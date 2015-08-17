@@ -5,4 +5,10 @@ import com.github.kelemen.hearthstone.emulator.actions.UndoableUnregisterRef;
 
 public interface Buff<Target> {
     public UndoableUnregisterRef buff(World world, Target target);
+
+    public default PermanentBuff<Target> toPermanent() {
+        return (World world, Target target) -> {
+            return buff(world, target);
+        };
+    }
 }

@@ -1,8 +1,16 @@
 package com.github.kelemen.brazier.actions;
 
 import com.github.kelemen.hearthstone.emulator.BornEntity;
+import com.github.kelemen.hearthstone.emulator.Hand;
+import com.github.kelemen.hearthstone.emulator.Player;
+import com.github.kelemen.hearthstone.emulator.PlayerProperty;
+import com.github.kelemen.hearthstone.emulator.UndoableResult;
 import com.github.kelemen.hearthstone.emulator.World;
+import com.github.kelemen.hearthstone.emulator.actions.UndoAction;
 import com.github.kelemen.hearthstone.emulator.actions.UndoBuilder;
+import com.github.kelemen.hearthstone.emulator.cards.Card;
+import com.github.kelemen.hearthstone.emulator.cards.CardDescr;
+import com.github.kelemen.hearthstone.emulator.minions.Minion;
 import com.github.kelemen.hearthstone.emulator.parsing.NamedArg;
 import org.jtrim.utils.ExceptionHelper;
 
@@ -64,6 +72,52 @@ public final class TargetlessActions {
         else {
             return resultAction;
         }
+    }
+
+    public static <Actor extends PlayerProperty> TargetlessAction<Actor> destroyOpponentsWeapon() {
+        return (World world, Actor actor) -> {
+            return actor.getOwner().destroyWeapon();
+        };
+    }
+
+    public static <Actor extends PlayerProperty> TargetlessAction<Actor> actWithOpponent(
+            @NamedArg("action") TargetlessAction<? super Player> action) {
+        return (World world, Actor actor) -> {
+            return action.alterWorld(world, actor.getOwner().getOpponent());
+        };
+    }
+
+    public static <Actor extends PlayerProperty> TargetlessAction<Actor> drawForSelf() {
+        return (World world, Actor actor) -> {
+            return actor.getOwner().drawCardToHand();
+        };
+    }
+
+    public static <Actor extends PlayerProperty> TargetlessAction<Actor> drawForOpponent() {
+        return actWithOpponent(drawForSelf());
+    }
+
+    public static TargetlessAction<Minion> swapWithMinionInHand() {
+        return (World world, Minion actor) -> {
+            Hand hand = actor.getOwner().getHand();
+            int cardIndex = hand.chooseRandomCardIndex(Card::isMinionCard);
+            if (cardIndex < 0) {
+                return UndoAction.DO_NOTHING;
+            }
+
+            CardDescr newCard = actor.getBaseDescr().getBaseCard();
+            UndoableResult<Card> replaceCardRef = hand.replaceAtIndex(cardIndex, newCard);
+            Minion newMinion = replaceCardRef.getResult().getMinion();
+            if (newMinion == null) {
+                throw new IllegalStateException("Selected a card with no minion.");
+            }
+
+            UndoAction replaceMinionUndo = actor.getLocationRef().replace(newMinion);
+            return () -> {
+                replaceMinionUndo.undo();
+                replaceCardRef.undo();
+            };
+        };
     }
 
     private TargetlessActions() {

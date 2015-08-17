@@ -9,12 +9,12 @@
         "attack": 8,
         "hp": 8,
         "battleCries": {
-            "class": "ActorlessTargetedActions.applyToTargetOwner",
-            "action": {
-                "class": "PlayerActions.setHeroHp",
+            "targets": "all-heroes",
+            "class": "TargetedActions.buffTarget",
+            "buff": {
+                "class": "Buffs.setCurrentHp",
                 "hp": 15
-            },
-            "targets": "all-heroes"
+            }
         }
     }
 }

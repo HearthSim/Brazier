@@ -1,8 +1,10 @@
 package com.github.kelemen.hearthstone.emulator.parsing;
 
+import com.github.kelemen.brazier.actions.Buff;
 import com.github.kelemen.brazier.actions.EntityFilter;
 import com.github.kelemen.brazier.actions.EntityFilters;
 import com.github.kelemen.brazier.actions.EntitySelector;
+import com.github.kelemen.brazier.actions.PermanentBuff;
 import com.github.kelemen.brazier.actions.TargetedAction;
 import com.github.kelemen.brazier.actions.TargetedEntitySelector;
 import com.github.kelemen.brazier.actions.TargetlessAction;
@@ -284,6 +286,9 @@ public final class ParserUtils {
         result.addTypeConversion(EntitySelector.class, TargetedEntitySelector.class,
                 (action) -> action.toTargeted());
 
+        result.addTypeConversion(Buff.class, PermanentBuff.class,
+                (action) -> action.toPermanent());
+
         // FIXME: These are temporary conversion and will need only until all previous
         //   action types get replaced with the new mechanic.
         @SuppressWarnings("unchecked")
@@ -309,6 +314,24 @@ public final class ParserUtils {
                 return characterTarget != null
                         ? action.alterWorld(world, arg.getSource(), characterTarget)
                         : UndoAction.DO_NOTHING;
+            };
+        });
+
+        @SuppressWarnings("unchecked")
+        Class<TargetlessAction<Card>> playTargetlessActionClass
+                = (Class<TargetlessAction<Card>>)(Class<?>)TargetlessAction.class;
+        result.addTypeConversion(playTargetlessActionClass, CardPlayAction.class, (action) -> {
+            return (World world, CardPlayArg arg) -> {
+                return action.alterWorld(world, arg.getCard());
+            };
+        });
+
+        @SuppressWarnings("unchecked")
+        Class<TargetlessAction<Minion>> battleCryTargetlessActionClass
+                = (Class<TargetlessAction<Minion>>)(Class<?>)TargetlessAction.class;
+        result.addTypeConversion(battleCryTargetlessActionClass, BattleCryTargetedAction.class, (action) -> {
+            return (World world, BattleCryArg arg) -> {
+                return action.alterWorld(world, arg.getSource());
             };
         });
     }

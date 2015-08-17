@@ -8,9 +8,12 @@
         "attack": 3,
         "hp": 3,
         "battleCries": {
-            "class": "ActorlessTargetedActions.setMinionAttackTo",
-            "attack": 1,
-            "targets": "enemy-minions"
+            "targets": "enemy-minions",
+            "class": "TargetedActions.buffTarget",
+            "buff": {
+                "class": "Buffs.setAttack",
+                "attack": 1
+            }
         }
     }
 }
