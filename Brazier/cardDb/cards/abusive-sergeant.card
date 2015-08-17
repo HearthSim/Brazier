@@ -7,9 +7,12 @@
         "attack": 2,
         "hp": 1,
         "battleCries": {
-            "class": "ActorlessTargetedActions.addTemporaryAttack",
-            "attack": 2,
-            "targets": "all-minions"
+            "targets": "all-minions",
+            "class": "TargetedActions.buffTargetThisTurn",
+            "buff": {
+                "class": "Buffs.addAttack",
+                "attack": 2
+            }
         }
     }
 }

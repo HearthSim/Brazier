@@ -6,7 +6,10 @@ import com.github.kelemen.hearthstone.emulator.TargetableCharacter;
 import com.github.kelemen.hearthstone.emulator.UndoableIntResult;
 import com.github.kelemen.hearthstone.emulator.UndoableResult;
 import com.github.kelemen.hearthstone.emulator.World;
+import com.github.kelemen.hearthstone.emulator.actions.ActionUtils;
+import com.github.kelemen.hearthstone.emulator.actions.UndoAction;
 import com.github.kelemen.hearthstone.emulator.actions.UndoBuilder;
+import com.github.kelemen.hearthstone.emulator.actions.UndoableUnregisterRef;
 import com.github.kelemen.hearthstone.emulator.cards.Card;
 import com.github.kelemen.hearthstone.emulator.minions.Minion;
 import com.github.kelemen.hearthstone.emulator.parsing.NamedArg;
@@ -63,6 +66,22 @@ public final class TargetedActions {
                 damageUndo.undo();
                 damageRef.getUndoAction();
             };
+        };
+    }
+
+    public static TargetedAction<Object, TargetableCharacter> buffTarget(
+            @NamedArg("buff") Buff<? super TargetableCharacter> buff) {
+        ExceptionHelper.checkNotNullArgument(buff, "buff");
+        return (World world, Object actor, TargetableCharacter target) -> {
+            return buff.buff(world, target);
+        };
+    }
+
+    public static TargetedAction<Object, TargetableCharacter> buffTargetThisTurn(
+            @NamedArg("buff") Buff<? super TargetableCharacter> buff) {
+        ExceptionHelper.checkNotNullArgument(buff, "buff");
+        return (World world, Object actor, TargetableCharacter target) -> {
+            return ActionUtils.doTemporary(world, () -> buff.buff(world, target));
         };
     }
 

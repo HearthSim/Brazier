@@ -3,6 +3,7 @@ package com.github.kelemen.hearthstone.emulator;
 import com.github.kelemen.hearthstone.emulator.abilities.AuraAwareBoolProperty;
 import com.github.kelemen.hearthstone.emulator.abilities.HpProperty;
 import com.github.kelemen.hearthstone.emulator.actions.UndoAction;
+import com.github.kelemen.hearthstone.emulator.actions.UndoableUnregisterRef;
 import com.github.kelemen.hearthstone.emulator.actions.WorldActionEvents;
 import com.github.kelemen.hearthstone.emulator.cards.CardDescr;
 import com.github.kelemen.hearthstone.emulator.weapons.AttackTool;
@@ -165,7 +166,7 @@ public final class Hero implements TargetableCharacter {
         return attackTool.extraAttack;
     }
 
-    public UndoAction addExtraAttackForThisTurn(int amount) {
+    public UndoableUnregisterRef addExtraAttackForThisTurn(int amount) {
         return attackTool.addAttack(amount);
     }
 
@@ -358,9 +359,20 @@ public final class Hero implements TargetableCharacter {
             return getOwner().getWeaponAttack() + extraAttack;
         }
 
-        public UndoAction addAttack(int attackAddition) {
+        public UndoableUnregisterRef addAttack(int attackAddition) {
             extraAttack += attackAddition;
-            return () -> extraAttack -= attackAddition;
+            return UndoableUnregisterRef.makeIdempotent(new UndoableUnregisterRef() {
+                @Override
+                public UndoAction unregister() {
+                    extraAttack -= attackAddition;
+                    return () -> extraAttack += attackAddition;
+                }
+
+                @Override
+                public void undo() {
+                    extraAttack -= attackAddition;
+                }
+            });
         }
 
         private int getMaxAttackCount() {
