@@ -284,7 +284,7 @@ public final class JsonDeserializer {
         try {
             field = declaringClass.getField(fieldName);
         } catch (NoSuchFieldException ex) {
-            throw new ObjectParsingException("No such field: " + fieldDef(declaringClass, fieldName), ex);
+            return getNoArgMethodObject(declaringClass, fieldName, typeChecker);
         }
 
         if (!Modifier.isPublic(field.getModifiers())) {
@@ -301,6 +301,35 @@ public final class JsonDeserializer {
             return field.get(null);
         } catch (IllegalAccessException ex) {
             throw new RuntimeException("Unexpected IllegalAccessException for field: " + fieldDef(declaringClass, fieldName), ex);
+        }
+    }
+
+    private Object getNoArgMethodObject(Class<?> declaringClass, String methodName, TypeChecker typeChecker) throws ObjectParsingException {
+        if (!Modifier.isPublic(declaringClass.getModifiers())) {
+            throw new ObjectParsingException("Class is not public: " + declaringClass.getName());
+        }
+
+        Method method;
+        try {
+            method = declaringClass.getMethod(methodName);
+        } catch (NoSuchMethodException ex) {
+            throw new ObjectParsingException("No such method: " + fieldDef(declaringClass, methodName), ex);
+        }
+
+        if (!Modifier.isPublic(method.getModifiers())) {
+            throw new ObjectParsingException("Field is not public: " + fieldDef(declaringClass, methodName));
+        }
+
+        if (!Modifier.isStatic(method.getModifiers())) {
+            throw new ObjectParsingException("Field is not static: " + fieldDef(declaringClass, methodName));
+        }
+
+        typeChecker.checkType(method.getGenericReturnType());
+
+        try {
+            return method.invoke(null);
+        } catch (IllegalAccessException | InvocationTargetException ex) {
+            throw new RuntimeException("Unexpected exception for method: " + fieldDef(declaringClass, methodName), ex);
         }
     }
 

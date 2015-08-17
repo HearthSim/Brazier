@@ -3,10 +3,13 @@ package com.github.kelemen.brazier.actions;
 import com.github.kelemen.hearthstone.emulator.Hero;
 import com.github.kelemen.hearthstone.emulator.Player;
 import com.github.kelemen.hearthstone.emulator.PlayerProperty;
+import com.github.kelemen.hearthstone.emulator.TargetableCharacter;
 import com.github.kelemen.hearthstone.emulator.World;
 import com.github.kelemen.hearthstone.emulator.cards.Card;
 import com.github.kelemen.hearthstone.emulator.minions.Minion;
 import com.github.kelemen.hearthstone.emulator.parsing.NamedArg;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.stream.Stream;
 import org.jtrim.utils.ExceptionHelper;
 
@@ -15,6 +18,18 @@ import static com.github.kelemen.brazier.actions.EntityFilters.*;
 public final class EntitySelectors {
     public static <Actor, Selection> EntitySelector<Actor, Selection> empty() {
         return (World world, Actor actor) -> Stream.empty();
+    }
+
+    public static <Actor, Selection> EntitySelector<Actor, Selection> sorted(
+            EntitySelector<? super Actor, ? extends Selection> selector,
+            Comparator<? super Selection> cmp) {
+        ExceptionHelper.checkNotNullArgument(selector, "selector");
+        ExceptionHelper.checkNotNullArgument(cmp, "cmp");
+
+        return (World world, Actor actor) -> {
+            Stream<? extends Selection> selection = selector.select(world, actor);
+            return selection.sorted(cmp);
+        };
     }
 
     public static <Actor, Selection> EntitySelector<Actor, Selection> filtered(
@@ -33,7 +48,7 @@ public final class EntitySelectors {
             @NamedArg("selector") EntitySelector<? super Player, ? extends Selection> selector) {
         ExceptionHelper.checkNotNullArgument(selector, "selector");
         return (World world, Actor actor) -> {
-            return selector.select(world, actor.getOwner());
+            return selector.select(world, actor.getOwner().getOpponent());
         };
     }
 
@@ -83,6 +98,66 @@ public final class EntitySelectors {
 
     public static <Actor extends PlayerProperty> EntitySelector<Actor, Minion> enemyBoardAlive() {
         return fromOpponent(friendlyBoardAlive());
+    }
+
+    public static <Actor extends PlayerProperty> EntitySelector<Actor, Minion> board() {
+        return EntitySelector.merge(Arrays.asList(friendlyBoard(), enemyBoard()));
+    }
+
+    public static <Actor extends PlayerProperty> EntitySelector<Actor, Minion> boardBuffable() {
+        return EntitySelector.merge(Arrays.asList(friendlyBoardBuffable(), enemyBoardBuffable()));
+    }
+
+    public static <Actor extends PlayerProperty> EntitySelector<Actor, Minion> boardAlive() {
+        return EntitySelector.merge(Arrays.asList(friendlyBoardAlive(), enemyBoardAlive()));
+    }
+
+    public static <Actor extends PlayerProperty> EntitySelector<Actor, TargetableCharacter> friends() {
+        return EntitySelector.mergeToCommonBase(Arrays.asList(friendlyBoard(), friendlyHero()));
+    }
+
+    public static <Actor extends PlayerProperty> EntitySelector<Actor, TargetableCharacter> friendsBuffable() {
+        return EntitySelector.mergeToCommonBase(Arrays.asList(friendlyBoardBuffable(), friendlyHero()));
+    }
+
+    public static <Actor extends PlayerProperty> EntitySelector<Actor, TargetableCharacter> friendsAlive() {
+        return EntitySelector.mergeToCommonBase(Arrays.asList(friendlyBoardAlive(), friendlyHero()));
+    }
+
+    public static <Actor extends PlayerProperty> EntitySelector<Actor, TargetableCharacter> enemies() {
+        return fromOpponent(friends());
+    }
+
+    public static <Actor extends PlayerProperty> EntitySelector<Actor, TargetableCharacter> enemiesBuffable() {
+        return fromOpponent(friendsBuffable());
+    }
+
+    public static <Actor extends PlayerProperty> EntitySelector<Actor, TargetableCharacter> enemiesAlive() {
+        return fromOpponent(friendsAlive());
+    }
+
+    public static <Actor extends PlayerProperty> EntitySelector<Actor, TargetableCharacter> allTargets() {
+        return EntitySelector.mergeToCommonBase(Arrays.asList(friends(), enemies()));
+    }
+
+    public static <Actor extends PlayerProperty> EntitySelector<Actor, TargetableCharacter> allTargetsBuffable() {
+        return EntitySelector.mergeToCommonBase(Arrays.asList(friendsBuffable(), enemiesBuffable()));
+    }
+
+    public static <Actor extends PlayerProperty> EntitySelector<Actor, TargetableCharacter> allTargetsAlive() {
+        return EntitySelector.mergeToCommonBase(Arrays.asList(friendsAlive(), enemiesAlive()));
+    }
+
+    public static <Actor extends PlayerProperty> EntitySelector<Actor, Minion> allMinions() {
+        return EntitySelector.merge(Arrays.asList(friendlyBoard(), enemyBoard()));
+    }
+
+    public static <Actor extends PlayerProperty> EntitySelector<Actor, Minion> allMinionsBuffable() {
+        return EntitySelector.merge(Arrays.asList(friendlyBoardBuffable(), enemyBoardBuffable()));
+    }
+
+    public static <Actor extends PlayerProperty> EntitySelector<Actor, Minion> allMinionsAlive() {
+        return EntitySelector.merge(Arrays.asList(friendlyBoardAlive(), enemyBoardAlive()));
     }
 
     private EntitySelectors() {

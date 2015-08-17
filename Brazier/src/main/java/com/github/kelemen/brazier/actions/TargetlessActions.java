@@ -1,5 +1,6 @@
 package com.github.kelemen.brazier.actions;
 
+import com.github.kelemen.hearthstone.emulator.BornEntity;
 import com.github.kelemen.hearthstone.emulator.World;
 import com.github.kelemen.hearthstone.emulator.actions.UndoBuilder;
 import com.github.kelemen.hearthstone.emulator.parsing.NamedArg;
@@ -19,6 +20,19 @@ public final class TargetlessActions {
             });
             return result;
         };
+    }
+
+    public static <Actor, Target extends BornEntity> TargetlessAction<Actor> forBornTargets(
+            @NamedArg("targets") EntitySelector<? super Actor, ? extends Target> targets,
+            @NamedArg("action") TargetedAction<? super Actor, ? super Target> action) {
+        return forBornTargets(targets, action, true);
+    }
+
+    public static <Actor, Target extends BornEntity> TargetlessAction<Actor> forBornTargets(
+            @NamedArg("targets") EntitySelector<? super Actor, ? extends Target> targets,
+            @NamedArg("action") TargetedAction<? super Actor, ? super Target> action,
+            @NamedArg("atomic") boolean atomic) {
+        return forTargets(EntitySelectors.sorted(targets, BornEntity.CMP), action, atomic);
     }
 
     public static <Actor, Target> TargetlessAction<Actor> forTargets(

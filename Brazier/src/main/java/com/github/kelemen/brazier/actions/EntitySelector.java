@@ -14,6 +14,23 @@ public interface EntitySelector<Actor, Selection> {
         return (World world, Actor actor, Object target) -> select(world, actor);
     }
 
+    public static <Actor, Selection> EntitySelector<Actor, Selection> mergeToCommonBase(
+            Collection<EntitySelector<Actor, ? extends Selection>> selectors) {
+        List<EntitySelector<Actor, ? extends Selection>> selectorsCopy = new ArrayList<>(selectors);
+        ExceptionHelper.checkNotNullElements(selectorsCopy, "selectors");
+
+        return (World world, Actor actor) -> {
+            Stream<? extends Selection> result = null;
+            for (EntitySelector<Actor, ? extends Selection> selector: selectorsCopy) {
+                Stream<? extends Selection> selected = selector.select(world, actor);
+                result = result != null
+                        ? Stream.concat(result, selected)
+                        : selected;
+            }
+            return result != null ? result : Stream.empty();
+        };
+    }
+
     public static <Actor, Selection> EntitySelector<Actor, Selection> merge(
             Collection<? extends EntitySelector<Actor, Selection>> selectors) {
         List<EntitySelector<Actor, Selection>> selectorsCopy = new ArrayList<>(selectors);
