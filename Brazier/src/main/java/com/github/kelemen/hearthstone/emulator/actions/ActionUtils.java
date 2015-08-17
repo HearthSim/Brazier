@@ -161,7 +161,7 @@ public final class ActionUtils {
         return player.getBoard().getDeck().tryDrawRandom(player.getWorld().getRandomProvider(), cardFilter);
     }
 
-    public static Predicate<LabeledEntity> includedKeywordsFilter(Keyword... includedKeywords) {
+    public static <E extends LabeledEntity> Predicate<E> includedKeywordsFilter(Keyword... includedKeywords) {
         if (includedKeywords.length == 0) {
             return (arg) -> true;
         }
@@ -179,7 +179,7 @@ public final class ActionUtils {
         };
     }
 
-    public static Predicate<LabeledEntity> excludedKeywordsFilter(Keyword... excludedKeywords) {
+    public static <E extends LabeledEntity> Predicate<E> excludedKeywordsFilter(Keyword... excludedKeywords) {
         Keyword[] excludedKeywordsCopy = excludedKeywords.clone();
         ExceptionHelper.checkNotNullElements(excludedKeywordsCopy, "excludedKeywords");
 

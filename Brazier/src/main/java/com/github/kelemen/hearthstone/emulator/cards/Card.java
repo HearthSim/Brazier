@@ -1,7 +1,5 @@
 package com.github.kelemen.hearthstone.emulator.cards;
 
-import com.github.kelemen.brazier.ZoneRef;
-import com.github.kelemen.brazier.ZonedEntity;
 import com.github.kelemen.hearthstone.emulator.Damage;
 import com.github.kelemen.hearthstone.emulator.DamageSource;
 import com.github.kelemen.hearthstone.emulator.Keyword;
@@ -19,30 +17,23 @@ import java.util.List;
 import java.util.Set;
 import org.jtrim.utils.ExceptionHelper;
 
-public final class Card implements PlayerProperty, LabeledEntity, CardRef, DamageSource, ZonedEntity {
+public final class Card implements PlayerProperty, LabeledEntity, CardRef, DamageSource {
     private final Player owner;
     private final CardDescr cardDescr;
     private final Minion minion;
 
     private final AuraAwareIntProperty manaCost;
-    private final ZoneRef zoneRef;
 
     public Card(Player owner, CardDescr cardDescr) {
         ExceptionHelper.checkNotNullArgument(cardDescr, "cardDescr");
 
         this.owner = owner;
         this.cardDescr = cardDescr;
-        this.zoneRef = new ZoneRef();
         this.manaCost = new AuraAwareIntProperty(cardDescr.getManaCost());
         this.manaCost.addBuff(this::adjustManaCost);
 
         MinionDescr minionDescr = cardDescr.getMinion();
         this.minion = minionDescr != null ? new Minion(owner, cardDescr.getMinion()) : null;
-    }
-
-    @Override
-    public ZoneRef getZoneRef() {
-        return zoneRef;
     }
 
     private int adjustManaCost(int baseCost) {

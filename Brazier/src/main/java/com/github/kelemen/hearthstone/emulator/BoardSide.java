@@ -204,14 +204,18 @@ public final class BoardSide {
     }
 
     public List<Minion> getAliveMinions() {
-        List<Minion> result = new ArrayList<>(minionRefs.size());
-        collectAliveMinions(result);
-        return result;
+        return getMinions(BoardSide::filterAliveMinion);
     }
 
     public List<Minion> getAllMinions() {
         List<Minion> result = new ArrayList<>(minionRefs.size());
         collectMinions(result);
+        return result;
+    }
+
+    public List<Minion> getMinions(Predicate<? super Minion> filter) {
+        List<Minion> result = new ArrayList<>(minionRefs.size());
+        collectMinions(result, filter);
         return result;
     }
 

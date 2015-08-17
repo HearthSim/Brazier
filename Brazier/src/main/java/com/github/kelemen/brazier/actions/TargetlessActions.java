@@ -21,6 +21,37 @@ public final class TargetlessActions {
         };
     }
 
+    public static <Actor, Target> TargetlessAction<Actor> forTargets(
+            @NamedArg("targets") EntitySelector<? super Actor, ? extends Target> targets,
+            @NamedArg("action") TargetedAction<? super Actor, ? super Target> action) {
+        return forTargets(targets, action, true);
+    }
+
+    public static <Actor, Target> TargetlessAction<Actor> forTargets(
+            @NamedArg("targets") EntitySelector<? super Actor, ? extends Target> targets,
+            @NamedArg("action") TargetedAction<? super Actor, ? super Target> action,
+            @NamedArg("atomic") boolean atomic) {
+        ExceptionHelper.checkNotNullArgument(targets, "targets");
+        ExceptionHelper.checkNotNullArgument(action, "action");
+
+        TargetlessAction<Actor> resultAction = (World world, Actor actor) -> {
+            UndoBuilder result = new UndoBuilder();
+            targets.select(world, actor).forEach((Target target) -> {
+                result.addUndo(action.alterWorld(world, actor, target));
+            });
+            return result;
+        };
+
+        if (atomic) {
+            return (World world, Actor actor) -> {
+                return world.getEvents().doAtomic(() -> resultAction.alterWorld(world, actor));
+            };
+        }
+        else {
+            return resultAction;
+        }
+    }
+
     private TargetlessActions() {
         throw new AssertionError();
     }

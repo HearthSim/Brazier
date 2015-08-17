@@ -1,7 +1,5 @@
 package com.github.kelemen.hearthstone.emulator.minions;
 
-import com.github.kelemen.brazier.ZoneRef;
-import com.github.kelemen.brazier.ZonedEntity;
 import com.github.kelemen.hearthstone.emulator.Damage;
 import com.github.kelemen.hearthstone.emulator.DestroyableEntity;
 import com.github.kelemen.hearthstone.emulator.Hero;
@@ -26,11 +24,10 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 import org.jtrim.utils.ExceptionHelper;
 
-public final class Minion implements TargetableCharacter, DestroyableEntity, Silencable, ZonedEntity {
+public final class Minion implements TargetableCharacter, DestroyableEntity, Silencable {
     private Player owner;
     private final TargetId minionId;
     private MinionProperties properties;
-    private final ZoneRef zoneRef;
 
     private SummonLocationRef locationRef;
     private final long birthDate;
@@ -46,15 +43,9 @@ public final class Minion implements TargetableCharacter, DestroyableEntity, Sil
         this.minionId = new TargetId();
         this.properties = new MinionProperties(this, baseDescr);
         this.locationRef = null;
-        this.zoneRef = new ZoneRef();
         this.birthDate = owner.getWorld().getCurrentTime();
         this.destroyed = new AtomicBoolean(false);
         this.scheduledToDestroy = new AtomicBoolean(false);
-    }
-
-    @Override
-    public ZoneRef getZoneRef() {
-        return zoneRef;
     }
 
     @Override

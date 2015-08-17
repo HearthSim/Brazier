@@ -21,9 +21,9 @@ import java.util.function.Function;
 import org.jtrim.collections.CollectionsEx;
 import org.jtrim.utils.ExceptionHelper;
 
-import static com.github.kelemen.hearthstone.emulator.parsing.ParserUtils.getStringField;
-
 public final class JsonDeserializer {
+    private static final String CLASS_FIELD_NAME = "class";
+
     public static final class Builder {
         private final CustomClassNameResolver classNameResolver;
         private final Map<Class<?>, List<RawObjectConverter<?>>> typeConverters;
@@ -217,12 +217,7 @@ public final class JsonDeserializer {
         }
 
         if (element.isJsonObject()) {
-            if (element.getChild("class") != null) {
-                return toComplexJavaObject(element, typeChecker);
-            }
-            else {
-                return toComplexJavaObject(element, expectedType, typeChecker);
-            }
+            return toComplexJavaObject(element, expectedType, typeChecker);
         }
         else {
             if (element.isJsonPrimitive()) {
@@ -337,13 +332,6 @@ public final class JsonDeserializer {
         }
 
         return constructor.newInstance(passedArgs);
-    }
-
-    private <T> T toComplexJavaObject(
-            JsonTree root,
-            Class<? extends T> actionClass,
-            TypeChecker typeChecker) throws ObjectParsingException {
-        return actionClass.cast(toComplexJavaObject(root, actionClass, null, typeChecker));
     }
 
     private static Constructor<?> findConstructor(JsonTree root, Class<?> actionClass) {
@@ -486,7 +474,7 @@ public final class JsonDeserializer {
 
     public Object toJavaObject(JsonTree root) throws ObjectParsingException {
         if (root.isJsonObject()) {
-            return toComplexJavaObject(root, (type) -> {});
+            return toComplexJavaObject(root, Object.class, (type) -> {});
         }
         else {
             return getFieldObject(root.getAsString(), (type) -> {});
@@ -506,8 +494,15 @@ public final class JsonDeserializer {
         }
     }
 
-    private Object toComplexJavaObject(JsonTree root, TypeChecker typeChecker) throws ObjectParsingException {
-        String className = getStringField(root, "class");
+    private Object toComplexJavaObject(
+            JsonTree root,
+            Class<?> expectedType,
+            TypeChecker typeChecker) throws ObjectParsingException {
+        String className = ParserUtils.tryGetStringField(root, CLASS_FIELD_NAME);
+        if (className == null) {
+            return expectedType.cast(toComplexJavaObject(root, expectedType, null, typeChecker));
+        }
+
         String factoryMethodName = null;
 
         Class<?> actionClass = null;

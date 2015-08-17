@@ -1,6 +1,7 @@
 package com.github.kelemen.hearthstone.emulator.parsing;
 
 import com.github.kelemen.brazier.actions.EntityFilter;
+import com.github.kelemen.brazier.actions.EntityFilters;
 import com.github.kelemen.brazier.actions.EntitySelector;
 import com.github.kelemen.brazier.actions.TargetedAction;
 import com.github.kelemen.brazier.actions.TargetedEntitySelector;
@@ -60,6 +61,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 import java.util.function.Supplier;
 import org.jtrim.utils.ExceptionHelper;
 
@@ -252,6 +254,23 @@ public final class ParserUtils {
                 (action) -> (world, self, eventSource) -> action.alterWorld(world));
         result.addTypeConversion(PlayerAction.class, WorldEventAction.class,
                 (action) -> (world, self, eventSource) -> action.alterWorld(world, self.getOwner()));
+        result.addTypeConversion(TargetlessAction.class, WorldEventAction.class, (action) -> {
+            // Not truly safe but there is not much to do.
+            // The true requirement is that the "Actor" extends the "Self" object of
+            // WorldEventAction.
+            @SuppressWarnings("unchecked")
+            TargetlessAction<PlayerProperty> safeAction = (TargetlessAction<PlayerProperty>)action;
+            return (World world, PlayerProperty self, Object eventSource) -> {
+                return safeAction.alterWorld(world, self);
+            };
+        });
+
+        result.addTypeConversion(Predicate.class, EntityFilter.class, (predicate) -> {
+            // Not truly safe but there is not much to do.
+            @SuppressWarnings("unchecked")
+            Predicate<Object> safePredicate = (Predicate<Object>)predicate;
+            return EntityFilters.fromPredicate(safePredicate);
+        });
 
         result.addTypeConversion(DamageAction.class, MinionAction.class,
                 (action) -> action.toMinionAction());
@@ -273,7 +292,10 @@ public final class ParserUtils {
         result.addTypeConversion(playTargetedActionClass, CardPlayAction.class, (action) -> {
             return (World world, CardPlayArg arg) -> {
                 PlayTarget target = arg.getTarget();
-                return action.alterWorld(world, arg.getCard(), target.getTarget());
+                TargetableCharacter characterTarget = target.getTarget();
+                return characterTarget != null
+                        ? action.alterWorld(world, arg.getCard(), characterTarget)
+                        : UndoAction.DO_NOTHING;
             };
         });
 
@@ -283,7 +305,10 @@ public final class ParserUtils {
         result.addTypeConversion(battleCryTargetedActionClass, BattleCryTargetedAction.class, (action) -> {
             return (World world, BattleCryArg arg) -> {
                 PlayTarget target = arg.getTarget();
-                return action.alterWorld(world, arg.getSource(), target.getTarget());
+                TargetableCharacter characterTarget = target.getTarget();
+                return characterTarget != null
+                        ? action.alterWorld(world, arg.getSource(), characterTarget)
+                        : UndoAction.DO_NOTHING;
             };
         });
     }
