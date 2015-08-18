@@ -6,6 +6,6 @@
     "minion": {
         "attack": 2,
         "hp": 1,
-        "deathRattle": "PlayerActions.DRAW_FOR_SELF"
+        "deathRattle": "TargetlessActions.DRAW_FOR_SELF"
     }
 }

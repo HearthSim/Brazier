@@ -6,7 +6,7 @@
     "rarity": "epic",
     "manaCost": 3,
     "playActions": {
-        "class": "PlayerActions.bouncingBlade",
+        "class": "TargetlessActions.bouncingBlade",
         "baseDamage": 1,
         "maxBounces": 80
     }

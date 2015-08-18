@@ -11,7 +11,7 @@
         "triggers": {
             "turn-starts": {
                 "filter": "BasicFilters.HAS_SAME_OWNER_PLAYER",
-                "action": "TargetlessActions.swapWithMinionInHand"
+                "action": "TargetlessActions.SWAP_WITH_MINION_IN_HAND"
             }
         }
     }

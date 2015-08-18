@@ -1,5 +1,6 @@
 package com.github.kelemen.hearthstone.emulator.actions;
 
+import com.github.kelemen.brazier.actions.TargetlessActions;
 import com.github.kelemen.hearthstone.emulator.BoardSide;
 import com.github.kelemen.hearthstone.emulator.BornEntity;
 import com.github.kelemen.hearthstone.emulator.CardPlayEvent;
@@ -9,7 +10,6 @@ import com.github.kelemen.hearthstone.emulator.EntityId;
 import com.github.kelemen.hearthstone.emulator.Hand;
 import com.github.kelemen.hearthstone.emulator.Hero;
 import com.github.kelemen.hearthstone.emulator.Keyword;
-import com.github.kelemen.hearthstone.emulator.Keywords;
 import com.github.kelemen.hearthstone.emulator.LabeledEntity;
 import com.github.kelemen.hearthstone.emulator.ManaResource;
 import com.github.kelemen.hearthstone.emulator.MultiTargeter;
@@ -34,9 +34,7 @@ import com.github.kelemen.hearthstone.emulator.cards.CardId;
 import com.github.kelemen.hearthstone.emulator.cards.CardProvider;
 import com.github.kelemen.hearthstone.emulator.cards.CardType;
 import com.github.kelemen.hearthstone.emulator.minions.Minion;
-import com.github.kelemen.hearthstone.emulator.minions.MinionBody;
 import com.github.kelemen.hearthstone.emulator.minions.MinionDescr;
-import com.github.kelemen.hearthstone.emulator.minions.MinionId;
 import com.github.kelemen.hearthstone.emulator.minions.MinionProvider;
 import com.github.kelemen.hearthstone.emulator.parsing.NamedArg;
 import com.github.kelemen.hearthstone.emulator.weapons.Weapon;
@@ -45,19 +43,15 @@ import com.github.kelemen.hearthstone.emulator.weapons.WeaponProvider;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 import org.jtrim.utils.ExceptionHelper;
 
 
 public final class PlayerActions {
-    public static final PlayerAction DO_NOTHING = (world, player) -> UndoAction.DO_NOTHING;
-
     public static final PlayerAction TRIGGER_DEATHRATTLES = (world, player) -> {
         return player.getBoard().forAllMinions((minion) -> minion.triggetDeathRattles());
     };
@@ -133,48 +127,6 @@ public final class PlayerActions {
         return result;
     };
 
-    public static final PlayerAction BATTLE_RAGE = (world, player) -> {
-        int cardsToDraw = player.getHero().isDamaged() ? 1 : 0;
-        cardsToDraw += player.getBoard().countMinions(Minion::isDamaged);
-
-        UndoBuilder result = new UndoBuilder(cardsToDraw);
-        for (int i = 0; i < cardsToDraw; i++) {
-            result.addUndo(player.drawCardToHand());
-        }
-        return result;
-    };
-
-    public static final PlayerAction BRAWL = (world, player) -> {
-        List<Minion> minions = new ArrayList<>(2 * Player.MAX_BOARD_SIZE);
-        world.getPlayer1().getBoard().collectMinions(minions);
-        world.getPlayer2().getBoard().collectMinions(minions);
-
-        // TODO: Brawler shouldn't be a keyword because keywords cannot be silenced.
-        List<Minion> brawlers = minions.stream()
-                .filter((minion) -> minion.getKeywords().contains(Keywords.BRAWLER))
-                .collect(Collectors.toList());
-
-        Minion winner = brawlers.isEmpty()
-                ? ActionUtils.pickRandom(world, minions)
-                : ActionUtils.pickRandom(world, brawlers);
-
-        UndoBuilder result = new UndoBuilder();
-        for (Minion minion: minions) {
-            if (minion != winner) {
-                result.addUndo(minion.poison());
-            }
-        }
-        return result;
-    };
-
-    public static final PlayerAction DRAW_FOR_SELF = (world, player) -> {
-        return player.drawCardToHand();
-    };
-
-    public static final PlayerAction DRAW_FOR_OPPONENT = (world, player) -> {
-        return player.getOpponent().drawCardToHand();
-    };
-
     public static final PlayerAction FISH_CARD_FOR_SELF = (world, player) -> {
         if (world.getRandomProvider().roll(2) < 1) {
             return player.drawCardToHand();
@@ -211,8 +163,6 @@ public final class PlayerActions {
         return player.getOpponent().destroyWeapon();
     };
 
-    public static final PlayerAction REDUCE_OPPONENT_WEAPON_DURABILITY = reduceOpponentWeaponDurability(1);
-
     public static final PlayerAction DRAW_CARD_FOR_OPPONENTS_WEAPON = (world, player) -> {
         Player opponent = player.getOpponent();
         Weapon weapon = opponent.tryGetWeapon();
@@ -225,7 +175,7 @@ public final class PlayerActions {
         result.addUndo(DESTROY_OPPONENTS_WEAPON.alterWorld(world, player));
 
         for (int i = 0; i < charges; i++) {
-            result.addUndo(DRAW_FOR_SELF.alterWorld(world, player));
+            result.addUndo(TargetlessActions.DRAW_FOR_SELF.alterWorld(world, player));
         }
         return result;
     };
@@ -252,21 +202,6 @@ public final class PlayerActions {
             result.addUndo(player.summonMinion(minion.getBaseDescr()));
         }
         return result;
-    };
-
-    public static final PlayerAction BLADE_FLURRY = (World world, Player player) -> {
-        if (player.tryGetWeapon() == null) {
-            return UndoAction.DO_NOTHING;
-        }
-
-        int damage = player.getHero().getAttackTool().getAttack();
-
-        UndoAction destroyUndo = player.destroyWeapon();
-        UndoAction damageUndo = dealDamageToEnemyTargets(damage).alterWorld(world, player);
-        return () -> {
-            damageUndo.undo();
-            destroyUndo.undo();
-        };
     };
 
     public static final PlayerAction SUMMON_RANDOM_MINION_FROM_HAND = (World world, Player player) -> {
@@ -349,40 +284,6 @@ public final class PlayerActions {
         };
     }
 
-    public static PlayerAction bouncingBlade(
-            @NamedArg("maxBounces") int maxBounces,
-            @NamedArg("baseDamage") int baseDamage) {
-
-        Predicate<Minion> minionFilter = (minion) -> {
-            MinionBody body = minion.getBody();
-            int currentHp = body.getCurrentHp();
-            return currentHp > 0 && !body.isImmune() && body.getMinHpProperty().getValue() < currentHp;
-        };
-
-        return (World world, Player player) -> {
-            Damage damage = player.getSpellDamage(1);
-            List<Minion> targets = new ArrayList<>();
-
-            UndoBuilder result = new UndoBuilder();
-            for (int i = 0; i < maxBounces; i++) {
-                targets.clear();
-                world.getPlayer1().getBoard().collectMinions(targets, minionFilter);
-                world.getPlayer2().getBoard().collectMinions(targets, minionFilter);
-
-                Minion selected = ActionUtils.pickRandom(world, targets);
-                if (selected == null) {
-                    break;
-                }
-
-                result.addUndo(selected.damage(damage));
-                if (selected.getBody().getCurrentHp() <= 0) {
-                    break;
-                }
-            }
-            return result;
-        };
-    }
-
     public static PlayerAction experiment(
             @NamedArg("replaceCard") CardProvider replaceCard) {
         return (World world, Player player) -> {
@@ -395,7 +296,7 @@ public final class PlayerActions {
             CardDescr cardDescr = card.getCardDescr();
 
             if (cardDescr.getCardType() == CardType.MINION) {
-                UndoAction drawActionsUndo = WorldActionList.executeActionsNow(world, player, cardDescr.getOnDrawActions());
+                UndoAction drawActionsUndo = WorldActionList.executeActionsNow(world, card, cardDescr.getOnDrawActions());
                 UndoAction addCardUndo = player.getHand().addCard(replaceCard.getCard());
                 UndoAction eventUndo = world.getEvents().drawCardListeners().triggerEvent(card);
 
@@ -596,27 +497,6 @@ public final class PlayerActions {
         };
     }
 
-    public static PlayerAction reduceOpponentWeaponDurability(@NamedArg("amount") int amount) {
-        ExceptionHelper.checkArgumentInRange(amount, 1, Integer.MAX_VALUE, "amount");
-
-        return (World world, Player player) -> {
-            Weapon weapon = player.tryGetWeapon();
-            if (weapon == null) {
-                return UndoAction.DO_NOTHING;
-            }
-
-            if (amount == 1) {
-                return weapon.decreaseCharges();
-            }
-
-            UndoBuilder result = new UndoBuilder(amount);
-            for (int i = 0; i < amount; i++) {
-                result.addUndo(weapon.decreaseCharges());
-            }
-            return result;
-        };
-    }
-
     private static UndoAction destroyStealth(Player player) {
         return player.getBoard().forAllMinions((minion) -> minion.getProperties().getBody().setStealth(false));
     }
@@ -754,7 +634,7 @@ public final class PlayerActions {
             @NamedArg("costReductionFilter") WorldEventFilter<? super Player, ? super Card> costReductionFilter) {
         ExceptionHelper.checkNotNullArgument(costReductionFilter, "costReductionFilter");
         if (costReduction == 0) {
-            return DRAW_FOR_SELF;
+            return (world, player) -> TargetlessActions.DRAW_FOR_SELF.alterWorld(world, player);
         }
 
         return (World world, Player player) -> {
@@ -1117,40 +997,6 @@ public final class PlayerActions {
     public static PlayerAction summonMinion(@NamedArg("minion") MinionProvider minion) {
         return (world, player) -> {
             return player.summonMinion(minion.getMinion());
-        };
-    }
-
-    private static UndoAction rollRandomTotem(World world, Player player, MinionProvider[] totems) {
-        Map<MinionId, MinionDescr> allowedMinions = new HashMap<>();
-        for (MinionProvider minionProvider: totems) {
-            MinionDescr minion = minionProvider.getMinion();
-            allowedMinions.put(minion.getId(), minion);
-        }
-        for (Minion minion: player.getBoard().getAliveMinions()) {
-            allowedMinions.remove(minion.getBaseDescr().getId());
-        }
-
-        int allowedCount = allowedMinions.size();
-        if (allowedCount == 0) {
-            return UndoAction.DO_NOTHING;
-        }
-
-        int totemIndex = world.getRandomProvider().roll(allowedCount);
-
-        Iterator<MinionDescr> minionItr = allowedMinions.values().iterator();
-        MinionDescr selected = minionItr.next();
-        for (int i = 0; i < totemIndex; i++) {
-            selected = minionItr.next();
-        }
-
-        return player.summonMinion(selected);
-    }
-
-    public static PlayerAction summonRandomTotem(@NamedArg("totems") MinionProvider... totems) {
-        MinionProvider[] totemsCopy = totems.clone();
-        ExceptionHelper.checkNotNullElements(totemsCopy, "totems");
-        return (world, player) -> {
-            return rollRandomTotem(world, player, totems);
         };
     }
 

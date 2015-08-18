@@ -6,6 +6,6 @@
     "minion": {
         "attack": 3,
         "hp": 2,
-        "battleCries": "TargetlessActions.destroyOpponentsWeapon"
+        "battleCries": "TargetlessActions.DESTROY_OPPONENTS_WEAPON"
     }
 }

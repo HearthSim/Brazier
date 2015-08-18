@@ -56,12 +56,24 @@ public final class EntityFilters {
         return ActionUtils.excludedKeywordsFilter(keywords);
     }
 
-    public static Predicate<Minion> buffableMinions() {
-        return (minion) -> !minion.isScheduledToDestroy();
+    public static <Entity extends TargetableCharacter> Predicate<Entity> isDead() {
+        return (target) -> target.isDead();
     }
 
-    public static Predicate<TargetableCharacter> aliveTargets() {
+    public static <Entity extends TargetableCharacter> Predicate<Entity> isAlive() {
         return (target) -> !target.isDead();
+    }
+
+    public static <Entity extends TargetableCharacter> Predicate<Entity> isDamaged() {
+        return (target) -> target.isDamaged();
+    }
+
+    public static <Entity extends TargetableCharacter> Predicate<Entity> isUndamaged() {
+        return (target) -> !target.isDamaged();
+    }
+
+    public static Predicate<Minion> buffableMinion() {
+        return (minion) -> !minion.isScheduledToDestroy();
     }
 
     public static <Entity> EntityFilter<Entity> fromPredicate(Predicate<? super Entity> filter) {

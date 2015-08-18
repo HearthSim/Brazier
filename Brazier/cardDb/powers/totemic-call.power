@@ -4,7 +4,6 @@
     "class": "shaman",
     "manaCost": 2,
     "playActions": {
-        "class": "PlayerActions.summonRandomTotem",
         "requires": [
             {
                 "class": "PlayActionRequirements.doesntHaveAllOnOwnBoard",
@@ -12,6 +11,7 @@
             },
             "PlayActionRequirements.HAS_SPACE_ON_OWN_BOARD"
         ],
+        "class": "TargetlessActions.summonRandomTotem",
         "totems": ["Healing Totem", "Searing Totem", "Wrath of Air Totem", "Stoneclaw Totem"]
     }
 }

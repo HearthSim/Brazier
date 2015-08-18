@@ -6,8 +6,8 @@
     "rarity": "legendary",
     "manaCost": 7,
     "drawActions": {
-        "class": "PlayerActions.dealDamageToAllTargets",
-        "spell": false,
+        "class": "TargetlessActions.damageTarget",
+        "selector": "EntitySelectors.allTargets",
         "damage": 2
     },
     "minion": {

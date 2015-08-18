@@ -6,7 +6,11 @@
     "manaCost": 2,
     "playActions": {
         "targets": "enemy-minions",
-        "class": "ActorlessTargetedActions.actWithMinionOnNeighbours",
-        "action": "TargetedMinionActions.DAMAGE_TARGET_WITH_ATTACK"
+        "class": "TargetedActions.withTarget",
+        "action": {
+            "class": "TargetedActions.forTargets",
+            "selector": "EntitySelectors.neighbours",
+            "action": "TargetedActions.DAMAGE_TARGET"
+        }
     }
 }

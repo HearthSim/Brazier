@@ -8,7 +8,7 @@
         "hp": 3,
         "triggers": {
             "minion-healed": {
-                "action": "PlayerActions.DRAW_FOR_SELF"
+                "action": "TargetlessActions.DRAW_FOR_SELF"
             }
         }
     }

@@ -5,10 +5,11 @@
     "type": "spell",
     "manaCost": 5,
     "playActions": {
-        "class": "PlayerActions.forOwnMinions",
+        "class": "TargetlessActions.forTargets",
+        "selector": "EntitySelectors.friendlyBoard",
         "action": {
-            "class": "ActorlessTargetedActions.addTemporaryAttack",
-            "attack": 3
+            "class": "TargetedActions.buffTargetThisTurn",
+            "buff": "3/0"
         }
     }
 }

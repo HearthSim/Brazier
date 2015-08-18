@@ -5,7 +5,14 @@
     "type": "spell",
     "manaCost": 3,
     "playActions": {
-        "class": "PlayerActions.summonRandomMinion",
-        "keywords": "animal-companion"
+        "class": "TargetlessActions.summonSelectedMinion",
+        "minion": {
+            "class": "EntitySelectors.filtered",
+            "selector": {
+                "class": "EntitySelectors.minionsWithKeywords",
+                "keywords": "animal-companion"
+            },
+            "filter": "EntityFilters.random"
+        }
     }
 }

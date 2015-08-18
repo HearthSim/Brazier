@@ -3,14 +3,13 @@ package com.github.kelemen.brazier.actions;
 import com.github.kelemen.hearthstone.emulator.World;
 import com.github.kelemen.hearthstone.emulator.actions.UndoAction;
 import com.github.kelemen.hearthstone.emulator.actions.UndoBuilder;
+import com.github.kelemen.hearthstone.emulator.actions.WorldObjectAction;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import org.jtrim.utils.ExceptionHelper;
 
-public interface TargetlessAction<Actor> {
-    public UndoAction alterWorld(World world, Actor actor);
-
+public interface TargetlessAction<Actor> extends WorldObjectAction<Actor> {
     public default TargetedAction<Actor, Object> toTargetedAction() {
         return (World world, Actor actor, Object target) -> alterWorld(world, actor);
     }

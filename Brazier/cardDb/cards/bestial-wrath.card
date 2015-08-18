@@ -13,16 +13,10 @@
                 "keywords": "beast"
             }
         ],
-        "class": "CardPlayActions.combine",
-        "actions": [
-            {
-                "class": "ActorlessTargetedActions.addTemporaryAttack",
-                "attack": 2
-            },
-            {
-                "class": "ActorlessTargetedActions.applyToMinionTarget",
-                "action": "MinionActions.IMMUNE_THIS_TURN"
-            }
+        "class": "TargetedActions.buffTargetThisTurn",
+        "buff": [
+            "2/0",
+            "Buffs.IMMUNE"
         ]
     }
 }

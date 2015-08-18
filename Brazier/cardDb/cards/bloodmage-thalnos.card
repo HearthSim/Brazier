@@ -11,6 +11,6 @@
             "class": "MinionAbilities.spellPower",
             "spellPower": 1
         },
-        "deathRattle": "PlayerActions.DRAW_FOR_SELF"
+        "deathRattle": "TargetlessActions.DRAW_FOR_SELF"
     }
 }

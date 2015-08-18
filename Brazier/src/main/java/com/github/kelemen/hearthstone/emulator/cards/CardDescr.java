@@ -1,5 +1,6 @@
 package com.github.kelemen.hearthstone.emulator.cards;
 
+import com.github.kelemen.brazier.actions.TargetlessAction;
 import com.github.kelemen.hearthstone.emulator.HearthStoneEntity;
 import com.github.kelemen.hearthstone.emulator.Keyword;
 import com.github.kelemen.hearthstone.emulator.Keywords;
@@ -36,7 +37,7 @@ public final class CardDescr implements HearthStoneEntity {
         private String description;
         private CardRarity rarity;
 
-        private final List<PlayerAction> onDrawActions;
+        private final List<TargetlessAction<? super Card>> onDrawActions;
         private final List<CardPlayActionDef> onPlayActions;
         private final List<ManaCostAdjuster> manaCostAdjusters;
         private final List<CardProvider> chooseOneActions;
@@ -104,7 +105,7 @@ public final class CardDescr implements HearthStoneEntity {
             this.description = description;
         }
 
-        public void addOnDrawAction(PlayerAction onDrawAction) {
+        public void addOnDrawAction(TargetlessAction<? super Card> onDrawAction) {
             ExceptionHelper.checkNotNullArgument(onDrawAction, "onDrawAction");
             this.onDrawActions.add(onDrawAction);
         }
@@ -163,7 +164,7 @@ public final class CardDescr implements HearthStoneEntity {
     private final MinionDescr minion;
     private final WeaponDescr weapon;
 
-    private final List<PlayerAction> onDrawActions;
+    private final List<TargetlessAction<? super Card>> onDrawActions;
     private final List<CardPlayActionDef> onPlayActions;
     private final List<ManaCostAdjuster> manaCostAdjusters;
     private final List<CardProvider> chooseOneActionsRef;
@@ -267,7 +268,7 @@ public final class CardDescr implements HearthStoneEntity {
         return keywords;
     }
 
-    public List<PlayerAction> getOnDrawActions() {
+    public List<TargetlessAction<? super Card>> getOnDrawActions() {
         return onDrawActions;
     }
 

@@ -6,7 +6,7 @@
     "rarity": "epic",
     "manaCost": 3,
     "playActions": {
-        "class": "PlayerActions.drawCard",
+        "class": "TargetlessActions.drawCard",
         "costReduction": 3
     }
 }

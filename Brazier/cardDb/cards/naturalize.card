@@ -7,9 +7,9 @@
     "playActions": [
         {
             "targets": "all-minions",
-            "class": "ActorlessTargetedActions.KILL_TARGET"
+            "class": "TargetedActions.KILL_TARGET"
         },
-        "PlayerActions.DRAW_FOR_OPPONENT",
-        "PlayerActions.DRAW_FOR_OPPONENT"
+        "TargetlessActions.DRAW_FOR_OPPONENT",
+        "TargetlessActions.DRAW_FOR_OPPONENT"
     ]
 }

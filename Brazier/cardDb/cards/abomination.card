@@ -10,7 +10,8 @@
         "taunt": true,
         "deathRattle": {
             "class": "TargetlessActions.forBornTargets",
-            "targets": "EntitySelectors.allTargetsAlive",
+            "atomic": true,
+            "selector": "EntitySelectors.allTargetsAlive",
             "action": {
                 "class": "TargetedActions.damageTarget",
                 "damage": 2

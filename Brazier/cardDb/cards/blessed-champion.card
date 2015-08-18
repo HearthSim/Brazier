@@ -7,6 +7,7 @@
     "manaCost": 5,
     "playActions": {
         "targets": "all-minions",
-        "class": "MinionActions.DOUBLE_ATTACK"
+        "class": "TargetedActions.buffTarget",
+        "buff": "Buffs.DOUBLE_ATTACK"
     }
 }

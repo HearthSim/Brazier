@@ -9,7 +9,7 @@
             "all-minions",
             "TargetNeeds.TARGET_NOT_DAMAGED"
         ],
-        "class": "ActorlessTargetedActions.dealSpellDamage",
+        "class": "TargetedActions.damageTarget",
         "damage": 2
     }
 }

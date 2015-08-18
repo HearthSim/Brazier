@@ -6,6 +6,7 @@
     "manaCost": 1,
     "playActions": {
         "targets": "all-minions",
-        "class": "ActorlessTargetedActions.blessingOfWisdom"
+        "class": "TargetedActions.doOnAttack",
+        "action": "TargetlessActions.DRAW_FOR_SELF"
     }
 }

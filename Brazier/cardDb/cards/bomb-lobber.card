@@ -8,7 +8,12 @@
         "attack": 3,
         "hp": 3,
         "battleCries": {
-            "class": "DamageActions.damageRandomEnemyMinion",
+            "class": "TargetlessActions.damageTarget",
+            "selector": {
+                "class": "EntitySelectors.filtered",
+                "filter": "EntityFilters.random",
+                "selector": "EntitySelectors.enemyBoardAlive"
+            },
             "damage": 4
         }
     }

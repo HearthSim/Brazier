@@ -7,6 +7,6 @@
     "manaCost": 7,
     "playActions": {
         "requires": "PlayActionRequirements.BOARD_IS_NOT_EMPTY",
-        "class": "PlayerActions.BRAWL"
+        "class": "TargetlessActions.BRAWL"
     }
 }

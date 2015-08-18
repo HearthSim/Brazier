@@ -8,11 +8,8 @@
         "class": "CardAbilities.onMinionKilledAbility",
         "filter": "BasicFilters.HAS_SAME_OWNER_PLAYER",
         "action": {
-            "class": "CardEventActions.applyToSelfCardMinion",
-            "action": {
-                "class": "MinionActions.buffAttack",
-                "attack": 1
-            }
+            "class": "TargetlessActions.buffSelfMinion",
+            "buff": "1/0"
         }
     },
     "minion": {

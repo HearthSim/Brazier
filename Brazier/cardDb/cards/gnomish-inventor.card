@@ -6,6 +6,6 @@
     "minion": {
         "attack": 2,
         "hp": 4,
-        "battleCries": "PlayerActions.DRAW_FOR_SELF"
+        "battleCries": "TargetlessActions.DRAW_FOR_SELF"
     }
 }

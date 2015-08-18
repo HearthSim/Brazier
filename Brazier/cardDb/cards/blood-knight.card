@@ -7,6 +7,6 @@
     "minion": {
         "attack": 3,
         "hp": 3,
-        "battleCries": "BattleCries.EAT_DIVINE_SHIELDS"
+        "battleCries": "TargetlessActions.EAT_DIVINE_SHIELDS"
     }
 }

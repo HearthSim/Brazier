@@ -13,7 +13,7 @@
                     "BasicFilters.HAS_SAME_OWNER_PLAYER",
                     "BasicFilters.EVENT_SOURCE_IS_SPELL"
                 ],
-                "action": "PlayerActions.DRAW_FOR_SELF"
+                "action": "TargetlessActions.DRAW_FOR_SELF"
             }
         }
     }

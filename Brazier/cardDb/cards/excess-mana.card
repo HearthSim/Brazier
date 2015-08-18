@@ -5,5 +5,5 @@
     "type": "spell",
     "collectible": false,
     "manaCost": 0,
-    "playActions": "PlayerActions.DRAW_FOR_SELF"
+    "playActions": "TargetlessActions.DRAW_FOR_SELF"
 }

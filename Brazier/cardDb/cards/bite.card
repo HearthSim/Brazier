@@ -4,14 +4,20 @@
     "class": "druid",
     "type": "spell",
     "manaCost": 4,
-    "playActions": [
-        {
-            "class": "PlayerActions.addHeroAttackForThisTurn",
-            "attack": 4
-        },
-        {
-            "class": "PlayerActions.armorUp",
-            "armor": 4
-        }
-    ]
+    "playActions": {
+        "actions": [
+            {
+                "class": "TargetlessActions.armorUp",
+                "armor": 4
+            },
+            {
+                "class": "TargetlessActions.forTargets",
+                "selector": "EntitySelectors.friendlyHero",
+                "action": {
+                    "class": "TargetedActions.buffTargetThisTurn",
+                    "buff": "4/0"
+                }
+            }
+        ]
+    }
 }

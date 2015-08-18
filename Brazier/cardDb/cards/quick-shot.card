@@ -12,7 +12,7 @@
         },
         {
             "class": "CardPlayActions.doIf",
-            "action": "PlayerActions.DRAW_FOR_SELF",
+            "action": "TargetlessActions.DRAW_FOR_SELF",
             "condition": "PlayActionRequirements.EMPTY_HAND"
         }
     ]

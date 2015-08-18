@@ -4,14 +4,11 @@
     "class": "shaman",
     "type": "spell",
     "manaCost": 0,
-    "playActions": [
-        {
-            "targets": "all-minions",
-            "class": "ActorlessTargetedActions.FULL_HEAL"
-        },
-        {
-            "targets": "all-minions",
-            "class": "MinionActions.TAUNT"
-        }
-    ]
+    "playActions": {
+        "targets": "all-minions",
+        "actions": [
+            "TargetedActions.FULL_HEAL",
+            "TargetedActions.TAUNT"
+        ]
+    }
 }

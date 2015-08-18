@@ -6,7 +6,7 @@
     "rarity": "epic",
     "manaCost": 6,
     "playActions": {
-        "class": "PlayerActions.dealMissleDamage",
+        "class": "TargetlessActions.dealMissleDamage",
         "missleCount": 8
     }
 }

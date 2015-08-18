@@ -1,14 +1,25 @@
 package com.github.kelemen.brazier.actions;
 
 import com.github.kelemen.hearthstone.emulator.World;
+import com.github.kelemen.hearthstone.emulator.actions.UndoAction;
+import com.github.kelemen.hearthstone.emulator.actions.UndoBuilder;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.function.Function;
 import java.util.stream.Stream;
 import org.jtrim.utils.ExceptionHelper;
 
 public interface EntitySelector<Actor, Selection> {
     public Stream<? extends Selection> select(World world, Actor actor);
+
+    public default UndoAction forEach(World world, Actor actor, Function<? super Selection, UndoAction> action) {
+        UndoBuilder result = new UndoBuilder();
+        select(world, actor).forEach((selection) -> {
+            result.addUndo(action.apply(selection));
+        });
+        return result;
+    }
 
     public default TargetedEntitySelector<Actor, Object, Selection> toTargeted() {
         return (World world, Actor actor, Object target) -> select(world, actor);

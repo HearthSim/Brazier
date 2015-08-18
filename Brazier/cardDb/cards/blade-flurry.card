@@ -7,6 +7,6 @@
     "manaCost": 2,
     "playActions": {
         "requires": "PlayActionRequirements.HAS_WEAPON",
-        "class": "PlayerActions.BLADE_FLURRY"
+        "class": "TargetlessActions.BLADE_FLURRY"
     }
 }

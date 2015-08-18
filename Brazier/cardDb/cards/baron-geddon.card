@@ -11,11 +11,12 @@
             "turn-ends": {
                 "filter": "BasicFilters.HAS_SAME_OWNER_PLAYER",
                 "action": {
-                    "class": "MinionEventActions.doSelf",
-                    "action": {
-                        "class": "DamageActions.dealDamageToOthers",
-                        "damage": 2
-                    }
+                    "class": "TargetlessActions.damageTarget",
+                    "selector": {
+                        "class": "EntitySelectors.notSelf",
+                        "selector": "EntitySelectors.allTargetsAlive"
+                    },
+                    damage: 2
                 }
             }
         }

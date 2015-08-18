@@ -7,7 +7,7 @@
         "attack": 3,
         "hp": 3,
         "battleCries": {
-            "class": "PlayerActions.equipWeapon",
+            "class": "TargetlessActions.equipWeapon",
             "weapon": "Battle Axe"
         }
     }

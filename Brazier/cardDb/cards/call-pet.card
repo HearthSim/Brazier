@@ -6,7 +6,7 @@
     "rarity": "rare",
     "manaCost": 2,
     "playActions": {
-        "class": "PlayerActions.drawCard",
+        "class": "TargetlessActions.drawCard",
         "costReduction": 4,
         "costReductionFilter": {
             "class": "BasicFilters.eventSourceHasKeyword",

@@ -14,7 +14,7 @@
                     "BasicFilters.EVENT_SOURCE_IS_SPELL"
                 ],
                 "action": {
-                    "class": "PlayerActions.addCard",
+                    "class": "TargetlessActions.addCard",
                     "card": "Fireball"
                 }
             }

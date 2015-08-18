@@ -13,8 +13,6 @@ import com.github.kelemen.hearthstone.emulator.minions.Minion;
 import com.github.kelemen.hearthstone.emulator.minions.MinionBody;
 import com.github.kelemen.hearthstone.emulator.parsing.NamedArg;
 import java.util.Arrays;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.function.Function;
 import org.jtrim.utils.ExceptionHelper;
 
 public final class BattleCries {
@@ -72,8 +70,6 @@ public final class BattleCries {
         };
     };
 
-    public static final BattleCryTargetedAction EAT_DIVINE_SHIELDS = eatDivineShields(3, 3);
-
     public static final BattleCryTargetedAction COPY_SELF = (world, arg) -> {
         return ActionUtils.doOnEndOfTurn(world, () -> {
             Minion self = arg.getSource();
@@ -111,41 +107,6 @@ public final class BattleCries {
             for (int i = 0; i < actionCount; i++) {
                 result.addUndo(action.alterWorld(world, arg));
             }
-            return result;
-        };
-    }
-
-    public static BattleCryTargetedAction eatDivineShields(
-            @NamedArg("attackPerShield") int attackPerShield,
-            @NamedArg("hpPerShield") int hpPerShield) {
-        return (World world, BattleCryArg arg) -> {
-            AtomicInteger shieldCountRef = new AtomicInteger(0);
-            Function<Minion, UndoAction> collector = (Minion minion) -> {
-                MinionBody body = minion.getBody();
-                if (body.isDivineShield()) {
-                    shieldCountRef.incrementAndGet();
-                    return body.setDivineShield(false);
-                }
-                else {
-                    return UndoAction.DO_NOTHING;
-                }
-            };
-
-            UndoAction collect1Undo = world.getPlayer1().getBoard().forAllMinions(collector);
-            UndoAction collect2Undo = world.getPlayer2().getBoard().forAllMinions(collector);
-            int shieldCount = shieldCountRef.get();
-            if (shieldCount <= 0) {
-                return UndoAction.DO_NOTHING;
-            }
-
-            Minion minion = arg.getSource();
-            UndoBuilder result = new UndoBuilder();
-            result.addUndo(collect1Undo);
-            result.addUndo(collect2Undo);
-
-            result.addUndo(minion.getBuffableAttack().addBuff(attackPerShield * shieldCount));
-            result.addUndo(minion.getBody().getHp().buffHp(hpPerShield * shieldCount));
-
             return result;
         };
     }

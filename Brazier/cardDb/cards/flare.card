@@ -8,6 +8,6 @@
     "playActions": [
         "PlayerActions.DESTROY_OPPONENT_SECRET",
         "PlayerActions.DESTROY_STEALTH",
-        "PlayerActions.DRAW_FOR_SELF"
+        "TargetlessActions.DRAW_FOR_SELF"
     ]
 }

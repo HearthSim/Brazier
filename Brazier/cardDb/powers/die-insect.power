@@ -4,7 +4,12 @@
     "class": "boss-class",
     "manaCost": 2,
     "playActions": {
-        "class": "PlayerActions.dealBasicDamageToRandomEnemy",
+        "class": "TargetlessActions.damageTarget",
+        "selector": {
+            "class": "EntitySelectors.filtered",
+            "filter": "EntityFilters.random",
+            "selector": "EntitySelectors.enemyTargetsAlive"
+        },
         "damage": 8
     }
 }

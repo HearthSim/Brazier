@@ -6,7 +6,6 @@ import com.github.kelemen.hearthstone.emulator.Player;
 import com.github.kelemen.hearthstone.emulator.PlayerProperty;
 import com.github.kelemen.hearthstone.emulator.SummonLocationRef;
 import com.github.kelemen.hearthstone.emulator.World;
-import com.github.kelemen.hearthstone.emulator.cards.Card;
 import com.github.kelemen.hearthstone.emulator.minions.Minion;
 import com.github.kelemen.hearthstone.emulator.parsing.NamedArg;
 import java.util.stream.Stream;
@@ -30,13 +29,6 @@ public final class TargetedEntitySelectors {
         return (World world, Actor actor, Target target) -> {
             Stream<? extends Selection> selection = selector.select(world, actor, target);
             return filter.select(world, selection);
-        };
-    }
-
-    public static <Target> TargetedEntitySelector<Card, Target, Minion> actorCardsMinion() {
-        return (World world, Card actor, Target target) -> {
-            Minion minion = actor.getMinion();
-            return minion != null ? Stream.of(minion) : Stream.empty();
         };
     }
 
@@ -77,12 +69,6 @@ public final class TargetedEntitySelectors {
     public static <Actor, Target extends PlayerProperty> TargetedEntitySelector<Actor, Target, Minion> targetsBoard() {
         return (World world, Actor actor, Target target) -> {
             return target.getOwner().getBoard().getAllMinions().stream();
-        };
-    }
-
-    public static <Actor extends PlayerProperty, Target> TargetedEntitySelector<Actor, Target, Minion> actorsBoard() {
-        return (World world, Actor actor, Target target) -> {
-            return actor.getOwner().getBoard().getAllMinions().stream();
         };
     }
 

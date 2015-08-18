@@ -3,14 +3,12 @@
     "description": "Draw a card and take 2 damage.",
     "class": "warlock",
     "manaCost": 2,
-    "playActions": {
-        "actions": [
-            {
-                "class": "PlayerActions.damageOwnHero",
-                "damage": 2,
-                "spell": false
-            },
-            "PlayerActions.DRAW_FOR_SELF"
-        ]
-    }
+    "playActions": [
+        {
+            "class": "TargetlessActions.damageTarget",
+            "selector": "EntitySelectors.friendlyHero",
+            "damage": 2
+        },
+        "TargetlessActions.DRAW_FOR_SELF"
+    ]
 }

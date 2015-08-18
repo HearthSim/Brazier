@@ -11,7 +11,7 @@
             "class": "Auras.ownPlayerAura",
             "aura": {
                 "class": "HeroAuras.playerFlag",
-                "flag": "stead-shot-snipe"
+                "flag": "steady-shot-snipe"
             }
         }
     }

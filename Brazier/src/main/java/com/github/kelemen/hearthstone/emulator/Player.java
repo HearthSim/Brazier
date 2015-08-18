@@ -383,7 +383,7 @@ public final class Player implements PlayerProperty {
     public UndoAction drawCardToHand(Card card) {
         ExceptionHelper.checkNotNullArgument(card, "card");
 
-        UndoAction drawActionsUndo = WorldActionList.executeActionsNow(world, this, card.getCardDescr().getOnDrawActions());
+        UndoAction drawActionsUndo = WorldActionList.executeActionsNow(world, card, card.getCardDescr().getOnDrawActions());
         UndoAction addCardUndo = hand.addCard(card, world.getEvents().drawCardListeners()::triggerEvent);
 
         return () -> {

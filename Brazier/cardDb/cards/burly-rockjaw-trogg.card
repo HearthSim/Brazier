@@ -13,11 +13,8 @@
                     "BasicFilters.HAS_DIFFERENT_OWNER_PLAYER"
                 ],
                 "action": {
-                    "class": "MinionEventActions.applyTargetedActionToSelf",
-                    "action": {
-                        "class": "MinionActions.buffAttack",
-                        "attack": 2
-                    }
+                    "class": "TargetlessActions.buffSelfMinion",
+                    "buff": "2/0"
                 }
             }
         }

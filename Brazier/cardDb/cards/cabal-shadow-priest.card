@@ -12,14 +12,14 @@
                 "class": "PlayActionRequirements.stealBattleCryNeeds",
                 "maxAttack": 2
             },
-            "class": "ActorlessTargetedActions.TAKE_CONTROL",
             "targets": [
                 "enemy-minions",
                 {
                     "class": "TargetNeeds.attackIsLessThan",
                     "attack": 3
                 }
-            ]
+            ],
+            "class": "TargetedActions.TAKE_CONTROL"
         }
     }
 }

@@ -121,8 +121,6 @@ public final class MinionActions {
 
     public static final MinionAction WARLORD_BUFF = minionLeaderBuff(1, 1, new Keyword[0]);
 
-    public static final MinionAction WEAPON_BASED_BUFF = weaponBasedBuff(1);
-
     public static final MinionAction SWAP_WITH_MINION_IN_HAND = (World world, Minion minion) -> {
         Hand hand = minion.getOwner().getHand();
         int cardIndex = hand.chooseRandomCardIndex(Card::isMinionCard);
@@ -333,20 +331,6 @@ public final class MinionActions {
                 hpBuffUndo.undo();
                 attackBuffUndo.undo();
             };
-        };
-    }
-
-    public static MinionAction weaponBasedBuff(
-            @NamedArg("buffPerAttack") int buffPerAttack) {
-
-        return (World world, Minion minion) -> {
-            Weapon weapon = minion.getOwner().tryGetWeapon();
-            if (weapon == null) {
-                return UndoAction.DO_NOTHING;
-            }
-
-            int buff = weapon.getAttack();
-            return minion.addAttackBuff(buffPerAttack * buff);
         };
     }
 

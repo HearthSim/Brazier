@@ -1,6 +1,7 @@
 package com.github.kelemen.hearthstone.emulator.parsing;
 
 import com.github.kelemen.brazier.actions.Buff;
+import com.github.kelemen.brazier.actions.Buffs;
 import com.github.kelemen.brazier.actions.EntityFilter;
 import com.github.kelemen.brazier.actions.EntityFilters;
 import com.github.kelemen.brazier.actions.EntitySelector;
@@ -194,6 +195,20 @@ public final class ParserUtils {
                     = (Collection<? extends EntitySelector<Object, Object>>)elements;
             return EntitySelector.merge(unsafeElements);
         });
+        result.setTypeMerger(Buff.class, (Collection<? extends Buff<?>> elements) -> {
+            // Unsafe but there is nothing to do.
+            @SuppressWarnings("unchecked")
+            Collection<? extends Buff<Object>> unsafeElements
+                    = (Collection<? extends Buff<Object>>)elements;
+            return Buff.merge(unsafeElements);
+        });
+        result.setTypeMerger(PermanentBuff.class, (Collection<? extends PermanentBuff<?>> elements) -> {
+            // Unsafe but there is nothing to do.
+            @SuppressWarnings("unchecked")
+            Collection<? extends PermanentBuff<Object>> unsafeElements
+                    = (Collection<? extends PermanentBuff<Object>>)elements;
+            return PermanentBuff.merge(unsafeElements);
+        });
     }
 
     private static void addTypeConversions(JsonDeserializer.Builder result) {
@@ -264,6 +279,17 @@ public final class ParserUtils {
             TargetlessAction<PlayerProperty> safeAction = (TargetlessAction<PlayerProperty>)action;
             return (World world, PlayerProperty self, Object eventSource) -> {
                 return safeAction.alterWorld(world, self);
+            };
+        });
+
+        result.addTypeConversion(TargetedAction.class, TargetlessAction.class, (action) -> {
+            // Not truly safe but there is not much to do.
+            // The true requirement is that the "Actor" extends the "Self" object of
+            // WorldEventAction.
+            @SuppressWarnings("unchecked")
+            TargetedAction<Object, Object> safeAction = (TargetedAction<Object, Object>)action;
+            return (World world, Object actor) -> {
+                return safeAction.alterWorld(world, actor, actor);
             };
         });
 
@@ -345,6 +371,15 @@ public final class ParserUtils {
         result.setCustomStringParser(CardId.class, (str) -> new CardId(str));
         result.setCustomStringParser(MinionId.class, (str) -> new MinionId(str));
         result.setCustomStringParser(WeaponId.class, (str) -> new WeaponId(str));
+
+        result.setCustomStringParser(Buff.class, (String str) -> {
+            BuffDescr buffDescr = BuffDescr.tryCreate(str);
+            return buffDescr != null ? Buffs.buffRemovable(buffDescr.attack, buffDescr.hp) : null;
+        });
+        result.setCustomStringParser(PermanentBuff.class, (String str) -> {
+            BuffDescr buffDescr = BuffDescr.tryCreate(str);
+            return buffDescr != null ? Buffs.buff(buffDescr.attack, buffDescr.hp) : null;
+        });
     }
 
     private static TargetNeed toTargetNeed(String str) throws ObjectParsingException {
@@ -599,6 +634,31 @@ public final class ParserUtils {
         WorldEventAction<? super Self, ? super Self> deathRattle = parseDeathRattle(selfClass, eventNotificationParser, root);
 
         return new LivingEntitysAbilities<>(ability, eventActionDefs, deathRattle);
+    }
+
+    private static final class BuffDescr {
+        public final int attack;
+        public final int hp;
+
+        public BuffDescr(int attack, int hp) {
+            this.attack = attack;
+            this.hp = hp;
+        }
+
+        public static BuffDescr tryCreate(String str) {
+            String[] attackHp = str.split("/");
+            if (attackHp.length != 2) {
+                return null;
+            }
+
+            try {
+                int attack = Integer.parseInt(attackHp[0].trim());
+                int hp = Integer.parseInt(attackHp[1].trim());
+                return new BuffDescr(attack, hp);
+            } catch (NumberFormatException ex) {
+                return null;
+            }
+        }
     }
 
     private ParserUtils() {

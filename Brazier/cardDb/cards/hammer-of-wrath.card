@@ -10,6 +10,6 @@
             "class": "ActorlessTargetedActions.dealSpellDamage",
             "damage": 3
         },
-        "PlayerActions.DRAW_FOR_SELF"
+        "TargetlessActions.DRAW_FOR_SELF"
     ]
 }

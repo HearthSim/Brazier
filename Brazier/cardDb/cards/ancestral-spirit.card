@@ -7,13 +7,7 @@
     "manaCost": 2,
     "playActions": {
         "targets": "all-minions",
-        "class": "ActorlessTargetedActions.applyToMinionTarget",
-        "action": {
-            "class": "MinionActions.addDeathRattle",
-            "action": {
-                "class": "MinionEventActions.doSelf",
-                "action": "MinionActions.RESUMMON_RIGHT"
-            }
-        }
+        "class": "TargetedActions.addDeathRattle",
+        "action": "TargetlessActions.RESUMMON_RIGHT"
     }
 }

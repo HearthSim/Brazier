@@ -4,7 +4,7 @@
     "class": "rouge",
     "manaCost": 2,
     "playActions": {
-        "class": "PlayerActions.equipWeapon",
+        "class": "TargetlessActions.equipWeapon",
         "weapon": "Wicked Knife"
     }
 }

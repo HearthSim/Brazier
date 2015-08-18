@@ -9,6 +9,6 @@
             "class": "PlayerActions.dealDamageToEnemyMinions",
             "damage": 1
         },
-        "PlayerActions.DRAW_FOR_SELF"
+        "TargetlessActions.DRAW_FOR_SELF"
     ]
 }

@@ -10,14 +10,28 @@
         "hp": 4,
         "battleCries": [
             {
-                "class": "PlayerActions.equipRandomWeapon",
-                "keywords": "collectible"
+                "class": "TargetlessActions.equipSelectedWeapon",
+                "weapon": {
+                    "class": "EntitySelectors.filtered",
+                    "filter": "EntityFilters.random",
+                    "selector": {
+                        "class": "EntitySelectors.weaponsWithKeywords",
+                        "keywords": "collectible"
+                    }
+                }
             },
             {
-                "class": "PlayerActions.doForOpponent",
+                "class": "TargetlessActions.actWithOpponent",
                 "action": {
-                    "class": "PlayerActions.equipRandomWeapon",
-                    "keywords": "collectible"
+                    "class": "TargetlessActions.equipSelectedWeapon",
+                    "weapon": {
+                        "class": "EntitySelectors.filtered",
+                        "filter": "EntityFilters.random",
+                        "selector": {
+                            "class": "EntitySelectors.weaponsWithKeywords",
+                            "keywords": "collectible"
+                        }
+                    }
                 }
             }
         ]

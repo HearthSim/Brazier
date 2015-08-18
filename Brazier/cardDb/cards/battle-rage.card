@@ -4,5 +4,5 @@
     "class": "warrior",
     "type": "spell",
     "manaCost": 2,
-    "playActions": "PlayerActions.BATTLE_RAGE"
+    "playActions": "TargetlessActions.BATTLE_RAGE"
 }

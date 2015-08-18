@@ -9,10 +9,7 @@
         "battleCries": {
             "targets": "all-minions",
             "class": "TargetedActions.buffTargetThisTurn",
-            "buff": {
-                "class": "Buffs.addAttack",
-                "attack": 2
-            }
+            "buff": "2/0"
         }
     }
 }

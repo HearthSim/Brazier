@@ -5,9 +5,9 @@
     "type": "spell",
     "manaCost": 7,
     "playActions": [
-        "PlayerActions.DRAW_FOR_SELF",
-        "PlayerActions.DRAW_FOR_SELF",
-        "PlayerActions.DRAW_FOR_SELF",
-        "PlayerActions.DRAW_FOR_SELF"
+        "TargetlessActions.DRAW_FOR_SELF",
+        "TargetlessActions.DRAW_FOR_SELF",
+        "TargetlessActions.DRAW_FOR_SELF",
+        "TargetlessActions.DRAW_FOR_SELF"
     ]
 }

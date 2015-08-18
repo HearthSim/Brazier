@@ -4,8 +4,8 @@
     "class": "mage",
     "manaCost": 2,
     "playActions": {
-        "class": "ActorlessTargetedActions.dealBasicDamage",
         "targets": "all",
+        "class": "TargetedActions.damageTarget",
         "damage": 1
     }
 }

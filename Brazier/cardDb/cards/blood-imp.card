@@ -12,11 +12,18 @@
             "turn-ends": {
                 "filter": "BasicFilters.HAS_SAME_OWNER_PLAYER",
                 "action": {
-                    "class": "MinionEventActions.applyTargetedActionToRandomOwnMinion",
-                    "filter": "BasicFilters.NOT_SELF",
+                    "class": "TargetlessActions.forTargets",
+                    "selector": {
+                        "class": "EntitySelectors.filtered",
+                        "filter": "EntityFilters.random",
+                        "selector": {
+                            "class": "EntitySelectors.notSelf",
+                            "selector": "EntitySelectors.friendlyBoardBuffable"
+                        }
+                    },
                     "action": {
-                        "class": "MinionActions.buffHp",
-                        "hp": 1
+                        "class": "TargetedActions.buffTarget",
+                        "buff": "0/1"
                     }
                 }
             }

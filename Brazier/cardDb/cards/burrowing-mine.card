@@ -7,10 +7,10 @@
     "manaCost": 0,
     "drawActions": [
         {
-            "class": "PlayerActions.damageOwnHero",
-            "spell": false,
+            "class": "TargetlessActions.damageTarget",
+            "selector": "EntitySelectors.friendlyHero",
             "damage": 10
         },
-        "PlayerActions.DRAW_FOR_SELF"
+        "TargetlessActions.DRAW_FOR_SELF"
     ]
 }

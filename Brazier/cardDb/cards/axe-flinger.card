@@ -10,11 +10,9 @@
             "minion-damaged": {
                 "filter": "BasicFilters.TARGET_SELF",
                 "action": {
-                    "class": "MinionEventActions.applyTargetedActionToSelf",
-                    "action": {
-                        "class": "MinionActions.damageOpponentHero",
-                        "damage": 2
-                    }
+                    "class": "TargetlessActions.damageTarget",
+                    "selector": "EntitySelectors.enemyHero",
+                    "damage": 2
                 }
             }
         }

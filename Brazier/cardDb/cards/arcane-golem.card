@@ -9,8 +9,11 @@
         "hp": 2,
         "charge": true,
         "battleCries": {
-            "class": "PlayerActions.addManaCrystalToOpponent",
-            "amount": 1
+            "class": "TargetlessActions.actWithOpponent",
+            "action": {
+                "class": "TargetlessActions.addManaCrystal",
+                "amount": 1
+            }
         }
     }
 }

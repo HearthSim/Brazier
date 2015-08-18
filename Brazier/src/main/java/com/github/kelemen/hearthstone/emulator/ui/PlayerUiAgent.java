@@ -105,11 +105,7 @@ public final class PlayerUiAgent {
             return;
         }
 
-        TargetNeed targetNeed = card.getCardDescr().getCombinedTargetNeed(player);
-        if (chooseOneChoice != null) {
-            targetNeed = targetNeed.combine(chooseOneChoice.getCombinedTargetNeed(player));
-        }
-
+        TargetNeed targetNeed = getTargetNeed(player, card, chooseOneChoice);
         if (targetNeed.hasTarget()) {
             TargeterDef targeterDef = new TargeterDef(playerId, true, false);
             PlayerTargetNeed playerTargetNeed = new PlayerTargetNeed(targeterDef, targetNeed);
@@ -118,6 +114,14 @@ public final class PlayerUiAgent {
         else {
             worldAgent.playCard(cardIndex, new PlayTargetRequest(playerId, -1, null, chooseOneChoice));
         }
+    }
+
+    private static TargetNeed getTargetNeed(Player player, Card card, CardDescr chooseOneChoice) {
+        TargetNeed result = card.getCardDescr().getCombinedTargetNeed(player);
+        if (chooseOneChoice != null) {
+            result = result.combine(chooseOneChoice.getCombinedTargetNeed(player));
+        }
+        return result;
     }
 
     private static boolean hasValidTarget(Player player, PlayerTargetNeed targetNeed) {
@@ -143,8 +147,7 @@ public final class PlayerUiAgent {
         targetManager.requestTarget(minionIndexNeed, (minionIndex) -> {
             if (minionIndex instanceof Integer) {
                 targetManager.clearRequest();
-                TargetNeed targetNeed = card.getCardDescr().getCombinedTargetNeed(player);
-
+                TargetNeed targetNeed = getTargetNeed(player, card, chooseOneChoice);
                 if (targetNeed.hasTarget()) {
                     TargeterDef targeterDef = new TargeterDef(playerId, false, false);
                     PlayerTargetNeed playerTargetNeed = new PlayerTargetNeed(targeterDef, targetNeed);

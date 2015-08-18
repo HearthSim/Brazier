@@ -13,6 +13,6 @@
                 "hp": 2
             }
         },
-        "PlayerActions.DRAW_FOR_SELF"
+        "TargetlessActions.DRAW_FOR_SELF"
     ]
 }

@@ -7,12 +7,19 @@
     "manaCost": 6,
     "playActions": [
         {
-            "class": "PlayerActions.dealDamageToEnemyMinions",
-            "damage": 2
+            "class": "TargetlessActions.forBornTargets",
+            "atomic": true,
+            "selector": "EntitySelectors.enemyBoard",
+            "action": {
+                "class": "TargetedActions.damageTarget",
+                "damage": 2
+            }
         },
         {
-            "class": "PlayerActions.forEnemyMinions",
-            "action": "ActorlessTargetedActions.FREEZE_TARGET"
+            "class": "TargetlessActions.forBornTargets",
+            "atomic": true,
+            "selector": "EntitySelectors.enemyBoard",
+            "action": "TargetedActions.FREEZE_TARGET"
         }
     ]
 }

@@ -30,6 +30,17 @@ import java.util.function.Predicate;
 import org.jtrim.utils.ExceptionHelper;
 
 public final class ActionUtils {
+    public static Minion tryGetMinion(Object obj) {
+        if (obj instanceof Minion) {
+            return (Minion)obj;
+        }
+        if (obj instanceof Card) {
+            Card card = (Card)obj;
+            return card.getMinion();
+        }
+        return null;
+    }
+
     public static UndoAction adjustHp(TargetableCharacter character, Function<HpProperty, UndoAction> action) {
         HpProperty hp = tryGetHp(character);
         if (hp == null) {

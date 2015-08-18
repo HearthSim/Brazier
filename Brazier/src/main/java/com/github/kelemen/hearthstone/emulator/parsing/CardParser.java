@@ -1,5 +1,6 @@
 package com.github.kelemen.hearthstone.emulator.parsing;
 
+import com.github.kelemen.brazier.actions.TargetlessAction;
 import com.github.kelemen.hearthstone.emulator.EntityId;
 import com.github.kelemen.hearthstone.emulator.Keyword;
 import com.github.kelemen.hearthstone.emulator.Keywords;
@@ -13,7 +14,6 @@ import com.github.kelemen.hearthstone.emulator.actions.CardPlayAction;
 import com.github.kelemen.hearthstone.emulator.actions.CardPlayArg;
 import com.github.kelemen.hearthstone.emulator.actions.ManaCostAdjuster;
 import com.github.kelemen.hearthstone.emulator.actions.PlayActionRequirement;
-import com.github.kelemen.hearthstone.emulator.actions.PlayerAction;
 import com.github.kelemen.hearthstone.emulator.actions.TargetNeed;
 import com.github.kelemen.hearthstone.emulator.actions.UndoAction;
 import com.github.kelemen.hearthstone.emulator.actions.WorldEventActionDefs;
@@ -26,6 +26,7 @@ import com.github.kelemen.hearthstone.emulator.cards.CardRarity;
 import com.github.kelemen.hearthstone.emulator.cards.CardType;
 import com.github.kelemen.hearthstone.emulator.minions.MinionDescr;
 import com.github.kelemen.hearthstone.emulator.weapons.WeaponDescr;
+import java.lang.reflect.Type;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Locale;
@@ -281,7 +282,11 @@ public final class CardParser implements EntityParser<CardDescr> {
 
         JsonTree drawActions = root.getChild("drawActions");
         if (drawActions != null) {
-            PlayerAction onDrawAction = objectParser.toJavaObject(drawActions, PlayerAction.class);
+            @SuppressWarnings("unchecked")
+            TargetlessAction<? super Card> onDrawAction = objectParser.toJavaObject(
+                    drawActions,
+                    TargetlessAction.class,
+                    TypeCheckers.genericTypeChecker(TargetlessAction.class, Card.class));
             result.addOnDrawAction(onDrawAction);
         }
 

@@ -4,8 +4,8 @@
     "class": "paladin",
     "manaCost": 2,
     "playActions": {
-        "class": "PlayerActions.summonMinion",
         "requires": "PlayActionRequirements.HAS_SPACE_ON_OWN_BOARD",
+        "class": "TargetlessActions.summonMinion",
         "minion": "Silver Hand Recruit"
     }
 }

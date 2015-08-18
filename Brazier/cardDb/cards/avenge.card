@@ -11,15 +11,15 @@
                 "BasicFilters.HAS_OTHER_OWNED_BUFF_TARGET"
             ],
             "action": {
-                "class": "GenericEventActions.applyTargetedActionToRandomOwnMinion",
-                "filter": "BasicFilters.NOT_SELF",
+                "class": "TargetlessActions.forTargets",
+                "selector": {
+                    "class": "EntitySelectors.filtered",
+                    "filter": "EntityFilters.random",
+                    "selector": "EntitySelectors.friendlyBoardBuffable"
+                },
                 "action": {
-                    "class": "ActorlessTargetedActions.applyToMinionTarget",
-                    "action": {
-                        "class": "MinionActions.buff",
-                        "attack": 3,
-                        "hp": 2
-                    }
+                    "class": "TargetedActions.buffTarget",
+                    "buff": "3/2"
                 }
             }
         }

@@ -11,7 +11,7 @@
         "triggers": {
             "turn-ends": {
                 "filter": "BasicFilters.HAS_SAME_OWNER_PLAYER",
-                "action": "PlayerActions.DRAW_FOR_SELF"
+                "action": "TargetlessActions.DRAW_FOR_SELF"
             }
         }
     }
