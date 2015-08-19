@@ -15,7 +15,7 @@
             "targets": "all",
             "class": "CardPlayActions.doIfTarget",
             "action": {
-                "class": "PlayerActions.summonMinion",
+                "class": "TargetlessActions.summonMinion",
                 "minion": "Lightwarden"
             },
             "condition": "BasicFilters.EVENT_SOURCE_DAMAGED"

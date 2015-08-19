@@ -9,13 +9,9 @@
         "hp": 4,
         "taunt": true,
         "deathRattle": {
-            "class": "TargetlessActions.forBornTargets",
-            "atomic": true,
+            "class": "TargetlessActions.damageTarget",
             "selector": "EntitySelectors.allTargetsAlive",
-            "action": {
-                "class": "TargetedActions.damageTarget",
-                "damage": 2
-            }
+            "damage": 2
         }
     }
 }

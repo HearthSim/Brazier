@@ -7,6 +7,7 @@ import com.github.kelemen.brazier.actions.EntityFilters;
 import com.github.kelemen.brazier.actions.EntitySelector;
 import com.github.kelemen.brazier.actions.PermanentBuff;
 import com.github.kelemen.brazier.actions.TargetedAction;
+import com.github.kelemen.brazier.actions.TargetedActionCondition;
 import com.github.kelemen.brazier.actions.TargetedEntitySelector;
 import com.github.kelemen.brazier.actions.TargetlessAction;
 import com.github.kelemen.hearthstone.emulator.HearthStoneDb;
@@ -57,8 +58,10 @@ import java.io.Reader;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Set;
@@ -180,6 +183,20 @@ public final class ParserUtils {
             Collection<? extends EntityFilter<Object>> unsafeElements
                     = (Collection<? extends EntityFilter<Object>>)elements;
             return EntityFilter.merge(unsafeElements);
+        });
+        result.setTypeMerger(TargetedActionCondition.class, (Collection<? extends TargetedActionCondition<?, ?>> elements) -> {
+            // Unsafe but there is nothing to do.
+            @SuppressWarnings("unchecked")
+            Collection<? extends TargetedActionCondition<Object, Object>> unsafeElements
+                    = (Collection<? extends TargetedActionCondition<Object, Object>>)elements;
+            return TargetedActionCondition.merge(unsafeElements);
+        });
+        result.setTypeMerger(Predicate.class, (Collection<? extends Predicate<?>> elements) -> {
+            // Unsafe but there is nothing to do.
+            @SuppressWarnings("unchecked")
+            Collection<? extends Predicate<Object>> unsafeElements
+                    = (Collection<? extends Predicate<Object>>)elements;
+            return mergePredicates(unsafeElements);
         });
         result.setTypeMerger(TargetedEntitySelector.class, (Collection<? extends TargetedEntitySelector<?, ?, ?>> elements) -> {
             // Unsafe but there is nothing to do.
@@ -659,6 +676,29 @@ public final class ParserUtils {
                 return null;
             }
         }
+    }
+
+    public static <T> Predicate<T> mergePredicates(
+            Collection<? extends Predicate<T>> filters) {
+        List<Predicate<T>> filtersCopy = new ArrayList<>(filters);
+        ExceptionHelper.checkNotNullElements(filtersCopy, "filters");
+
+        int count = filtersCopy.size();
+        if (count == 0) {
+            return (arg) -> true;
+        }
+        if (count == 1) {
+            return filtersCopy.get(0);
+        }
+
+        return (T arg) -> {
+            for (Predicate<T> filter: filtersCopy) {
+                if (!filter.test(arg)) {
+                    return false;
+                }
+            }
+            return true;
+        };
     }
 
     private ParserUtils() {

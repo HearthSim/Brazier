@@ -7,12 +7,12 @@
     "manaCost": 3,
     "playActions": [
         {
-            "class": "PlayerActions.summonMinion",
+            "class": "TargetlessActions.summonMinion",
             "minion": "Silver Hand Recruit",
             "minionCount": 3
         },
         {
-            "class": "PlayerActions.equipWeapon",
+            "class": "TargetlessActions.equipWeapon",
             "weapon": "Light's Justice"
         }
     ]

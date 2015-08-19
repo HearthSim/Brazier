@@ -8,6 +8,6 @@
     "manaCost": 1,
     "playActions": {
         "targets": "all-minions",
-        "class": "ActorlessTargetedActions.ATTACK_HP_SWITCH"
+        "class": "TargetedActions.ATTACK_HP_SWITCH"
     }
 }

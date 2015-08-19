@@ -8,8 +8,8 @@
         "attack": 2,
         "hp": 1,
         "battleCries": {
-            "class": "ActorlessTargetedActions.SILENCE",
-            "targets": "all-minions"
+            "targets": "all-minions",
+            "class": "TargetedActions.SILENCE"
         }
     }
 }

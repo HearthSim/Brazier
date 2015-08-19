@@ -12,14 +12,14 @@
                 "filter": "BasicFilters.HAS_SAME_OWNER_PLAYER",
                 "action": [
                     {
-                        "class": "MinionEventActions.doSelf",
+                        "class": "TargetlessActions.forSelf",
                         "action": {
-                            "class": "MinionActions.damageSelf",
+                            "class": "TargetedActions.damageTarget",
                             "damage": 1
                         }
                     },
                     {
-                        "class": "MinionEventActions.summonMinionRight",
+                        "class": "TargetlessActions.summonMinionRight",
                         "minion": "Imp/Rare"
                     }
                 ]

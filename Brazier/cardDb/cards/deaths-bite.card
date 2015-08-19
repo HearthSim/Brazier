@@ -7,11 +7,9 @@
         "attack": 4,
         "charges": 2,
         "deathRattle": {
-            "class": "WeaponEventActions.doSelf",
-            "action": {
-                "class": "DamageActions.dealDamageToAllMinions",
-                "damage": 1
-            }
+            "class": "TargetlessActions.damageTarget",
+            "selector": "EntitySelectors.board",
+            "damage": 1
         }
     }
 }

@@ -14,11 +14,9 @@
                     "BasicFilters.EVENT_SOURCE_IS_SPELL"
                 ],
                 "action": {
-                    "class": "MinionEventActions.doSelf",
-                    "action": {
-                        "class": "DamageActions.dealDamageToAllMinions",
-                        "damage": 1
-                    }
+                    "class": "TargetlessActions.damageTarget",
+                    "selector": "EntitySelectors.board",
+                    "damage": 1
                 }
             }
         }

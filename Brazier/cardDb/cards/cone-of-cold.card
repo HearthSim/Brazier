@@ -8,13 +8,17 @@
         "targets": "all-minions",
         "class": "CardPlayActions.doAtomic",
         "action": {
-            "class": "ActorlessTargetedActions.applyToAdjacentTargets",
+            "class": "TargetedActions.forTargets",
+            "selector": [
+                "TargetedEntitySelectors.target",
+                "TargetedEntitySelectors.targetsNeighbours"
+            ],
             "action": [
                 {
-                    "class": "ActorlessTargetedActions.dealSpellDamage",
+                    "class": "TargetedActions.damageTarget",
                     "damage": 1
                 },
-                "ActorlessTargetedActions.FREEZE_TARGET"
+                "TargetedActions.FREEZE_TARGET"
             ]
         }
     }

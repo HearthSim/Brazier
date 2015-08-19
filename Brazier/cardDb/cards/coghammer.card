@@ -6,14 +6,16 @@
     "rarity": "epic",
     "manaCost": 3,
     "playActions": {
-        "class": "PlayerActions.applyTargetedActionToRandomOwnMinion",
-        "action": {
-            "class": "ActorlessTargetedActions.applyToMinionTarget",
-            "action": [
-                "MinionActions.GIVE_DIVINE_SHIELD",
-                "MinionActions.TAUNT"
-            ]
-        }
+        "class": "TargetlessActions.forTargets",
+        "selector": {
+            "class": "EntitySelectors.filtered",
+            "filter": "EntityFilters.random",
+            "selector": "EntitySelectors.friendlyBoard"
+        },
+        "action": [
+            "TargetedActions.GIVE_DIVINE_SHIELD",
+            "TargetedActions.TAUNT"
+        ]
     },
     "weapon": {
         "attack": 2,

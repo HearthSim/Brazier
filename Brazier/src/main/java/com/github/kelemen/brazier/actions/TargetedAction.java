@@ -9,6 +9,8 @@ import java.util.List;
 import org.jtrim.utils.ExceptionHelper;
 
 public interface TargetedAction<Actor, Target> {
+    public static final TargetedAction<Object, Object> DO_NOTHING = (world, actor, target) -> UndoAction.DO_NOTHING;
+
     public UndoAction alterWorld(World world, Actor actor, Target target);
 
     public static <Actor, Target> TargetedAction<Actor, Target> merge(

@@ -7,11 +7,12 @@
     "playActions": [
         {
             "targets": "all-minions",
-            "class": "ActorlessTargetedActions.dealSpellDamage",
+            "class": "TargetedActions.damageTarget",
             "damage": 3
         },
         {
-            "class": "PlayerActions.damageOpponentHero",
+            "class": "TargetlessActions.damageTarget",
+            "selector": "EntitySelectors.enemyHero",
             "damage": 3
         }
     ]

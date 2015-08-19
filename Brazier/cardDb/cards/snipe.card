@@ -14,8 +14,11 @@
                 }
             ],
             "action": {
-                "class": "CardEventActions.damageCardMinionWithSpell",
-                "damage": 4
+                "class": "WorldEventActions.forEventArgMinionTarget",
+                "action": {
+                    "class": "TargetedActions.damageTarget",
+                    "damage": 4
+                }
             }
         }
     }

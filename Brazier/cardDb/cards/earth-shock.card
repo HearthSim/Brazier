@@ -4,15 +4,14 @@
     "class": "shaman",
     "type": "spell",
     "manaCost": 1,
-    "playActions": [
-        {
-            "targets": "all-minions",
-            "class": "ActorlessTargetedActions.SILENCE"
-        },
-        {
-            "targets": "all-minions",
-            "class": "ActorlessTargetedActions.dealSpellDamage",
-            "damage": 1
-        }
-    ]
+    "playActions": {
+        "targets": "all-minions",
+        "actions": [
+            "TargetedActions.SILENCE",
+            {
+                "class": "TargetedActions.damageTarget",
+                "damage": 1
+            }
+        ]
+    }
 }

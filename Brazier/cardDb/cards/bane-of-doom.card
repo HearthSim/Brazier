@@ -13,9 +13,12 @@
                 "damage": 2
             },
             {
-                "class": "TargetedActions.ifTarget",
-                "condition": "EntityFilters.isDead",
-                "action": {
+                "class": "TargetedActions.doIf",
+                "condition": {
+                    "class": "TargetedActionConditions.forTarget",
+                    "filter": "EntityFilters.isDead"
+                },
+                "if": {
                     "class": "TargetlessActions.summonSelectedMinion",
                     "minion": {
                         "class": "EntitySelectors.filtered",

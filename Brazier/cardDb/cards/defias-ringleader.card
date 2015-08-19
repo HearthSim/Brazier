@@ -5,8 +5,11 @@
     "manaCost": 2,
     "playActions": {
         "requires": "PlayActionRequirements.COMBO",
-        "class": "CardPlayActions.summonMinionRight",
-        "minion": "Defias Bandit"
+        "class": "TargetlessActions.withMinion",
+        "action": {
+            "class": "TargetlessActions.summonMinionRight",
+            "minion": "Defias Bandit"
+        }
     },
     "minion": {
         "attack": 2,

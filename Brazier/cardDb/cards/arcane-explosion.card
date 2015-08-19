@@ -5,12 +5,8 @@
     "type": "spell",
     "manaCost": 2,
     "playActions": {
-        "class": "TargetlessActions.forBornTargets",
-        "atomic": true,
+        "class": "TargetlessActions.damageTarget",
         "selector": "EntitySelectors.enemyBoard",
-        "action": {
-            "class": "TargetedActions.damageTarget",
-            "damage": 1
-        }
+        "damage": 1
     }
 }

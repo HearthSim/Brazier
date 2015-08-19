@@ -8,20 +8,14 @@
         {
             "targets": "all-minions",
             "requires": "PlayActionRequirements.NO_COMBO",
-            "class": "ActorlessTargetedActions.applyToMinionTarget",
-            "action": {
-                "class": "MinionActions.buffAttack",
-                "attack": 2
-            }
+            "class": "TargetedActions.buffTarget",
+            "buff": "2/0"
         },
         {
             "targets": "all-minions",
             "requires": "PlayActionRequirements.COMBO",
-            "class": "ActorlessTargetedActions.applyToMinionTarget",
-            "action": {
-                "class": "MinionActions.buffAttack",
-                "attack": 4
-            }
+            "class": "TargetedActions.buffTarget",
+            "buff": "4/0"
         }
     ]
 }

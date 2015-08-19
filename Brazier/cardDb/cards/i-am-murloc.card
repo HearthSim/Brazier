@@ -7,7 +7,7 @@
     "collectible": false,
     "manaCost": 4,
     "playActions": {
-        "class": "PlayerActions.summonMinion",
+        "class": "TargetlessActions.summonMinion",
         "maxMinionCount": 5,
         "minMinionCount": 3,
         "minion": "Murloc"

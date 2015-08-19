@@ -7,11 +7,15 @@
         "attack": 3,
         "hp": 4,
         "deathRattle": {
-            "class": "MinionEventActions.applyTargetedActionToRandomOwnMinion",
-            "filter": "BasicFilters.NOT_SELF",
+            "class": "TargetlessActions.forTargets",
+            "selector": {
+                "class": "EntitySelectors.filtered",
+                "filter": "EntityFilters.random",
+                "selector": "EntitySelectors.friendlyBoardBuffable"
+            },
             "action": {
-                "class": "MinionActions.buffHp",
-                "hp": 3
+                "class": "TargetedActions.buffTarget",
+                "buff": "0/3"
             }
         }
     }

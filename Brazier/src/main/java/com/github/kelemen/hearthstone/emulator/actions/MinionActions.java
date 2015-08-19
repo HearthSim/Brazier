@@ -26,7 +26,6 @@ import com.github.kelemen.hearthstone.emulator.minions.MinionBody;
 import com.github.kelemen.hearthstone.emulator.minions.MinionDescr;
 import com.github.kelemen.hearthstone.emulator.minions.MinionProvider;
 import com.github.kelemen.hearthstone.emulator.parsing.NamedArg;
-import com.github.kelemen.hearthstone.emulator.weapons.Weapon;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -192,32 +191,6 @@ public final class MinionActions {
         return (World world, Minion minion) -> {
             AuraAwareIntProperty maxAttackCount = minion.getProperties().getMaxAttackCountProperty();
             return maxAttackCount.addAuraBuff((prev) -> Math.max(prev, attackCount));
-        };
-    }
-
-    public static MinionAction mimironTransformation(@NamedArg("minion") MinionProvider minion) {
-        ExceptionHelper.checkNotNullArgument(minion, "minion");
-
-        Predicate<LabeledEntity> mechFilter = ActionUtils.includedKeywordsFilter(Keywords.RACE_MECH);
-
-        return (World world, Minion mimiron) -> {
-            Player player = mimiron.getOwner();
-
-            List<Minion> mechs = new ArrayList<>();
-            player.getBoard().collectAliveMinions(mechs, mechFilter);
-
-            if (mechs.size() >= 3) {
-                UndoBuilder result = new UndoBuilder(mechs.size() + 2);
-                for (Minion mech: mechs) {
-                    result.addUndo(mech.poison());
-                }
-                result.addUndo(world.endPhase());
-                result.addUndo(player.summonMinion(minion.getMinion()));
-                return result;
-            }
-            else {
-                return UndoAction.DO_NOTHING;
-            }
         };
     }
 

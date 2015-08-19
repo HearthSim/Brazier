@@ -9,8 +9,12 @@
         "attack": 12,
         "hp": 12,
         "battleCries": [
-            "PlayerActions.KILL_ALL_MINIONS",
-            "PlayerActions.DISCARD_HAND"
+            {
+                "class": "TargetlessActions.forOtherTargets",
+                "selector": "EntitySelectors.board",
+                "action": "TargetedActions.KILL_TARGET"
+            },
+            "TargetlessActions.DISCARD_HAND"
         ]
     }
 }

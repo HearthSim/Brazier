@@ -1,6 +1,7 @@
 package com.github.kelemen.brazier.actions;
 
 import com.github.kelemen.hearthstone.emulator.Keyword;
+import com.github.kelemen.hearthstone.emulator.Keywords;
 import com.github.kelemen.hearthstone.emulator.LabeledEntity;
 import com.github.kelemen.hearthstone.emulator.TargetableCharacter;
 import com.github.kelemen.hearthstone.emulator.World;
@@ -14,6 +15,7 @@ import java.util.stream.Stream;
 import org.jtrim.utils.ExceptionHelper;
 
 public final class EntityFilters {
+
     public static <Entity> EntityFilter<Entity> empty() {
         return (world, entities) -> Stream.empty();
     }
@@ -56,6 +58,30 @@ public final class EntityFilters {
         return ActionUtils.excludedKeywordsFilter(keywords);
     }
 
+    public static <Entity extends TargetableCharacter> Predicate<Entity> isBeast() {
+        return withKeywords(Keywords.RACE_BEAST);
+    }
+
+    public static <Entity extends TargetableCharacter> Predicate<Entity> isDemon() {
+        return withKeywords(Keywords.RACE_DEMON);
+    }
+
+    public static <Entity extends TargetableCharacter> Predicate<Entity> isDragon() {
+        return withKeywords(Keywords.RACE_DRAGON);
+    }
+
+    public static <Entity extends TargetableCharacter> Predicate<Entity> isMech() {
+        return withKeywords(Keywords.RACE_MECH);
+    }
+
+    public static <Entity extends TargetableCharacter> Predicate<Entity> isMurloc() {
+        return withKeywords(Keywords.RACE_MURLOC);
+    }
+
+    public static <Entity extends TargetableCharacter> Predicate<Entity> isPirate() {
+        return withKeywords(Keywords.RACE_PIRATE);
+    }
+
     public static <Entity extends TargetableCharacter> Predicate<Entity> isDead() {
         return (target) -> target.isDead();
     }
@@ -74,6 +100,11 @@ public final class EntityFilters {
 
     public static Predicate<Minion> buffableMinion() {
         return (minion) -> !minion.isScheduledToDestroy();
+    }
+
+    public static <Entity> Predicate<Entity> not(@NamedArg("filter") Predicate<? super Entity> filter) {
+        ExceptionHelper.checkNotNullArgument(filter, "filter");
+        return (arg) -> !filter.test(arg);
     }
 
     public static <Entity> EntityFilter<Entity> fromPredicate(Predicate<? super Entity> filter) {

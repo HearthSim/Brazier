@@ -7,7 +7,7 @@
     "manaCost": 2,
     "playActions": [
         {
-            "class": "PlayerActions.addThisTurnAbility",
+            "class": "TargetlessActions.addThisTurnAbility",
             "ability": {
                 "class": "Auras.sameBoardAura",
                 "aura": {

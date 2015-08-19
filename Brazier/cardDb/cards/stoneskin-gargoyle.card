@@ -10,8 +10,8 @@
             "turn-starts": {
                 "filter": "BasicFilters.HAS_SAME_OWNER_PLAYER",
                 "action": {
-                    "class": "MinionEventActions.doSelf",
-                    "action": "MinionActions.RESTORES_SELF_HEALTH"
+                    "class": "TargetlessActions.forSelf",
+                    "action": "TargetedActions.RESTORES_HEALTH"
                 }
             }
         }

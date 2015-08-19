@@ -9,10 +9,9 @@
     "playActions": [
         {
             "targets": "all-minions",
-            "class": "MinionActions.buff",
-            "attack": 5,
-            "hp": 5
+            "class": "TargetedActions.buffTarget",
+            "buff": "5/5"
         },
-        "ActorlessTargetedActions.TAUNT_MINION"
+        "TargetedActions.TAUNT"
     ]
 }

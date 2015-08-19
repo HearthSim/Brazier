@@ -8,11 +8,9 @@
         "hp": 3,
         "taunt": "true",
         "deathRattle": {
-            "class": "MinionEventActions.doSelf",
-            "action": {
-                "class": "DamageActions.dealDamageToAllMinions",
-                "damage": 1
-            }
+            "class": "TargetlessActions.damageTarget",
+            "selector": "EntitySelectors.board",
+            "damage": 1
         }
     }
 }

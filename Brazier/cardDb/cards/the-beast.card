@@ -8,9 +8,9 @@
         "attack": 9,
         "hp": 7,
         "deathRattle": {
-            "class": "PlayerActions.doForOpponent",
+            "class": "TargetlessActions.actWithOpponent",
             "action": {
-                "class": "PlayerActions.summonMinion",
+                "class": "TargetlessActions.summonMinion",
                 "minion": "Finkle Einhorn"
             }
         }

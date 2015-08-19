@@ -8,12 +8,13 @@
         "attack": 4,
         "hp": 3,
         "battleCries": {
-            "class": "TargetedMinionActions.forEnemyMinions",
-            "action": {
-                "class": "TargetedMinionActions.damageTarget",
-                "damage": 2
+            "class": "TargetlessActions.damageTarget",
+            "selector": {
+                "class": "EntitySelectors.filtered",
+                "filter": "EntityFilters.isUndamaged",
+                "selector": "EntitySelectors.enemyBoard"
             },
-            "filter": "BasicFilters.EVENT_SOURCE_IS_NOT_DAMAGED"
+            "damage": 2
         }
     }
 }

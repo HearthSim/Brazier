@@ -14,11 +14,9 @@
                     "BasicFilters.OWNER_HAS_SECRET"
                 ],
                 "action": {
-                    "class": "MinionEventActions.doSelf",
-                    "action": {
-                        "class": "DamageActions.damageOwnHero",
-                        "damage": -4
-                    }
+                    "class": "TargetlessActions.damageTarget",
+                    "selector": "EntitySelectors.friendlyHero",
+                    "damage": -4
                 }
             }
         }

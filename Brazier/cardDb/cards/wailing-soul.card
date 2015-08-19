@@ -8,8 +8,9 @@
         "attack": 3,
         "hp": 5,
         "battleCries": {
-            "class": "PlayerActions.forOwnMinions",
-            "action": "ActorlessTargetedActions.SILENCE"
+            "class": "TargetlessActions.forOtherTargets",
+            "selector": "EntitySelectors.friendlyBoard",
+            "action": "TargetedActions.SILENCE"
         }
     }
 }

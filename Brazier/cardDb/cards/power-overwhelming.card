@@ -18,7 +18,7 @@
                 "ability": {
                     "class": "MinionAbilities.endOfTurnBuff",
                     "filter": "BasicFilters.SELF_TURN",
-                    "action": "MinionEventActions.SELF_DESTRUCT"
+                    "action": "TargetlessActions.SELF_DESTRUCT"
                 }
             }
         ]

@@ -32,6 +32,10 @@ public final class TargetedEntitySelectors {
         };
     }
 
+    public static <Actor, Target> TargetedEntitySelector<Actor, Target, Target> target() {
+        return (World world, Actor actor, Target target) -> Stream.of(target);
+    }
+
     public static <Actor, Target extends PlayerProperty> TargetedEntitySelector<Actor, Target, Player> targetsOwnerPlayer() {
         return (World world, Actor actor, Target target) -> Stream.of(target.getOwner());
     }

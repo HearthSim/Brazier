@@ -7,7 +7,20 @@
     "manaCost": 5,
     "playActions": {
         "targets": "all-minions",
-        "class": "ActorlessTargetedActions.demonBuff",
-        "buff": 5
+        "class": "TargetedActions.doIf",
+        "condition": [
+            "TargetedActionConditions.sameOwner",
+            {
+                "class": "TargetedActionConditions.forTarget",
+                "filter": "EntityFilters.isDemon"
+            }],
+        "if": {
+            "class": "TargetedActions.buffTarget",
+            "buff": "5/5"
+        },
+        "else": {
+            "class": "TargetedActions.damageTarget",
+            "damage": 5
+        }
     }
 }

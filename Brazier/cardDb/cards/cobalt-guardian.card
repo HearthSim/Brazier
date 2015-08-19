@@ -18,8 +18,8 @@
                     }
                 ],
                 "action": {
-                    "class": "MinionEventActions.doSelf",
-                    "action": "MinionActions.GIVE_DIVINE_SHIELD"
+                    "class": "TargetlessActions.forSelf",
+                    "action": "TargetedActions.GIVE_DIVINE_SHIELD"
                 }
             }
         }

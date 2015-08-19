@@ -29,8 +29,6 @@ public final class MinionEventActions {
         return opponent.getHand().addCard(card.getCardDescr());
     };
 
-    public static final WorldEventAction<Minion, Object> SELF_DESTRUCT = doSelf(MinionActions.SELF_DESTRUCT);
-
     public static WorldEventAction<DamageSource, DamageEvent> LIFE_STEAL_FOR_HERO = (world, self, event) -> {
         int damageDealt = event.getDamageDealt();
         if (damageDealt <= 0) {
@@ -272,15 +270,6 @@ public final class MinionEventActions {
 
         return (world, owner, eventSource) -> {
             return !eventSource.isDead() && baseFilter.applies(world, owner, eventSource);
-        };
-    }
-
-    public static WorldEventAction<Minion, Object> doSelf(
-            @NamedArg("action") MinionAction action) {
-        ExceptionHelper.checkNotNullArgument(action, "action");
-
-        return (World world, Minion self, Object eventSource) -> {
-            return action.alterWorld(world, self);
         };
     }
 

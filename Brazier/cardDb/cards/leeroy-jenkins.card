@@ -9,17 +9,12 @@
         "hp": 2,
         "charge": true,
         "battleCries": {
-            "class": "PlayerActions.doForOpponent",
-            "action": [
-                {
-                    "class": "PlayerActions.summonMinion",
-                    "minion": "Whelp"
-                },
-                {
-                    "class": "PlayerActions.summonMinion",
-                    "minion": "Whelp"
-                }
-            ]
+            "class": "TargetlessActions.actWithOpponent",
+            "action": {
+                "class": "TargetlessActions.summonMinion",
+                "minion": "Whelp",
+                "minionCount": 2
+            }
         }
     }
 }

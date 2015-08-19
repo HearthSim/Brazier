@@ -12,7 +12,7 @@
                 "BasicFilters.ATTACK_TARGET_IS_MINION"
             ],
             "action": {
-                "class": "PlayerActions.summonMinion",
+                "class": "TargetlessActions.summonMinion",
                 "minionCount": 3,
                 "minion": "Snake"
             }

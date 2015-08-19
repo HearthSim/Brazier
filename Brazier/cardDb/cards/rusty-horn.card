@@ -8,6 +8,6 @@
     "manaCost": 1,
     "playActions": {
         "targets": "all-minions",
-        "class": "ActorlessTargetedActions.TAUNT_MINION"
+        "class": "TargetedActions.TAUNT"
     }
 }

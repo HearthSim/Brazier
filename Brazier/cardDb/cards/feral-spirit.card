@@ -7,7 +7,7 @@
     "manaCost": 3,
     "overload": 2,
     "playActions": {
-        "class": "PlayerActions.summonMinion",
+        "class": "TargetlessActions.summonMinion",
         "minion": "Spirit Wolf",
         "minionCount": 2
     }

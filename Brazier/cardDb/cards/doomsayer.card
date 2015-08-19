@@ -10,7 +10,11 @@
         "triggers": {
             "turn-starts": {
                 "filter": "BasicFilters.HAS_SAME_OWNER_PLAYER",
-                "action": "PlayerActions.KILL_ALL_MINIONS"
+                "action": {
+                    "class": "TargetlessActions.forTargets",
+                    "selector": "EntitySelectors.board",
+                    "action": "TargetedActions.KILL_TARGET"
+                }
             }
         }
     }

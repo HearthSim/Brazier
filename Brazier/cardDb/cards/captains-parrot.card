@@ -9,7 +9,7 @@
         "attack": 1,
         "hp": 1,
         "battleCries": {
-            "class": "PlayerActions.getRandomFromDeck",
+            "class": "TargetlessActions.getRandomFromDeck",
             "keywords": "pirate"
         }
     }

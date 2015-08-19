@@ -18,8 +18,8 @@
                     }
                 ],
                 "action": {
-                    "class": "MinionEventActions.doSelf",
-                    "action": "MinionActions.STEALTH"
+                    "class": "TargetlessActions.forSelf",
+                    "action": "TargetedActions.STEALTH"
                 }
             }
         }

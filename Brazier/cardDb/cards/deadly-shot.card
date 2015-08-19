@@ -6,7 +6,12 @@
     "manaCost": 3,
     "playActions": {
         "requires": "PlayActionRequirements.OPPONENT_BOARD_NOT_EMPTY",
-        "class": "PlayerActions.applyTargetedActionToRandomEnemyMinion",
-        "action": "ActorlessTargetedActions.KILL_TARGET"
+        "class": "TargetlessActions.forTargets",
+        "selector": {
+            "class": "EntitySelectors.filtered",
+            "filter": "EntityFilters.random",
+            "selector": "EntitySelectors.enemyBoardAlive"
+        },
+        "action": "TargetedActions.KILL_TARGET"
     }
 }

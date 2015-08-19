@@ -7,11 +7,9 @@
         "attack": 2,
         "hp": 3,
         "deathRattle": {
-            "class": "MinionEventActions.doSelf",
-            "action": {
-                "class": "DamageActions.damageOpponentHero",
-                "damage": -5
-            }
+            "class": "TargetlessActions.damageTarget",
+            "selector": "EntitySelectors.enemyHero",
+            "damage": -5
         }
     }
 }

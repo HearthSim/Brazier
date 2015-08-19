@@ -9,12 +9,16 @@
         "attack": 2,
         "hp": 3,
         "battleCries": {
-            "class": "MinionActions.forAllMinions",
-            "action": {
-                "class": "MinionActions.buffHp",
-                "hp": 2
+            "class": "TargetlessActions.forOtherTargets",
+            "selector": {
+                "class": "EntitySelectors.filtered",
+                "filter": "EntityFilters.isMurloc",
+                "selector": "EntitySelectors.board"
             },
-            "filter": "MinionAuras.TARGET_IS_MURLOC"
+            "action": {
+                "class": "TargetedActions.buffTarget",
+                "buff": "0/2"
+            }
         }
     }
 }

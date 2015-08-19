@@ -6,16 +6,12 @@
     "manaCost": 3,
     "playActions": {
         "targets": "self-minions",
-        "class": "CardPlayActions.combine",
         "actions": [
             {
-                "class": "MinionActions.buffAttack",
-                "attack": 2
+                "class": "TargetedActions.buffTarget",
+                "buff": "2/0"
             },
-            {
-                "class": "ActorlessTargetedActions.applyToMinionTarget",
-                "action": "MinionActions.CHARGE"
-            }
+            "TargetedActions.CHARGE"
         ]
     }
 }

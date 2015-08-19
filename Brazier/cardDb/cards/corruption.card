@@ -6,11 +6,11 @@
     "manaCost": 1,
     "playActions": {
         "targets": "enemy-minions",
-        "class": "MinionActions.buff",
+        "class": "TargetedActions.addAbility",
         "ability": {
             "class": "MinionAbilities.startOfTurnBuff",
             "filter": "BasicFilters.NOT_SELF_TURN",
-            "action": "MinionEventActions.SELF_DESTRUCT"
+            "action": "TargetlessActions.SELF_DESTRUCT"
         }
     }
 }

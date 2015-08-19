@@ -34,9 +34,9 @@ public final class ActionUtils {
         if (obj instanceof Minion) {
             return (Minion)obj;
         }
-        if (obj instanceof Card) {
-            Card card = (Card)obj;
-            return card.getMinion();
+        if (obj instanceof CardRef) {
+            CardRef cardRef = (CardRef)obj;
+            return cardRef.getCard().getMinion();
         }
         return null;
     }

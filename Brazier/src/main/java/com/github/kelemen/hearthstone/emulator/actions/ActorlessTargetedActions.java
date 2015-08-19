@@ -5,13 +5,10 @@ import com.github.kelemen.hearthstone.emulator.BornEntity;
 import com.github.kelemen.hearthstone.emulator.Damage;
 import com.github.kelemen.hearthstone.emulator.Deck;
 import com.github.kelemen.hearthstone.emulator.Hero;
-import com.github.kelemen.hearthstone.emulator.Keyword;
-import com.github.kelemen.hearthstone.emulator.Keywords;
 import com.github.kelemen.hearthstone.emulator.MultiTargeter;
 import com.github.kelemen.hearthstone.emulator.Player;
 import com.github.kelemen.hearthstone.emulator.Priorities;
 import com.github.kelemen.hearthstone.emulator.RandomProvider;
-import com.github.kelemen.hearthstone.emulator.Silencable;
 import com.github.kelemen.hearthstone.emulator.SummonLocationRef;
 import com.github.kelemen.hearthstone.emulator.TargetableCharacter;
 import com.github.kelemen.hearthstone.emulator.UndoableIntResult;
@@ -22,67 +19,15 @@ import com.github.kelemen.hearthstone.emulator.abilities.ActivatableAbility;
 import com.github.kelemen.hearthstone.emulator.cards.Card;
 import com.github.kelemen.hearthstone.emulator.cards.CardDescr;
 import com.github.kelemen.hearthstone.emulator.minions.Minion;
-import com.github.kelemen.hearthstone.emulator.minions.MinionBody;
 import com.github.kelemen.hearthstone.emulator.minions.MinionDescr;
 import com.github.kelemen.hearthstone.emulator.minions.MinionProperties;
 import com.github.kelemen.hearthstone.emulator.minions.MinionProvider;
 import com.github.kelemen.hearthstone.emulator.parsing.NamedArg;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Function;
 import org.jtrim.utils.ExceptionHelper;
 
 public final class ActorlessTargetedActions {
-    public static final ActorlessTargetedAction TAKE_CONTROL = (World world, PlayTarget playTarget) -> {
-        TargetableCharacter target = playTarget.getTarget();
-        if (target instanceof Minion) {
-            return playTarget.getCastingPlayer().getBoard().takeOwnership((Minion)target);
-        }
-        else {
-            return UndoAction.DO_NOTHING;
-        }
-    };
-
-    public static final ActorlessTargetedAction FULL_HEAL = (World world, PlayTarget target) -> {
-        Player player = target.getCastingPlayer();
-        TargetableCharacter character = target.getTarget();
-        if (character == null) {
-            return UndoAction.DO_NOTHING;
-        }
-
-        int healAmount;
-        if (character instanceof Minion) {
-            healAmount = ((Minion)character).getBody().getMaxHp();
-        }
-        else if (character instanceof Hero) {
-            healAmount = ((Hero)character).getMaxHp();
-        }
-        else {
-            healAmount = 0;
-        }
-
-        return dealSpellDamage(player, character, -healAmount);
-    };
-
-    public static final CharacterTargetedAction SILENCE = (World world, TargetableCharacter target) -> {
-        if (target instanceof Silencable) {
-            return ((Silencable)target).silence();
-        }
-        else {
-            return UndoAction.DO_NOTHING;
-        }
-    };
-
-    public static final CharacterTargetedAction TAUNT_MINION = (World world, TargetableCharacter target) -> {
-        if (target instanceof Minion) {
-            Minion minion = (Minion)target;
-            return minion.getBody().setTaunt(true);
-        }
-        else {
-            return UndoAction.DO_NOTHING;
-        }
-    };
-
     public static final ActorlessTargetedAction SHIELD_SLAM = (World world, PlayTarget playTarget) -> {
         TargetableCharacter target = playTarget.getTarget();
         if (target == null) {
@@ -132,28 +77,6 @@ public final class ActorlessTargetedActions {
             return minion.addAndActivateAbility(ActionUtils.toUntilTurnStartsAbility(world, minion, (Minion self) -> {
                 return self.getBody().getStealthProperty().addBuff((prev) -> true);
             }));
-        }
-        else {
-            return UndoAction.DO_NOTHING;
-        }
-    };
-
-    public static final CharacterTargetedAction ATTACK_HP_SWITCH = (World world, TargetableCharacter target) -> {
-        if (target instanceof Minion) {
-            Minion minion = (Minion)target;
-            MinionBody body = minion.getBody();
-
-            int attack = minion.getAttackTool().getAttack();
-            int hp = body.getCurrentHp();
-
-            UndoAction attackUndo = minion.getBuffableAttack().setValueTo(hp);
-            UndoAction hpUndo = body.getHp().setMaxHp(attack);
-            UndoAction currentHpUndo = body.getHp().setCurrentHp(body.getMaxHp());
-            return () -> {
-                currentHpUndo.undo();
-                hpUndo.undo();
-                attackUndo.undo();
-            };
         }
         else {
             return UndoAction.DO_NOTHING;
@@ -559,25 +482,6 @@ public final class ActorlessTargetedActions {
         };
     }
 
-    private static boolean isDemon(TargetableCharacter target) {
-        return target.getKeywords().contains(Keywords.RACE_DEMON);
-    }
-
-    public static ActorlessTargetedAction demonBuff(@NamedArg("buff") int buff) {
-        CharacterTargetedAction buffAction = applyToMinionTarget(MinionActions.buff(buff, buff));
-        ActorlessTargetedAction damageAction = dealSpellDamage(buff);
-
-        return (World world, PlayTarget arg) -> {
-            TargetableCharacter target = arg.getTarget();
-            if (target.getOwner() == arg.getCastingPlayer() && isDemon(target)) {
-                return buffAction.alterWorld(world, target);
-            }
-            else {
-                return damageAction.alterWorld(world, arg);
-            }
-        };
-    }
-
     private static UndoAction takeControlForThisTurn(Player newOwner, Minion minion) {
         World world = newOwner.getWorld();
         return minion.addAndActivateAbility(ActionUtils.toSingleTurnAbility(world, (Minion self) -> {
@@ -604,33 +508,6 @@ public final class ActorlessTargetedActions {
                 }
             });
         }));
-    }
-
-    public static ActorlessTargetedAction damageAndSummonOnDeath(
-            @NamedArg("damage") int damage,
-            @NamedArg("keywords") Keyword[] keywords) {
-
-        Function<World, MinionDescr> minionProvider = ActionUtils.randomMinionProvider(keywords);
-        ActorlessTargetedAction damageAction = dealSpellDamage(damage);
-
-        return (World world, PlayTarget arg) -> {
-            UndoAction damageUndo = damageAction.alterWorld(world, arg);
-            if (arg.getTarget().isDead()) {
-                MinionDescr minion = minionProvider.apply(world);
-                if (minion == null) {
-                    return damageUndo;
-                }
-
-                UndoAction summonUndo = arg.getCastingPlayer().summonMinion(minion);
-                return () -> {
-                    summonUndo.undo();
-                    damageUndo.undo();
-                };
-            }
-            else {
-                return damageUndo;
-            }
-        };
     }
 
     private ActorlessTargetedActions() {

@@ -20,7 +20,7 @@
                 "ability": {
                     "class": "MinionAbilities.startOfTurnBuff",
                     "filter": "BasicFilters.SELF_TURN",
-                    "action": "MinionEventActions.SELF_DESTRUCT"
+                    "action": "TargetlessActions.SELF_DESTRUCT"
                 }
             }
         ]

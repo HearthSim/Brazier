@@ -15,8 +15,8 @@
                 }
             ],
             "action": {
-                "class": "CardEventActions.applyToCardMinion",
-                "action": "MinionActions.SUMMON_COPY_FOR_OPPONENT"
+                "class": "WorldEventActions.withEventArgMinion",
+                "action": "TargetlessActions.SUMMON_COPY_FOR_OPPONENT"
             }
         }
     }

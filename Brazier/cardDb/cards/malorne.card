@@ -9,8 +9,8 @@
         "attack": 9,
         "hp": 7,
         "deathRattle": {
-            "class": "MinionEventActions.doSelf",
-            "action": "MinionActions.SHUFFLE_MINION"
+            "class": "TargetlessActions.forSelf",
+            "action": "TargetedActions.SHUFFLE_MINION"
         }
     }
 }

@@ -6,7 +6,8 @@
     "rarity": "epic",
     "manaCost": 9,
     "playActions": {
-        "class": "PlayerActions.forAllTargets",
-        "action": "ActorlessTargetedActions.FULL_HEAL"
+        "class": "TargetlessActions.forTargets",
+        "selector": "EntitySelectors.allTargets",
+        "action": "TargetedActions.FULL_HEAL"
     }
 }

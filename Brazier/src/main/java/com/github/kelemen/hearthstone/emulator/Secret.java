@@ -7,7 +7,7 @@ import com.github.kelemen.hearthstone.emulator.cards.CardDescr;
 import java.util.Set;
 import org.jtrim.utils.ExceptionHelper;
 
-public final class Secret implements PlayerProperty, WorldProperty, LabeledEntity {
+public final class Secret implements PlayerProperty, WorldProperty, LabeledEntity, DamageSource {
     private Player owner;
     private final CardDescr baseCard;
     private final ActivatableAbility<? super Secret> ability;
@@ -22,6 +22,11 @@ public final class Secret implements PlayerProperty, WorldProperty, LabeledEntit
         this.baseCard = baseCard;
         this.ability = ability;
         this.ref = null;
+    }
+
+    @Override
+    public UndoableResult<Damage> createDamage(int damage) {
+        return new UndoableResult<>(getOwner().getSpellDamage(damage));
     }
 
     public UndoAction setOwner(Player newOwner) {

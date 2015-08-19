@@ -12,7 +12,7 @@
         "triggers": {
             "turn-ends": {
                 "filter": "BasicFilters.HAS_SAME_OWNER_PLAYER",
-                "action": "MinionEventActions.SELF_DESTRUCT"
+                "action": "TargetlessActions.SELF_DESTRUCT"
             }
         }
     }

@@ -56,6 +56,12 @@ public final class Buffs {
         });
     }
 
+    public static PermanentBuff<TargetableCharacter> setMaxHp(@NamedArg("hp") int hp) {
+        return adjustHp((hpProperty) -> {
+            return hpProperty.setMaxHp(hp);
+        });
+    }
+
     public static PermanentBuff<TargetableCharacter> buffHp(@NamedArg("hp") int hp) {
         return buff(0, hp);
     }
@@ -149,6 +155,10 @@ public final class Buffs {
             int buff = weapon.getAttack();
             return target.addAttackBuff(buffPerAttack * buff);
         };
+    }
+
+    public static PermanentBuff<Weapon> buffWeapon(@NamedArg("attack") int attack) {
+        return buffWeapon(attack, 0);
     }
 
     public static PermanentBuff<Weapon> buffWeapon(

@@ -6,7 +6,14 @@
     "manaCost": 1,
     "playActions": {
         "requires": "PlayActionRequirements.HAS_WEAPON",
-        "class": "PlayerActions.addWeaponAttack",
-        "attack": 2
+        "class": "TargetlessActions.forTargets",
+        "selector": "EntitySelectors.friendlyWeapon",
+        "action": {
+            "class": "TargetedActions.buffTarget",
+            "buff": {
+                "class": "Buffs.buffWeapon",
+                "attack": 2
+            }
+        }
     }
 }

@@ -7,8 +7,9 @@
     "manaCost": 4,
     "playActions": [
         {
-            "class": "PlayerActions.forEnemyMinions",
-            "action": "ActorlessTargetedActions.SILENCE"
+            "class": "TargetlessActions.forTargets",
+            "selector": "EntitySelectors.enemyBoard",
+            "action": "TargetedActions.SILENCE"
         },
         "TargetlessActions.DRAW_FOR_SELF"
     ]

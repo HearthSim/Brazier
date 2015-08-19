@@ -5,7 +5,7 @@
     "type": "spell",
     "manaCost": 3,
     "playActions": {
-        "class": "PlayerActions.getRandomFromDeck",
+        "class": "TargetlessActions.getRandomFromDeck",
         "cardCount": 2,
         "fallbackCard": "Worthless Imp",
         "keywords": "demon"

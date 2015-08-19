@@ -72,11 +72,6 @@ public final class PlayerActions {
 
     public static final PlayerAction HERO_IS_IMMUNE_THIS_TURN = activateAbilityForThisTurn(HERO_IS_IMMUNE);
 
-    public static final PlayerAction DISCARD_HAND = (world, player) -> {
-        // TODO: Display discarded cards to opponent
-        return player.getHand().discardAll();
-    };
-
     public static final PlayerAction REMOVE_OVERLOAD = (world, player) -> {
         ManaResource mana = player.getManaResource();
         UndoAction thisTurnUndo = mana.setOverloadedMana(0);
@@ -266,8 +261,6 @@ public final class PlayerActions {
             return player.getSecrets().stealActivatedSecret(opponent.getSecrets(), selected);
         }
     };
-
-    public static final PlayerAction SUMMON_RANDOM_MINION_FROM_DECK = summonRandomMinionFromDeck(null);
 
     public static PlayerAction addRandomCard(@NamedArg("keywords") Keyword[] keywords) {
         Keyword[] keywordsCopy = keywords.clone();
@@ -523,71 +516,6 @@ public final class PlayerActions {
         };
     }
 
-    public static PlayerAction getRandomFromDeck(
-            @NamedArg("keywords") Keyword[] keywords) {
-        return getRandomFromDeck(1, keywords);
-    }
-
-    public static PlayerAction getRandomFromDeck(
-            @NamedArg("cardCount") int cardCount,
-            @NamedArg("keywords") Keyword[] keywords) {
-        return getRandomFromDeck(cardCount, keywords, null);
-    }
-
-    public static PlayerAction getRandomFromDeck(
-            @NamedArg("keywords") Keyword[] keywords,
-            @NamedArg("fallbackCard") CardProvider fallbackCard) {
-        return getRandomFromDeck(1, keywords, fallbackCard);
-    }
-
-    public static PlayerAction getRandomFromDeck(
-            @NamedArg("cardCount") int cardCount,
-            @NamedArg("keywords") Keyword[] keywords,
-            @NamedArg("fallbackCard") CardProvider fallbackCard) {
-
-        Predicate<LabeledEntity> cardFilter = ActionUtils.includedKeywordsFilter(keywords);
-        return getRandomFromDeck(cardCount, cardFilter, fallbackCard);
-    }
-
-    public static PlayerAction getRandomFromDeck(
-            int cardCount,
-            Predicate<? super Card> cardFilter,
-            CardProvider fallbackCard) {
-        ExceptionHelper.checkArgumentInRange(cardCount, 1, Integer.MAX_VALUE, "cardCount");
-        ExceptionHelper.checkNotNullArgument(cardFilter, "cardFilter");
-
-        return (World world, Player player) -> {
-            UndoBuilder result = new UndoBuilder();
-
-            boolean mayHaveCard = true;
-            for (int i = 0; i < cardCount; i++) {
-                UndoableResult<Card> selectedRef = mayHaveCard
-                        ? ActionUtils.pollDeckForCard(player, cardFilter)
-                        : null;
-
-                Card selected;
-                if (selectedRef == null) {
-                    mayHaveCard = false;
-                    selected = fallbackCard != null
-                            ? new Card(player, fallbackCard.getCard())
-                            : null;
-                }
-                else {
-                    result.addUndo(selectedRef.getUndoAction());
-                    selected = selectedRef.getResult();
-                }
-
-                if (selected == null) {
-                    break;
-                }
-
-                result.addUndo(player.getHand().addCard(selected));
-            }
-
-            return result;
-        };
-    }
-
     public static PlayerAction addCard(@NamedArg("keywords") Keyword[] keywords) {
         return addCard(0, keywords);
     }
@@ -651,31 +579,6 @@ public final class PlayerActions {
             return () -> {
                 addUndo.undo();
                 cardRef.undo();
-            };
-        };
-    }
-
-    public static PlayerAction summonRandomMinionFromDeck(
-            @NamedArg("fallbackMinion") MinionProvider fallbackMinion) {
-
-        Predicate<Card> appliedFilter = (card) -> card.getMinion() != null;
-        return (World world, Player player) -> {
-            UndoableResult<Card> cardRef = ActionUtils.pollDeckForCard(player, appliedFilter);
-            if (cardRef == null && fallbackMinion == null) {
-                return UndoAction.DO_NOTHING;
-            }
-
-            MinionDescr minion = cardRef != null
-                    ? cardRef.getResult().getMinion().getBaseDescr()
-                    : fallbackMinion.getMinion();
-            assert minion != null;
-
-            UndoAction summonUndo = player.summonMinion(minion);
-            return () -> {
-                summonUndo.undo();
-                if (cardRef != null) {
-                    cardRef.undo();
-                }
             };
         };
     }
@@ -952,34 +855,6 @@ public final class PlayerActions {
         };
     }
 
-    public static PlayerAction summonMinion(
-            @NamedArg("minionCount") int minionCount,
-            @NamedArg("minion") MinionProvider minion) {
-        ExceptionHelper.checkNotNullArgument(minion, "minion");
-
-        if (minionCount <= 0) {
-            return (world, player) -> UndoAction.DO_NOTHING;
-        }
-        return summonMinion(minionCount, minionCount, minion);
-    }
-
-    public static PlayerAction summonMinion(
-            @NamedArg("minMinionCount") int minMinionCount,
-            @NamedArg("maxMinionCount") int maxMinionCount,
-            @NamedArg("minion") MinionProvider minion) {
-        return (world, player) -> {
-            MinionDescr minionDescr = minion.getMinion();
-
-            int minionCount = world.getRandomProvider().roll(minMinionCount, maxMinionCount);
-
-            UndoBuilder result = new UndoBuilder(minionCount);
-            for (int i = 0; i < minionCount; i++) {
-                result.addUndo(player.summonMinion(minionDescr));
-            }
-            return result;
-        };
-    }
-
     public static PlayerAction summonRandomMinion(
             @NamedArg("keywords") Keyword[] keywords) {
 
@@ -991,12 +866,6 @@ public final class PlayerActions {
                 return UndoAction.DO_NOTHING;
             }
             return player.summonMinion(minion);
-        };
-    }
-
-    public static PlayerAction summonMinion(@NamedArg("minion") MinionProvider minion) {
-        return (world, player) -> {
-            return player.summonMinion(minion.getMinion());
         };
     }
 
@@ -1333,8 +1202,8 @@ public final class PlayerActions {
 
             result.addUndo(world.endPhase());
 
-            result.addUndo(summonMinion(minions1.size(), minion).alterWorld(world, player1));
-            result.addUndo(summonMinion(minions2.size(), minion).alterWorld(world, player2));
+            result.addUndo(TargetlessActions.summonMinion(minions1.size(), minion).alterWorld(world, player1));
+            result.addUndo(TargetlessActions.summonMinion(minions2.size(), minion).alterWorld(world, player2));
 
             return result;
         };

@@ -7,7 +7,7 @@
     "playActions": {
         "class": "PlayerActions.addDeathRattleToAll",
         "action": {
-            "class": "PlayerActions.summonMinion",
+            "class": "TargetlessActions.summonMinion",
             "minion": "Treant"
         }
     }

@@ -5,8 +5,15 @@
     "type": "spell",
     "manaCost": 3,
     "playActions": {
-        "class": "PlayerActions.dealDamageToAllMinions",
-        "damage": 2,
-        "excludedKeywords": "demon"
+        "class": "TargetlessActions.damageTarget",
+        "selector": {
+            "class": "EntitySelectors.filtered",
+            "filter": {
+                "class": "EntityFilters.not",
+                "filter": "EntityFilters.isDemon"
+            },
+            "selector": "EntitySelectors.board"
+        },
+        "damage": 2
     }
 }

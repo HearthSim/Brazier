@@ -15,7 +15,7 @@
                     "TargetlessActions.DRAW_FOR_SELF",
                     "TargetlessActions.DRAW_FOR_SELF",
                     "TargetlessActions.DRAW_FOR_SELF",
-                    "MinionEventActions.SELF_DESTRUCT"
+                    "TargetlessActions.SELF_DESTRUCT"
                 ]
             }
         }

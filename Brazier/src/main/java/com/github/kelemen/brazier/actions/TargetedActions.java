@@ -2,23 +2,28 @@ package com.github.kelemen.brazier.actions;
 
 import com.github.kelemen.hearthstone.emulator.Damage;
 import com.github.kelemen.hearthstone.emulator.DamageSource;
-import com.github.kelemen.hearthstone.emulator.Hero;
+import com.github.kelemen.hearthstone.emulator.Deck;
+import com.github.kelemen.hearthstone.emulator.Hand;
 import com.github.kelemen.hearthstone.emulator.Player;
 import com.github.kelemen.hearthstone.emulator.PlayerProperty;
 import com.github.kelemen.hearthstone.emulator.Priorities;
+import com.github.kelemen.hearthstone.emulator.Silencable;
 import com.github.kelemen.hearthstone.emulator.TargetableCharacter;
 import com.github.kelemen.hearthstone.emulator.UndoableIntResult;
 import com.github.kelemen.hearthstone.emulator.UndoableResult;
 import com.github.kelemen.hearthstone.emulator.World;
 import com.github.kelemen.hearthstone.emulator.WorldEvents;
 import com.github.kelemen.hearthstone.emulator.abilities.ActivatableAbility;
+import com.github.kelemen.hearthstone.emulator.abilities.HpProperty;
 import com.github.kelemen.hearthstone.emulator.actions.ActionUtils;
+import com.github.kelemen.hearthstone.emulator.actions.CharacterTargetedAction;
 import com.github.kelemen.hearthstone.emulator.actions.UndoAction;
 import com.github.kelemen.hearthstone.emulator.actions.UndoBuilder;
 import com.github.kelemen.hearthstone.emulator.actions.WorldEventAction;
 import com.github.kelemen.hearthstone.emulator.cards.Card;
 import com.github.kelemen.hearthstone.emulator.cards.CardDescr;
 import com.github.kelemen.hearthstone.emulator.minions.Minion;
+import com.github.kelemen.hearthstone.emulator.minions.MinionBody;
 import com.github.kelemen.hearthstone.emulator.minions.MinionDescr;
 import com.github.kelemen.hearthstone.emulator.minions.MinionProvider;
 import com.github.kelemen.hearthstone.emulator.parsing.NamedArg;
@@ -32,18 +37,26 @@ import org.jtrim.utils.ExceptionHelper;
 
 public final class TargetedActions {
     public static final TargetedAction<DamageSource, TargetableCharacter> FULL_HEAL = (world, actor, target) -> {
-        int healAmount;
-        if (target instanceof Minion) {
-            healAmount = ((Minion)target).getBody().getMaxHp();
-        }
-        else if (target instanceof Hero) {
-            healAmount = ((Hero)target).getMaxHp();
-        }
-        else {
-            healAmount = 0;
+        HpProperty hp = ActionUtils.tryGetHp(target);
+        if (hp == null) {
+            return UndoAction.DO_NOTHING;
         }
 
+        int healAmount = hp.getMaxHp();
         return damageTarget(actor, target, -healAmount);
+    };
+
+    public static final TargetedAction<DamageSource, TargetableCharacter> RESTORES_HEALTH = (world, actor, target) -> {
+        HpProperty hp = ActionUtils.tryGetHp(target);
+        if (hp == null) {
+            return UndoAction.DO_NOTHING;
+        }
+
+        int damage = hp.getCurrentHp() - hp.getMaxHp();
+        if (damage >= 0) {
+            return UndoAction.DO_NOTHING;
+        }
+        return ActionUtils.damageCharacter(actor, damage, target);
     };
 
     public static final TargetedAction<Object, TargetableCharacter> KILL_TARGET = (world, actor, target) -> {
@@ -58,6 +71,24 @@ public final class TargetedActions {
         return target.getProperties().getBody().setDivineShield(true);
     };
 
+    public static final TargetedAction<Object, Minion> CHARGE = (world, actor, target) -> {
+        return target.setCharge(true);
+    };
+
+    public static final TargetedAction<Object, Minion> STEALTH = (world, actor, target) -> {
+        return target.getBody().setStealth(true);
+    };
+
+    public static final TargetedAction<Object, Minion> STEALTH_FOR_A_TURN = (world, actor, target) -> {
+        return target.addAndActivateAbility(ActionUtils.toUntilTurnStartsAbility(world, target, (Minion self) -> {
+            return self.getBody().getStealthProperty().addBuff((prev) -> true);
+        }));
+    };
+
+    public static final TargetedAction<Object, Silencable> SILENCE = (world, actor, target) -> {
+        return target.silence();
+    };
+
     public static final TargetedAction<Object, TargetableCharacter> FREEZE_TARGET = (world, actor, target) -> {
         return target.getAttackTool().freeze();
     };
@@ -66,6 +97,40 @@ public final class TargetedActions {
 
     public static final TargetedAction<PlayerProperty, Minion> TAKE_CONTROL = (world, actor, target) -> {
         return actor.getOwner().getBoard().takeOwnership(target);
+    };
+
+    public static final TargetedAction<PlayerProperty, Card> COPY_TARGET_CARD = (world, self, target) -> {
+        Hand hand = self.getOwner().getHand();
+        return hand.addCard(target.getCardDescr());
+    };
+
+    public static final TargetedAction<Object, Minion> SHUFFLE_MINION = (world, actor, minion) -> {
+        Player owner = minion.getOwner();
+        Deck deck = owner.getBoard().getDeck();
+        CardDescr baseCard = minion.getBaseDescr().getBaseCard();
+
+        UndoAction removeUndo = minion.getLocationRef().removeFromBoard();
+        UndoAction shuffleUndo = deck.putToRandomPosition(world.getRandomProvider(), baseCard);
+        return () -> {
+            shuffleUndo.undo();
+            removeUndo.undo();
+        };
+    };
+
+    public static final TargetedAction<Object, Minion> ATTACK_HP_SWITCH = (World world, Object actor, Minion target) -> {
+        MinionBody body = target.getBody();
+
+        int attack = target.getAttackTool().getAttack();
+        int hp = body.getCurrentHp();
+
+        UndoAction attackUndo = target.getBuffableAttack().setValueTo(hp);
+        UndoAction hpUndo = body.getHp().setMaxHp(attack);
+        UndoAction currentHpUndo = body.getHp().setCurrentHp(body.getMaxHp());
+        return () -> {
+            currentHpUndo.undo();
+            hpUndo.undo();
+            attackUndo.undo();
+        };
     };
 
     public static <Actor extends PlayerProperty> TargetedAction<Actor, Minion> doOnAttack(
@@ -152,19 +217,24 @@ public final class TargetedActions {
         };
     }
 
-    public static <Actor, Target> TargetedAction<Actor, Target> ifTarget(
-            @NamedArg("condition") Predicate<? super Target> condition,
-            @NamedArg("action") TargetlessAction<? super Actor> action) {
+    public static <Actor, Target> TargetedAction<Actor, Target> doIf(
+            @NamedArg("condition") TargetedActionCondition<? super Actor, ? super Target> condition,
+            @NamedArg("if") TargetedAction<? super Actor, ? super Target> ifAction) {
+        return doIf(condition, ifAction, TargetedAction.DO_NOTHING);
+    }
+
+    public static <Actor, Target> TargetedAction<Actor, Target> doIf(
+            @NamedArg("condition") TargetedActionCondition<? super Actor, ? super Target> condition,
+            @NamedArg("if") TargetedAction<? super Actor, ? super Target> ifAction,
+            @NamedArg("else") TargetedAction<? super Actor, ? super Target> elseAction) {
         ExceptionHelper.checkNotNullArgument(condition, "condition");
-        ExceptionHelper.checkNotNullArgument(action, "action");
+        ExceptionHelper.checkNotNullArgument(ifAction, "ifAction");
+        ExceptionHelper.checkNotNullArgument(elseAction, "elseAction");
 
         return (World world, Actor actor, Target target) -> {
-            if (condition.test(target)) {
-                return action.alterWorld(world, actor);
-            }
-            else {
-                return UndoAction.DO_NOTHING;
-            }
+            return condition.applies(world, actor, target)
+                    ? ifAction.alterWorld(world, actor, target)
+                    : elseAction.alterWorld(world, actor, target);
         };
     }
 

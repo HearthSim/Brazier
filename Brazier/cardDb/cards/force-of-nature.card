@@ -6,7 +6,7 @@
     "rarity": "epic",
     "manaCost": 6,
     "playActions": {
-        "class": "PlayerActions.summonMinion",
+        "class": "TargetlessActions.summonMinion",
         "minion": "Treant/Charge",
         "minionCount": 3
     }
