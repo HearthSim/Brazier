@@ -9,11 +9,13 @@
         "hp": 1,
         "battleCries": [
             {
-                "class": "DamageActions.damageOwnHero",
+                "class": "TargetlessActions.damageTarget",
+                "selector": "EntitySelectors.friendlyHero",
                 "damage": 3
             },
             {
-                "class": "DamageActions.damageOpponentHero",
+                "class": "TargetlessActions.damageTarget",
+                "selector": "EntitySelectors.enemyHero",
                 "damage": 3
             }
         ]

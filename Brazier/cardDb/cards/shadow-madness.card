@@ -13,6 +13,6 @@
             }
         ],
         "requires": "PlayActionRequirements.HAS_SPACE_ON_OWN_BOARD",
-        "class": "ActorlessTargetedActions.SHADOW_MADNESS"
+        "class": "TargetedActions.SHADOW_MADNESS"
     }
 }

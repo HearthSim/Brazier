@@ -5,5 +5,5 @@
     "type": "spell",
     "rarity": "epic",
     "manaCost": 4,
-    "playActions": "PlayerActions.ECHO_MINIONS"
+    "playActions": "TargetlessActions.ECHO_MINIONS"
 }

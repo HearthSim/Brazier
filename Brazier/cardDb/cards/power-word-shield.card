@@ -7,11 +7,8 @@
     "playActions": [
         {
             "targets": "all-minions",
-            "class": "ActorlessTargetedActions.applyToMinionTarget",
-            "action": {
-                "class": "MinionActions.buffHp",
-                "hp": 2
-            }
+            "class": "TargetedActions.buffTarget",
+            "buff": "0/2"
         },
         "TargetlessActions.DRAW_FOR_SELF"
     ]

@@ -12,7 +12,7 @@
                     "BasicFilters.ATTACKER_IS_OWNER",
                     "BasicFilters.ATTACKER_IS_HERO"
                 ],
-                "action": "AttackEventActions.MISS_TARGET_SOMETIMES"
+                "action": "WorldEventActions.MISS_TARGET_SOMETIMES"
             }
         }
     }

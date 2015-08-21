@@ -10,7 +10,7 @@
                 "class": "TargetNeeds.hasKeyword",
                 "keywords": "demon"
             },
-            "class": "ActorlessTargetedActions.KILL_TARGET"
+            "class": "TargetedActions.KILL_TARGET"
         },
         {
             "class": "PlayerActions.damageOwnHero",

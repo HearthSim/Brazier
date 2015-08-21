@@ -5,5 +5,9 @@
     "type": "spell",
     "rarity": "epic",
     "manaCost": 2,
-    "playActions": "PlayerActions.TRIGGER_DEATHRATTLES"
+    "playActions": {
+       "class": "TargetlessActions.forBornTargets",
+       "selector": "EntitySelectors.friendlyBoard",
+       "action": "TargetedActions.TRIGGER_DEATHRATTLE"
+    }
 }

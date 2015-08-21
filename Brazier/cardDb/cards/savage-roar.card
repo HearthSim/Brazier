@@ -4,17 +4,12 @@
     "class": "druid",
     "type": "spell",
     "manaCost": 3,
-    "playActions": [
-        {
-            "class": "PlayerActions.forOwnMinions",
-            "action": {
-                "class": "ActorlessTargetedActions.addTemporaryAttack",
-                "attack": 2
-            }
-        },
-        {
-            "class": "PlayerActions.addHeroAttackForThisTurn",
-            "attack": 2
+    "playActions": {
+        "class": "TargetlessActions.forTargets",
+        "selector": "EntitySelectors.friendlyTargets",
+        "action": {
+            "class": "TargetedActions.buffTargetThisTurn",
+            "buff": "2/0"
         }
-    ]
+    }
 }

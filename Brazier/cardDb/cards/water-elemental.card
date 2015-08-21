@@ -9,7 +9,10 @@
         "triggers": {
             "minion-damaged": {
                 "filter": "BasicFilters.DAMAGE_SOURCE_SELF",
-                "action": "DamageEventActions.FREEZE_DAMAGE_TARGET"
+                "action": {
+                    "class": "WorldEventActions.forDamageTarget",
+                    "action": "TargetedActions.FREEZE_TARGET"
+                }
             }
         }
     }

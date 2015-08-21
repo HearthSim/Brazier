@@ -16,15 +16,17 @@ import com.github.kelemen.hearthstone.emulator.UndoableResult;
 import com.github.kelemen.hearthstone.emulator.WorldEvents;
 import com.github.kelemen.hearthstone.emulator.abilities.ActivatableAbility;
 import com.github.kelemen.hearthstone.emulator.abilities.AuraAwareIntProperty;
+import com.github.kelemen.hearthstone.emulator.actions.CardRef;
 import com.github.kelemen.hearthstone.emulator.actions.UndoAction;
 import com.github.kelemen.hearthstone.emulator.actions.UndoBuilder;
 import com.github.kelemen.hearthstone.emulator.actions.WorldEventAction;
+import com.github.kelemen.hearthstone.emulator.cards.Card;
 import com.github.kelemen.hearthstone.emulator.weapons.AttackTool;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 import org.jtrim.utils.ExceptionHelper;
 
-public final class Minion implements TargetableCharacter, DestroyableEntity, Silencable {
+public final class Minion implements TargetableCharacter, DestroyableEntity, Silencable, CardRef {
     private Player owner;
     private final TargetId minionId;
     private MinionProperties properties;
@@ -59,6 +61,11 @@ public final class Minion implements TargetableCharacter, DestroyableEntity, Sil
             deactivateUndo.undo();
             scheduledToDestroy.set(false);
         };
+    }
+
+    @Override
+    public Card getCard() {
+        return new Card(owner, getBaseDescr().getBaseCard());
     }
 
     public boolean notScheduledToDestroy() {

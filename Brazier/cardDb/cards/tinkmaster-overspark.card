@@ -8,9 +8,14 @@
         "attack": 3,
         "hp": 3,
         "battleCries": {
-            "class": "PlayerActions.applyTargetedActionToRandomMinion",
+            "class": "TargetlessActions.forOtherTargets",
+            "selector": {
+                "class": "EntitySelectors.filtered",
+                "filter": "EntityFilters.random",
+                "selector": "EntitySelectors.board"
+            },
             "action": {
-                "class": "MinionActions.transformMinion",
+                "class": "TargetedActions.transformMinion",
                 "minion": [
                     "Devlisaur",
                     "Squirrel"

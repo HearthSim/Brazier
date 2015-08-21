@@ -8,18 +8,22 @@
         "attack": 3,
         "charges": 2,
         "deathRattle": {
-            "class": "PlayerActions.applyTargetedActionToRandomOwnMinion",
-            "filter": {
-                "class": "BasicFilters.eventSourceHasKeyword",
-                "keywords": "mech"
+            "class": "TargetlessActions.forTargets",
+            "selector": {
+                "class": "EntitySelectors.filtered",
+                "filter": "EntityFilters.random",
+                "selector": {
+                    "class": "EntitySelectors.filtered",
+                    "filter": {
+                        "class": "EntityFilters.withKeywords",
+                        "keywords": "mech"
+                    },
+                    "selector": "EntitySelectors.friendlyBoardBuffable"
+                }
             },
             "action": {
-                "class": "ActorlessTargetedActions.applyToMinionTarget",
-                "action": {
-                    "class": "MinionActions.buff",
-                    "attack": 2,
-                    "hp": 2
-                }
+                "class": "TargetedActions.buffTarget",
+                "buff": "2/2"
             }
         }
     }

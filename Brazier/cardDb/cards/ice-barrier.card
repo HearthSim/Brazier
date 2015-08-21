@@ -9,7 +9,7 @@
             "priority": "low",
             "filter": "BasicFilters.ATTACK_TARGET_IS_OWN_HERO",
             "action": {
-                "class": "PlayerActions.armorUp",
+                "class": "TargetlessActions.armorUp",
                 "armor": 8
             }
         }

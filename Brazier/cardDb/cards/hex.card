@@ -6,10 +6,7 @@
     "manaCost": 3,
     "playActions": {
         "targets": "all-minions",
-        "class": "ActorlessTargetedActions.applyToMinionTarget",
-        "action": {
-            "class": "MinionActions.transformMinion",
-            "minion": "Frog"
-        }
+        "class": "TargetedActions.transformMinion",
+        "minion": "Frog"
     }
 }

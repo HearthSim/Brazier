@@ -220,6 +220,34 @@ public final class DamageEventTest {
     }
 
     @Test
+    public void testExplosiveShotAtomic() {
+        PlayScript.testScript((script) -> {
+            script.setMana("p1", 10);
+
+            script.playMinionCard("p1", VOIDWALKER, 0);
+            script.playMinionCard("p1", GRIM_PATRON, 1);
+            script.playMinionCard("p1", VOIDWALKER, 2);
+
+            script.setMana("p1", 10);
+            script.playCard("p1", BLESSING_OF_KINGS, "p1:1");
+
+            script.expectBoard("p1",
+                    expectedMinion(VOIDWALKER, 1, 3),
+                    expectedMinion(GRIM_PATRON, 7, 7),
+                    expectedMinion(VOIDWALKER, 1, 3));
+
+            script.setMana("p2", 10);
+            script.playCard("p2", EXPLOSIVE_SHOT, "p1:1");
+
+            script.expectBoard("p1",
+                    expectedMinion(VOIDWALKER, 1, 1),
+                    expectedMinion(GRIM_PATRON, 7, 2),
+                    expectedMinion(GRIM_PATRON, 3, 3),
+                    expectedMinion(VOIDWALKER, 1, 1));
+        });
+    }
+
+    @Test
     public void testEmperorCobra() {
         PlayScript.testScript((script) -> {
             script.setMana("p1", 10);

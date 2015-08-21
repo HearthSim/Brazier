@@ -7,7 +7,7 @@
     "collectible": false,
     "manaCost": 0,
     "playActions": {
-        "class": "PlayerActions.gainMana",
+        "class": "TargetlessActions.gainMana",
         "mana": 1
     }
 }

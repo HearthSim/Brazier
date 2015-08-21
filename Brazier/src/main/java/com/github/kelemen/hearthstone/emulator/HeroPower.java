@@ -1,6 +1,5 @@
 package com.github.kelemen.hearthstone.emulator;
 
-import com.github.kelemen.hearthstone.emulator.actions.ActorlessTargetedAction;
 import com.github.kelemen.hearthstone.emulator.actions.CardPlayArg;
 import com.github.kelemen.hearthstone.emulator.actions.PlayTarget;
 import com.github.kelemen.hearthstone.emulator.actions.TargetNeed;
@@ -14,7 +13,7 @@ import com.github.kelemen.hearthstone.emulator.cards.CardType;
 import java.util.concurrent.atomic.AtomicReference;
 import org.jtrim.utils.ExceptionHelper;
 
-public final class HeroPower implements PlayerProperty, ActorlessTargetedAction {
+public final class HeroPower implements PlayerProperty {
     private final Hero hero;
     private final CardDescr powerDef;
 
@@ -83,7 +82,6 @@ public final class HeroPower implements PlayerProperty, ActorlessTargetedAction 
         return false;
     }
 
-    @Override
     public UndoAction alterWorld(World world, PlayTarget target) {
         CardPlayArg playArg = new CardPlayArg(getBaseCard(), target);
 

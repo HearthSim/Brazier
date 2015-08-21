@@ -8,6 +8,7 @@ import com.github.kelemen.hearthstone.emulator.TargetableCharacter;
 import com.github.kelemen.hearthstone.emulator.World;
 import com.github.kelemen.hearthstone.emulator.cards.Card;
 import com.github.kelemen.hearthstone.emulator.cards.CardDescr;
+import com.github.kelemen.hearthstone.emulator.cards.CardProvider;
 import com.github.kelemen.hearthstone.emulator.minions.Minion;
 import com.github.kelemen.hearthstone.emulator.minions.MinionDescr;
 import com.github.kelemen.hearthstone.emulator.parsing.NamedArg;
@@ -28,6 +29,26 @@ public final class EntitySelectors {
 
     public static <Actor, Target> EntitySelector<Actor, Actor> self() {
         return (World world, Actor actor) -> Stream.of(actor);
+    }
+
+    public static <Actor extends PlayerProperty> EntitySelector<Actor, CardDescr> opponentCardsWithKeywords(
+            @NamedArg("fallbackCard") CardProvider fallbackCard,
+            @NamedArg("keywords") Keyword... keywords) {
+        Keyword[] keywordsCopy = keywords.clone();
+        ExceptionHelper.checkNotNullElements(keywordsCopy, "keywords");
+
+        return (World world, Actor actor) -> {
+            Keyword[] allKeywords = new Keyword[keywordsCopy.length + 1];
+            allKeywords[0] = actor.getOwner().getOpponent().getHero().getHeroClass();
+            System.arraycopy(keywordsCopy, 0, allKeywords, 1, keywordsCopy.length);
+
+            List<CardDescr> cards = world.getDb().getCardDb().getByKeywords(allKeywords);
+            if (fallbackCard != null && cards.isEmpty()) {
+                return Stream.of(fallbackCard.getCard());
+            }
+
+            return cards.stream();
+        };
     }
 
     public static <Actor> EntitySelector<Actor, CardDescr> cardsWithKeywords(

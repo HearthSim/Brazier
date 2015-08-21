@@ -6,7 +6,10 @@
     "manaCost": 1,
     "playActions": {
         "targets": "all-minions",
-        "class": "MinionActions.setAttack",
-        "attack": 1
+        "class": "TargetedActions.buffTarget",
+        "buff": {
+            "class": "Buffs.setAttack",
+            "attack": 1
+        }
     }
 }

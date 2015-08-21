@@ -14,7 +14,7 @@
                     "BasicFilters.TARGET_SURVIVES"
                 ],
                 "action": {
-                    "class": "MinionEventActions.summonMinionRight",
+                    "class": "TargetlessActions.summonMinionRight",
                     "minion": "Grim Patron"
                 }
             }

@@ -10,10 +10,13 @@
         "hp": 6,
         "taunt": true,
         "battleCries": {
-            "class": "MinionActions.minionLeaderBuff",
-            "attack": 1,
-            "hp": 0,
-            "keywords": "beast"
+            "class": "TargetlessActions.buffSelfMinion",
+            "buff": {
+                "class": "Buffs.minionLeaderBuff",
+                "attack": 1,
+                "hp": 0,
+                "keywords": "beast"
+            }
         }
     }
 }

@@ -6,15 +6,13 @@
     "manaCost": 3,
     "playActions": {
         "targets": "all-minions",
-        "class": "ActorlessTargetedActions.applyToMinionTarget",
-        "action": [
+        "actions": [
             {
-                "class": "MinionActions.buff",
-                "attack": 2,
-                "hp": 4
+                "class": "TargetedActions.buffTarget",
+                "buff": "2/4"
             },
             {
-                "class": "MinionActions.buff",
+                "class": "TargetedActions.addAbility",
                 "ability": {
                     "class": "MinionAbilities.spellPower",
                     "spellPower": 1

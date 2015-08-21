@@ -8,7 +8,12 @@
         "attack": 2,
         "hp": 2,
         "battleCries": {
-            "class": "DamageActions.dealDamageToDeathRattles",
+            "class": "TargetlessActions.damageTarget",
+            "selector": {
+                "class": "EntitySelectors.filtered",
+                "filter": "EntityFilters.isDeathRattle",
+                "selector": "EntitySelectors.board"
+            },
             "damage": 2
         }
     }

@@ -6,14 +6,11 @@
     "collectible": false,
     "manaCost": 0,
     "playActions": {
-        "class": "PlayerActions.forOwnMinions",
+        "class": "TargetlessActions.forTargets",
+        "selector": "EntitySelectors.friendlyBoard",
         "action": {
-            "class": "ActorlessTargetedActions.applyToMinionTarget",
-            "action": {
-                "class": "MinionActions.buff",
-                "attack": 1,
-                "hp": 1
-            }
+            "class": "TargetedActions.buffTarget",
+            "buff": "1/1"
         }
     }
 }

@@ -10,11 +10,8 @@
             "minion-damaged": {
                 "filter": "BasicFilters.TARGET_SELF",
                 "action": {
-                    "class": "MinionEventActions.applyTargetedActionToSelf",
-                    "action": {
-                        "class": "MinionActions.buffAttack",
-                        "attack": 3
-                    }
+                    "class": "TargetlessActions.buffSelfMinion",
+                    "buff": "3/0"
                 }
             }
         }

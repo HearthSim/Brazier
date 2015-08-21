@@ -8,13 +8,13 @@
         {
             "targets": "all",
             "requires": "PlayActionRequirements.NO_COMBO",
-            "class": "ActorlessTargetedActions.dealSpellDamage",
+            "class": "TargetedActions.damageTarget",
             "damage": 2
         },
         {
             "targets": "all",
             "requires": "PlayActionRequirements.COMBO",
-            "class": "ActorlessTargetedActions.dealSpellDamage",
+            "class": "TargetedActions.damageTarget",
             "damage": 4
         }
     ]

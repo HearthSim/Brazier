@@ -5,7 +5,11 @@
     "type": "spell",
     "manaCost": 2,
     "playActions": {
-        "class": "PlayerActions.addHeroAttackForThisTurn",
-        "attack": "4"
+        "class": "TargetlessActions.forTargets",
+        "selector": "EntitySelectors.friendlyHero",
+        "action": {
+            "class": "TargetedActions.buffTargetThisTurn",
+            "buff": "4/0"
+        }
     }
 }

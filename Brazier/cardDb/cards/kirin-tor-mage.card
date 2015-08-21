@@ -8,7 +8,7 @@
         "attack": 4,
         "hp": 3,
         "battleCries": {
-            "class": "PlayerActions.setManaCostThisTurn",
+            "class": "TargetlessActions.setManaCostThisTurn",
             "filter": {
                 "class": "Auras.targetHasKeyword",
                 "keywords": "secret"

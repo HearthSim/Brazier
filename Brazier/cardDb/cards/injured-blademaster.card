@@ -8,8 +8,11 @@
         "attack": 4,
         "hp": 7,
         "battleCries": {
-            "class": "MinionActions.damageSelf",
-            "damage": 4
+            "class": "TargetlessActions.forSelf",
+            "action": {
+                "class": "TargetedActions.damageTarget",
+                "damage": 4
+            }
         }
     }
 }

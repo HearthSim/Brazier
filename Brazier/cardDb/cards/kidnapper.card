@@ -7,8 +7,7 @@
     "playActions": {
         "targets": "enemy-minions",
         "requires": "PlayActionRequirements.COMBO",
-        "class": "ActorlessTargetedActions.applyToMinionTarget",
-        "action": "MinionActions.RETURN_MINION"
+        "class": "TargetedActions.RETURN_MINION"
     },
     "minion": {
         "attack": 6,

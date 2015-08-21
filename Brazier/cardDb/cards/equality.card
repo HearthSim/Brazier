@@ -6,11 +6,12 @@
     "rarity": "rare",
     "manaCost": 2,
     "playActions": {
-        "class": "PlayerActions.forAllMinions",
+        "class": "TargetlessActions.forTargets",
+        "selector": "EntitySelectors.enemyBoard",
         "action": {
-            "class": "ActorlessTargetedActions.applyToMinionTarget",
-            "action": {
-                "class": "MinionActions.setMaxHp",
+            "class": "TargetedActions.buffTarget",
+            "buff": {
+                "class": "Buffs.setMaxHp",
                 "hp": 1
             }
         }

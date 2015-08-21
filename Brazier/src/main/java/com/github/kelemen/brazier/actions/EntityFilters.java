@@ -7,6 +7,7 @@ import com.github.kelemen.hearthstone.emulator.TargetableCharacter;
 import com.github.kelemen.hearthstone.emulator.World;
 import com.github.kelemen.hearthstone.emulator.actions.ActionUtils;
 import com.github.kelemen.hearthstone.emulator.minions.Minion;
+import com.github.kelemen.hearthstone.emulator.minions.MinionId;
 import com.github.kelemen.hearthstone.emulator.parsing.NamedArg;
 import java.util.List;
 import java.util.function.Predicate;
@@ -82,6 +83,10 @@ public final class EntityFilters {
         return withKeywords(Keywords.RACE_PIRATE);
     }
 
+    public static <Entity extends TargetableCharacter> Predicate<Entity> isTotem() {
+        return withKeywords(Keywords.RACE_TOTEM);
+    }
+
     public static <Entity extends TargetableCharacter> Predicate<Entity> isDead() {
         return (target) -> target.isDead();
     }
@@ -98,8 +103,21 @@ public final class EntityFilters {
         return (target) -> !target.isDamaged();
     }
 
+    public static <Entity extends TargetableCharacter> Predicate<Entity> isFrozen() {
+        return (target) -> target.getAttackTool().isFrozen();
+    }
+
+    public static <Entity extends Minion> Predicate<Entity> isDeathRattle() {
+        return (target) -> target.getProperties().isDeathRattle();
+    }
+
     public static Predicate<Minion> buffableMinion() {
         return (minion) -> !minion.isScheduledToDestroy();
+    }
+
+    public static <Entity extends Minion> Predicate<Entity> minionNameIs(@NamedArg("name") MinionId name) {
+        ExceptionHelper.checkNotNullArgument(name, "name");
+        return (target) -> name.equals(target.getBaseDescr().getId());
     }
 
     public static <Entity> Predicate<Entity> not(@NamedArg("filter") Predicate<? super Entity> filter) {
@@ -113,6 +131,10 @@ public final class EntityFilters {
         return (World world, Stream<? extends Entity> entities) -> {
             return entities.filter(filter);
         };
+    }
+
+    public static <Entity extends TargetableCharacter> Predicate<Entity> attackIsLess(@NamedArg("attack") int attack) {
+        return (target) -> target.getAttackTool().getAttack() < attack;
     }
 
     private EntityFilters() {

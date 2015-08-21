@@ -7,11 +7,12 @@
     "playActions": [
         {
             "targets": "all",
-            "class": "ActorlessTargetedActions.dealSpellDamage",
+            "class": "TargetedActions.damageTarget",
             "damage": 2
         },
         {
-            "class": "PlayerActions.damageOwnHero",
+            "class": "TargetlessActions.damageTarget",
+            "selector": "EntitySelectors.friendlyHero",
             "damage": -2
         }
     ]

@@ -1,46 +1,16 @@
 package com.github.kelemen.hearthstone.emulator.actions;
 
-import com.github.kelemen.hearthstone.emulator.Damage;
 import com.github.kelemen.hearthstone.emulator.DamageSource;
 import com.github.kelemen.hearthstone.emulator.Hero;
 import com.github.kelemen.hearthstone.emulator.MultiTargeter;
 import com.github.kelemen.hearthstone.emulator.Player;
 import com.github.kelemen.hearthstone.emulator.TargetableCharacter;
-import com.github.kelemen.hearthstone.emulator.UndoableResult;
 import com.github.kelemen.hearthstone.emulator.World;
 import com.github.kelemen.hearthstone.emulator.minions.Minion;
 import com.github.kelemen.hearthstone.emulator.parsing.NamedArg;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.function.Predicate;
 
 public final class DamageActions {
-    private static List<TargetableCharacter> getAllTargets(World world) {
-        List<TargetableCharacter> result = new ArrayList<>(2 * (Player.MAX_BOARD_SIZE + 1));
-        ActionUtils.collectAliveTargets(world.getPlayer1(), result);
-        ActionUtils.collectAliveTargets(world.getPlayer2(), result);
-        return result;
-    }
-
-    public static DamageAction throwBombs(@NamedArg("bombCount") int bombCount) {
-        return (World world, DamageSource damageSource) -> {
-            UndoBuilder result = new UndoBuilder(bombCount + 1);
-
-            UndoableResult<Damage> appliedDamageRef = damageSource.createDamage(1);
-            result.addUndo(appliedDamageRef.getUndoAction());
-
-            for (int i = 0; i < bombCount; i++) {
-                TargetableCharacter selected = ActionUtils.pickRandom(world, getAllTargets(world));
-                if (selected == null) {
-                    break;
-                }
-
-                result.addUndo(selected.damage(appliedDamageRef.getResult()));
-            }
-            return result;
-        };
-    }
-
     public static DamageAction damageRandomEnemyMinion(@NamedArg("damage") int damage) {
         return (World world, DamageSource damageSource) -> {
             Minion target = ActionUtils.rollAliveMinionTarget(world, (minion) -> {
@@ -146,29 +116,6 @@ public final class DamageActions {
         targeterBuilder.setHeroes(heroes);
         targeterBuilder.setAtomic(atomic);
         targeterBuilder.setCustomFilter(filter);
-
-        MultiTargeter targeter = targeterBuilder.create();
-
-        return (World world, DamageSource damageSource) -> {
-            return targeter.damageTargets(damageSource.getOwner(), damageSource, damage);
-        };
-    }
-
-    public static DamageAction dealDamageToDeathRattles(@NamedArg("damage") int damage) {
-        MultiTargeter.Builder targeterBuilder = new MultiTargeter.Builder();
-        targeterBuilder.setEnemy(true);
-        targeterBuilder.setSelf(true);
-        targeterBuilder.setMinions(true);
-        targeterBuilder.setHeroes(false);
-        targeterBuilder.setAtomic(false);
-        targeterBuilder.setCustomFilter((target) -> {
-            if (target instanceof Minion) {
-                return ((Minion)target).getProperties().isDeathRattle();
-            }
-            else {
-                return false;
-            }
-        });
 
         MultiTargeter targeter = targeterBuilder.create();
 

@@ -11,7 +11,7 @@
                 "class": "PlayActionRequirements.doesntHaveOnOwnBoard",
                 "keywords": "beast"
             },
-            "class": "ActorlessTargetedActions.dealSpellDamage",
+            "class": "TargetedActions.damageTarget",
             "damage": 3
         },
         {
@@ -20,7 +20,7 @@
                 "class": "PlayActionRequirements.hasOnOwnBoard",
                 "keywords": "beast"
             },
-            "class": "ActorlessTargetedActions.dealSpellDamage",
+            "class": "TargetedActions.damageTarget",
             "damage": 5
         }
     ]

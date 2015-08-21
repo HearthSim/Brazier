@@ -7,14 +7,17 @@ import com.github.kelemen.hearthstone.emulator.minions.Minion;
 import java.util.Objects;
 import org.jtrim.utils.ExceptionHelper;
 
-public final class TargetNeed {
-    public static final TargetNeed NO_NEED = new TargetNeed(TargetNeed::allowNone, TargetNeed::allowNone, false, "NO-NEEDS");
+import static com.github.kelemen.hearthstone.emulator.PlayerPredicate.ANY;
+import static com.github.kelemen.hearthstone.emulator.PlayerPredicate.NONE;
 
-    public static final TargetNeed ALL_HEROES = new TargetNeed(TargetNeed::allowAll, TargetNeed::allowNone, "ALL-HEROES");
-    public static final TargetNeed ALL_MINIONS = new TargetNeed(TargetNeed::allowNone, TargetNeed::allowAll, "ALL-MINIONS");
-    public static final TargetNeed SELF_MINIONS = new TargetNeed(TargetNeed::allowNone, TargetNeed::allowSelf, "SELF-MINIONS");
-    public static final TargetNeed ENEMY_MINIONS = new TargetNeed(TargetNeed::allowNone, TargetNeed::allowEnemy, "ENEMY-MINIONS");
-    public static final TargetNeed ALL_TARGETS = new TargetNeed(TargetNeed::allowAll, TargetNeed::allowAll, "ALL-TARGETS");
+public final class TargetNeed {
+    public static final TargetNeed NO_NEED = new TargetNeed(NONE, NONE, false, "NO-NEEDS");
+
+    public static final TargetNeed ALL_HEROES = new TargetNeed(ANY, NONE, "ALL-HEROES");
+    public static final TargetNeed ALL_MINIONS = new TargetNeed(NONE, ANY, "ALL-MINIONS");
+    public static final TargetNeed SELF_MINIONS = new TargetNeed(NONE, TargetNeed::allowSelf, "SELF-MINIONS");
+    public static final TargetNeed ENEMY_MINIONS = new TargetNeed(NONE, TargetNeed::allowEnemy, "ENEMY-MINIONS");
+    public static final TargetNeed ALL_TARGETS = new TargetNeed(ANY, ANY, "ALL-TARGETS");
     public static final TargetNeed SELF_TARGETS = new TargetNeed(TargetNeed::allowSelf, TargetNeed::allowSelf, "SELF-TARGETS");
     public static final TargetNeed ENEMY_TARGETS = new TargetNeed(TargetNeed::allowEnemy, TargetNeed::allowEnemy, "ENEMY-TARGETS");
 
@@ -24,7 +27,7 @@ public final class TargetNeed {
     private final String name;
 
     public TargetNeed() {
-        this(TargetNeed::allowNone, TargetNeed::allowNone, false, null);
+        this(NONE, NONE, false, null);
     }
 
     public TargetNeed(PlayerPredicate<? super Hero> allowHeroCondition,
@@ -51,6 +54,18 @@ public final class TargetNeed {
         this.name = name;
     }
 
+    private static <T> PlayerPredicate<? super T> combine(
+            PlayerPredicate<? super T> pred1,
+            PlayerPredicate<? super T> pred2) {
+        if (pred1 == NONE || pred2 == NONE) {
+            return NONE;
+        }
+
+        return (playerId, arg) -> {
+            return pred1.test(playerId, arg) && pred2.test(playerId, arg);
+        };
+    }
+
     public TargetNeed combine(TargetNeed other) {
         if (!hasTarget) {
             return other;
@@ -59,12 +74,8 @@ public final class TargetNeed {
             return this;
         }
 
-        PlayerPredicate<Hero> newHeroCond = (playerId, hero) -> {
-            return allowHeroCondition.test(playerId, hero) && other.allowHeroCondition.test(playerId, hero);
-        };
-        PlayerPredicate<Minion> newMinionCond = (playerId, minion) -> {
-            return allowMinionCondition.test(playerId, minion) && other.allowMinionCondition.test(playerId, minion);
-        };
+        PlayerPredicate<? super Hero> newHeroCond = combine(allowHeroCondition, other.allowHeroCondition);
+        PlayerPredicate<? super Minion> newMinionCond = combine(allowMinionCondition, other.allowMinionCondition);
 
         String thisName = this.name;
         String otherName = other.name;
@@ -77,6 +88,14 @@ public final class TargetNeed {
 
     public boolean hasTarget() {
         return hasTarget;
+    }
+
+    public boolean mayTargetHero() {
+        return allowHeroCondition != NONE;
+    }
+
+    public boolean mayTargetMinion() {
+        return allowMinionCondition != NONE;
     }
 
     public PlayerPredicate<? super Hero> getAllowHeroCondition() {
@@ -112,14 +131,6 @@ public final class TargetNeed {
         return name != null
                 ? name
                 : "TargetNeed{hasTarget=" + hasTarget + '}';
-    }
-
-    private static <T> boolean allowNone(PlayerId playerId, T arg) {
-        return false;
-    }
-
-    private static <T> boolean allowAll(PlayerId playerId, T arg) {
-        return true;
     }
 
     private static boolean allowEnemy(PlayerId playerId, Minion minion) {

@@ -5,7 +5,8 @@
     "type": "spell",
     "manaCost": 4,
     "playActions": {
-        "class": "PlayerActions.dealDamageToAllTargets",
+        "class": "TargetlessActions.damageTarget",
+        "selector": "EntitySelectors.allTargetsAlive",
         "damage": 3
     }
 }

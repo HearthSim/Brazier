@@ -8,35 +8,23 @@
     "minion": {
         "attack": 7,
         "hp": 7,
-        "battleCries": [
-            {
-                "class": "PlayerActions.addCard",
-                "keywords": [
-                    "murloc",
-                    "collectible"
-                ]
+        "battleCries": {
+            "class": "TargetlessActions.doMultipleTimes",
+            "action": {
+                "class": "TargetlessActions.addSelectedCard",
+                "card": {
+                    "class": "EntitySelectors.filtered",
+                    "filter": "EntityFilters.random",
+                    "selector": {
+                        "class": "EntitySelectors.cardsWithKeywords",
+                        "keywords": [
+                            "murloc",
+                            "collectible"
+                        ]
+                    }
+                }
             },
-            {
-                "class": "PlayerActions.addCard",
-                "keywords": [
-                    "murloc",
-                    "collectible"
-                ]
-            },
-            {
-                "class": "PlayerActions.addCard",
-                "keywords": [
-                    "murloc",
-                    "collectible"
-                ]
-            },
-            {
-                "class": "PlayerActions.addCard",
-                "keywords": [
-                    "murloc",
-                    "collectible"
-                ]
-            }
-        ]
+            "actionCount": 4
+        }
     }
 }

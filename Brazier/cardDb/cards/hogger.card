@@ -11,7 +11,7 @@
             "turn-ends": {
                 "filter": "BasicFilters.HAS_SAME_OWNER_PLAYER",
                 "action": {
-                    "class": "MinionEventActions.summonMinionRight",
+                    "class": "TargetlessActions.summonMinionRight",
                     "minion": "Gnoll"
                 }
             }

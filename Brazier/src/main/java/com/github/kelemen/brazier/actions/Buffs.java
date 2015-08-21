@@ -1,6 +1,9 @@
 package com.github.kelemen.brazier.actions;
 
+import com.github.kelemen.hearthstone.emulator.BoardSide;
 import com.github.kelemen.hearthstone.emulator.Hero;
+import com.github.kelemen.hearthstone.emulator.Keyword;
+import com.github.kelemen.hearthstone.emulator.LabeledEntity;
 import com.github.kelemen.hearthstone.emulator.TargetableCharacter;
 import com.github.kelemen.hearthstone.emulator.World;
 import com.github.kelemen.hearthstone.emulator.abilities.HpProperty;
@@ -11,6 +14,7 @@ import com.github.kelemen.hearthstone.emulator.minions.Minion;
 import com.github.kelemen.hearthstone.emulator.parsing.NamedArg;
 import com.github.kelemen.hearthstone.emulator.weapons.Weapon;
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 public final class Buffs {
     public static Buff<TargetableCharacter> IMMUNE = (World world, TargetableCharacter target) -> {
@@ -32,6 +36,29 @@ public final class Buffs {
     };
 
     public static final PermanentBuff<Minion> WEAPON_ATTACK_BUFF = weaponAttackBuff(1);
+
+    public static final PermanentBuff<Minion> TWILIGHT_BUFF = (world, target) -> {
+        return buff(target, 0, target.getOwner().getHand().getCardCount());
+    };
+
+    public static final PermanentBuff<Minion> INNER_FIRE = (world, target) -> {
+        int hp = target.getBody().getCurrentHp();
+        return target.getProperties().getBuffableAttack().setValueTo(hp);
+    };
+
+    public static final PermanentBuff<Minion> EXORCIST_BUFF = (World world, Minion target) -> {
+        BoardSide opponentBoard = target.getOwner().getOpponent().getBoard();
+        int buff = opponentBoard.countMinions((opponentMinion) -> opponentMinion.getProperties().isDeathRattle());
+
+        UndoAction attackBuffUndo = target.addAttackBuff(buff);
+        UndoAction hpBuffUndo = target.getBody().getHp().buffHp(buff);
+        return () -> {
+            hpBuffUndo.undo();
+            attackBuffUndo.undo();
+        };
+    };
+
+    public static final PermanentBuff<Minion> WARLORD_BUFF = minionLeaderBuff(1, 1);
 
     public static PermanentBuff<Minion> setAttack(@NamedArg("attack") int attack) {
         return (World world, Minion target) -> {
@@ -60,6 +87,15 @@ public final class Buffs {
         return adjustHp((hpProperty) -> {
             return hpProperty.setMaxHp(hp);
         });
+    }
+
+    public static PermanentBuff<Minion> buffAttack(
+            @NamedArg("minAttack") int minAttack,
+            @NamedArg("maxAttack") int maxAttack) {
+        return (World world, Minion target) -> {
+            int buff = world.getRandomProvider().roll(minAttack, maxAttack);
+            return target.addAttackBuff(buff);
+        };
     }
 
     public static PermanentBuff<TargetableCharacter> buffHp(@NamedArg("hp") int hp) {
@@ -170,6 +206,42 @@ public final class Buffs {
 
             return () -> {
                 incChargesUndo.undo();
+                attackBuffUndo.undo();
+            };
+        };
+    }
+
+    public static PermanentBuff<Minion> vancleefBuff(
+            @NamedArg("attack") int attack,
+            @NamedArg("hp") int hp) {
+        return (World world, Minion minion) -> {
+            int mul = minion.getOwner().getCardsPlayedThisTurn() - 1;
+            if (mul <= 0) {
+                return UndoAction.DO_NOTHING;
+            }
+
+            return buff(minion, attack * mul, hp * mul);
+        };
+    }
+
+    public static PermanentBuff<Minion> minionLeaderBuff(
+            @NamedArg("attack") int attack,
+            @NamedArg("hp") int hp,
+            @NamedArg("keywords") Keyword... keywords) {
+
+        Predicate<LabeledEntity> minionFilter = ActionUtils.includedKeywordsFilter(keywords);
+        return (World world, Minion target) -> {
+            Predicate<LabeledEntity> appliedFilter = minionFilter.and((otherMinion) -> target != otherMinion);
+            int buff = target.getOwner().getBoard().countMinions(appliedFilter);
+            if (buff <= 0) {
+                return UndoAction.DO_NOTHING;
+            }
+
+            UndoAction attackBuffUndo = target.addAttackBuff(attack * buff);
+            UndoAction hpBuffUndo = target.getBody().getHp().buffHp(hp * buff);
+
+            return () -> {
+                hpBuffUndo.undo();
                 attackBuffUndo.undo();
             };
         };

@@ -9,7 +9,7 @@
         "hp": 8,
         "triggers": {
             "turn-ends": {
-                "action": "PlayerActions.RESURRECT_DEAD_MINIONS"
+                "action": "TargetlessActions.RESURRECT_DEAD_MINIONS"
             }
         }
     }

@@ -6,7 +6,10 @@
     "manaCost": 0,
     "playActions": {
         "targets": "all-minions",
-        "class": "MinionActions.setMaxHp",
-        "hp": 1
+        "class": "TargetedActions.buffTarget",
+        "buff": {
+            "class": "Buffs.setMaxHp",
+            "hp": 1
+        }
     }
 }

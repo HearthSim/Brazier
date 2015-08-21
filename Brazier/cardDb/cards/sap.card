@@ -6,7 +6,6 @@
     "manaCost": 2,
     "playActions": {
         "targets": "enemy-minions",
-        "class": "ActorlessTargetedActions.applyToMinionTarget",
-        "action": "MinionActions.RETURN_MINION"
+        "class": "TargetedActions.RETURN_MINION"
     }
 }

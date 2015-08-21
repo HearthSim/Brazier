@@ -7,7 +7,7 @@
         "attack": 2,
         "hp": 3,
         "battleCries": {
-            "class": "MinionActions.summonMinionRight",
+            "class": "TargetlessActions.summonMinionRight",
             "minion": "Boar"
         }
     }

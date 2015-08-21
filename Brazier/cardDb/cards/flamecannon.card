@@ -6,9 +6,14 @@
     "manaCost": 2,
     "playActions": {
         "requires": "PlayActionRequirements.OPPONENT_BOARD_NOT_EMPTY",
-        "class": "PlayerActions.applyTargetedActionToRandomEnemyMinion",
+        "class": "TargetlessActions.forTargets",
+        "selector": {
+            "class": "EntitySelectors.filtered",
+            "filter": "EntityFilters.random",
+            "selector": "EntitySelectors.enemyBoardAlive"
+        },
         "action": {
-            "class": "ActorlessTargetedActions.dealSpellDamage",
+            "class": "TargetedActions.damageTarget",
             "damage": 4
         }
     }

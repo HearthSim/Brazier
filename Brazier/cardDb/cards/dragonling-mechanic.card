@@ -7,7 +7,7 @@
         "attack": 2,
         "hp": 4,
         "battleCries": {
-            "class": "MinionActions.summonMinionRight",
+            "class": "TargetlessActions.summonMinionRight",
             "minion": "Mechanical Dragonling"
         }
     }

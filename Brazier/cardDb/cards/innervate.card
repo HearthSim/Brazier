@@ -5,7 +5,7 @@
     "type": "spell",
     "manaCost": 0,
     "playActions": {
-        "class": "PlayerActions.gainMana",
+        "class": "TargetlessActions.gainMana",
         "mana": 2
     }
 }

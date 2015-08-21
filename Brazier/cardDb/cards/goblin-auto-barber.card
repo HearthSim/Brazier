@@ -8,9 +8,15 @@
         "attack": 3,
         "hp": 2,
         "battleCries": {
-            "class": "PlayerActions.buffWeapon",
-            "attack": 1,
-            "charges": 0
+            "class": "TargetlessActions.forTargets",
+            "selector": "EntitySelectors.friendlyWeapon",
+            "action": {
+                "class": "TargetedActions.buffTarget",
+                "buff": {
+                    "class": "Buffs.buffWeapon",
+                    "attack": 1
+                }
+            }
         }
     }
 }

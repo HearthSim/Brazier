@@ -8,13 +8,20 @@
         "attack": 5,
         "hp": 6,
         "battleCries": {
-            "class": "PlayerActions.doForOpponent",
+            "class": "TargetlessActions.actWithOpponent",
             "action": {
-                "class": "PlayerActions.summonRandomMinion",
-                "keywords": [
-                    "1-cost",
-                    "collectible"
-                ]
+                "class": "TargetlessActions.summonSelectedMinion",
+                "minion": {
+                    "class": "EntitySelectors.filtered",
+                    "filter": "EntityFilters.random",
+                    "selector": {
+                        "class": "EntitySelectors.minionsWithKeywords",
+                        "keywords": [
+                            "1-cost",
+                            "collectible"
+                        ]
+                    }
+                }
             }
         }
     }

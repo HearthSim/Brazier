@@ -12,13 +12,21 @@
             "turn-ends": {
                 "filter": "BasicFilters.HAS_SAME_OWNER_PLAYER",
                 "action": {
-                    "class": "MinionEventActions.applyTargetedActionToRandomMinion",
-                    "filter": {
-                        "class": "BasicFilters.targetDoesntHaveKeyword",
-                        "keywords": "mech"
+                    "class": "TargetlessActions.forTargets",
+                    "selector": {
+                        "class": "EntitySelectors.filtered",
+                        "filter": "EntityFilters.random",
+                        "selector": {
+                            "class": "EntitySelectors.filtered",
+                            "filter": {
+                                "class": "EntityFilters.withoutKeywords",
+                                "keywords": "mech"
+                            },
+                            "selector": "EntitySelectors.boardAlive"
+                        }
                     },
                     "action": {
-                        "class": "TargetedMinionActions.damageTarget",
+                        "class": "TargetedActions.damageTarget",
                         "damage": 2
                     }
                 }

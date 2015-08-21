@@ -12,15 +12,21 @@ public interface MinionAction extends WorldObjectAction<Minion> {
     @Override
     public UndoAction alterWorld(World world, Minion minion);
 
-    public default BattleCryTargetedAction toBattleCryTargetedAction() {
-        return (World world, BattleCryArg arg) -> alterWorld(world, arg.getSource());
+    public default TargetedMinionAction toTargetedMinionAction() {
+        return (Minion targeter, PlayTarget target) -> {
+            return alterWorld(targeter.getWorld(), targeter);
+        };
     }
 
-    public default CharacterTargetedAction toCharacterTargetedAction() {
-        return (World world, TargetableCharacter target) -> {
-            return target instanceof Minion
-                    ? alterWorld(world, (Minion)target)
-                    : UndoAction.DO_NOTHING;
+    public default CardPlayAction toCardPlayAction() {
+        return (World world, CardPlayArg arg) -> {
+            TargetableCharacter target = arg.getTarget().getTarget();
+            if (target instanceof Minion) {
+                return alterWorld(world, (Minion)target);
+            }
+            else {
+                return UndoAction.DO_NOTHING;
+            }
         };
     }
 

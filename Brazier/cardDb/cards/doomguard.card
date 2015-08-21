@@ -10,8 +10,8 @@
         "hp": 7,
         "charge": true,
         "battleCries": [
-            "PlayerActions.DISCARD_RANDOM_CARD",
-            "PlayerActions.DISCARD_RANDOM_CARD"
+            "TargetlessActions.DISCARD_RANDOM_CARD",
+            "TargetlessActions.DISCARD_RANDOM_CARD"
         ]
     }
 }

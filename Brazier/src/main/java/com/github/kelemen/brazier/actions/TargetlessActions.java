@@ -1,26 +1,46 @@
 package com.github.kelemen.brazier.actions;
 
+import com.github.kelemen.hearthstone.emulator.BoardLocationRef;
+import com.github.kelemen.hearthstone.emulator.BoardSide;
 import com.github.kelemen.hearthstone.emulator.BornEntity;
+import com.github.kelemen.hearthstone.emulator.CardPlayEvent;
 import com.github.kelemen.hearthstone.emulator.Damage;
 import com.github.kelemen.hearthstone.emulator.DamageSource;
+import com.github.kelemen.hearthstone.emulator.Deck;
+import com.github.kelemen.hearthstone.emulator.EntityId;
 import com.github.kelemen.hearthstone.emulator.Hand;
+import com.github.kelemen.hearthstone.emulator.Hero;
 import com.github.kelemen.hearthstone.emulator.Keyword;
 import com.github.kelemen.hearthstone.emulator.Keywords;
 import com.github.kelemen.hearthstone.emulator.LabeledEntity;
 import com.github.kelemen.hearthstone.emulator.ManaResource;
 import com.github.kelemen.hearthstone.emulator.Player;
 import com.github.kelemen.hearthstone.emulator.PlayerProperty;
+import com.github.kelemen.hearthstone.emulator.Secret;
+import com.github.kelemen.hearthstone.emulator.SecretContainer;
+import com.github.kelemen.hearthstone.emulator.SummonLocationRef;
 import com.github.kelemen.hearthstone.emulator.TargetableCharacter;
 import com.github.kelemen.hearthstone.emulator.UndoableResult;
 import com.github.kelemen.hearthstone.emulator.World;
 import com.github.kelemen.hearthstone.emulator.abilities.ActivatableAbility;
+import com.github.kelemen.hearthstone.emulator.abilities.Aura;
+import com.github.kelemen.hearthstone.emulator.abilities.AuraFilter;
+import com.github.kelemen.hearthstone.emulator.abilities.AuraTargetProvider;
+import com.github.kelemen.hearthstone.emulator.abilities.Auras;
+import com.github.kelemen.hearthstone.emulator.abilities.CardAuras;
+import com.github.kelemen.hearthstone.emulator.abilities.TargetedActiveAura;
 import com.github.kelemen.hearthstone.emulator.actions.ActionUtils;
 import com.github.kelemen.hearthstone.emulator.actions.UndoAction;
 import com.github.kelemen.hearthstone.emulator.actions.UndoBuilder;
+import com.github.kelemen.hearthstone.emulator.actions.UndoableUnregisterRef;
+import com.github.kelemen.hearthstone.emulator.actions.UndoableUnregisterRefBuilder;
+import com.github.kelemen.hearthstone.emulator.actions.WorldActionList;
 import com.github.kelemen.hearthstone.emulator.actions.WorldEventFilter;
 import com.github.kelemen.hearthstone.emulator.cards.Card;
 import com.github.kelemen.hearthstone.emulator.cards.CardDescr;
+import com.github.kelemen.hearthstone.emulator.cards.CardId;
 import com.github.kelemen.hearthstone.emulator.cards.CardProvider;
+import com.github.kelemen.hearthstone.emulator.cards.CardType;
 import com.github.kelemen.hearthstone.emulator.minions.Minion;
 import com.github.kelemen.hearthstone.emulator.minions.MinionBody;
 import com.github.kelemen.hearthstone.emulator.minions.MinionDescr;
@@ -52,12 +72,57 @@ public final class TargetlessActions {
 
     public static final TargetlessAction<PlayerProperty> DRAW_FOR_OPPONENT = actWithOpponent(DRAW_FOR_SELF);
 
+    public static final TargetlessAction<PlayerProperty> DISCARD_RANDOM_CARD = (world, actor) -> {
+        Player player = actor.getOwner();
+        Hand hand = player.getHand();
+        int cardCount = hand.getCardCount();
+        if (cardCount == 0) {
+            return UndoAction.DO_NOTHING;
+        }
+
+        int cardIndex = world.getRandomProvider().roll(cardCount);
+        // TODO: Show discarded card to the opponent.
+        return hand.removeAtIndex(cardIndex);
+    };
+
+    public static final TargetlessAction<PlayerProperty> DISCARD_FROM_DECK = (world, actor) -> {
+        Player player = actor.getOwner();
+        Deck deck = player.getBoard().getDeck();
+        if (deck.getNumberOfCards() <= 0) {
+            return UndoAction.DO_NOTHING;
+        }
+
+        UndoableResult<Card> cardRef = deck.tryDrawOneCard();
+        // TODO: Show discarded card to the opponent.
+        return cardRef != null ? cardRef.getUndoAction() : UndoAction.DO_NOTHING;
+    };
+
     public static final TargetlessAction<Minion> RESUMMON_RIGHT = (World world, Minion minion) -> {
         return minion.getLocationRef().summonRight(minion.getBaseDescr());
     };
 
+    public static final TargetlessAction<PlayerProperty> RESURRECT_DEAD_MINIONS = (world, actor) -> {
+        Player player = actor.getOwner();
+        List<Minion> deadMinions = player.getBoard().getGraveyard().getMinionsDiedThisTurn();
+        if (deadMinions.isEmpty()) {
+            return UndoAction.DO_NOTHING;
+        }
+
+        UndoBuilder result = new UndoBuilder(deadMinions.size());
+        for (Minion minion: deadMinions) {
+            result.addUndo(player.summonMinion(minion.getBaseDescr()));
+        }
+        return result;
+    };
+
     public static final TargetlessAction<PlayerProperty> DESTROY_OPPONENTS_WEAPON = (world, actor) -> {
         return actor.getOwner().destroyWeapon();
+    };
+
+    public static final TargetlessAction<PlayerProperty> DESTROY_OPPONENT_SECRET = (world, actor) -> {
+        Player player = actor.getOwner();
+        SecretContainer secrets = player.getOpponent().getSecrets();
+        return secrets.removeAllSecrets();
     };
 
     public static final TargetlessAction<PlayerProperty> DISCARD_HAND = (world, actor) -> {
@@ -110,6 +175,22 @@ public final class TargetlessActions {
         };
     };
 
+    public static final TargetlessAction<Minion> COPY_SELF = (world, actor) -> {
+        Player owner = actor.getOwner();
+        if (owner.getBoard().isFull()) {
+            return UndoAction.DO_NOTHING;
+        }
+
+        Minion copy = new Minion(actor.getOwner(), actor.getBaseDescr());
+
+        UndoAction copyUndo = copy.copyOther(actor);
+        UndoAction summonUndo = actor.getLocationRef().summonRight(copy);
+        return () -> {
+            summonUndo.undo();
+            copyUndo.undo();
+        };
+    };
+
     public static final TargetlessAction<TargetableCharacter> SELF_DESTRUCT = (world, actor) -> {
         return actor.poison();
     };
@@ -144,6 +225,97 @@ public final class TargetlessActions {
 
     public static final TargetlessAction<Minion> EAT_DIVINE_SHIELDS = eatDivineShields(3, 3);
 
+    public static final TargetlessAction<Minion> CONSUME_NEIGHBOURS = (World world, Minion actor) -> {
+        int attackBuff = 0;
+        int hpBuff = 0;
+
+        UndoBuilder result = new UndoBuilder(4);
+
+        Minion left = tryGetLeft(actor);
+        if (left != null) {
+            attackBuff += left.getAttackTool().getAttack();
+            hpBuff += left.getBody().getCurrentHp();
+            result.addUndo(TargetedActions.KILL_TARGET.alterWorld(world, actor, left));
+        }
+
+        Minion right = tryGetRight(actor);
+        if (right != null) {
+            attackBuff += right.getAttackTool().getAttack();
+            hpBuff += right.getBody().getCurrentHp();
+            result.addUndo(TargetedActions.KILL_TARGET.alterWorld(world, actor, right));
+        }
+
+        if (hpBuff != 0 && attackBuff != 0) {
+            result.addUndo(actor.addAttackBuff(attackBuff));
+            result.addUndo(actor.getBody().getHp().buffHp(hpBuff));
+        }
+
+        return result;
+    };
+
+    public static final TargetlessAction<PlayerProperty> DRAW_CARD_FOR_OPPONENTS_WEAPON = (world, actor) -> {
+        Player player = actor.getOwner();
+        Player opponent = player.getOpponent();
+        Weapon weapon = opponent.tryGetWeapon();
+        if (weapon == null) {
+            return UndoAction.DO_NOTHING;
+        }
+
+        int charges = weapon.getCharges();
+        UndoBuilder result = new UndoBuilder(charges + 1);
+        result.addUndo(DESTROY_OPPONENTS_WEAPON.alterWorld(world, player));
+
+        for (int i = 0; i < charges; i++) {
+            result.addUndo(TargetlessActions.DRAW_FOR_SELF.alterWorld(world, player));
+        }
+        return result;
+    };
+
+
+    public static final TargetlessAction<PlayerProperty> STEAL_SECRET = (World world, PlayerProperty actor) -> {
+        Player player = actor.getOwner();
+        Player opponent = player.getOpponent();
+        List<Secret> opponentSecrets = opponent.getSecrets().getSecrets();
+        if (opponentSecrets.isEmpty()) {
+            return UndoAction.DO_NOTHING;
+        }
+
+        Map<EntityId, Secret> stealCandidates = new HashMap<>();
+        opponentSecrets.forEach((secret) -> stealCandidates.put(secret.getSecretId(), secret));
+
+        List<Secret> ourSecrets = player.getSecrets().getSecrets();
+        ourSecrets.forEach((secret) -> stealCandidates.remove(secret.getSecretId()));
+
+        if (stealCandidates.isEmpty()) {
+            Secret selected = ActionUtils.pickRandom(world, opponentSecrets);
+            if (selected == null) {
+                return UndoAction.DO_NOTHING;
+            }
+
+            return opponent.getSecrets().removeSecret(selected);
+        }
+        else {
+            Secret selected = ActionUtils.pickRandom(world, new ArrayList<>(stealCandidates.values()));
+            if (selected == null) {
+                return UndoAction.DO_NOTHING;
+            }
+
+            return player.getSecrets().stealActivatedSecret(opponent.getSecrets(), selected);
+        }
+    };
+
+    public static final TargetlessAction<PlayerProperty> STEAL_RANDOM_MINION = (world, actor) -> {
+        Player player = actor.getOwner();
+        Player opponent = player.getOpponent();
+        List<Minion> minions = opponent.getBoard().getAliveMinions();
+        if (minions.isEmpty()) {
+            return UndoAction.DO_NOTHING;
+        }
+
+        Minion stolenMinion = minions.get(world.getRandomProvider().roll(minions.size()));
+        return player.getBoard().takeOwnership(stolenMinion);
+    };
+
     public static final TargetlessAction<Object> BRAWL = (world, actor) -> {
         List<Minion> minions = new ArrayList<>(2 * Player.MAX_BOARD_SIZE);
         world.getPlayer1().getBoard().collectMinions(minions);
@@ -173,6 +345,38 @@ public final class TargetlessActions {
         newMinion.copyOther(minion);
 
         return receiver.summonMinion(newMinion);
+    };
+
+    public static final TargetlessAction<PlayerProperty> DIVINE_FAVOR = (world, actor) -> {
+        Player player = actor.getOwner();
+
+        int playerHand = player.getHand().getCardCount();
+        int opponentHand = player.getOpponent().getHand().getCardCount();
+        if (playerHand >= opponentHand) {
+            return UndoAction.DO_NOTHING;
+        }
+
+        int drawCount = opponentHand - playerHand;
+        UndoBuilder result = new UndoBuilder(drawCount);
+        for (int i = 0; i < drawCount; i++) {
+            result.addUndo(player.drawCardToHand());
+        }
+        return result;
+    };
+
+    public static final TargetlessAction<PlayerProperty> ECHO_MINIONS = (world, actor) -> {
+        Player player = actor.getOwner();
+        BoardSide board = player.getBoard();
+        List<Minion> minions = new ArrayList<>(board.getMaxSize());
+        player.getBoard().collectMinions(minions);
+        BornEntity.sortEntities(minions);
+
+        UndoBuilder result = new UndoBuilder(minions.size());
+        Hand hand = player.getHand();
+        for (Minion minion: minions) {
+            result.addUndo(hand.addCard(minion.getBaseDescr().getBaseCard()));
+        }
+        return result;
     };
 
     public static TargetlessAction<Object> withMinion(
@@ -265,6 +469,19 @@ public final class TargetlessActions {
         };
     }
 
+    public static <Actor> TargetlessAction<Actor> doMultipleTimes(
+            @NamedArg("actionCount") int actionCount,
+            @NamedArg("action") TargetlessAction<? super Actor> action) {
+        ExceptionHelper.checkNotNullArgument(action, "action");
+        return (World world, Actor actor) -> {
+            UndoBuilder result = new UndoBuilder(actionCount);
+            for (int i = 0; i < actionCount; i++) {
+                result.addUndo(action.alterWorld(world, actor));
+            }
+            return result;
+        };
+    }
+
     public static <Actor extends PlayerProperty> TargetlessAction<Actor> equipWeapon(
             @NamedArg("weapon") WeaponProvider weapon) {
         ExceptionHelper.checkNotNullArgument(weapon, "weapon");
@@ -284,6 +501,14 @@ public final class TargetlessActions {
             return toEquip != null
                     ? player.equipWeapon(toEquip)
                     : UndoAction.DO_NOTHING;
+        };
+    }
+
+    public static TargetlessAction<Minion> summonMinionLeft(
+            @NamedArg("minion") MinionProvider minion) {
+        ExceptionHelper.checkNotNullArgument(minion, "minion");
+        return (World world, Minion actor) -> {
+            return actor.getLocationRef().summonLeft(minion.getMinion());
         };
     }
 
@@ -346,10 +571,19 @@ public final class TargetlessActions {
         };
     }
 
-    public static TargetlessAction<DamageSource> damageTarget(
-            @NamedArg("selector") EntitySelector<DamageSource, TargetableCharacter> selector,
+    public static <Actor extends DamageSource> TargetlessAction<Actor> damageTarget(
+            @NamedArg("selector") EntitySelector<Actor, ? extends TargetableCharacter> selector,
             @NamedArg("damage") int damage) {
         return damageTarget(selector, damage, damage);
+    }
+
+    public static TargetlessAction<PlayerProperty> shuffleCardIntoDeck(@NamedArg("card") CardProvider card) {
+        ExceptionHelper.checkNotNullArgument(card, "card");
+
+        return (World world, PlayerProperty actor) -> {
+            Deck deck = actor.getOwner().getBoard().getDeck();
+            return deck.putToRandomPosition(world.getRandomProvider(), card.getCard());
+        };
     }
 
     public static <Actor extends DamageSource> TargetlessAction<Actor> damageTarget(
@@ -412,33 +646,15 @@ public final class TargetlessActions {
 
     public static <Actor extends PlayerProperty> TargetlessAction<Actor> addCard(
             @NamedArg("card") CardProvider card) {
-        return addCard(false, card);
-    }
-
-    public static <Actor extends PlayerProperty> TargetlessAction<Actor> addCard(
-            @NamedArg("delay") boolean delay,
-            @NamedArg("card") CardProvider card) {
-        return addSelectedCard(delay, (World world, Actor actor) -> Stream.of(card.getCard()));
+        return addSelectedCard((World world, Actor actor) -> Stream.of(card.getCard()));
     }
 
     public static <Actor extends PlayerProperty> TargetlessAction<Actor> addSelectedCard(
-            @NamedArg("card") EntitySelector<? super Actor, ? extends CardDescr> card) {
-        return addSelectedCard(false, card);
-    }
-
-    public static <Actor extends PlayerProperty> TargetlessAction<Actor> addSelectedCard(
-            @NamedArg("delay") boolean delay,
             @NamedArg("card") EntitySelector<? super Actor, ? extends CardDescr> card) {
         ExceptionHelper.checkNotNullArgument(card, "card");
 
         return (World world, Actor actor) -> {
-            if (!delay) {
-                return addCards(world, actor, card);
-            }
-
-            return ActionUtils.doOnEndOfTurn(world, () -> {
-                return addCards(world, actor, card);
-            });
+            return addCards(world, actor, card);
         };
     }
 
@@ -738,11 +954,11 @@ public final class TargetlessActions {
         };
     }
 
-    public static <Actor extends PlayerProperty> TargetlessAction<Actor> summonRandomMinionFromDeck(
+    public static TargetlessAction<PlayerProperty> summonRandomMinionFromDeck(
             @NamedArg("fallbackMinion") MinionProvider fallbackMinion) {
 
         Predicate<Card> appliedFilter = (card) -> card.getMinion() != null;
-        return (World world, Actor actor) -> {
+        return (World world, PlayerProperty actor) -> {
             Player player = actor.getOwner();
 
             UndoableResult<Card> cardRef = ActionUtils.pollDeckForCard(player, appliedFilter);
@@ -763,6 +979,212 @@ public final class TargetlessActions {
                 }
             };
         };
+    }
+
+    private static ActivatableAbility<Player> deactivateAfterPlay(
+            ActivatableAbility<Player> ability,
+            AuraFilter<? super Player, ? super Card> filter) {
+        return deactivateAfterCardPlay(ability, (card) -> {
+            return filter.isApplicable(card.getWorld(), card.getOwner(), card);
+        });
+    }
+
+    private static ActivatableAbility<Player> deactivateAfterCardPlay(
+            ActivatableAbility<Player> ability,
+            Predicate<Card> deactivateCondition) {
+        ExceptionHelper.checkNotNullArgument(ability, "ability");
+        ExceptionHelper.checkNotNullArgument(deactivateCondition, "deactivateCondition");
+
+        return (Player self) -> {
+            UndoableUnregisterRefBuilder result = new UndoableUnregisterRefBuilder(2);
+
+            UndoableUnregisterRef abilityRef = ability.activate(self);
+            result.addRef(abilityRef);
+
+            UndoableUnregisterRef listenerRef = self.getWorld().getEvents().startPlayingCardListeners().addAction((World world, CardPlayEvent playEvent) -> {
+                if (deactivateCondition.test(playEvent.getCard())) {
+                    return abilityRef.unregister();
+                }
+                else {
+                    return UndoAction.DO_NOTHING;
+                }
+            });
+            result.addRef(listenerRef);
+
+            return result;
+        };
+    }
+
+    public static TargetlessAction<PlayerProperty> experiment(
+            @NamedArg("replaceCard") CardProvider replaceCard) {
+        ExceptionHelper.checkNotNullArgument(replaceCard, "replaceCard");
+
+        return (World world, PlayerProperty actor) -> {
+            Player player = actor.getOwner();
+            UndoableResult<Card> cardRef = player.drawFromDeck();
+            Card card = cardRef.getResult();
+            if (card == null) {
+                return cardRef.getUndoAction();
+            }
+
+            CardDescr cardDescr = card.getCardDescr();
+
+            if (cardDescr.getCardType() == CardType.MINION) {
+                UndoAction drawActionsUndo = WorldActionList.executeActionsNow(world, card, cardDescr.getOnDrawActions());
+                UndoAction addCardUndo = player.getHand().addCard(replaceCard.getCard());
+                UndoAction eventUndo = world.getEvents().drawCardListeners().triggerEvent(card);
+
+                return () -> {
+                    eventUndo.undo();
+                    addCardUndo.undo();
+                    drawActionsUndo.undo();
+                    cardRef.undo();
+                };
+            }
+            else {
+                UndoAction drawUndo = player.drawCardToHand(cardRef.getResult());
+                return () -> {
+                    drawUndo.undo();
+                    cardRef.undo();
+                };
+            }
+        };
+    }
+
+    public static TargetlessAction<PlayerProperty> drawCardToFillHand(@NamedArg("targetHandSize") int targetHandSize) {
+        return (World world, PlayerProperty actor) -> {
+            Player player = actor.getOwner();
+            int currentHandSize = player.getHand().getCardCount();
+            if (currentHandSize >= targetHandSize) {
+                return UndoAction.DO_NOTHING;
+            }
+
+            int drawCount = targetHandSize - currentHandSize;
+            UndoBuilder result = new UndoBuilder(drawCount);
+            for (int i = 0; i < drawCount; i++) {
+                result.addUndo(player.drawCardToHand());
+            }
+            return result;
+        };
+    }
+
+    public static TargetlessAction<Minion> replaceHero(
+            @NamedArg("heroClass") Keyword heroClass,
+            @NamedArg("heroPower") CardId heroPower) {
+
+        return (World world, Minion actor) -> {
+            Player player = actor.getOwner();
+            UndoAction removeUndo = actor.getLocationRef().removeFromBoard();
+
+            MinionBody body = actor.getBody();
+
+            Hero hero = new Hero(player, body.getHp(), 0, heroClass, actor.getKeywords());
+            hero.setCurrentHp(body.getCurrentHp());
+            hero.setHeroPower(world.getDb().getHeroPowerDb().getById(heroPower));
+
+            UndoAction setHeroUndo = player.setHero(hero);
+            return () -> {
+                setHeroUndo.undo();
+                removeUndo.undo();
+            };
+        };
+    }
+
+    public static TargetlessAction<PlayerProperty> gainMana(@NamedArg("mana") int mana) {
+        return (world, actor) -> {
+            Player player = actor.getOwner();
+            return player.setMana(player.getMana() + mana);
+        };
+    }
+
+    public static TargetlessAction<PlayerProperty> setManaCostThisTurn(
+            @NamedArg("manaCost") int manaCost,
+            @NamedArg("filter") AuraFilter<? super Player, ? super Card> filter) {
+        ExceptionHelper.checkNotNullArgument(filter, "filter");
+
+        return (World world, PlayerProperty actor) -> {
+            ActivatableAbility<Player> aura = Auras.aura(
+                    CardAuras.OWN_CARD_PROVIDER,
+                    filter,
+                    CardAuras.setManaCost(manaCost));
+            aura = deactivateAfterPlay(aura, filter);
+            aura = ActionUtils.toSingleTurnAbility(world, aura);
+
+            return aura.activate(actor.getOwner());
+        };
+    }
+
+    public static TargetlessAction<PlayerProperty> reduceManaCostThisTurn(
+            @NamedArg("amount") int amount,
+            @NamedArg("filter") AuraFilter<? super Player, ? super Card> filter) {
+        ExceptionHelper.checkNotNullArgument(filter, "filter");
+
+        return (World world, PlayerProperty actor) -> {
+            ActivatableAbility<Player> aura = Auras.aura(
+                    CardAuras.OWN_CARD_PROVIDER,
+                    filter,
+                    CardAuras.increaseManaCost(-amount));
+            aura = deactivateAfterPlay(aura, filter);
+            aura = ActionUtils.toSingleTurnAbility(world, aura);
+
+            return aura.activate(actor.getOwner());
+        };
+    }
+
+    public static TargetlessAction<PlayerProperty> reduceManaCostNextCard(
+            @NamedArg("amount") int amount,
+            @NamedArg("filter") AuraFilter<? super Player, ? super Card> filter) {
+        ExceptionHelper.checkNotNullArgument(filter, "filter");
+
+        return (World world, PlayerProperty actor) -> {
+            ActivatableAbility<Player> aura = Auras.aura(
+                    CardAuras.OWN_CARD_PROVIDER,
+                    filter,
+                    CardAuras.increaseManaCost(-amount));
+            aura = deactivateAfterPlay(aura, filter);
+
+            return aura.activate(actor.getOwner());
+        };
+    }
+
+    public static <Target> TargetlessAction<PlayerProperty> untilTurnStartsAura(
+            @NamedArg("target") AuraTargetProvider<? super Player, ? extends Target> target,
+            @NamedArg("aura") Aura<? super Player, ? super Target> aura) {
+        return untilTurnStartsAura(target, AuraFilter.ANY, aura);
+    }
+
+    public static <Target> TargetlessAction<PlayerProperty> untilTurnStartsAura(
+            @NamedArg("target") AuraTargetProvider<? super Player, ? extends Target> target,
+            @NamedArg("filter") AuraFilter<? super Player, ? super Target> filter,
+            @NamedArg("aura") Aura<? super Player, ? super Target> aura) {
+
+        return (World world, PlayerProperty actor) -> {
+            Player player = actor.getOwner();
+            return ActionUtils.doUntilNewTurnStart(player.getWorld(), player, () -> {
+                return player.getWorld().addAura(new TargetedActiveAura<>(player, target, filter, aura));
+            });
+        };
+    }
+
+    public static <Actor extends PlayerProperty> TargetlessAction<Actor> doOnEndOfTurn(
+            @NamedArg("action") TargetlessAction<? super Actor> action) {
+        ExceptionHelper.checkNotNullArgument(action, "action");
+
+        return (World world, Actor actor) -> {
+            return ActionUtils.doOnEndOfTurn(world, () -> action.alterWorld(world, actor));
+        };
+    }
+
+    private static Minion tryGetLeft(Minion minion) {
+        SummonLocationRef locationRef = minion.getLocationRef();
+        BoardLocationRef left = locationRef.tryGetLeft();
+        return left != null ? left.getMinion() : null;
+    }
+
+    private static Minion tryGetRight(Minion minion) {
+        SummonLocationRef locationRef = minion.getLocationRef();
+        BoardLocationRef right = locationRef.tryGetRight();
+        return right != null ? right.getMinion() : null;
     }
 
     private TargetlessActions() {

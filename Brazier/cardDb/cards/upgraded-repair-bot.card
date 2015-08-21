@@ -9,18 +9,15 @@
         "attack": 5,
         "hp": 5,
         "battleCries": {
-            "class": "ActorlessTargetedActions.applyToMinionTarget",
-            "action": {
-                "class": "MinionActions.buffHp",
-                "hp": 4
-            },
             "targets": [
                 "self-minions",
                 {
                     "class": "TargetNeeds.hasKeyword",
                     "keywords": "mech"
                 }
-            ]
+            ],
+            "class": "TargetedActions.buffTarget",
+            "buff": "0/4"
         }
     }
 }

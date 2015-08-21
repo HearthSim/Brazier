@@ -6,17 +6,23 @@
     "manaCost": 4,
     "playActions": {
         "targets": "enemy",
-        "class": "CardPlayActions.doAtomic",
-        "action": {
-            "class": "ActorlessTargetedActions.swipeAction",
-            "mainAction": {
-                "class": "ActorlessTargetedActions.dealSpellDamage",
+        "class": "TargetedActions.doAtomic",
+        "action": [
+            {
+                "class": "TargetedActions.damageTarget",
                 "damage": 4
             },
-            "othersAction": {
-                "class": "ActorlessTargetedActions.dealSpellDamage",
-                "damage": 1
+            {
+                "class": "TargetedActions.forTargets",
+                "selector": {
+                    "class": "TargetedEntitySelectors.excludeTarget",
+                    "selector": "EntitySelectors.enemyTargets"
+                },
+                "action": {
+                    "class": "TargetedActions.damageTarget",
+                    "damage": 1
+                }
             }
-        }
+        ]
     }
 }

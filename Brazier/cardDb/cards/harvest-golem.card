@@ -8,7 +8,7 @@
         "attack": 2,
         "hp": 3,
         "deathRattle": {
-            "class": "MinionEventActions.summonMinionRight",
+            "class": "TargetlessActions.summonMinionRight",
             "minion": "Damaged Golem"
         }
     }

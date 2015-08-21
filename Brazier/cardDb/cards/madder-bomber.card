@@ -8,8 +8,17 @@
         "attack": 5,
         "hp": 4,
         "battleCries": {
-            "class": "DamageActions.throwBombs",
-            "bombCount": 6
+            "class": "TargetlessActions.doMultipleTimes",
+            "action": {
+                "class": "TargetlessActions.damageTarget",
+                "selector": {
+                    "class": "EntitySelectors.filtered",
+                    "filter": "EntityFilters.random",
+                    "selector": "EntitySelectors.allTargetsAlive"
+                },
+                "damage": 1
+            },
+            "actionCount": 6
         }
     }
 }

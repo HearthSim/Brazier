@@ -11,7 +11,7 @@
             "minion-damaged": {
                 "filter": "BasicFilters.TARGET_SELF",
                 "action": {
-                    "class": "MinionEventActions.summonMinionRight",
+                    "class": "TargetlessActions.summonMinionRight",
                     "minion": "Imp"
                 }
             }

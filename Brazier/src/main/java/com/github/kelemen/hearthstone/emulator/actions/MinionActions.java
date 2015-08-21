@@ -6,9 +6,6 @@ import com.github.kelemen.hearthstone.emulator.Damage;
 import com.github.kelemen.hearthstone.emulator.Deck;
 import com.github.kelemen.hearthstone.emulator.Hand;
 import com.github.kelemen.hearthstone.emulator.Hero;
-import com.github.kelemen.hearthstone.emulator.Keyword;
-import com.github.kelemen.hearthstone.emulator.Keywords;
-import com.github.kelemen.hearthstone.emulator.LabeledEntity;
 import com.github.kelemen.hearthstone.emulator.Player;
 import com.github.kelemen.hearthstone.emulator.SummonLocationRef;
 import com.github.kelemen.hearthstone.emulator.UndoableIntResult;
@@ -16,9 +13,7 @@ import com.github.kelemen.hearthstone.emulator.UndoableResult;
 import com.github.kelemen.hearthstone.emulator.World;
 import com.github.kelemen.hearthstone.emulator.abilities.ActivatableAbility;
 import com.github.kelemen.hearthstone.emulator.abilities.Aura;
-import com.github.kelemen.hearthstone.emulator.abilities.AuraAwareIntProperty;
 import com.github.kelemen.hearthstone.emulator.abilities.AuraFilter;
-import com.github.kelemen.hearthstone.emulator.abilities.HpProperty;
 import com.github.kelemen.hearthstone.emulator.cards.Card;
 import com.github.kelemen.hearthstone.emulator.cards.CardDescr;
 import com.github.kelemen.hearthstone.emulator.minions.Minion;
@@ -50,24 +45,6 @@ public final class MinionActions {
         return ActionUtils.damageCharacter(minion, damage, minion);
     };
 
-    public static final MinionAction RECOMBOBULATE = transformMinion((Minion minion) -> {
-        World world = minion.getWorld();
-
-        int manaCost = minion.getBaseDescr().getBaseCard().getManaCost();
-        Keyword manaCostKeyword = Keywords.manaCost(manaCost);
-        List<CardDescr> possibleMinions = world.getDb().getCardDb().getByKeywords(Keywords.MINION, manaCostKeyword);
-        CardDescr selected = ActionUtils.pickRandom(world, possibleMinions);
-        if (selected == null) {
-            return null;
-        }
-
-        MinionDescr result = selected.getMinion();
-        if (result == null) {
-            throw new IllegalStateException("Minion keyword was appied to a non-minion card: " + selected.getId());
-        }
-        return result;
-    });
-
     public static final MinionAction SELF_DESTRUCT = (world, minion) -> {
         return minion.poison();
     };
@@ -82,11 +59,6 @@ public final class MinionActions {
 
     public static final MinionAction DOUBLE_ATTACK = (world, minion) -> {
         return minion.getProperties().getBuffableAttack().addBuff((prev) -> 2 * prev);
-    };
-
-    public static final MinionAction INNER_FIRE = (world, minion) -> {
-        int hp = minion.getBody().getCurrentHp();
-        return minion.getProperties().getBuffableAttack().setValueTo(hp);
     };
 
     public static final MinionAction SHUFFLE_MINION = (world, minion) -> {
@@ -114,11 +86,7 @@ public final class MinionActions {
         return buff(minion, 0, minion.getOwner().getHand().getCardCount());
     };
 
-    public static final MinionAction WIND_FURY = windFury(2);
-
     public static final MinionAction RETURN_MINION = returnMinion(0);
-
-    public static final MinionAction WARLORD_BUFF = minionLeaderBuff(1, 1, new Keyword[0]);
 
     public static final MinionAction SWAP_WITH_MINION_IN_HAND = (World world, Minion minion) -> {
         Hand hand = minion.getOwner().getHand();
@@ -165,32 +133,12 @@ public final class MinionActions {
         };
     }
 
-    public static MinionAction addCopyToOwnerHand(@NamedArg("copyCount") int copyCount) {
-        return (World world, Minion minion) -> {
-            CardDescr baseCard = minion.getBaseDescr().getBaseCard();
-            Hand hand = minion.getOwner().getHand();
-
-            UndoBuilder result = new UndoBuilder(copyCount);
-            for (int i = 0; i < copyCount; i++) {
-                result.addUndo(hand.addCard(baseCard));
-            }
-            return result;
-        };
-    }
-
     public static MinionAction addDeathRattle(
             @NamedArg("action") WorldEventAction<? super Minion, ? super Minion> action) {
         ExceptionHelper.checkNotNullArgument(action, "action");
 
         return (World world, Minion minion) -> {
             return minion.addDeathRattle(action);
-        };
-    }
-
-    public static MinionAction windFury(@NamedArg("attackCount") int attackCount) {
-        return (World world, Minion minion) -> {
-            AuraAwareIntProperty maxAttackCount = minion.getProperties().getMaxAttackCountProperty();
-            return maxAttackCount.addAuraBuff((prev) -> Math.max(prev, attackCount));
         };
     }
 
@@ -281,36 +229,6 @@ public final class MinionActions {
     public static MinionAction damageSelf(@NamedArg("damage") int damage) {
         return (World world, Minion self) -> {
             return ActionUtils.damageCharacter(self, damage, self);
-        };
-    }
-
-    public static MinionAction minionLeaderBuff(
-            @NamedArg("attack") int attack,
-            @NamedArg("hp") int hp,
-            @NamedArg("keywords") Keyword[] keywords) {
-
-        Predicate<LabeledEntity> minionFilter = ActionUtils.includedKeywordsFilter(keywords);
-        return (World world, Minion minion) -> {
-            Predicate<LabeledEntity> appliedFilter = minionFilter.and((otherMinion) -> minion != otherMinion);
-            int buff = minion.getOwner().getBoard().countMinions(appliedFilter);
-            if (buff <= 0) {
-                return UndoAction.DO_NOTHING;
-            }
-
-            UndoAction attackBuffUndo = minion.addAttackBuff(attack * buff);
-            UndoAction hpBuffUndo = minion.getBody().getHp().buffHp(hp * buff);
-
-            return () -> {
-                hpBuffUndo.undo();
-                attackBuffUndo.undo();
-            };
-        };
-    }
-
-    public static MinionAction multiplyHp(@NamedArg("mul") int mul) {
-        return (World world, Minion minion) -> {
-            HpProperty hp = minion.getBody().getHp();
-            return hp.buffHp(hp.getCurrentHp());
         };
     }
 

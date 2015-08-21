@@ -9,12 +9,16 @@
         "attack": 3,
         "hp": 3,
         "battleCries": {
-            "class": "MinionActions.forOwnMinions",
-            "action": {
-                "class": "MinionActions.buffAttack",
-                "attack": 2
+            "class": "TargetlessActions.forOtherTargets",
+            "selector": {
+                "class": "EntitySelectors.filtered",
+                "filter": "EntityFilters.isMech",
+                "selector": "EntitySelectors.friendlyBoard"
             },
-            "filter": "MinionAuras.TARGET_IS_MECH"
+            "action": {
+                "class": "TargetedActions.buffTarget",
+                "buff": "2/0"
+            }
         }
     }
 }

@@ -6,10 +6,15 @@
     "rarity": "rare",
     "manaCost": 2,
     "playActions": {
-        "class": "PlayerActions.applyTargetedActionToRandomOwnMinion",
+        "class": "TargetlessActions.forTargets",
+        "selector": {
+            "class": "EntitySelectors.filtered",
+            "filter": "EntityFilters.random",
+            "selector": "EntitySelectors.friendlyBoardAlive"
+        },
         "action": {
-            "class": "MinionActions.buffAttack",
-            "attack": 1
+            "class": "TargetedActions.buffTarget",
+            "buff": "1/0"
         }
     },
     "weapon": {

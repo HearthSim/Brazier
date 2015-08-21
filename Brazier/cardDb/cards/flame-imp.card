@@ -8,7 +8,8 @@
         "attack": 3,
         "hp": 2,
         "battleCries": {
-            "class": "DamageActions.damageOwnHero",
+            "class": "TargetlessActions.damageTarget",
+            "selector": "EntitySelectors.friendlyHero",
             "damage": 3
         }
     }

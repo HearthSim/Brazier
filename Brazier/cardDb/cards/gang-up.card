@@ -6,7 +6,10 @@
     "manaCost": 2,
     "playActions": {
         "targets": "all-minions",
-        "class": "ActorlessTargetedActions.shuffleTargetIntoDeck",
-        "cardCount": 3
+        "actions": [
+            "TargetedActions.SHUFFLE_MINION",
+            "TargetedActions.SHUFFLE_MINION",
+            "TargetedActions.SHUFFLE_MINION"
+        ]
     }
 }

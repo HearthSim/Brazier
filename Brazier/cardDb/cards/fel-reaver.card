@@ -12,9 +12,9 @@
             "start-play-card": {
                 "filter": "BasicFilters.HAS_DIFFERENT_OWNER_PLAYER",
                 "action": [
-                    "PlayerActions.DISCARD_FROM_DECK",
-                    "PlayerActions.DISCARD_FROM_DECK",
-                    "PlayerActions.DISCARD_FROM_DECK"
+                    "TargetlessActions.DISCARD_FROM_DECK",
+                    "TargetlessActions.DISCARD_FROM_DECK",
+                    "TargetlessActions.DISCARD_FROM_DECK"
                 ]
             }
         }

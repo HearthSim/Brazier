@@ -6,7 +6,19 @@
     "manaCost": 2,
     "playActions": {
         "targets": "all-minions",
-        "class": "ActorlessTargetedActions.slam",
-        "damage": 2
+        "actions": [
+            {
+                "class": "TargetedActions.damageTarget",
+                "damage": 2
+            },
+            {
+                "class": "TargetedActions.doIf",
+                "condition": {
+                    "class": "TargetedActionConditions.forTarget",
+                    "filter": "EntityFilters.isAlive"
+                },
+                "if": "TargetlessActions.DRAW_FOR_SELF"
+            }
+        ]
     }
 }

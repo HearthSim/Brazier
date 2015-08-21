@@ -5,7 +5,8 @@
     "type": "spell",
     "manaCost": 3,
     "playActions": {
-        "class": "PlayerActions.forEnemyMinions",
-        "action": "ActorlessTargetedActions.FREEZE_TARGET"
+        "class": "TargetlessActions.forTargets",
+        "selector": "EntitySelectors.enemyBoard",
+        "action": "TargetedActions.FREEZE_TARGET"
     }
 }

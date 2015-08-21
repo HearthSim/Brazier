@@ -9,7 +9,7 @@
         "triggers": {
             "attack-initiated": {
                 "filter": "BasicFilters.ATTACKER_IS_SELF",
-                "action": "AttackEventActions.MISS_TARGET_SOMETIMES"
+                "action": "WorldEventActions.MISS_TARGET_SOMETIMES"
             }
         }
     }

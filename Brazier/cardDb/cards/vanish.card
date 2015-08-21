@@ -5,10 +5,8 @@
     "type": "spell",
     "manaCost": 6,
     "playActions": {
-        "class": "PlayerActions.forAllMinions",
-        "action": {
-            "class": "ActorlessTargetedActions.applyToMinionTarget",
-            "action": "MinionActions.RETURN_MINION"
-        }
+        "class": "TargetlessActions.forBornTargets",
+        "selector": "EntitySelectors.board",
+        "action": "TargetedActions.RETURN_MINION"
     }
 }

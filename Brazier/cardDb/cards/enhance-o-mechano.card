@@ -9,13 +9,14 @@
         "attack": 3,
         "hp": 2,
         "battleCries": {
-            "class": "MinionActions.forOwnMinions",
+            "class": "TargetlessActions.forOtherTargets",
+            "selector": "EntitySelectors.friendlyBoard",
             "action": {
-                "class": "TargetedMinionActions.randomAction",
-                "action": [
-                    "MinionActions.GIVE_DIVINE_SHIELD",
-                    "MinionActions.WIND_FURY",
-                    "MinionActions.TAUNT"
+                "class": "TargetedActions.randomAction",
+                "actions": [
+                    "TargetedActions.GIVE_DIVINE_SHIELD",
+                    "TargetedActions.WIND_FURY",
+                    "TargetedActions.TAUNT"
                 ]
             }
         }

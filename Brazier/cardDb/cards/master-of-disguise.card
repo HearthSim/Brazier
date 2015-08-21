@@ -8,9 +8,8 @@
         "attack": 4,
         "hp": 4,
         "battleCries": {
-            "class": "ActorlessTargetedActions.applyToMinionTarget",
-            "action": "MinionActions.STEALTH",
-            "targets": "self-minions"
+            "targets": "self-minions",
+            "class": "TargetedActions.STEALTH"
         }
     }
 }

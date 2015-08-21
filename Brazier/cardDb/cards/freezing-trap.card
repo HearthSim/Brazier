@@ -11,8 +11,11 @@
                 "BasicFilters.ATTACKER_IS_ALIVE"
             ],
             "action": {
-                "class": "AttackEventActions.returnAttacker",
-                "costReduction": -2
+                "class": "WorldEventActions.forAttacker",
+                "action": {
+                    "class": "TargetedActions.returnMinion",
+                    "costReduction": -2
+                }
             }
         }
     }

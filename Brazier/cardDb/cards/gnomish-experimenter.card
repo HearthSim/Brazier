@@ -8,7 +8,7 @@
         "attack": 3,
         "hp": 2,
         "battleCries": {
-            "class": "PlayerActions.experiment",
+            "class": "TargetlessActions.experiment",
             "replaceCard": "Chicken"
         }
     }

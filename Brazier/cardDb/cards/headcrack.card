@@ -7,14 +7,17 @@
     "manaCost": 3,
     "playActions": [
         {
-            "class": "PlayerActions.damageOpponentHero",
+            "class": "TargetlessActions.damageTarget",
+            "selector": "EntitySelectors.enemyHero",
             "damage": "2"
         },
         {
             "requires": "PlayActionRequirements.COMBO",
-            "class": "PlayerActions.addCard",
-            "card": "Headcrack",
-            "delay": true
+            "class": "TargetlessActions.doOnEndOfTurn",
+            "action": {
+                "class": "TargetlessActions.addCard",
+                "card": "Headcrack"
+            }
         }
     ]
 }

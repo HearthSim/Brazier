@@ -9,20 +9,19 @@
         "attack": 1,
         "hp": 2,
         "battleCries": {
-            "class": "BattleCries.combined",
-            "actions": [
-                "ActorlessTargetedActions.KILL_TARGET",
-                {
-                    "class": "MinionActions.buff",
-                    "attack": 2,
-                    "hp": 2
-                }
-            ],
             "targets": [
                 "all-minions",
                 {
                     "class": "TargetNeeds.hasKeyword",
                     "keywords": "murloc"
+                }
+            ],
+            "class": "TargetedActions.combine",
+            "actions": [
+                "TargetedActions.KILL_TARGET",
+                {
+                    "class": "TargetlessActions.buffSelfMinion",
+                    "buff": "2/2"
                 }
             ]
         }

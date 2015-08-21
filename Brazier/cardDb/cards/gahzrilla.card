@@ -12,8 +12,8 @@
             "minion-damaged": {
                 "filter": "BasicFilters.TARGET_SELF",
                 "action": {
-                    "class": "MinionEventActions.applyTargetedActionToSelf",
-                    "action": "MinionActions.DOUBLE_ATTACK"
+                    "class": "TargetlessActions.buffSelfMinion",
+                    "buff": "Buffs.DOUBLE_ATTACK"
                 }
             }
         }

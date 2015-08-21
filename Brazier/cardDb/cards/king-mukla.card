@@ -9,14 +9,14 @@
         "attack": 5,
         "hp": 5,
         "battleCries": {
-            "class": "PlayerActions.doForOpponent",
+            "class": "TargetlessActions.actWithOpponent",
             "action": [
                 {
-                    "class": "PlayerActions.addCard",
+                    "class": "TargetlessActions.addCard",
                     "card": "Bananas"
                 },
                 {
-                    "class": "PlayerActions.addCard",
+                    "class": "TargetlessActions.addCard",
                     "card": "Bananas"
                 }
             ]

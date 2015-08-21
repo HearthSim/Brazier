@@ -12,9 +12,8 @@
                 "class": "PlayActionRequirements.opponentsHpIsLess",
                 "hp": 16
             },
-            "class": "MinionActions.buff",
-            "attack": 3,
-            "hp": 3
+            "class": "TargetlessActions.buffSelfMinion",
+            "buff": "3/3"
         }
     }
 }

@@ -6,7 +6,7 @@
     "manaCost": 1,
     "playActions": {
         "targets": "self",
-        "class": "ActorlessTargetedActions.addTemporaryAttack",
-        "attack": 3
+        "class": "TargetedActions.buffTargetThisTurn",
+        "buff": "3/0"
     }
 }

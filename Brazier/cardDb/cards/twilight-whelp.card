@@ -12,8 +12,8 @@
                 "class": "PlayActionRequirements.hasCardInHand",
                 "keywords": "dragon"
             },
-            "class": "MinionActions.buffHp",
-            "hp": 2
+            "class": "TargetlessActions.buffSelfMinion",
+            "buff": "0/2"
         }
     }
 }

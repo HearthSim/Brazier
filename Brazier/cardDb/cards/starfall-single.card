@@ -7,7 +7,7 @@
     "manaCost": 0,
     "playActions": {
         "targets": "all-minions",
-        "class": "ActorlessTargetedActions.dealSpellDamage",
+        "class": "TargetedActions.damageTarget",
         "damage": 5
     }
 }

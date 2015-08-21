@@ -11,8 +11,12 @@
             "turn-ends": {
                 "filter": "BasicFilters.HAS_SAME_OWNER_PLAYER",
                 "action": {
-                    "class": "PlayerActions.decreaseCostOfHand",
-                    "amount": 1
+                    "class": "TargetlessActions.forTargets",
+                    "selector": "EntitySelectors.friendlyHand",
+                    "action": {
+                        "class": "TargetedActions.decreaseCostOfTarget",
+                        "amount": 1
+                    }
                 }
             }
         }

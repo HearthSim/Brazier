@@ -6,10 +6,13 @@
     "collectible": false,
     "manaCost": 0,
     "playActions": {
-        "class": "CardPlayActions.doForPlayedMinion",
+        "class": "TargetlessActions.withMinion",
         "action": {
-            "class": "MinionActions.transformMinion",
-            "minion": "Druid of the Flame/Firehawk"
+            "class": "TargetlessActions.forSelf",
+            "action": {
+                "class": "TargetedActions.transformMinion",
+                "minion": "Druid of the Flame/Firehawk"
+            }
         }
     }
 }

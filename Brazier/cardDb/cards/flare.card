@@ -6,8 +6,12 @@
     "rarity": "rare",
     "manaCost": 2,
     "playActions": [
-        "PlayerActions.DESTROY_OPPONENT_SECRET",
-        "PlayerActions.DESTROY_STEALTH",
+        "TargetlessActions.DESTROY_OPPONENT_SECRET",
+        {
+            "class": "TargetlessActions.forTargets",
+            "selector": "EntitySelectors.board",
+            "action": "TargetedActions.DESTROY_STEALTH"
+        },
         "TargetlessActions.DRAW_FOR_SELF"
     ]
 }

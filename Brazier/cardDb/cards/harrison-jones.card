@@ -7,6 +7,6 @@
     "minion": {
         "attack": 5,
         "hp": 4,
-        "battleCries": "PlayerActions.DRAW_CARD_FOR_OPPONENTS_WEAPON"
+        "battleCries": "TargetlessActions.DRAW_CARD_FOR_OPPONENTS_WEAPON"
     }
 }

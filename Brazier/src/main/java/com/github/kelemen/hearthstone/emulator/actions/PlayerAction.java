@@ -2,6 +2,7 @@ package com.github.kelemen.hearthstone.emulator.actions;
 
 import com.github.kelemen.hearthstone.emulator.Player;
 import com.github.kelemen.hearthstone.emulator.World;
+import com.github.kelemen.hearthstone.emulator.minions.Minion;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -11,12 +12,16 @@ public interface PlayerAction extends WorldObjectAction<Player> {
     @Override
     public UndoAction alterWorld(World world, Player player);
 
-    public default ActorlessTargetedAction toTargetedAction() {
-        return (world, target) -> alterWorld(world, target.getCastingPlayer());
+    public default TargetedMinionAction toTargetedMinionAction() {
+        return (Minion targeter, PlayTarget target) -> {
+            return alterWorld(targeter.getWorld(), target.getCastingPlayer());
+        };
     }
 
-    public default BattleCryTargetedAction toBattleCryTargetedAction() {
-        return (world, target) -> alterWorld(world, target.getCastingPlayer());
+    public default CardPlayAction toCardPlayAction() {
+        return (World world, CardPlayArg arg) -> {
+            return alterWorld(world, arg.getTarget().getCastingPlayer());
+        };
     }
 
     public static PlayerAction merge(Collection<? extends PlayerAction> actions) {

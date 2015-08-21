@@ -5,13 +5,15 @@
     "type": "spell",
     "manaCost": 0,
     "playActions": {
-        "class": "PlayerActions.forOwnMinions",
+        "class": "TargetlessActions.forOtherTargets",
+        "selector": {
+            "class": "EntitySelectors.filtered",
+            "filter": "EntityFilters.isTotem",
+            "selector": "EntitySelectors.board"
+        },
         "action": {
-            "class": "ActorlessTargetedActions.applyToMinionTarget",
-            "action": {
-                "class": "MinionActions.buffHp",
-                "hp": 2
-            }
+            "class": "TargetedActions.buffTarget",
+            "buff": "0/2"
         }
     }
 }

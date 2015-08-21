@@ -8,9 +8,9 @@
         "minion-killed": {
             "filter": "BasicFilters.HAS_SAME_OWNER_PLAYER",
             "action": {
-                "class": "MinionEventActions.doForEventSourceMinion",
+                "class": "WorldEventActions.forEventArgCardTarget",
                 "action": {
-                    "class": "MinionActions.addCopyToOwnerHand",
+                    "class": "TargetedActions.copyTargetToHand",
                     "copyCount": 2
                 }
             }

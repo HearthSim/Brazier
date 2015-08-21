@@ -20,6 +20,16 @@ public final class TargetedEntitySelectors {
         return (World world, Actor actor, Target target) -> Stream.of(actor);
     }
 
+    public static <Actor, Target, Selection> TargetedEntitySelector<Actor, Target, Selection> excludeTarget(
+            @NamedArg("selector") TargetedEntitySelector<? super Actor, ? super Target, ? extends Selection> selector) {
+        ExceptionHelper.checkNotNullArgument(selector, "selector");
+
+        return (World world, Actor actor, Target target) -> {
+            Stream<? extends Selection> selection = selector.select(world, actor, target);
+            return selection.filter((element) -> element != target);
+        };
+    }
+
     public static <Actor, Target, Selection> TargetedEntitySelector<Actor, Target, Selection> filtered(
             @NamedArg("filter") EntityFilter<Selection> filter,
             @NamedArg("selector") TargetedEntitySelector<? super Actor, ? super Target, ? extends Selection> selector) {

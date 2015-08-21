@@ -7,8 +7,8 @@
         "attack": 5,
         "hp": 5,
         "battleCries": {
-            "class": "ActorlessTargetedActions.FREEZE_TARGET",
-            "targets": "all"
+            "targets": "all",
+            "class": "TargetedActions.FREEZE_TARGET"
         }
     }
 }

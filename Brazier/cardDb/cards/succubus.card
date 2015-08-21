@@ -7,6 +7,6 @@
     "minion": {
         "attack": 4,
         "hp": 3,
-        "battleCries": "PlayerActions.DISCARD_RANDOM_CARD"
+        "battleCries": "TargetlessActions.DISCARD_RANDOM_CARD"
     }
 }

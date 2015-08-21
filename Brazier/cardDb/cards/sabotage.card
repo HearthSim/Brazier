@@ -8,12 +8,17 @@
     "playActions": [
         {
             "requires": "PlayActionRequirements.OPPONENT_BOARD_NOT_EMPTY",
-            "class": "PlayerActions.applyTargetedActionToRandomEnemyMinion",
-            "action": "ActorlessTargetedActions.KILL_TARGET"
+            "class": "TargetlessActions.forTargets",
+            "selector": {
+                "class": "EntitySelectors.filtered",
+                "filter": "EntityFilters.random",
+                "selector": "EntitySelectors.enemyBoardAlive"
+            },
+            "action": "TargetedActions.KILL_TARGET"
         },
         {
             "requires": "PlayActionRequirements.COMBO",
-            "class": "PlayerActions.DESTROY_OPPONENTS_WEAPON"
+            "class": "TargetlessActions.DESTROY_OPPONENTS_WEAPON"
         }
     ]
 }

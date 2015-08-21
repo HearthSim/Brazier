@@ -9,12 +9,20 @@
         "attack": 3,
         "hp": 5,
         "battleCries": {
-            "class": "PlayerActions.applyTargetedActionToRandomMinion",
-            "action": "ActorlessTargetedActions.KILL_TARGET",
-            "filter": {
-                "class": "BasicFilters.targetAttackIsLess",
-                "attack": 3
-            }
+            "class": "TargetlessActions.forTargets",
+            "selector": {
+                "class": "EntitySelectors.filtered",
+                "filter": "EntityFilters.random",
+                "selector": {
+                    "class": "EntitySelectors.filtered",
+                    "filter": {
+                        "class": "EntityFilters.attackIsLess",
+                        "attack": 3
+                    },
+                    "selector": "EntitySelectors.enemyBoardAlive"
+                }
+            },
+            "action": "TargetedActions.KILL_TARGET"
         }
     }
 }

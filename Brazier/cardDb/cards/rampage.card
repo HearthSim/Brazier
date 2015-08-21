@@ -9,11 +9,7 @@
             "all-minions",
             "TargetNeeds.TARGET_DAMAGED"
         ],
-        "class": "ActorlessTargetedActions.applyToMinionTarget",
-        "action": {
-            "class": "MinionActions.buff",
-            "attack": 3,
-            "hp": 3
-        }
+        "class": "TargetedActions.buffTarget",
+        "buff": "3/3"
     }
 }

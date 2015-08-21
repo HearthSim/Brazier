@@ -6,7 +6,19 @@
     "manaCost": 1,
     "playActions": {
         "targets": "all-minions",
-        "class": "ActorlessTargetedActions.mortalCoil",
-        "damage": 1
+        "actions": [
+            {
+                "class": "TargetedActions.damageTarget",
+                "damage": 1
+            },
+            {
+                "class": "TargetedActions.doIf",
+                "condition": {
+                    "class": "TargetedActionConditions.forTarget",
+                    "filter": "EntityFilters.isDead"
+                },
+                "if": "TargetlessActions.DRAW_FOR_SELF"
+            }
+        ]
     }
 }

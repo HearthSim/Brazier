@@ -7,13 +7,12 @@
     "manaCost": 0,
     "playActions": {
         "targets": "all-minions",
-        "class": "ActorlessTargetedActions.applyToMinionTarget",
-        "action": [
+        "actions": [
             {
-                "class": "MinionActions.buffHp",
-                "hp": 4
+                "class": "TargetedActions.buffTarget",
+                "buff": "0/4"
             },
-            "MinionActions.TAUNT"
+            "TargetedActions.TAUNT"
         ]
     }
 }

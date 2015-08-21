@@ -11,11 +11,8 @@
         "triggers": {
             "turn-ends": {
                 "action": {
-                    "class": "MinionEventActions.doForEventSourcePlayer",
-                    "action": {
-                        "class": "PlayerActions.drawCardToFillHand",
-                        "targetHandSize": 3
-                    }
+                    "class": "TargetlessActions.drawCardToFillHand",
+                    "targetHandSize": 3
                 }
             }
         }

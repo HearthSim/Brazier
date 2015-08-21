@@ -14,12 +14,8 @@
                     "BasicFilters.HAS_SECRET"
                 ],
                 "action": {
-                    "class": "MinionEventActions.applyTargetedActionToSelf",
-                    "action": {
-                        "class": "MinionActions.buff",
-                        "attack": 2,
-                        "hp": 2
-                    }
+                    "class": "TargetlessActions.buffSelfMinion",
+                    "buff": "2/2"
                 }
             }
         }

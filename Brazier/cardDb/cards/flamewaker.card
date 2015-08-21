@@ -14,17 +14,20 @@
                     "BasicFilters.EVENT_SOURCE_IS_SPELL"
                 ],
                 "action": {
-                    "class": "MinionEventActions.applyTargetedActionToRandomEnemy",
-                    "action": [
-                        {
-                            "class": "TargetedMinionActions.damageTarget",
-                            "damage": 1
+                    "class": "TargetlessActions.doMultipleTimes",
+                    "action": {
+                        "class": "TargetlessActions.forTargets",
+                        "selector": {
+                            "class": "EntitySelectors.filtered",
+                            "filter": "EntityFilters.random",
+                            "selector": "EntitySelectors.enemyTargetsAlive"
                         },
-                        {
-                            "class": "TargetedMinionActions.damageTarget",
+                        "action": {
+                            "class": "TargetedActions.damageTarget",
                             "damage": 1
                         }
-                    ]
+                    },
+                    "actionCount": 2
                 }
             }
         }

@@ -10,20 +10,34 @@
         "hp": 8,
         "battleCries": [
             {
-                "class": "PlayerActions.getRandomOpponentCard",
-                "fallbackCard": "Tail Swipe",
-                "keywords": [
-                    "collectible",
-                    "spell"
-                ]
+                "class": "TargetlessActions.addSelectedCard",
+                "card": {
+                    "class": "EntitySelectors.filtered",
+                    "filter": "EntityFilters.random",
+                    "selector": {
+                        "class": "EntitySelectors.opponentCardsWithKeywords",
+                        "fallbackCard": "Tail Swipe",
+                        "keywords": [
+                            "collectible",
+                            "spell"
+                        ]
+                    }
+                }
             },
             {
-                "class": "PlayerActions.getRandomOpponentCard",
-                "fallbackCard": "Tail Swipe",
-                "keywords": [
-                    "collectible",
-                    "spell"
-                ]
+                "class": "TargetlessActions.addSelectedCard",
+                "card": {
+                    "class": "EntitySelectors.filtered",
+                    "filter": "EntityFilters.random",
+                    "selector": {
+                        "class": "EntitySelectors.opponentCardsWithKeywords",
+                        "fallbackCard": "Tail Swipe",
+                        "keywords": [
+                            "collectible",
+                            "spell"
+                        ]
+                    }
+                }
             }
         ]
     }

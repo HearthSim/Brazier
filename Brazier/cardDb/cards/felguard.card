@@ -10,7 +10,7 @@
         "hp": 5,
         "taunt": true,
         "battleCries": {
-            "class": "PlayerActions.addManaCrystal",
+            "class": "TargetlessActions.addManaCrystal",
             "amount": -1
         }
     }

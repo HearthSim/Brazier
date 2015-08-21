@@ -6,7 +6,12 @@
     "rarity": "epic",
     "manaCost": 6,
     "playActions": {
-        "class": "PlayerActions.forAllMinions",
-        "action": "ActorlessTargetedActions.OWN_ATTACK_DAMAGE"
+        "class": "TargetlessActions.forBornTargets",
+        "selector": "EntitySelectors.board",
+        "atomic": false,
+        "action": {
+            "class": "TargetlessActions.forSelf",
+            "action": "TargetedActions.DAMAGE_TARGET"
+        }
     }
 }

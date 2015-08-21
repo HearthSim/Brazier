@@ -12,11 +12,11 @@
         "hp": 2,
         "deathRattle": [
             {
-                "class": "MinionEventActions.summonMinionRight",
+                "class": "TargetlessActions.summonMinionRight",
                 "minion": "Spectral Spider"
             },
             {
-                "class": "MinionEventActions.summonMinionRight",
+                "class": "TargetlessActions.summonMinionRight",
                 "minion": "Spectral Spider"
             }
         ]

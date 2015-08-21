@@ -1,7 +1,6 @@
 package com.github.kelemen.hearthstone.emulator.actions;
 
 import com.github.kelemen.hearthstone.emulator.DamageSource;
-import com.github.kelemen.hearthstone.emulator.TargetableCharacter;
 import com.github.kelemen.hearthstone.emulator.World;
 import com.github.kelemen.hearthstone.emulator.minions.Minion;
 import com.github.kelemen.hearthstone.emulator.weapons.Weapon;
@@ -13,18 +12,6 @@ import org.jtrim.utils.ExceptionHelper;
 public interface DamageAction extends WorldObjectAction<DamageSource> {
     @Override
     public UndoAction alterWorld(World world, DamageSource minion);
-
-    public default BattleCryTargetedAction toBattleCryTargetedAction() {
-        return (World world, BattleCryArg arg) -> alterWorld(world, arg.getSource());
-    }
-
-    public default CharacterTargetedAction toCharacterTargetedAction() {
-        return (World world, TargetableCharacter target) -> {
-            return target instanceof DamageSource
-                    ? alterWorld(world, (DamageSource)target)
-                    : UndoAction.DO_NOTHING;
-        };
-    }
 
     public default MinionAction toMinionAction() {
         return (World world, Minion minion) -> alterWorld(world, minion);

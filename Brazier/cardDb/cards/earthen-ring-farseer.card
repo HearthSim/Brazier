@@ -7,9 +7,9 @@
         "attack": 3,
         "hp": 3,
         "battleCries": {
-            "class": "BattleCries.dealDamageToTarget",
-            "damage": -3,
-            "targets": "all"
+            "targets": "all",
+            "class": "TargetedActions.damageTarget",
+            "damage": -3
         }
     }
 }

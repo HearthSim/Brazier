@@ -9,7 +9,7 @@
         "attack": 4,
         "hp": 7,
         "deathRattle": {
-            "class": "MinionEventActions.summonMinionRight",
+            "class": "TargetlessActions.summonMinionRight",
             "minion": "Thaddius"
         },
         "deathRattleCondition": {

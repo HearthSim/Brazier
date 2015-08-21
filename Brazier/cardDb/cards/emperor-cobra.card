@@ -11,7 +11,10 @@
         "triggers": {
             "minion-damaged": {
                 "filter": "BasicFilters.DAMAGE_SOURCE_SELF",
-                "action": "DamageEventActions.KILL_DAMAGE_TARGET_MINION"
+                "action": {
+                    "class": "WorldEventActions.forDamageTarget",
+                    "action": "TargetedActions.KILL_TARGET"
+                }
             }
         }
     }

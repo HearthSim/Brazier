@@ -13,8 +13,8 @@
                 "BasicFilters.ATTACKER_IS_ENEMY"
             ],
             "action": {
-                "class": "AttackEventActions.doForAttacker",
-                "action": "ActorlessTargetedActions.KILL_TARGET"
+                "class": "WorldEventActions.forAttacker",
+                "action": "TargetedActions.KILL_TARGET"
             }
         }
     }

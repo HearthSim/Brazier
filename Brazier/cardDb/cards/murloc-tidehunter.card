@@ -8,7 +8,7 @@
         "attack": 2,
         "hp": 1,
         "battleCries": {
-            "class": "MinionActions.summonMinionRight",
+            "class": "TargetlessActions.summonMinionRight",
             "minion": "Murloc Scout"
         }
     }

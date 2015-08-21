@@ -8,11 +8,12 @@
     "playActions": [
         {
             "targets": "self-minions",
-            "class": "ActorlessTargetedActions.KILL_TARGET"
+            "class": "TargetedActions.KILL_TARGET"
         },
         {
             "targets": "self-minions",
-            "class": "ActorlessTargetedActions.SHADOW_FLAME_DAMAGE"
+            "class": "TargetedActions.shadowFlameDamage",
+            "selector": "EntitySelectors.enemyBoard"
         }
     ]
 }

@@ -6,6 +6,9 @@
     "minion": {
         "attack": 4,
         "hp": 4,
-        "battleCries": "MinionActions.WARLORD_BUFF"
+        "battleCries": {
+            "class": "TargetlessActions.buffSelfMinion",
+            "buff": "Buffs.WARLORD_BUFF"
+        }
     }
 }

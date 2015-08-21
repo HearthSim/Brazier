@@ -1,16 +1,18 @@
 package com.github.kelemen.hearthstone.emulator.minions;
 
+import com.github.kelemen.brazier.actions.TargetedAction;
 import com.github.kelemen.hearthstone.emulator.HearthStoneEntity;
 import com.github.kelemen.hearthstone.emulator.Keyword;
 import com.github.kelemen.hearthstone.emulator.Player;
+import com.github.kelemen.hearthstone.emulator.TargetableCharacter;
+import com.github.kelemen.hearthstone.emulator.World;
 import com.github.kelemen.hearthstone.emulator.abilities.ActivatableAbility;
 import com.github.kelemen.hearthstone.emulator.abilities.LivingEntitysAbilities;
 import com.github.kelemen.hearthstone.emulator.abilities.OwnedIntPropertyBuff;
 import com.github.kelemen.hearthstone.emulator.actions.BattleCryAction;
 import com.github.kelemen.hearthstone.emulator.actions.BattleCryArg;
-import com.github.kelemen.hearthstone.emulator.actions.BattleCryTargetedAction;
 import com.github.kelemen.hearthstone.emulator.actions.UndoAction;
-import com.github.kelemen.hearthstone.emulator.actions.WorldActionList;
+import com.github.kelemen.hearthstone.emulator.actions.UndoBuilder;
 import com.github.kelemen.hearthstone.emulator.actions.WorldEventAction;
 import com.github.kelemen.hearthstone.emulator.actions.WorldEventActionDefs;
 import com.github.kelemen.hearthstone.emulator.cards.CardDescr;
@@ -268,13 +270,27 @@ public final class MinionDescr implements HearthStoneEntity {
             return UndoAction.DO_NOTHING;
         }
 
-        List<BattleCryTargetedAction> actions = new ArrayList<>(battleCries.size());
+        List<TargetedAction<? super Minion, ? super TargetableCharacter>> actions
+                = new ArrayList<>(battleCries.size());
         for (BattleCryAction action: battleCries) {
             if (action.getRequirement().meetsRequirement(player)) {
                 actions.add(action.getAction());
             }
         }
-        return WorldActionList.executeActionsNow(player.getWorld(), target, actions);
+
+        if (actions.isEmpty()) {
+            return UndoAction.DO_NOTHING;
+        }
+
+        World world = player.getWorld();
+        Minion actor = target.getSource();
+        TargetableCharacter characterTarget = target.getTarget().getTarget();
+
+        UndoBuilder result = new UndoBuilder(actions.size());
+        for (TargetedAction<? super Minion, ? super TargetableCharacter> action: actions) {
+            result.addUndo(action.alterWorld(world, actor, characterTarget));
+        }
+        return result;
     }
 
     public WorldEventActionDefs<Minion> getEventActionDefs() {

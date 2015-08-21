@@ -6,6 +6,6 @@
     "manaCost": 1,
     "playActions": {
         "targets": "all-minions",
-        "class": "MinionActions.GIVE_DIVINE_SHIELD"
+        "class": "TargetedActions.GIVE_DIVINE_SHIELD"
     }
 }

@@ -7,14 +7,17 @@
     "manaCost": 0,
     "playActions": [
         {
-            "class": "PlayerActions.addManaCrystal",
+            "class": "TargetlessActions.addManaCrystal",
             "amount": 1,
             "empty": false
         },
         {
-            "class": "PlayerActions.addManaCrystalToOpponent",
-            "amount": 1,
-            "empty": false
+            "class": "TargetlessActions.actWithOpponent",
+            "action": {
+                "class": "TargetlessActions.addManaCrystal",
+                "amount": 1,
+                "empty": false
+            }
         }
     ]
 }

@@ -4,7 +4,6 @@ import com.github.kelemen.hearthstone.emulator.BornEntity;
 import com.github.kelemen.hearthstone.emulator.Player;
 import com.github.kelemen.hearthstone.emulator.TargetableCharacter;
 import com.github.kelemen.hearthstone.emulator.World;
-import com.github.kelemen.hearthstone.emulator.abilities.HpProperty;
 import com.github.kelemen.hearthstone.emulator.minions.Minion;
 import com.github.kelemen.hearthstone.emulator.parsing.NamedArg;
 import java.util.ArrayList;
@@ -21,26 +20,6 @@ public final class TargetedMinionActions {
 
         int damage = targeter.getAttackTool().getAttack();
         return ActionUtils.damageCharacter(targeter, damage, character);
-    };
-
-    public static final TargetedMinionAction SWAP_HP_WITH_TARGET = (Minion targeter, PlayTarget target) -> {
-        TargetableCharacter character = target.getTarget();
-        if (!(character instanceof Minion)) {
-            return UndoAction.DO_NOTHING;
-        }
-
-        HpProperty targetHpProperty = ((Minion)character).getBody().getHp();
-        HpProperty ourHpProperty = targeter.getBody().getHp();
-
-        int targetHp = targetHpProperty.getCurrentHp();
-        int ourHp = ourHpProperty.getCurrentHp();
-
-        UndoAction targetHpUndo = targetHpProperty.setMaxAndCurrentHp(ourHp);
-        UndoAction ourHpUndo = ourHpProperty.setMaxAndCurrentHp(targetHp);
-        return () -> {
-            ourHpUndo.undo();
-            targetHpUndo.undo();
-        };
     };
 
     public static TargetedMinionAction randomAction(

@@ -7,6 +7,9 @@
     "minion": {
         "attack": 2,
         "hp": 3,
-        "battleCries": "BattleCries.EXORCIST_BUFF"
+        "battleCries": {
+            "class": "TargetlessActions.buffSelfMinion",
+            "buff": "Buffs.EXORCIST_BUFF"
+        }
     }
 }

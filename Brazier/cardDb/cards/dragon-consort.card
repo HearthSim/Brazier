@@ -9,7 +9,7 @@
         "attack": 5,
         "hp": 5,
         "battleCries": {
-            "class": "PlayerActions.reduceManaCostNextCard",
+            "class": "TargetlessActions.reduceManaCostNextCard",
             "amount": 2,
             "filter": {
                 "class": "Auras.targetHasKeyword",

@@ -5,7 +5,8 @@
     "type": "spell",
     "manaCost": 7,
     "playActions": {
-        "class": "PlayerActions.dealDamageToEnemyMinions",
+        "class": "TargetlessActions.damageTarget",
+        "selector": "EntitySelectors.enemyBoard",
         "damage": 4
     }
 }

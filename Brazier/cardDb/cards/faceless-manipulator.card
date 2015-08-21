@@ -8,8 +8,8 @@
         "attack": 3,
         "hp": 3,
         "battleCries": {
-            "class": "BattleCries.copyOther",
-            "targets": "all-minions"
+            "targets": "all-minions",
+            "class": "TargetedActions.COPY_OTHER_MINION"
         }
     }
 }

@@ -13,6 +13,7 @@ public final class TestCards {
     public static final String AVENGE = "Avenge";
     public static final String BLACKWING_CORRUPTOR = "Blackwing Corruptor";
     public static final String BLACKWING_TECHNICIAN = "Blackwing Technician";
+    public static final String BLESSING_OF_KINGS = "Blessing of Kings";
     public static final String BLESSING_OF_WISDOM = "Blessing of Wisdom";
     public static final String BLUEGILL_WARRIOR = "Bluegill Warrior";
     public static final String BOLVAR_FORDRAGON = "Bolvar Fordragon";
@@ -31,6 +32,7 @@ public final class TestCards {
     public static final String EVISCERATE = "Eviscerate";
     public static final String EXECUTE = "Execute";
     public static final String EXPLOSIVE_SHEEP = "Explosive Sheep";
+    public static final String EXPLOSIVE_SHOT = "Explosive Shot";
     public static final String EXPLOSIVE_TRAP = "Explosive Trap";
     public static final String FACELESS_MANIPULATOR = "Faceless Manipulator";
     public static final String FIERY_WAR_AXE = "Fiery War Axe";

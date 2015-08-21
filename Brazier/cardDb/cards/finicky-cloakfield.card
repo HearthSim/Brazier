@@ -8,6 +8,6 @@
     "manaCost": 1,
     "playActions": {
         "targets": "self-minions",
-        "class": "ActorlessTargetedActions.STEALTH_FOR_A_TURN"
+        "class": "TargetedActions.STEALTH_FOR_A_TURN"
     }
 }

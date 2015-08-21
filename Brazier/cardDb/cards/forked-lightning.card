@@ -10,11 +10,18 @@
             "class": "PlayActionRequirements.opponentBoardIsLarger",
             "minionCount": 1
         },
-        "class": "PlayerActions.forRandomEnemyMinions",
-        "action": {
-            "class": "ActorlessTargetedActions.dealSpellDamage",
-            "damage": 2
+        "class": "TargetlessActions.forBornTargets",
+        "selector": {
+            "class": "EntitySelectors.filtered",
+            "filter": {
+                "class": "EntityFilters.random",
+                "count": 2
+            },
+            "selector": "EntitySelectors.enemyBoardAlive"
         },
-        "minionCount": 2
+        "action": {
+            "class": "TargetedActions.damageTarget",
+            "damage": 2
+        }
     }
 }

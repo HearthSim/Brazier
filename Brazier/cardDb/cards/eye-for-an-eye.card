@@ -7,7 +7,10 @@
     "secret": {
         "hero-damaged": {
             "filter": "BasicFilters.DAMAGE_TARGET_IS_OWN_HERO",
-            "action": "DamageEventActions.REFLECT_DAMAGE_TO_ENEMY_HERO"
+            "action": {
+                "class": "WorldEventActions.reflectDamage",
+                "selector": "EntitySelectors.enemyHero"
+            }
         }
     }
 }

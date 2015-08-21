@@ -11,16 +11,22 @@
                 "class": "PlayActionRequirements.hasOnOwnBoard",
                 "keywords": "mech"
             },
-            "class": "BattleCries.combined",
+            "class": "TargetedActions.combine",
             "actions": [
                 {
-                    "class": "PlayerActions.addRandomCard",
-                    "keywords": "spare-part"
+                    "class": "TargetlessActions.addSelectedCard",
+                    "card": {
+                        "class": "EntitySelectors.filtered",
+                        "filter": "EntityFilters.random",
+                        "selector": {
+                            "class": "EntitySelectors.cardsWithKeywords",
+                            "keywords": "spare-part"
+                        }
+                    }
                 },
                 {
-                    "class": "MinionActions.buff",
-                    "attack": 1,
-                    "hp": 1
+                    "class": "TargetlessActions.buffSelfMinion",
+                    "buff": "1/1"
                 }
             ]
         }

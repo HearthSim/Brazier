@@ -6,6 +6,7 @@
     "manaCost": 1,
     "playActions": {
         "targets": "all-minions",
-        "class": "MinionActions.INNER_FIRE"
+        "class": "TargetedActions.buffTarget",
+        "buff": "Buffs.INNER_FIRE"
     }
 }

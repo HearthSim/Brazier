@@ -6,18 +6,16 @@
     "manaCost": 1,
     "playActions": {
         "targets": "self-minions",
-        "class": "ActorlessTargetedActions.applyToMinionTarget",
-        "action": [
+        "actions": [
             {
-                "class": "MinionActions.buff",
-                "attack": 4,
-                "hp": 4
+                "class": "TargetedActions.buffTarget",
+                "buff": "5/5"
             },
             {
-                "class": "MinionActions.buff",
+                "class": "TargetedActions.addAbility",
                 "ability": {
                     "class": "MinionAbilities.endOfTurnBuff",
-                    "filter": "BasicFilters.SELF_TURN",
+                    "filter": "BasicFilters.NOT_SELF_TURN",
                     "action": "TargetlessActions.SELF_DESTRUCT"
                 }
             }

@@ -5,5 +5,5 @@
     "type": "spell",
     "rarity": "rare",
     "manaCost": 3,
-    "playActions": "PlayerActions.DIVINE_FAVOR"
+    "playActions": "TargetlessActions.DIVINE_FAVOR"
 }

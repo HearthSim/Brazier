@@ -12,9 +12,14 @@
                 "class": "PlayActionRequirements.hasOnOwnBoard",
                 "keywords": "mech"
             },
-            "class": "BattleCries.doMultipleTimes",
+            "class": "TargetlessActions.doMultipleTimes",
             "action": {
-                "class": "DamageActions.damageRandomEnemyTarget",
+                "class": "TargetlessActions.damageTarget",
+                "selector": {
+                    "class": "EntitySelectors.filtered",
+                    "filter": "EntityFilters.random",
+                    "selector": "EntitySelectors.enemyTargetsAlive"
+                },
                 "damage": 1
             },
             "actionCount": 4

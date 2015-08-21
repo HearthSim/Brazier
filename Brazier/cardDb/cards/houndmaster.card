@@ -7,21 +7,20 @@
         "attack": 4,
         "hp": 3,
         "battleCries": {
-            "class": "ActorlessTargetedActions.applyToMinionTarget",
-            "action": [
-                {
-                    "class": "MinionActions.buff",
-                    "attack": 2,
-                    "hp": 2
-                },
-                "MinionActions.TAUNT"
-            ],
             "targets": [
                 "self-minions",
                 {
                     "class": "TargetNeeds.hasKeyword",
                     "keywords": "beast"
                 }
+            ],
+            "class": "TargetedActions.combine",
+            "actions": [
+                {
+                    "class": "TargetedActions.buffTarget",
+                    "buff": "2/2"
+                },
+                "TargetedActions.TAUNT"
             ]
         }
     }

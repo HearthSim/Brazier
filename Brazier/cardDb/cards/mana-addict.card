@@ -14,11 +14,8 @@
                     "BasicFilters.EVENT_SOURCE_IS_SPELL"
                 ],
                 "action": {
-                    "class": "MinionEventActions.applyTargetedActionToSelf",
-                    "action": {
-                        "class": "ActorlessTargetedActions.addTemporaryAttack",
-                        "attack": 2
-                    }
+                    "class": "TargetlessActions.buffSelfMinionThisTurn",
+                    "buff": "2/0"
                 }
             }
         }

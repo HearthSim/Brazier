@@ -8,7 +8,7 @@
         "attack": 4,
         "hp": 4,
         "battleCries": {
-            "class": "PlayerActions.untilTurnStartsAura",
+            "class": "TargetlessActions.untilTurnStartsAura",
             "aura": {
                 "class": "CardAuras.setManaCost",
                 "manaCost": 0

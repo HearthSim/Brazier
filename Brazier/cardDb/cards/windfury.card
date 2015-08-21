@@ -6,6 +6,6 @@
     "manaCost": 2,
     "playActions": {
         "targets": "all-minions",
-        "class": "MinionActions.WIND_FURY"
+        "class": "TargetedActions.WIND_FURY"
     }
 }

@@ -4,6 +4,8 @@ import com.github.kelemen.hearthstone.emulator.Damage;
 import com.github.kelemen.hearthstone.emulator.DamageSource;
 import com.github.kelemen.hearthstone.emulator.Deck;
 import com.github.kelemen.hearthstone.emulator.Hand;
+import com.github.kelemen.hearthstone.emulator.Keyword;
+import com.github.kelemen.hearthstone.emulator.Keywords;
 import com.github.kelemen.hearthstone.emulator.Player;
 import com.github.kelemen.hearthstone.emulator.PlayerProperty;
 import com.github.kelemen.hearthstone.emulator.Priorities;
@@ -14,11 +16,12 @@ import com.github.kelemen.hearthstone.emulator.UndoableResult;
 import com.github.kelemen.hearthstone.emulator.World;
 import com.github.kelemen.hearthstone.emulator.WorldEvents;
 import com.github.kelemen.hearthstone.emulator.abilities.ActivatableAbility;
+import com.github.kelemen.hearthstone.emulator.abilities.AuraAwareIntProperty;
 import com.github.kelemen.hearthstone.emulator.abilities.HpProperty;
 import com.github.kelemen.hearthstone.emulator.actions.ActionUtils;
-import com.github.kelemen.hearthstone.emulator.actions.CharacterTargetedAction;
 import com.github.kelemen.hearthstone.emulator.actions.UndoAction;
 import com.github.kelemen.hearthstone.emulator.actions.UndoBuilder;
+import com.github.kelemen.hearthstone.emulator.actions.UndoableUnregisterRef;
 import com.github.kelemen.hearthstone.emulator.actions.WorldEventAction;
 import com.github.kelemen.hearthstone.emulator.cards.Card;
 import com.github.kelemen.hearthstone.emulator.cards.CardDescr;
@@ -31,9 +34,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
-import java.util.function.Predicate;
 import org.jtrim.utils.ExceptionHelper;
-
 
 public final class TargetedActions {
     public static final TargetedAction<DamageSource, TargetableCharacter> FULL_HEAL = (world, actor, target) -> {
@@ -57,6 +58,10 @@ public final class TargetedActions {
             return UndoAction.DO_NOTHING;
         }
         return ActionUtils.damageCharacter(actor, damage, target);
+    };
+
+    public static final TargetedAction<Object, Minion> TRIGGER_DEATHRATTLE = (world, actor, target) -> {
+        return target.triggetDeathRattles();
     };
 
     public static final TargetedAction<Object, TargetableCharacter> KILL_TARGET = (world, actor, target) -> {
@@ -104,6 +109,10 @@ public final class TargetedActions {
         return hand.addCard(target.getCardDescr());
     };
 
+    public static TargetedAction<Minion, Minion> COPY_OTHER_MINION = (world, actor, target) -> {
+        return actor.copyOther(target);
+    };
+
     public static final TargetedAction<Object, Minion> SHUFFLE_MINION = (world, actor, minion) -> {
         Player owner = minion.getOwner();
         Deck deck = owner.getBoard().getDeck();
@@ -116,6 +125,37 @@ public final class TargetedActions {
             removeUndo.undo();
         };
     };
+
+    public static final TargetedAction<DamageSource, TargetableCharacter> SAVAGERY = (world, actor, target) -> {
+        int damage = actor.getOwner().getHero().getAttackTool().getAttack();
+        return damageTarget(actor, target, damage);
+    };
+
+    public static final TargetedAction<DamageSource, TargetableCharacter> SHIELD_SLAM = (world, actor, target) -> {
+        int damage = actor.getOwner().getHero().getCurrentArmor();
+        return damageTarget(actor, target, damage);
+    };
+
+    public static final TargetedAction<PlayerProperty, Minion> SHADOW_MADNESS = (world, actor, target) -> {
+        return takeControlForThisTurn(actor.getOwner(), target);
+    };
+
+    public static final TargetedAction<DamageSource, TargetableCharacter> HOLY_WRATH = (world, actor, target) -> {
+        Player player = actor.getOwner();
+
+        UndoableResult<Card> cardRef = player.drawCardToHand();
+        Card card = cardRef.getResult();
+
+        int damage = card != null ? card.getCardDescr().getManaCost() : 0;
+        UndoAction damageUndo = damageTarget(actor, target, damage);
+
+        return () -> {
+            damageUndo.undo();
+            cardRef.undo();
+        };
+    };
+
+    public static final TargetedAction<Object, Minion> WIND_FURY = windFury(2);
 
     public static final TargetedAction<Object, Minion> ATTACK_HP_SWITCH = (World world, Object actor, Minion target) -> {
         MinionBody body = target.getBody();
@@ -131,6 +171,43 @@ public final class TargetedActions {
             hpUndo.undo();
             attackUndo.undo();
         };
+    };
+
+    public static final TargetedAction<Object, Minion> RECOMBOBULATE = transformMinion((Minion target) -> {
+        World world = target.getWorld();
+
+        int manaCost = target.getBaseDescr().getBaseCard().getManaCost();
+        Keyword manaCostKeyword = Keywords.manaCost(manaCost);
+        List<CardDescr> possibleMinions = world.getDb().getCardDb().getByKeywords(Keywords.MINION, manaCostKeyword);
+        CardDescr selected = ActionUtils.pickRandom(world, possibleMinions);
+        if (selected == null) {
+            return null;
+        }
+
+        MinionDescr result = selected.getMinion();
+        if (result == null) {
+            throw new IllegalStateException("Minion keyword was appied to a non-minion card: " + selected.getId());
+        }
+        return result;
+    });
+
+    public static final TargetedAction<Minion, Minion> SWAP_HP_WITH_TARGET = (World world, Minion actor, Minion target) -> {
+        HpProperty targetHpProperty = target.getBody().getHp();
+        HpProperty ourHpProperty = actor.getBody().getHp();
+
+        int targetHp = targetHpProperty.getCurrentHp();
+        int ourHp = ourHpProperty.getCurrentHp();
+
+        UndoAction targetHpUndo = targetHpProperty.setMaxAndCurrentHp(ourHp);
+        UndoAction ourHpUndo = ourHpProperty.setMaxAndCurrentHp(targetHp);
+        return () -> {
+            ourHpUndo.undo();
+            targetHpUndo.undo();
+        };
+    };
+
+    public static final TargetedAction<Object, Minion> DESTROY_STEALTH = (world, actor, target) -> {
+        return target.getBody().setStealth(false);
     };
 
     public static <Actor extends PlayerProperty> TargetedAction<Actor, Minion> doOnAttack(
@@ -157,6 +234,14 @@ public final class TargetedActions {
             @NamedArg("action") TargetedAction<? super Target, ? super Target> action) {
         return (World world, Target actor, Target target) -> {
             return action.alterWorld(world, target, target);
+        };
+    }
+
+    public static <Actor, Target> TargetedAction<Actor, Target> doAtomic(
+            @NamedArg("action") TargetedAction<? super Actor, ? super Target> action) {
+        ExceptionHelper.checkNotNullArgument(action, "action");
+        return (World world, Actor actor, Target target) -> {
+            return world.getEvents().doAtomic(() -> action.alterWorld(world, actor, target));
         };
     }
 
@@ -322,6 +407,123 @@ public final class TargetedActions {
         return (World world, Object actor, Minion target) -> {
             MinionDescr newMinion = newMinionGetter.apply(target);
             return target.transformTo(newMinion);
+        };
+    }
+
+    public static TargetedAction<DamageSource, TargetableCharacter> implosion(
+            @NamedArg("minDamage") int minDamage,
+            @NamedArg("maxDamage") int maxDamage,
+            @NamedArg("minion") MinionProvider minion) {
+        ExceptionHelper.checkArgumentInRange(minDamage, 0, maxDamage, "minDamage");
+        ExceptionHelper.checkNotNullArgument(minion, "minion");
+
+        return (world, actor, target) -> {
+            UndoBuilder result = new UndoBuilder();
+
+            int damage = world.getRandomProvider().roll(minDamage, maxDamage);
+            UndoableResult<Damage> damageRef = actor.createDamage(damage);
+            result.addUndo(damageRef.getUndoAction());
+
+            UndoableIntResult damageUndo = target.damage(damageRef.getResult());
+            result.addUndo(damageUndo.getUndoAction());
+
+            int damageDelt = damageUndo.getResult();
+            Player player = actor.getOwner();
+            MinionDescr summonedMinion = minion.getMinion();
+            for (int i = 0; i < damageDelt; i++) {
+                result.addUndo(player.summonMinion(summonedMinion));
+            }
+
+            return result;
+        };
+    }
+
+    public static TargetedAction<Object, TargetableCharacter> multiplyHp(@NamedArg("mul") int mul) {
+        Function<HpProperty, UndoAction> buffAction = (hp) -> hp.buffHp((mul - 1) * hp.getCurrentHp());
+        return (World world, Object actor, TargetableCharacter target) -> {
+            return ActionUtils.adjustHp(target, buffAction);
+        };
+    }
+
+    public static TargetedAction<Object, Card> copyTargetToHand(@NamedArg("copyCount") int copyCount) {
+        return (World world, Object actor, Card target) -> {
+            CardDescr baseCard = target.getCardDescr();
+            Hand hand = target.getOwner().getHand();
+
+            UndoBuilder result = new UndoBuilder(copyCount);
+            for (int i = 0; i < copyCount; i++) {
+                result.addUndo(hand.addCard(baseCard));
+            }
+            return result;
+        };
+    }
+
+    public static TargetedAction<Object, Card> decreaseCostOfTarget(@NamedArg("amount") int amount) {
+        return (World world, Object actor, Card target) -> {
+            return target.decreaseManaCost(amount);
+        };
+    }
+
+    public static <Actor, Target> TargetedAction<Actor, Target> randomAction(
+            @NamedArg("actions") TargetedAction<? super Actor, ? super Target>[] actions) {
+        TargetedAction<? super Actor, ? super Target>[] actionsCopy = actions.clone();
+        ExceptionHelper.checkNotNullElements(actionsCopy, "actions");
+        ExceptionHelper.checkArgumentInRange(actionsCopy.length, 1, Integer.MAX_VALUE, "actions.length");
+
+        return (World world, Actor actor, Target target) -> {
+            TargetedAction<? super Actor, ? super Target> selected = ActionUtils.pickRandom(world, actionsCopy);
+            return selected.alterWorld(world, actor, target);
+        };
+    }
+
+    public static <Actor, Target> TargetedAction<Actor, Target> combine(
+            @NamedArg("actions") TargetedAction<Actor, Target>[] actions) {
+        return TargetedAction.merge(Arrays.asList(actions));
+    }
+
+    public static TargetedAction<Object, Minion> windFury(@NamedArg("attackCount") int attackCount) {
+        return (World world, Object actor, Minion target) -> {
+            AuraAwareIntProperty maxAttackCount = target.getProperties().getMaxAttackCountProperty();
+            return maxAttackCount.addAuraBuff((prev) -> Math.max(prev, attackCount));
+        };
+    }
+
+
+    private static UndoAction takeControlForThisTurn(Player newOwner, Minion minion) {
+        World world = newOwner.getWorld();
+        return minion.addAndActivateAbility(ActionUtils.toSingleTurnAbility(world, (Minion self) -> {
+            Player originalOwner = self.getOwner();
+            UndoAction takeOwnUndo = newOwner.getBoard().takeOwnership(self);
+            UndoAction refreshUndo = self.refresh();
+
+            return UndoableUnregisterRef.makeIdempotent(new UndoableUnregisterRef() {
+                @Override
+                public UndoAction unregister() {
+                    // We must not return this minion to its owner,
+                    // if we are disabling this ability before destroying the
+                    // minion.
+                    if (self.isScheduledToDestroy()) {
+                        return UndoAction.DO_NOTHING;
+                    }
+                    return originalOwner.getBoard().takeOwnership(self);
+                }
+
+                @Override
+                public void undo() {
+                    refreshUndo.undo();
+                    takeOwnUndo.undo();
+                }
+            });
+        }));
+    }
+
+    public static <Actor extends DamageSource> TargetedAction<Actor, TargetableCharacter> shadowFlameDamage(
+            @NamedArg("selector") EntitySelector<Actor, ? extends TargetableCharacter> selector) {
+        ExceptionHelper.checkNotNullArgument(selector, "selector");
+        return (World world, Actor actor, TargetableCharacter target) -> {
+            int damage = target.getAttackTool().getAttack();
+            TargetlessAction<Actor> damageAction = TargetlessActions.damageTarget(selector, damage);
+            return damageAction.alterWorld(world, actor);
         };
     }
 

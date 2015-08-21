@@ -5,9 +5,9 @@
     "rarity": "legendary",
     "manaCost": 3,
     "playActions": {
-        "class": "CardPlayActions.doForPlayedMinion",
-        "action": {
-            "class": "MinionActions.vancleefBuff",
+        "class": "TargetlessActions.buffSelfMinion",
+        "buff": {
+            "class": "Buffs.vancleefBuff",
             "attack": 2,
             "hp": 2
         }

@@ -12,10 +12,15 @@
         },
         {
             "requires": "PlayActionRequirements.COMBO",
-            "class": "PlayerActions.applyTargetedActionToRandomOwnMinion",
+            "class": "TargetlessActions.forTargets",
+            "selector": {
+                "class": "EntitySelectors.filtered",
+                "filter": "EntityFilters.random",
+                "selector": "EntitySelectors.friendlyBoardAlive"
+            },
             "action": {
-                "class": "MinionActions.buffAttack",
-                "attack": 3
+                "class": "TargetedActions.buffTarget",
+                "buff": "3/0"
             }
         }
     ]

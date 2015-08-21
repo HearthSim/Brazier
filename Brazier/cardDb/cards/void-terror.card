@@ -8,6 +8,6 @@
     "minion": {
         "attack": 3,
         "hp": 3,
-        "battleCries": "BattleCries.CONSUME_NEIGHBOURS"
+        "battleCries": "TargetlessActions.CONSUME_NEIGHBOURS"
     }
 }

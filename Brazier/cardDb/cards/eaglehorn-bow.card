@@ -11,8 +11,15 @@
             "secret-revealed": {
                 "filter": "BasicFilters.HAS_SAME_OWNER_PLAYER",
                 "action": {
-                    "class": "WeaponEventActions.doSelf",
-                    "action": "WeaponActions.INCREASE_CHARGE"
+                    "class": "TargetlessActions.forSelf",
+                    "action": {
+                        "class": "TargetedActions.buffTarget",
+                        "buff": {
+                            "class": "Buffs.buffWeapon",
+                            "attack": 0,
+                            "charges": 1
+                        }
+                    }
                 }
             }
         }

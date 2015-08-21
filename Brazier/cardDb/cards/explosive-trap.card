@@ -8,8 +8,8 @@
         "attack-initiated": {
             "filter": "BasicFilters.ATTACK_TARGET_IS_OWN_HERO",
             "action": {
-                "class": "PlayerActions.dealDamageToEnemyTargets",
-                "spell": false,
+                "class": "TargetlessActions.damageTarget",
+                "selector": "EntitySelectors.enemyTargetsAlive",
                 "damage": 2
             }
         }

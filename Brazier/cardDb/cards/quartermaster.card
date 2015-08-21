@@ -8,15 +8,18 @@
         "attack": 2,
         "hp": 5,
         "battleCries": {
-            "class": "MinionActions.forOwnMinions",
-            "action": {
-                "class": "MinionActions.buff",
-                "attack": 2,
-                "hp": 2
+            "class": "TargetlessActions.forTargets",
+            "selector": {
+                "class": "EntitySelectors.filtered",
+                "filter": {
+                    "class": "EntityFilters.minionNameIs",
+                    "name": "Silver Hand Recruit"
+                },
+                "selector": "EntitySelectors.friendlyBoard"
             },
-            "filter": {
-                "class": "MinionAuras.minionTargetNameIs",
-                "name": "Silver Hand Recruit"
+            "action": {
+                "class": "TargetedActions.buffTarget",
+                "buff": "2/2"
             }
         }
     }

@@ -18,11 +18,18 @@
                     }
                 ],
                 "action": {
-                    "class": "PlayerActions.addCard",
-                    "keywords": [
-                        "mech",
-                        "collectible"
-                    ]
+                    "class": "TargetlessActions.addSelectedCard",
+                    "card": {
+                        "class": "EntitySelectors.filtered",
+                        "filter": "EntityFilters.random",
+                        "selector": {
+                            "class": "EntitySelectors.cardsWithKeywords",
+                            "keywords": [
+                                "mech",
+                                "collectible"
+                            ]
+                        }
+                    }
                 }
             }
         }

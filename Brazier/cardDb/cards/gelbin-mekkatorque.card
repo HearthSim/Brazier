@@ -7,15 +7,16 @@
     "minion": {
         "attack": 6,
         "hp": 6,
-        "battleCries": [
-            {
-                "class": "PlayerActions.summonRandomMinion",
-                "keywords": "awesome-invention"
-            },
-            {
-                "class": "PlayerActions.summonRandomMinion",
-                "keywords": "awesome-invention"
+        "battleCries": {
+            "class": "TargetlessActions.summonSelectedMinion",
+            "minion": {
+                "class": "EntitySelectors.filtered",
+                "selector": {
+                    "class": "EntitySelectors.minionsWithKeywords",
+                    "keywords": "awesome-invention"
+                },
+                "filter": "EntityFilters.random"
             }
-        ]
+        }
     }
 }

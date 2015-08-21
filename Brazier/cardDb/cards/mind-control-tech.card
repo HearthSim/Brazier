@@ -12,7 +12,7 @@
                 "class": "PlayActionRequirements.opponentBoardIsLarger",
                 "minionCount": 3
             },
-            "class": "PlayerActions.STEAL_RANDOM_MINION"
+            "class": "TargetlessActions.STEAL_RANDOM_MINION"
         }
     }
 }

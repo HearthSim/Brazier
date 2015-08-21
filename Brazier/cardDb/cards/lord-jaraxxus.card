@@ -10,12 +10,12 @@
         "hp": 15,
         "battleCries": [
             {
-                "class": "BattleCries.replaceHero",
+                "class": "TargetlessActions.replaceHero",
                 "heroClass": "warlock",
                 "heroPower": "INFERNO!"
             },
             {
-                "class": "PlayerActions.equipWeapon",
+                "class": "TargetlessActions.equipWeapon",
                 "weapon": "Blood Fury"
             }
         ]

@@ -37,6 +37,7 @@ public final class Keywords {
     public static final Keyword RACE_DEMON = Keyword.create("demon");
     public static final Keyword RACE_DRAGON = Keyword.create("dragon");
     public static final Keyword RACE_PIRATE = Keyword.create("pirate");
+    public static final Keyword RACE_TOTEM = Keyword.create("totem");
     public static final Keyword RACE_MURLOC = Keyword.create("murloc");
 
     public static final Keyword SECRET = Keyword.create("secret");

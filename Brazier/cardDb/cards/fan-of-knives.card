@@ -6,7 +6,8 @@
     "manaCost": 3,
     "playActions": [
         {
-            "class": "PlayerActions.dealDamageToEnemyMinions",
+            "class": "TargetlessActions.damageTarget",
+            "selector": "EntitySelectors.enemyBoard",
             "damage": 1
         },
         "TargetlessActions.DRAW_FOR_SELF"

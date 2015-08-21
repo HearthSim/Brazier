@@ -9,6 +9,6 @@
             "enemy-minions",
             "TargetNeeds.TARGET_DAMAGED"
         ],
-        "class": "ActorlessTargetedActions.KILL_TARGET"
+        "class": "TargetedActions.KILL_TARGET"
     }
 }

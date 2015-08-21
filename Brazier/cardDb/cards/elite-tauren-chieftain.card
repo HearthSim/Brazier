@@ -9,14 +9,28 @@
         "hp": 5,
         "battleCries": [
             {
-                "class": "PlayerActions.addCard",
-                "keywords": "power-chord"
+                "class": "TargetlessActions.addSelectedCard",
+                "card": {
+                    "class": "EntitySelectors.filtered",
+                    "filter": "EntityFilters.random",
+                    "selector": {
+                        "class": "EntitySelectors.cardsWithKeywords",
+                        "keywords": "power-chord"
+                    }
+                }
             },
             {
-                "class": "PlayerActions.doForOpponent",
+                "class": "TargetlessActions.actWithOpponent",
                 "action": {
-                    "class": "PlayerActions.addCard",
-                    "keywords": "power-chord"
+                    "class": "TargetlessActions.addSelectedCard",
+                    "card": {
+                        "class": "EntitySelectors.filtered",
+                        "filter": "EntityFilters.random",
+                        "selector": {
+                            "class": "EntitySelectors.cardsWithKeywords",
+                            "keywords": "power-chord"
+                        }
+                    }
                 }
             }
         ]

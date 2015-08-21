@@ -7,16 +7,13 @@
     "playActions": [
         {
             "targets": "all-minions",
-            "class": "ActorlessTargetedActions.dealSpellDamage",
+            "class": "TargetedActions.damageTarget",
             "damage": 1
         },
         {
             "targets": "all-minions",
-            "class": "ActorlessTargetedActions.applyToMinionTarget",
-            "action": {
-                "class": "MinionActions.buffAttack",
-                "attack": 2
-            }
+            "class": "TargetedActions.buffTarget",
+            "buff": "2/0"
         }
     ]
 }

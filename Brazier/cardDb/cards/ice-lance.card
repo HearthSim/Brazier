@@ -4,18 +4,21 @@
     "class": "mage",
     "type": "spell",
     "manaCost": 1,
-    "playActions": [
-        {
-            "targets": "all",
-            "class": "ActorlessTargetedActions.applyIfFrozen",
-            "action": {
-                "class": "ActorlessTargetedActions.dealSpellDamage",
-                "damage": 4
-            }
-        },
-        {
-            "targets": "all",
-            "class": "ActorlessTargetedActions.FREEZE_TARGET"
-        }
-    ]
+    "playActions": {
+        "targets": "all",
+        "actions": [
+            {
+                "class": "TargetedActions.doIf",
+                "condition": {
+                    "class": "TargetedActionConditions.forTarget",
+                    "filter": "EntityFilters.isFrozen"
+                },
+                "if": {
+                    "class": "TargetedActions.damageTarget",
+                    "damage": 4
+                }
+            },
+            "TargetedActions.FREEZE_TARGET"
+        ]
+    }
 }

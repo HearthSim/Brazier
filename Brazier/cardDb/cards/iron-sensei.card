@@ -12,11 +12,22 @@
             "turn-ends": {
                 "filter": "BasicFilters.HAS_SAME_OWNER_PLAYER",
                 "action": {
-                    "class": "MinionEventActions.applyTargetedActionToRandomEnemy",
+                    "class": "TargetlessActions.forTargets",
+                    "selector": {
+                        "class": "EntitySelectors.filtered",
+                        "filter": "EntityFilters.random",
+                        "selector": {
+                            "class": "EntitySelectors.filtered",
+                            "filter": {
+                                "class": "EntityFilters.withKeywords",
+                                "keywords": "mech"
+                            },
+                            "selector": "EntitySelectors.friendlyBoardBuffable"
+                        }
+                    },
                     "action": {
-                        "class": "MinionActions.buff",
-                        "attack": 2,
-                        "hp": 2
+                        "class": "TargetedActions.buffTarget",
+                        "buff": "2/2"
                     }
                 }
             }

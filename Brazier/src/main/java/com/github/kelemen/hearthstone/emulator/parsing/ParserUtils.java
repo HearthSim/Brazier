@@ -19,12 +19,8 @@ import com.github.kelemen.hearthstone.emulator.abilities.ActivatableAbility;
 import com.github.kelemen.hearthstone.emulator.abilities.Aura;
 import com.github.kelemen.hearthstone.emulator.abilities.AuraFilter;
 import com.github.kelemen.hearthstone.emulator.abilities.LivingEntitysAbilities;
-import com.github.kelemen.hearthstone.emulator.actions.ActorlessTargetedAction;
-import com.github.kelemen.hearthstone.emulator.actions.BattleCryArg;
-import com.github.kelemen.hearthstone.emulator.actions.BattleCryTargetedAction;
 import com.github.kelemen.hearthstone.emulator.actions.CardPlayAction;
 import com.github.kelemen.hearthstone.emulator.actions.CardPlayArg;
-import com.github.kelemen.hearthstone.emulator.actions.CharacterTargetedAction;
 import com.github.kelemen.hearthstone.emulator.actions.DamageAction;
 import com.github.kelemen.hearthstone.emulator.actions.MinionAction;
 import com.github.kelemen.hearthstone.emulator.actions.PlayActionRequirement;
@@ -43,7 +39,6 @@ import com.github.kelemen.hearthstone.emulator.cards.Card;
 import com.github.kelemen.hearthstone.emulator.cards.CardDescr;
 import com.github.kelemen.hearthstone.emulator.cards.CardId;
 import com.github.kelemen.hearthstone.emulator.cards.CardProvider;
-import com.github.kelemen.hearthstone.emulator.minions.Minion;
 import com.github.kelemen.hearthstone.emulator.minions.MinionDescr;
 import com.github.kelemen.hearthstone.emulator.minions.MinionId;
 import com.github.kelemen.hearthstone.emulator.minions.MinionProvider;
@@ -92,7 +87,6 @@ public final class ParserUtils {
 
     private static void addTypeMergers(JsonDeserializer.Builder result) {
         result.setTypeMerger(PlayActionRequirement.class, (elements) -> PlayActionRequirement.merge(elements));
-        result.setTypeMerger(ActorlessTargetedAction.class, (elements) -> ActorlessTargetedAction.mergeActions(elements));
         result.setTypeMerger(CardPlayAction.class, (elements) -> CardPlayAction.mergeActions(elements));
         result.setTypeMerger(WorldEventFilter.class, (Collection<? extends WorldEventFilter<?, ?>> elements) -> {
             // Unsafe but there is nothing to do.
@@ -153,9 +147,6 @@ public final class ParserUtils {
         });
         result.setTypeMerger(DamageAction.class, (Collection<? extends DamageAction> elements) -> {
             return DamageAction.merge(elements);
-        });
-        result.setTypeMerger(BattleCryTargetedAction.class, (Collection<? extends BattleCryTargetedAction> elements) -> {
-            return BattleCryTargetedAction.merge(elements);
         });
         result.setTypeMerger(PlayerAction.class, (Collection<? extends PlayerAction> elements) -> {
             return PlayerAction.merge(elements);
@@ -235,54 +226,20 @@ public final class ParserUtils {
         result.addTypeConversion(WorldAction.class, TargetedMinionAction.class,
                 (action) -> (targeter, target) -> action.alterWorld(targeter.getWorld()));
         result.addTypeConversion(PlayerAction.class, TargetedMinionAction.class,
-                (action) -> action.toTargetedAction().toTargetedMinionAction());
-        result.addTypeConversion(CharacterTargetedAction.class, TargetedMinionAction.class,
-                (action) -> action.toTargetedAction().toTargetedMinionAction());
-        result.addTypeConversion(ActorlessTargetedAction.class, TargetedMinionAction.class,
                 (action) -> action.toTargetedMinionAction());
         result.addTypeConversion(MinionAction.class, TargetedMinionAction.class,
-                (action) -> action.toCharacterTargetedAction().toTargetedAction().toTargetedMinionAction());
+                (action) -> action.toTargetedMinionAction());
         result.addTypeConversion(DamageAction.class, TargetedMinionAction.class,
-                (action) -> action.toCharacterTargetedAction().toTargetedAction().toTargetedMinionAction());
-
-        result.addTypeConversion(WorldAction.class, ActorlessTargetedAction.class,
-                (action) -> (world, target) -> action.alterWorld(world));
-        result.addTypeConversion(PlayerAction.class, ActorlessTargetedAction.class,
-                (action) -> action.toTargetedAction());
-        result.addTypeConversion(CharacterTargetedAction.class, ActorlessTargetedAction.class,
-                (action) -> action.toTargetedAction());
-        result.addTypeConversion(MinionAction.class, ActorlessTargetedAction.class,
-                (action) -> action.toCharacterTargetedAction().toTargetedAction());
-        result.addTypeConversion(DamageAction.class, ActorlessTargetedAction.class,
-                (action) -> action.toCharacterTargetedAction().toTargetedAction());
+                (action) -> action.toMinionAction().toTargetedMinionAction());
 
         result.addTypeConversion(WorldAction.class, CardPlayAction.class,
                 (action) -> (world, target) -> action.alterWorld(world));
         result.addTypeConversion(PlayerAction.class, CardPlayAction.class,
-                (action) -> action.toTargetedAction().toCardPlayAction());
-        result.addTypeConversion(CharacterTargetedAction.class, CardPlayAction.class,
-                (action) -> action.toTargetedAction().toCardPlayAction());
-        result.addTypeConversion(ActorlessTargetedAction.class, CardPlayAction.class,
                 (action) -> action.toCardPlayAction());
         result.addTypeConversion(MinionAction.class, CardPlayAction.class,
-                (action) -> action.toCharacterTargetedAction().toTargetedAction().toCardPlayAction());
+                (action) -> action.toCardPlayAction());
         result.addTypeConversion(DamageAction.class, CardPlayAction.class,
-                (action) -> action.toCharacterTargetedAction().toTargetedAction().toCardPlayAction());
-
-        result.addTypeConversion(WorldAction.class, BattleCryTargetedAction.class,
-                (action) -> (world, target) -> action.alterWorld(world));
-        result.addTypeConversion(PlayerAction.class, BattleCryTargetedAction.class,
-                (action) -> action.toBattleCryTargetedAction());
-        result.addTypeConversion(CharacterTargetedAction.class, BattleCryTargetedAction.class,
-                (action) -> action.toBattleCryTargetedAction());
-        result.addTypeConversion(ActorlessTargetedAction.class, BattleCryTargetedAction.class,
-                (action) -> action.toBattleCryTargetedAction());
-        result.addTypeConversion(TargetedMinionAction.class, BattleCryTargetedAction.class,
-                (action) -> action.toBattleCryTargetedAction());
-        result.addTypeConversion(MinionAction.class, BattleCryTargetedAction.class,
-                (action) -> action.toBattleCryTargetedAction());
-        result.addTypeConversion(DamageAction.class, BattleCryTargetedAction.class,
-                (action) -> action.toBattleCryTargetedAction());
+                (action) -> action.toMinionAction().toCardPlayAction());
 
         result.addTypeConversion(WorldAction.class, WorldEventAction.class,
                 (action) -> (world, self, eventSource) -> action.alterWorld(world));
@@ -348,33 +305,11 @@ public final class ParserUtils {
         });
 
         @SuppressWarnings("unchecked")
-        Class<TargetedAction<Minion, TargetableCharacter>> battleCryTargetedActionClass
-                = (Class<TargetedAction<Minion, TargetableCharacter>>)(Class<?>)TargetedAction.class;
-        result.addTypeConversion(battleCryTargetedActionClass, BattleCryTargetedAction.class, (action) -> {
-            return (World world, BattleCryArg arg) -> {
-                PlayTarget target = arg.getTarget();
-                TargetableCharacter characterTarget = target.getTarget();
-                return characterTarget != null
-                        ? action.alterWorld(world, arg.getSource(), characterTarget)
-                        : UndoAction.DO_NOTHING;
-            };
-        });
-
-        @SuppressWarnings("unchecked")
         Class<TargetlessAction<Card>> playTargetlessActionClass
                 = (Class<TargetlessAction<Card>>)(Class<?>)TargetlessAction.class;
         result.addTypeConversion(playTargetlessActionClass, CardPlayAction.class, (action) -> {
             return (World world, CardPlayArg arg) -> {
                 return action.alterWorld(world, arg.getCard());
-            };
-        });
-
-        @SuppressWarnings("unchecked")
-        Class<TargetlessAction<Minion>> battleCryTargetlessActionClass
-                = (Class<TargetlessAction<Minion>>)(Class<?>)TargetlessAction.class;
-        result.addTypeConversion(battleCryTargetlessActionClass, BattleCryTargetedAction.class, (action) -> {
-            return (World world, BattleCryArg arg) -> {
-                return action.alterWorld(world, arg.getSource());
             };
         });
     }
@@ -653,6 +588,29 @@ public final class ParserUtils {
         return new LivingEntitysAbilities<>(ability, eventActionDefs, deathRattle);
     }
 
+    public static <T> Predicate<T> mergePredicates(
+            Collection<? extends Predicate<T>> filters) {
+        List<Predicate<T>> filtersCopy = new ArrayList<>(filters);
+        ExceptionHelper.checkNotNullElements(filtersCopy, "filters");
+
+        int count = filtersCopy.size();
+        if (count == 0) {
+            return (arg) -> true;
+        }
+        if (count == 1) {
+            return filtersCopy.get(0);
+        }
+
+        return (T arg) -> {
+            for (Predicate<T> filter: filtersCopy) {
+                if (!filter.test(arg)) {
+                    return false;
+                }
+            }
+            return true;
+        };
+    }
+
     private static final class BuffDescr {
         public final int attack;
         public final int hp;
@@ -676,29 +634,6 @@ public final class ParserUtils {
                 return null;
             }
         }
-    }
-
-    public static <T> Predicate<T> mergePredicates(
-            Collection<? extends Predicate<T>> filters) {
-        List<Predicate<T>> filtersCopy = new ArrayList<>(filters);
-        ExceptionHelper.checkNotNullElements(filtersCopy, "filters");
-
-        int count = filtersCopy.size();
-        if (count == 0) {
-            return (arg) -> true;
-        }
-        if (count == 1) {
-            return filtersCopy.get(0);
-        }
-
-        return (T arg) -> {
-            for (Predicate<T> filter: filtersCopy) {
-                if (!filter.test(arg)) {
-                    return false;
-                }
-            }
-            return true;
-        };
     }
 
     private ParserUtils() {

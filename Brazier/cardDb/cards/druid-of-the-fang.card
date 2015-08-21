@@ -7,8 +7,11 @@
         "attack": 7,
         "hp": 7,
         "battleCries": {
-            "class": "MinionActions.transformMinion",
-            "minion": "Druid of the Fang/Beast"
+            "class": "TargetlessActions.forSelf",
+            "action": {
+                "class": "TargetedActions.transformMinion",
+                "minion": "Druid of the Fang/Beast"
+            }
         }
     }
 }
