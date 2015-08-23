@@ -14,11 +14,9 @@
                     "BasicFilters.ATTACKER_IS_HERO"
                 ],
                 "action": {
-                    "class": "WeaponEventActions.doSelf",
-                    "action": {
-                        "class": "DamageActions.damageOwnHero",
-                        "damage": -2
-                    }
+                    "class": "TargetlessActions.damageTarget",
+                    "selector": "EntitySelectors.friendlyHero",
+                    "damage": -2
                 }
             }
         }

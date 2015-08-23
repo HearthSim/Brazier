@@ -21,7 +21,6 @@ import com.github.kelemen.hearthstone.emulator.abilities.AuraFilter;
 import com.github.kelemen.hearthstone.emulator.abilities.LivingEntitysAbilities;
 import com.github.kelemen.hearthstone.emulator.actions.CardPlayAction;
 import com.github.kelemen.hearthstone.emulator.actions.CardPlayArg;
-import com.github.kelemen.hearthstone.emulator.actions.DamageAction;
 import com.github.kelemen.hearthstone.emulator.actions.MinionAction;
 import com.github.kelemen.hearthstone.emulator.actions.PlayActionRequirement;
 import com.github.kelemen.hearthstone.emulator.actions.PlayTarget;
@@ -145,9 +144,6 @@ public final class ParserUtils {
         result.setTypeMerger(WeaponAction.class, (Collection<? extends WeaponAction> elements) -> {
             return WeaponAction.merge(elements);
         });
-        result.setTypeMerger(DamageAction.class, (Collection<? extends DamageAction> elements) -> {
-            return DamageAction.merge(elements);
-        });
         result.setTypeMerger(PlayerAction.class, (Collection<? extends PlayerAction> elements) -> {
             return PlayerAction.merge(elements);
         });
@@ -229,8 +225,6 @@ public final class ParserUtils {
                 (action) -> action.toTargetedMinionAction());
         result.addTypeConversion(MinionAction.class, TargetedMinionAction.class,
                 (action) -> action.toTargetedMinionAction());
-        result.addTypeConversion(DamageAction.class, TargetedMinionAction.class,
-                (action) -> action.toMinionAction().toTargetedMinionAction());
 
         result.addTypeConversion(WorldAction.class, CardPlayAction.class,
                 (action) -> (world, target) -> action.alterWorld(world));
@@ -238,8 +232,6 @@ public final class ParserUtils {
                 (action) -> action.toCardPlayAction());
         result.addTypeConversion(MinionAction.class, CardPlayAction.class,
                 (action) -> action.toCardPlayAction());
-        result.addTypeConversion(DamageAction.class, CardPlayAction.class,
-                (action) -> action.toMinionAction().toCardPlayAction());
 
         result.addTypeConversion(WorldAction.class, WorldEventAction.class,
                 (action) -> (world, self, eventSource) -> action.alterWorld(world));
@@ -273,12 +265,6 @@ public final class ParserUtils {
             Predicate<Object> safePredicate = (Predicate<Object>)predicate;
             return EntityFilters.fromPredicate(safePredicate);
         });
-
-        result.addTypeConversion(DamageAction.class, MinionAction.class,
-                (action) -> action.toMinionAction());
-
-        result.addTypeConversion(DamageAction.class, WeaponAction.class,
-                (action) -> action.toWeaponAction());
 
         result.addTypeConversion(TargetlessAction.class, TargetedAction.class,
                 (action) -> action.toTargetedAction());
