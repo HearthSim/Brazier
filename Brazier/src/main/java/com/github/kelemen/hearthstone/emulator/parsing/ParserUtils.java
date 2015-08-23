@@ -28,7 +28,6 @@ import com.github.kelemen.hearthstone.emulator.actions.PlayerAction;
 import com.github.kelemen.hearthstone.emulator.actions.TargetNeed;
 import com.github.kelemen.hearthstone.emulator.actions.TargetedMinionAction;
 import com.github.kelemen.hearthstone.emulator.actions.UndoAction;
-import com.github.kelemen.hearthstone.emulator.actions.WeaponAction;
 import com.github.kelemen.hearthstone.emulator.actions.WorldAction;
 import com.github.kelemen.hearthstone.emulator.actions.WorldEventAction;
 import com.github.kelemen.hearthstone.emulator.actions.WorldEventActionDefs;
@@ -140,9 +139,6 @@ public final class ParserUtils {
         });
         result.setTypeMerger(MinionAction.class, (Collection<? extends MinionAction> elements) -> {
             return MinionAction.merge(elements);
-        });
-        result.setTypeMerger(WeaponAction.class, (Collection<? extends WeaponAction> elements) -> {
-            return WeaponAction.merge(elements);
         });
         result.setTypeMerger(PlayerAction.class, (Collection<? extends PlayerAction> elements) -> {
             return PlayerAction.merge(elements);

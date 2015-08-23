@@ -8,6 +8,9 @@
     "minion": {
         "attack": 1,
         "hp": 2,
-        "battleCries": "TargetlessActions.REDUCE_OPPONENTS_WEAPON_DURABILITY"
+        "battleCries": {
+            "class": "TargetlessActions.actWithOpponent",
+            "action": "TargetlessActions.REDUCE_WEAPON_DURABILITY"
+        }
     }
 }

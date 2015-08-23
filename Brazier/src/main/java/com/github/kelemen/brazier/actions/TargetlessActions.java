@@ -131,7 +131,7 @@ public final class TargetlessActions {
         return player.getHand().discardAll();
     };
 
-    public static final TargetlessAction<PlayerProperty> REDUCE_OPPONENTS_WEAPON_DURABILITY = reduceOpponentsWeaponDurability(1);
+    public static final TargetlessAction<PlayerProperty> REDUCE_WEAPON_DURABILITY = reduceWeaponDurability(1);
 
     public static final TargetlessAction<Minion> SWAP_WITH_MINION_IN_HAND = (World world, Minion actor) -> {
         Hand hand = actor.getOwner().getHand();
@@ -765,11 +765,11 @@ public final class TargetlessActions {
         };
     }
 
-    public static TargetlessAction<PlayerProperty> reduceOpponentsWeaponDurability(@NamedArg("amount") int amount) {
+    public static TargetlessAction<PlayerProperty> reduceWeaponDurability(@NamedArg("amount") int amount) {
         ExceptionHelper.checkArgumentInRange(amount, 1, Integer.MAX_VALUE, "amount");
 
         return (World world, PlayerProperty actor) -> {
-            Weapon weapon = actor.getOwner().getOpponent().tryGetWeapon();
+            Weapon weapon = actor.getOwner().tryGetWeapon();
             if (weapon == null) {
                 return UndoAction.DO_NOTHING;
             }

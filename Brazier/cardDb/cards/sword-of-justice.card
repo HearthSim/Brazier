@@ -14,10 +14,7 @@
                     "BasicFilters.SOURCE_WEAPON_HAS_CHARGE"
                 ],
                 "action": [
-                    {
-                        "class": "WeaponEventActions.doSelf",
-                        "action": "WeaponActions.DECREASE_CHARGE"
-                    },
+                    "TargetlessActions.REDUCE_WEAPON_DURABILITY",
                     {
                         "class": "MinionEventActions.doForEventSourceMinion",
                         "action": {
