@@ -1,7 +1,6 @@
 package com.github.kelemen.hearthstone.emulator.actions;
 
 import com.github.kelemen.hearthstone.emulator.BoardLocationRef;
-import com.github.kelemen.hearthstone.emulator.BornEntity;
 import com.github.kelemen.hearthstone.emulator.Damage;
 import com.github.kelemen.hearthstone.emulator.Deck;
 import com.github.kelemen.hearthstone.emulator.Hand;
@@ -13,7 +12,6 @@ import com.github.kelemen.hearthstone.emulator.UndoableResult;
 import com.github.kelemen.hearthstone.emulator.World;
 import com.github.kelemen.hearthstone.emulator.abilities.ActivatableAbility;
 import com.github.kelemen.hearthstone.emulator.abilities.Aura;
-import com.github.kelemen.hearthstone.emulator.abilities.AuraFilter;
 import com.github.kelemen.hearthstone.emulator.cards.Card;
 import com.github.kelemen.hearthstone.emulator.cards.CardDescr;
 import com.github.kelemen.hearthstone.emulator.minions.Minion;
@@ -24,9 +22,7 @@ import com.github.kelemen.hearthstone.emulator.parsing.NamedArg;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.BiConsumer;
 import java.util.function.Function;
-import java.util.function.Predicate;
 import org.jtrim.utils.ExceptionHelper;
 
 public final class MinionActions {
@@ -358,73 +354,6 @@ public final class MinionActions {
     public static MinionAction summonMinionRight(@NamedArg("minion") MinionProvider minion) {
         return (world, sourceMinion) -> {
             return sourceMinion.getLocationRef().summonRight(minion.getMinion());
-        };
-    }
-
-    public static MinionAction forAllMinions(@NamedArg("action") TargetedMinionAction action) {
-        return forAllMinions(AuraFilter.ANY, action);
-    }
-
-    public static MinionAction forAllMinions(
-            @NamedArg("filter") AuraFilter<? super Minion, ? super Minion> filter,
-            @NamedArg("action") TargetedMinionAction action) {
-        return forMinions(action, (minion, targets) -> {
-            World world = minion.getWorld();
-            Predicate<Minion> appliedFilter = (target) -> filter.isApplicable(world, minion, target);
-            world.getPlayer1().getBoard().collectMinions(targets, appliedFilter);
-            world.getPlayer2().getBoard().collectMinions(targets, appliedFilter);
-        });
-    }
-
-    public static MinionAction forOwnMinions(@NamedArg("action") TargetedMinionAction action) {
-        return forOwnMinions(AuraFilter.ANY, action);
-    }
-
-    public static MinionAction forOwnMinions(
-            @NamedArg("filter") AuraFilter<? super Minion, ? super Minion> filter,
-            @NamedArg("action") TargetedMinionAction action) {
-        return forMinions(action, (minion, targets) -> {
-            World world = minion.getWorld();
-            Predicate<Minion> appliedFilter = (target) -> filter.isApplicable(world, minion, target);
-            minion.getOwner().getBoard().collectMinions(targets, appliedFilter);
-        });
-    }
-
-    public static MinionAction forOpponentMinions(@NamedArg("action") TargetedMinionAction action) {
-        return forOpponentMinions(AuraFilter.ANY, action);
-    }
-
-    public static MinionAction forOpponentMinions(
-            @NamedArg("filter") AuraFilter<? super Minion, ? super Minion> filter,
-            @NamedArg("action") TargetedMinionAction action) {
-        return forMinions(action, (minion, targets) -> {
-            World world = minion.getWorld();
-            Predicate<Minion> appliedFilter = (target) -> filter.isApplicable(world, minion, target);
-            minion.getOwner().getOpponent().getBoard().collectMinions(targets, appliedFilter);
-        });
-    }
-
-    private static MinionAction forMinions(
-            TargetedMinionAction action,
-            BiConsumer<Minion, List<Minion>> minionCollector) {
-        ExceptionHelper.checkNotNullArgument(action, "action");
-        ExceptionHelper.checkNotNullArgument(minionCollector, "minionCollector");
-
-        return (World world, Minion minion) -> {
-            List<Minion> targets = new ArrayList<>();
-            minionCollector.accept(minion, targets);
-
-            if (targets.isEmpty()) {
-                return UndoAction.DO_NOTHING;
-            }
-
-            BornEntity.sortEntities(targets);
-
-            UndoBuilder result = new UndoBuilder(targets.size());
-            for (Minion target: targets) {
-                result.addUndo(action.doAction(minion, new PlayTarget(minion.getOwner(), target)));
-            }
-            return result;
         };
     }
 

@@ -2,7 +2,6 @@ package com.github.kelemen.hearthstone.emulator.actions;
 
 import com.github.kelemen.hearthstone.emulator.Player;
 import com.github.kelemen.hearthstone.emulator.World;
-import com.github.kelemen.hearthstone.emulator.minions.Minion;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -11,12 +10,6 @@ import org.jtrim.utils.ExceptionHelper;
 public interface PlayerAction extends WorldObjectAction<Player> {
     @Override
     public UndoAction alterWorld(World world, Player player);
-
-    public default TargetedMinionAction toTargetedMinionAction() {
-        return (Minion targeter, PlayTarget target) -> {
-            return alterWorld(targeter.getWorld(), target.getCastingPlayer());
-        };
-    }
 
     public default CardPlayAction toCardPlayAction() {
         return (World world, CardPlayArg arg) -> {

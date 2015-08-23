@@ -10,18 +10,28 @@
         "triggers": {
             "minion-healed": {
                 "action": {
-                    "class": "MinionEventActions.applyTargetedActionToRandomEnemy",
+                    "class": "TargetlessActions.forTargets",
+                    "selector": {
+                        "class": "EntitySelectors.filtered",
+                        "filter": "EntityFilters.random",
+                        "selector": "EntitySelectors.enemyTargetsAlive"
+                    },
                     "action": {
-                        "class": "TargetedMinionActions.damageTarget",
+                        "class": "TargetedActions.damageTarget",
                         "damage": 1
                     }
                 }
             },
             "hero-healed": {
                 "action": {
-                    "class": "MinionEventActions.applyTargetedActionToRandomEnemy",
+                    "class": "TargetlessActions.forTargets",
+                    "selector": {
+                        "class": "EntitySelectors.filtered",
+                        "filter": "EntityFilters.random",
+                        "selector": "EntitySelectors.enemyTargetsAlive"
+                    },
                     "action": {
-                        "class": "TargetedMinionActions.damageTarget",
+                        "class": "TargetedActions.damageTarget",
                         "damage": 1
                     }
                 }

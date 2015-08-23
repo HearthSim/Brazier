@@ -12,11 +12,8 @@
             "armor-gained": {
                 "filter": "BasicFilters.HAS_SAME_OWNER_PLAYER",
                 "action": {
-                    "class": "MinionEventActions.applyTargetedActionToSelf",
-                    "action": {
-                        "class": "MinionActions.buffAttack",
-                        "attack": 1
-                    }
+                    "class": "TargetlessActions.buffSelfMinion",
+                    "buff": "1/0"
                 }
             }
         }

@@ -26,7 +26,6 @@ import com.github.kelemen.hearthstone.emulator.actions.PlayActionRequirement;
 import com.github.kelemen.hearthstone.emulator.actions.PlayTarget;
 import com.github.kelemen.hearthstone.emulator.actions.PlayerAction;
 import com.github.kelemen.hearthstone.emulator.actions.TargetNeed;
-import com.github.kelemen.hearthstone.emulator.actions.TargetedMinionAction;
 import com.github.kelemen.hearthstone.emulator.actions.UndoAction;
 import com.github.kelemen.hearthstone.emulator.actions.WorldAction;
 import com.github.kelemen.hearthstone.emulator.actions.WorldEventAction;
@@ -143,9 +142,6 @@ public final class ParserUtils {
         result.setTypeMerger(PlayerAction.class, (Collection<? extends PlayerAction> elements) -> {
             return PlayerAction.merge(elements);
         });
-        result.setTypeMerger(TargetedMinionAction.class, (Collection<? extends TargetedMinionAction> elements) -> {
-            return TargetedMinionAction.merge(elements);
-        });
         result.setTypeMerger(TargetedAction.class, (Collection<? extends TargetedAction<?, ?>> elements) -> {
             // Unsafe but there is nothing to do.
             @SuppressWarnings("unchecked")
@@ -214,13 +210,6 @@ public final class ParserUtils {
     private static void addTypeConversions(JsonDeserializer.Builder result) {
         result.addTypeConversion(WorldAction.class, PlayerAction.class,
                 (action) -> (world, playerId) -> action.alterWorld(world));
-
-        result.addTypeConversion(WorldAction.class, TargetedMinionAction.class,
-                (action) -> (targeter, target) -> action.alterWorld(targeter.getWorld()));
-        result.addTypeConversion(PlayerAction.class, TargetedMinionAction.class,
-                (action) -> action.toTargetedMinionAction());
-        result.addTypeConversion(MinionAction.class, TargetedMinionAction.class,
-                (action) -> action.toTargetedMinionAction());
 
         result.addTypeConversion(WorldAction.class, CardPlayAction.class,
                 (action) -> (world, target) -> action.alterWorld(world));

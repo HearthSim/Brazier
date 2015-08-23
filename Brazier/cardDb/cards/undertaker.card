@@ -10,11 +10,8 @@
             "done-summoning": {
                 "filter": "BasicFilters.SUMMONED_DEATH_RATTLE",
                 "action": {
-                    "class": "MinionEventActions.applyTargetedActionToSelf",
-                    "action": {
-                        "class": "MinionActions.buffAttack",
-                        "attack": 1
-                    }
+                    "class": "TargetlessActions.buffSelfMinion",
+                    "buff": "1/0"
                 }
             }
         }

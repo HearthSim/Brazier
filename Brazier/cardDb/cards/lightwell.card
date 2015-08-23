@@ -11,10 +11,14 @@
             "turn-starts": {
                 "filter": "BasicFilters.HAS_SAME_OWNER_PLAYER",
                 "action": {
-                    "class": "MinionEventActions.applyTargetedActionToRandomOwnTarget",
-                    "filter": "BasicFilters.EVENT_SOURCE_DAMAGED",
+                    "class": "TargetlessActions.forTargets",
+                    "selector": {
+                        "class": "EntitySelectors.filtered",
+                        "filter": "EntityFilters.random",
+                        "selector": "EntitySelectors.friendlyTargets"
+                    },
                     "action": {
-                        "class": "TargetedMinionActions.damageTarget",
+                        "class": "TargetedActions.damageTarget",
                         "damage": -3
                     }
                 }

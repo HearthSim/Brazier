@@ -38,20 +38,6 @@ public final class CardPlayActions {
         };
     }
 
-    public static CardPlayAction doWithPlayedMinion(
-            @NamedArg("action") TargetedMinionAction action) {
-        ExceptionHelper.checkNotNullArgument(action, "action");
-
-        return (World world, CardPlayArg arg) -> {
-            Minion minion = arg.getCard().getMinion();
-            if (minion == null) {
-                return UndoAction.DO_NOTHING;
-            }
-
-            return action.doAction(minion, arg.getTarget());
-        };
-    }
-
     public static CardPlayAction doIfTarget(
             @NamedArg("condition") WorldEventFilter<? super Player, ? super TargetableCharacter> condition,
             @NamedArg("action") CardPlayAction action) {

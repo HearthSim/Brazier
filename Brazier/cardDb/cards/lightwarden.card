@@ -10,20 +10,14 @@
         "triggers": {
             "hero-healed": {
                 "action": {
-                    "class": "MinionEventActions.applyTargetedActionToSelf",
-                    "action": {
-                        "class": "MinionActions.buffAttack",
-                        "attack": 1
-                    }
+                    "class": "TargetlessActions.buffSelfMinion",
+                    "buff": "2/0"
                 }
             },
             "minion-healed": {
                 "action": {
-                    "class": "MinionEventActions.applyTargetedActionToSelf",
-                    "action": {
-                        "class": "MinionActions.buffAttack",
-                        "attack": 1
-                    }
+                    "class": "TargetlessActions.buffSelfMinion",
+                    "buff": "2/0"
                 }
             }
         }

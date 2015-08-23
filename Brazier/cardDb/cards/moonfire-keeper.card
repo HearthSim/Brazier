@@ -8,9 +8,9 @@
     "manaCost": 0,
     "playActions": {
         "targets": "all",
-        "class": "CardPlayActions.doWithPlayedMinion",
+        "class": "TargetedActions.withMinion",
         "action": {
-            "class": "TargetedMinionActions.damageTarget",
+            "class": "TargetedActions.damageTarget",
             "damage": 2
         }
     }
