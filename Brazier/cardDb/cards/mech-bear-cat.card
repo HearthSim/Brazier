@@ -12,8 +12,15 @@
             "minion-damaged": {
                 "filter": "BasicFilters.TARGET_SELF",
                 "action": {
-                    "class": "PlayerActions.addRandomCard",
-                    "keywords": "spare-part"
+                    "class": "TargetlessActions.addSelectedCard",
+                    "card": {
+                        "class": "EntitySelectors.filtered",
+                        "filter": "EntityFilters.random",
+                        "selector": {
+                            "class": "EntitySelectors.cardsWithKeywords",
+                            "keywords": "spare-part"
+                        }
+                    }
                 }
             }
         }

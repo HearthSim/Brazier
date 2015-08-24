@@ -9,14 +9,28 @@
         "hp": 5,
         "deathRattle": [
             {
-                "class": "PlayerActions.addRandomCard",
-                "keywords": "spare-part"
+                "class": "TargetlessActions.addSelectedCard",
+                "card": {
+                    "class": "EntitySelectors.filtered",
+                    "filter": "EntityFilters.random",
+                    "selector": {
+                        "class": "EntitySelectors.cardsWithKeywords",
+                        "keywords": "spare-part"
+                    }
+                }
             },
             {
-                "class": "PlayerActions.doForOpponent",
+                "class": "TargetlessActions.actWithOpponent",
                 "action": {
-                    "class": "PlayerActions.addRandomCard",
-                    "keywords": "spare-part"
+                    "class": "TargetlessActions.addSelectedCard",
+                    "card": {
+                        "class": "EntitySelectors.filtered",
+                        "filter": "EntityFilters.random",
+                        "selector": {
+                            "class": "EntitySelectors.cardsWithKeywords",
+                            "keywords": "spare-part"
+                        }
+                    }
                 }
             }
         ]

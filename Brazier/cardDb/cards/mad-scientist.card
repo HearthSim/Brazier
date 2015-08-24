@@ -7,7 +7,7 @@
         "attack": 2,
         "hp": 2,
         "deathRattle": {
-            "class": "PlayerActions.drawAndPlayCard",
+            "class": "TargetlessActions.drawAndPlayCard",
             "keywords": "secret"
         }
     }

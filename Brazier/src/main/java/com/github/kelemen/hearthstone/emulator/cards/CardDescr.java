@@ -8,7 +8,6 @@ import com.github.kelemen.hearthstone.emulator.Player;
 import com.github.kelemen.hearthstone.emulator.abilities.ActivatableAbility;
 import com.github.kelemen.hearthstone.emulator.actions.BattleCryAction;
 import com.github.kelemen.hearthstone.emulator.actions.ManaCostAdjuster;
-import com.github.kelemen.hearthstone.emulator.actions.PlayerAction;
 import com.github.kelemen.hearthstone.emulator.actions.TargetNeed;
 import com.github.kelemen.hearthstone.emulator.actions.UndoableUnregisterRef;
 import com.github.kelemen.hearthstone.emulator.minions.MinionDescr;

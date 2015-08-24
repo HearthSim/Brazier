@@ -12,8 +12,15 @@
             "turn-ends": {
                 "filter": "BasicFilters.HAS_SAME_OWNER_PLAYER",
                 "action": {
-                    "class": "PlayerActions.addCard",
-                    "keywords": "emerald-dream"
+                    "class": "TargetlessActions.addSelectedCard",
+                    "card": {
+                        "class": "EntitySelectors.filtered",
+                        "filter": "EntityFilters.random",
+                        "selector": {
+                            "class": "EntitySelectors.cardsWithKeywords",
+                            "keywords": "emerald-dream"
+                        }
+                    }
                 }
             }
         }

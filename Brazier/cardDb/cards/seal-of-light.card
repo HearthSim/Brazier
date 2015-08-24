@@ -4,14 +4,18 @@
     "class": "paladin",
     "type": "spell",
     "manaCost": 2,
-    "playActions": [
-        {
-            "class": "PlayerActions.damageOwnHero",
-            "damage": -4
-        },
-        {
-            "class": "PlayerActions.addHeroAttackForThisTurn",
-            "attack": 2
-        }
-    ]
+    "playActions": {
+        "class": "TargetlessActions.forTargets",
+        "selector": "EntitySelectors.friendlyHero",
+        "action": [
+            {
+                "class": "TargetedActions.damageTarget",
+                "damage": -4
+            },
+            {
+                "class": "TargetedActions.buffTargetThisTurn",
+                "buff": "2/0"
+            }
+        ]
+    }
 }

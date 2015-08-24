@@ -4,5 +4,5 @@
     "class": "priest",
     "type": "spell",
     "manaCost": 1,
-    "playActions": "PlayerActions.MIND_VISION"
+    "playActions": "TargetlessActions.MIND_VISION"
 }

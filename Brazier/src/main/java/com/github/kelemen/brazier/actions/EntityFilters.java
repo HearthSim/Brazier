@@ -3,6 +3,8 @@ package com.github.kelemen.brazier.actions;
 import com.github.kelemen.hearthstone.emulator.Keyword;
 import com.github.kelemen.hearthstone.emulator.Keywords;
 import com.github.kelemen.hearthstone.emulator.LabeledEntity;
+import com.github.kelemen.hearthstone.emulator.Player;
+import com.github.kelemen.hearthstone.emulator.PlayerProperty;
 import com.github.kelemen.hearthstone.emulator.TargetableCharacter;
 import com.github.kelemen.hearthstone.emulator.World;
 import com.github.kelemen.hearthstone.emulator.actions.ActionUtils;
@@ -135,6 +137,10 @@ public final class EntityFilters {
 
     public static <Entity extends TargetableCharacter> Predicate<Entity> attackIsLess(@NamedArg("attack") int attack) {
         return (target) -> target.getAttackTool().getAttack() < attack;
+    }
+
+    public static <Entity extends PlayerProperty> Predicate<Entity> isMaxManaCrystals() {
+        return (target) -> target.getOwner().getManaResource().getManaCrystals() >= Player.MAX_MANA;
     }
 
     private EntityFilters() {

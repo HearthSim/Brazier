@@ -5,7 +5,7 @@
     "type": "spell",
     "manaCost": 4,
     "playActions": {
-        "class": "PlayerActions.killAndReplaceMinions",
+        "class": "TargetlessActions.killAndReplaceMinions",
         "minion": "Treant"
     }
 }

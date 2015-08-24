@@ -6,7 +6,7 @@
     "rarity": "epic",
     "manaCost": 3,
     "playActions": {
-        "class": "PlayerActions.replaceHeroPower",
+        "class": "TargetlessActions.replaceHeroPower",
         "heroPower": [
             "Mind Spike",
             "Mind Shatter"

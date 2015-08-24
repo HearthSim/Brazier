@@ -8,7 +8,7 @@
         "attack": 9,
         "hp": 7,
         "deathRattle": {
-            "class": "PlayerActions.replaceHero",
+            "class": "TargetlessActions.replaceHero",
             "maxHp": 8,
             "armor": 0,
             "heroPower": "DIE, INSECT!",

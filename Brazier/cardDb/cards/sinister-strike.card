@@ -5,7 +5,8 @@
     "type": "spell",
     "manaCost": 1,
     "playActions": {
-        "class": "PlayerActions.damageOpponentHero",
+        "class": "TargetlessActions.damageTarget",
+        "selector": "EntitySelectors.enemyHero",
         "damage": 3
     }
 }

@@ -7,8 +7,15 @@
     "collectible": false,
     "manaCost": 2,
     "playActions": {
-        "class": "PlayerActions.dealDamageToAllTargets",
-        "damage": 5,
-        "excludedKeywords": "ysera"
+        "class": "TargetlessActions.damageTarget",
+        "selector": {
+            "class": "EntitySelectors.filtered",
+            "filter": {
+                "class": "EntityFilters.withoutKeywords",
+                "keywords": "ysera"
+            },
+            "selector": "EntitySelectors.allTargetsAlive"
+        },
+        "damage": 5
     }
 }

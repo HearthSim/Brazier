@@ -13,7 +13,8 @@
             "class": "TargetedActions.KILL_TARGET"
         },
         {
-            "class": "PlayerActions.damageOwnHero",
+            "class": "TargetlessActions.damageTarget",
+            "selector": "EntitySelectors.friendlyHero",
             "damage": -5
         }
     ]

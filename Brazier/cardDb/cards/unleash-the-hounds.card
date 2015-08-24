@@ -5,7 +5,7 @@
     "type": "spell",
     "manaCost": 3,
     "playActions": {
-        "class": "PlayerActions.unleashMinions",
+        "class": "TargetlessActions.unleashMinions",
         "minion": "Hound"
     }
 }

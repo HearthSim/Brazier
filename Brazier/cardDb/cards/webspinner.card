@@ -8,11 +8,18 @@
         "attack": 1,
         "hp": 1,
         "deathRattle": {
-            "class": "PlayerActions.addCard",
-            "keywords": [
-                "beast",
-                "collectible"
-            ]
+            "class": "TargetlessActions.addSelectedCard",
+            "card": {
+                "class": "EntitySelectors.filtered",
+                "filter": "EntityFilters.random",
+                "selector": {
+                    "class": "EntitySelectors.cardsWithKeywords",
+                    "keywords": [
+                        "beast",
+                        "collectible"
+                    ]
+                }
+            }
         }
     }
 }

@@ -5,5 +5,9 @@
     "type": "spell",
     "rarity": "epic",
     "manaCost": 8,
-    "playActions": "PlayerActions.KILL_ALL_MINIONS"
+    "playActions": {
+        "class": "TargetlessActions.forTargets",
+        "selector": "EntitySelectors.board",
+        "action": "TargetedActions.KILL_TARGET"
+    }
 }

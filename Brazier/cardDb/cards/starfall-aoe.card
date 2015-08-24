@@ -6,7 +6,8 @@
     "collectible": false,
     "manaCost": 0,
     "playActions": {
-        "class": "PlayerActions.dealDamageToEnemyMinions",
+        "class": "TargetlessActions.damageTarget",
+        "selector": "EntitySelectors.enemyBoard",
         "damage": 2
     }
 }

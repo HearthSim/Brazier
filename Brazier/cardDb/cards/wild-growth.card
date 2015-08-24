@@ -5,8 +5,15 @@
     "type": "spell",
     "manaCost": 2,
     "playActions": {
-        "class": "PlayerActions.wildGrowth",
-        "amount": 1,
-        "excessCard": "Excess Mana"
+        "class": "TargetlessActions.doIf",
+        "condition": "EntityFilters.isMaxManaCrystals",
+        "if": {
+            "class": "TargetlessActions.addCard",
+            "card": "Excess Mana"
+        },
+        "else": {
+            "class": "TargetlessActions.addManaCrystal",
+            "amount": 1
+        }
     }
 }

@@ -6,11 +6,13 @@
     "manaCost": 5,
     "playActions": [
         {
-            "class": "PlayerActions.dealDamageToEnemyTargets",
+            "class": "TargetlessActions.damageTarget",
+            "selector": "EntitySelectors.enemyTargets",
             "damage": 2
         },
         {
-            "class": "PlayerActions.dealDamageToOwnTargets",
+            "class": "TargetlessActions.damageTarget",
+            "selector": "EntitySelectors.friendlyTargetsBuffable",
             "damage": -2
         }
     ]

@@ -5,10 +5,14 @@
     "type": "spell",
     "manaCost": 4,
     "playActions": {
-        "class": "PlayerActions.addDeathRattleToAll",
+        "class": "TargetlessActions.forTargets",
+        "selector": "EntitySelectors.friendlyBoard",
         "action": {
-            "class": "TargetlessActions.summonMinion",
-            "minion": "Treant"
+            "class": "TargetedActions.addDeathRattle",
+            "action": {
+                "class": "TargetlessActions.summonMinion",
+                "minion": "Treant"
+            }
         }
     }
 }

@@ -6,7 +6,7 @@
     "manaCost": 3,
     "playActions": [
         {
-            "class": "PlayerActions.armorUp",
+            "class": "TargetlessActions.armorUp",
             "armor": 5
         },
         "TargetlessActions.DRAW_FOR_SELF"

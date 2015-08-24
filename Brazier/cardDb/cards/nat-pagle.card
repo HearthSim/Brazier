@@ -10,7 +10,7 @@
         "triggers": {
             "turn-starts": {
                 "filter": "BasicFilters.HAS_SAME_OWNER_PLAYER",
-                "action": "PlayerActions.FISH_CARD_FOR_SELF"
+                "action": "TargetlessActions.FISH_CARD_FOR_SELF"
             }
         }
     }

@@ -5,11 +5,18 @@
     "type": "spell",
     "manaCost": 2,
     "playActions": {
-        "class": "PlayerActions.addCard",
+        "class": "TargetlessActions.addSelectedCard",
         "costReduction": 3,
-        "keywords": [
-            "minion",
-            "collectible"
-        ]
+        "card": {
+            "class": "EntitySelectors.filtered",
+            "filter": "EntityFilters.random",
+            "selector": {
+                "class": "EntitySelectors.cardsWithKeywords",
+                "keywords": [
+                    "minion",
+                    "collectible"
+                ]
+            }
+        }
     }
 }

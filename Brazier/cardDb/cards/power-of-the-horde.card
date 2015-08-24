@@ -7,7 +7,14 @@
     "collectible": false,
     "manaCost": 4,
     "playActions": {
-        "class": "PlayerActions.summonRandomMinion",
-        "keywords": "horde-warrior"
+        "class": "TargetlessActions.summonSelectedMinion",
+        "minion": {
+            "class": "EntitySelectors.filtered",
+            "selector": {
+                "class": "EntitySelectors.minionsWithKeywords",
+                "keywords": "horde-warrior"
+            },
+            "filter": "EntityFilters.random"
+        }
     }
 }

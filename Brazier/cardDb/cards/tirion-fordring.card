@@ -10,7 +10,7 @@
         "taunt": true,
         "divineShield": true,
         "deathRattle": {
-            "class": "PlayerActions.equipWeapon",
+            "class": "TargetlessActions.equipWeapon",
             "weapon": "Ashbringer"
         }
     }

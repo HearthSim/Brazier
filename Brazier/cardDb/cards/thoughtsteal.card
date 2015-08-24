@@ -5,7 +5,14 @@
     "type": "spell",
     "manaCost": 3,
     "playActions": {
-        "class": "PlayerActions.stealFromOpponent",
-        "cardCount": 2
+        "class": "TargetlessActions.addSelectedCard",
+        "card": {
+            "class": "EntitySelectors.filtered",
+            "filter": {
+                "class": "EntityFilters.random",
+                "count": 2
+            },
+            "selector": "EntitySelectors.enemyDeck"
+        }
     }
 }

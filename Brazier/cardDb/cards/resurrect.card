@@ -5,5 +5,5 @@
     "type": "spell",
     "rarity": "rare",
     "manaCost": 2,
-    "playActions": "PlayerActions.SUMMON_DEAD_MINION"
+    "playActions": "TargetlessActions.SUMMON_DEAD_MINION"
 }

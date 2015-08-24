@@ -10,6 +10,8 @@ import java.util.List;
 import org.jtrim.utils.ExceptionHelper;
 
 public interface TargetlessAction<Actor> extends WorldObjectAction<Actor> {
+    public static final TargetlessAction<Object> DO_NOTHING = (world, actor) -> UndoAction.DO_NOTHING;
+
     public default TargetedAction<Actor, Object> toTargetedAction() {
         return (World world, Actor actor, Object target) -> alterWorld(world, actor);
     }

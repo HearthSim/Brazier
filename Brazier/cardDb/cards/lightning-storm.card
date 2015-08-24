@@ -7,7 +7,8 @@
     "manaCost": 3,
     "overload": 2,
     "playActions": {
-        "class": "PlayerActions.dealDamageToEnemyMinions",
+        "class": "TargetlessActions.damageTarget",
+        "selector": "EntitySelectors.enemyBoard",
         "maxDamage": 3,
         "minDamage": 2
     }

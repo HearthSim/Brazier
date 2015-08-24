@@ -11,6 +11,6 @@
             "class": "TargetedActions.damageTarget",
             "damage": 2
         },
-        "PlayerActions.REMOVE_OVERLOAD"
+        "TargetlessActions.REMOVE_OVERLOAD"
     ]
 }

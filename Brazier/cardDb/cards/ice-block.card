@@ -14,7 +14,14 @@
             ],
             "action": [
                 "WorldEventActions.PREVENT_PREPARED_DAMAGE",
-                "PlayerActions.HERO_IS_IMMUNE_THIS_TURN"
+                {
+                    "class": "TargetlessActions.forTargets",
+                    "selector": "EntitySelectors.friendlyHero",
+                    "action": {
+                        "class": "TargetedActions.buffTargetThisTurn",
+                        "buff": "Buffs.IMMUNE"
+                    }
+                }
             ]
         }
     }

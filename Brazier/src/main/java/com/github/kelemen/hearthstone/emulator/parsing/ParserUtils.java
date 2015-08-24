@@ -23,7 +23,6 @@ import com.github.kelemen.hearthstone.emulator.actions.CardPlayAction;
 import com.github.kelemen.hearthstone.emulator.actions.CardPlayArg;
 import com.github.kelemen.hearthstone.emulator.actions.PlayActionRequirement;
 import com.github.kelemen.hearthstone.emulator.actions.PlayTarget;
-import com.github.kelemen.hearthstone.emulator.actions.PlayerAction;
 import com.github.kelemen.hearthstone.emulator.actions.TargetNeed;
 import com.github.kelemen.hearthstone.emulator.actions.UndoAction;
 import com.github.kelemen.hearthstone.emulator.actions.WorldAction;
@@ -135,9 +134,6 @@ public final class ParserUtils {
                     = (Collection<? extends WorldObjectAction<Object>>)elements;
             return WorldObjectAction.merge(unsafeElements);
         });
-        result.setTypeMerger(PlayerAction.class, (Collection<? extends PlayerAction> elements) -> {
-            return PlayerAction.merge(elements);
-        });
         result.setTypeMerger(TargetedAction.class, (Collection<? extends TargetedAction<?, ?>> elements) -> {
             // Unsafe but there is nothing to do.
             @SuppressWarnings("unchecked")
@@ -204,18 +200,11 @@ public final class ParserUtils {
     }
 
     private static void addTypeConversions(JsonDeserializer.Builder result) {
-        result.addTypeConversion(WorldAction.class, PlayerAction.class,
-                (action) -> (world, playerId) -> action.alterWorld(world));
-
         result.addTypeConversion(WorldAction.class, CardPlayAction.class,
                 (action) -> (world, target) -> action.alterWorld(world));
-        result.addTypeConversion(PlayerAction.class, CardPlayAction.class,
-                (action) -> action.toCardPlayAction());
 
         result.addTypeConversion(WorldAction.class, WorldEventAction.class,
                 (action) -> (world, self, eventSource) -> action.alterWorld(world));
-        result.addTypeConversion(PlayerAction.class, WorldEventAction.class,
-                (action) -> (world, self, eventSource) -> action.alterWorld(world, self.getOwner()));
         result.addTypeConversion(TargetlessAction.class, WorldEventAction.class, (action) -> {
             // Not truly safe but there is not much to do.
             // The true requirement is that the "Actor" extends the "Self" object of

@@ -11,7 +11,8 @@
                 "class": "PlayActionRequirements.ownHpIsMore",
                 "hp": 12
             },
-            "class": "PlayerActions.dealDamageToAllMinions",
+            "class": "TargetlessActions.damageTarget",
+            "selector": "EntitySelectors.boardAlive",
             "damage": 1
         },
         {
@@ -19,7 +20,8 @@
                 "class": "PlayActionRequirements.ownHpIsLess",
                 "hp": 13
             },
-            "class": "PlayerActions.dealDamageToAllMinions",
+            "class": "TargetlessActions.damageTarget",
+            "selector": "EntitySelectors.boardAlive",
             "damage": 3
         }
     ]
