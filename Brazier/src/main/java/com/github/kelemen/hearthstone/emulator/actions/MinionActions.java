@@ -357,19 +357,6 @@ public final class MinionActions {
         };
     }
 
-    public static MinionAction resummonMinionWithHp(@NamedArg("hp") int hp) {
-        return (World world, Minion minion) -> {
-            Minion newMinion = new Minion(minion.getOwner(), minion.getBaseDescr());
-
-            UndoAction summonUndo = minion.getLocationRef().summonRight(newMinion);
-            UndoAction updateHpUndo = newMinion.getProperties().getBody().getHp().setCurrentHp(1);
-            return () -> {
-                updateHpUndo.undo();
-                summonUndo.undo();
-            };
-        };
-    }
-
     public static MinionAction damageOwnHero(@NamedArg("damage") int damage) {
         return (world, minion) -> {
             Hero hero = minion.getOwner().getHero();

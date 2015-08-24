@@ -8,9 +8,9 @@
         "minion-killed": {
             "filter": "BasicFilters.HAS_SAME_OWNER_PLAYER",
             "action": {
-                "class": "MinionEventActions.doForEventSourceMinion",
+                "class": "WorldEventActions.forEventArgMinionTarget",
                 "action": {
-                    "class": "MinionActions.resummonMinionWithHp",
+                    "class": "TargetedActions.resummonMinionWithHp",
                     "hp": 1
                 }
             }

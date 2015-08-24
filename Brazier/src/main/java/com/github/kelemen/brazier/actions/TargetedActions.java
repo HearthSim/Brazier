@@ -527,6 +527,19 @@ public final class TargetedActions {
         };
     }
 
+    public static TargetedAction<Object, Minion> resummonMinionWithHp(@NamedArg("hp") int hp) {
+        return (World world, Object actor, Minion minion) -> {
+            Minion newMinion = new Minion(minion.getOwner(), minion.getBaseDescr());
+
+            UndoAction summonUndo = minion.getLocationRef().summonRight(newMinion);
+            UndoAction updateHpUndo = newMinion.getProperties().getBody().getHp().setCurrentHp(1);
+            return () -> {
+                updateHpUndo.undo();
+                summonUndo.undo();
+            };
+        };
+    }
+
     private TargetedActions() {
         throw new AssertionError();
     }
