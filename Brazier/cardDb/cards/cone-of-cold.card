@@ -6,7 +6,7 @@
     "manaCost": 4,
     "playActions": {
         "targets": "all-minions",
-        "class": "CardPlayActions.doAtomic",
+        "class": "TargetedActions.doAtomic",
         "action": {
             "class": "TargetedActions.forTargets",
             "selector": [

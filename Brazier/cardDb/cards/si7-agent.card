@@ -7,8 +7,11 @@
     "playActions": {
         "targets": "all",
         "requires": "PlayActionRequirements.COMBO",
-        "class": "CardPlayActions.dealMinionDamage",
-        "damage": 2
+        "class": "TargetedActions.withMinion",
+        "action": {
+            "class": "TargetedActions.damageTarget",
+            "damage": 2
+        }
     },
     "minion": {
         "attack": 3,

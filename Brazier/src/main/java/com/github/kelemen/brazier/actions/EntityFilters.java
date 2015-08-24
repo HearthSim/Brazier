@@ -142,6 +142,10 @@ public final class EntityFilters {
         return (target) -> target.getOwner().getManaResource().getManaCrystals() >= Player.MAX_MANA;
     }
 
+    public static <Entity extends PlayerProperty> Predicate<Entity> isEmptyHand() {
+        return (target) -> target.getOwner().getHand().getCardCount() == 0;
+    }
+
     private EntityFilters() {
         throw new AssertionError();
     }

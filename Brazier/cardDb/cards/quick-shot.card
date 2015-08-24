@@ -11,9 +11,12 @@
             "damage": 3
         },
         {
-            "class": "CardPlayActions.doIf",
-            "action": "TargetlessActions.DRAW_FOR_SELF",
-            "condition": "PlayActionRequirements.EMPTY_HAND"
+            "class": "TargetedActions.doIf",
+            "condition": {
+                "class": "TargetedActionConditions.forActor",
+                "filter": "EntityFilters.isEmptyHand"
+            },
+            "if": "TargetlessActions.DRAW_FOR_SELF"
         }
     ]
 }

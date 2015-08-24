@@ -13,12 +13,15 @@
         },
         {
             "targets": "all",
-            "class": "CardPlayActions.doIfTarget",
-            "action": {
+            "class": "TargetedActions.doIf",
+            "condition": {
+                "class": "TargetedActionConditions.forTarget",
+                "filter": "EntityFilters.isDamaged"
+            },
+            "if": {
                 "class": "TargetlessActions.summonMinion",
                 "minion": "Lightwarden"
-            },
-            "condition": "BasicFilters.EVENT_SOURCE_DAMAGED"
+            }
         }
     ]
 }
