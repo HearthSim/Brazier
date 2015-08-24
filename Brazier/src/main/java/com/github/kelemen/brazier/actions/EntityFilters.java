@@ -1,16 +1,15 @@
 package com.github.kelemen.brazier.actions;
 
-import com.github.kelemen.hearthstone.emulator.Keyword;
-import com.github.kelemen.hearthstone.emulator.Keywords;
-import com.github.kelemen.hearthstone.emulator.LabeledEntity;
-import com.github.kelemen.hearthstone.emulator.Player;
-import com.github.kelemen.hearthstone.emulator.PlayerProperty;
-import com.github.kelemen.hearthstone.emulator.TargetableCharacter;
-import com.github.kelemen.hearthstone.emulator.World;
-import com.github.kelemen.hearthstone.emulator.actions.ActionUtils;
-import com.github.kelemen.hearthstone.emulator.minions.Minion;
-import com.github.kelemen.hearthstone.emulator.minions.MinionId;
-import com.github.kelemen.hearthstone.emulator.parsing.NamedArg;
+import com.github.kelemen.brazier.Keyword;
+import com.github.kelemen.brazier.Keywords;
+import com.github.kelemen.brazier.LabeledEntity;
+import com.github.kelemen.brazier.Player;
+import com.github.kelemen.brazier.PlayerProperty;
+import com.github.kelemen.brazier.TargetableCharacter;
+import com.github.kelemen.brazier.World;
+import com.github.kelemen.brazier.minions.Minion;
+import com.github.kelemen.brazier.minions.MinionId;
+import com.github.kelemen.brazier.parsing.NamedArg;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;

@@ -1,8 +1,6 @@
 package com.github.kelemen.brazier.actions;
 
-import com.github.kelemen.hearthstone.emulator.World;
-import com.github.kelemen.hearthstone.emulator.actions.UndoAction;
-import com.github.kelemen.hearthstone.emulator.actions.UndoBuilder;
+import com.github.kelemen.brazier.World;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;

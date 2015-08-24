@@ -1,13 +1,13 @@
 package com.github.kelemen.brazier.actions;
 
-import com.github.kelemen.hearthstone.emulator.BoardLocationRef;
-import com.github.kelemen.hearthstone.emulator.Hero;
-import com.github.kelemen.hearthstone.emulator.Player;
-import com.github.kelemen.hearthstone.emulator.PlayerProperty;
-import com.github.kelemen.hearthstone.emulator.SummonLocationRef;
-import com.github.kelemen.hearthstone.emulator.World;
-import com.github.kelemen.hearthstone.emulator.minions.Minion;
-import com.github.kelemen.hearthstone.emulator.parsing.NamedArg;
+import com.github.kelemen.brazier.BoardLocationRef;
+import com.github.kelemen.brazier.Hero;
+import com.github.kelemen.brazier.Player;
+import com.github.kelemen.brazier.PlayerProperty;
+import com.github.kelemen.brazier.SummonLocationRef;
+import com.github.kelemen.brazier.World;
+import com.github.kelemen.brazier.minions.Minion;
+import com.github.kelemen.brazier.parsing.NamedArg;
 import java.util.stream.Stream;
 import org.jtrim.utils.ExceptionHelper;
 

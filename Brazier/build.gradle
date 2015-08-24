@@ -9,7 +9,7 @@ import java.nio.file.*;
 // "mainClass" property. You may however define the property prior executing
 // tasks by passing a "-PmainClass=<QUALIFIED_CLASS_NAME>" argument.
 if (!hasProperty('mainClass')) {
-    ext.mainClass = 'com.github.kelemen.hearthstone.emulator.HearthStoneEmulator'
+    ext.mainClass = 'com.github.kelemen.brazier.HearthStoneEmulator'
 }
 
 task configJar {

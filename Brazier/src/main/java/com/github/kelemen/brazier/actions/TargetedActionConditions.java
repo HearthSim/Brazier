@@ -1,8 +1,8 @@
 package com.github.kelemen.brazier.actions;
 
-import com.github.kelemen.hearthstone.emulator.PlayerProperty;
-import com.github.kelemen.hearthstone.emulator.World;
-import com.github.kelemen.hearthstone.emulator.parsing.NamedArg;
+import com.github.kelemen.brazier.PlayerProperty;
+import com.github.kelemen.brazier.World;
+import com.github.kelemen.brazier.parsing.NamedArg;
 import java.util.function.Predicate;
 import org.jtrim.utils.ExceptionHelper;
 
