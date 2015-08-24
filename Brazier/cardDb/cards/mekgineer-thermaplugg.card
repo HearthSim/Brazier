@@ -15,7 +15,7 @@
                     "BasicFilters.HAS_DIFFERENT_OWNER_PLAYER"
                 ],
                 "action": {
-                    "class": "MinionEventActions.summonMinionRight",
+                    "class": "TargetlessActions.summonMinionRight",
                     "minion": "Leper Gnome"
                 }
             }

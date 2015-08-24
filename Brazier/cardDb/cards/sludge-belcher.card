@@ -9,7 +9,7 @@
         "hp": 5,
         "taunt": "true",
         "deathRattle": {
-            "class": "MinionEventActions.summonMinionRight",
+            "class": "TargetlessActions.summonMinionRight",
             "minion": "Slime"
         }
     }

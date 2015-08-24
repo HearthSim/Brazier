@@ -10,7 +10,19 @@
         "triggers": {
             "start-play-card": {
                 "filter": "BasicFilters.EVENT_SOURCE_IS_SPELL",
-                "action": "MinionEventActions.COPY_PLAYER_CARD"
+                "action": {
+                    "class": "WorldEventActions.forEventArgCardTarget",
+                    "action": {
+                        "class": "TargetedActions.actWithTarget",
+                        "action": {
+                            "class": "TargetedActions.actWithOpponent",
+                            "action": {
+                                "class": "TargetedActions.copyTargetToHand",
+                                "copyCount": 1
+                            }
+                        }
+                    }
+                }
             }
         }
     }

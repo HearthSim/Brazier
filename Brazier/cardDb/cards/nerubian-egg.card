@@ -8,7 +8,7 @@
         "attack": 0,
         "hp": 2,
         "deathRattle": {
-            "class": "MinionEventActions.summonMinionRight",
+            "class": "TargetlessActions.summonMinionRight",
             "minion": "Nerubian"
         }
     }

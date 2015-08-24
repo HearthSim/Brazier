@@ -11,11 +11,11 @@
         "triggers": {
             "minion-damaged": {
                 "filter": "BasicFilters.DAMAGE_SOURCE_SELF",
-                "action": "MinionEventActions.LIFE_STEAL_FOR_HERO"
+                "action": "WorldEventActions.LIFE_STEAL_FOR_HERO"
             },
             "hero-damaged": {
                 "filter": "BasicFilters.DAMAGE_SOURCE_SELF",
-                "action": "MinionEventActions.LIFE_STEAL_FOR_HERO"
+                "action": "WorldEventActions.LIFE_STEAL_FOR_HERO"
             }
         }
     }

@@ -9,11 +9,18 @@
         "attack": 6,
         "hp": 4,
         "deathRattle": {
-            "class": "MinionEventActions.summonRandomMinionRight",
-            "keywords": [
-                "4-cost",
-                "collectible"
-            ]
+            "class": "TargetlessActions.summonSelectedRight",
+            "minion": {
+                "class": "EntitySelectors.filtered",
+                "filter": "EntityFilters.random",
+                "selector": {
+                    "class": "EntitySelectors.minionsWithKeywords",
+                    "keywords": [
+                        "4-cost",
+                        "collectible"
+                    ]
+                }
+            }
         }
     }
 }

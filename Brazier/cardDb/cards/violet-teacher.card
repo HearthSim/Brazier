@@ -14,7 +14,7 @@
                     "BasicFilters.EVENT_SOURCE_IS_SPELL"
                 ],
                 "action": {
-                    "class": "MinionEventActions.summonMinionRight",
+                    "class": "TargetlessActions.summonMinionRight",
                     "minion": "Violet Apprentice"
                 }
             }

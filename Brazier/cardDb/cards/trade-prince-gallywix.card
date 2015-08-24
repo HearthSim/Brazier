@@ -17,16 +17,25 @@
                         "keywords": "gallywix-spell"
                     }
                 ],
-                "action": [
-                    "MinionEventActions.COPY_PLAYER_CARD",
-                    {
-                        "class": "PlayerActions.doForOpponent",
-                        "action": {
-                            "class": "PlayerActions.addCard",
-                            "card": "Gallywix's Coin"
-                        }
+                "action": {
+                    "class": "WorldEventActions.forEventArgCardTarget",
+                    "action": {
+                        "class": "TargetedActions.actWithTarget",
+                        "action": [
+                            {
+                                "class": "TargetedActions.actWithOpponent",
+                                "action": {
+                                    "class": "TargetedActions.copyTargetToHand",
+                                    "copyCount": 1
+                                }
+                            },
+                            {
+                                "class": "TargetlessActions.addCard",
+                                "card": "Gallywix's Coin"
+                            }
+                        ]
                     }
-                ]
+                }
             }
         }
     }

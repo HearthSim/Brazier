@@ -7,7 +7,7 @@
         "attack": 3,
         "hp": 4,
         "deathRattle": {
-            "class": "MinionEventActions.summonMinionFromHandRight",
+            "class": "TargetlessActions.summonRandomMinionFromHandRight",
             "keywords": "demon"
         }
     }

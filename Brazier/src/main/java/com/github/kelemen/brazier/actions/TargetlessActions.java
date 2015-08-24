@@ -571,6 +571,14 @@ public final class TargetlessActions {
         };
     }
 
+    public static TargetlessAction<Minion> summonSelectedRight(
+            @NamedArg("minion") EntitySelector<? super Minion, ? extends MinionDescr> minion) {
+        ExceptionHelper.checkNotNullArgument(minion, "minion");
+        return (World world, Minion actor) -> {
+            return minion.forEach(world, actor, (toSummon) -> actor.getLocationRef().summonRight(toSummon));
+        };
+    }
+
     public static <Actor extends DamageSource> TargetlessAction<Actor> damageTarget(
             @NamedArg("selector") EntitySelector<Actor, ? extends TargetableCharacter> selector,
             @NamedArg("damage") int damage) {
@@ -977,6 +985,29 @@ public final class TargetlessActions {
                 if (cardRef != null) {
                     cardRef.undo();
                 }
+            };
+        };
+    }
+
+    public static TargetlessAction<Minion> summonRandomMinionFromHandRight(
+            @NamedArg("keywords") Keyword[] keywords) {
+        Predicate<LabeledEntity> cardFilter = ActionUtils.includedKeywordsFilter(keywords);
+
+        return (world, actor) -> {
+            Hand hand = actor.getOwner().getHand();
+            int cardIndex = hand.chooseRandomCardIndex(cardFilter);
+            if (cardIndex < 0) {
+                return UndoAction.DO_NOTHING;
+            }
+
+            UndoableResult<Card> removedCardRef = hand.removeAtIndex(cardIndex);
+            Minion minion = removedCardRef.getResult().getMinion();
+            assert minion != null;
+
+            UndoAction summonUndo = actor.getLocationRef().summonRight(minion);
+            return () -> {
+                summonUndo.undo();
+                removedCardRef.undo();
             };
         };
     }

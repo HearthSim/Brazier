@@ -44,7 +44,7 @@ public final class TargetedActions {
         }
 
         int healAmount = hp.getMaxHp();
-        return damageTarget(actor, target, -healAmount);
+        return ActionUtils.damageCharacter(actor, -healAmount, target);
     };
 
     public static final TargetedAction<DamageSource, TargetableCharacter> RESTORES_HEALTH = (world, actor, target) -> {
@@ -128,12 +128,12 @@ public final class TargetedActions {
 
     public static final TargetedAction<DamageSource, TargetableCharacter> SAVAGERY = (world, actor, target) -> {
         int damage = actor.getOwner().getHero().getAttackTool().getAttack();
-        return damageTarget(actor, target, damage);
+        return ActionUtils.damageCharacter(actor, damage, target);
     };
 
     public static final TargetedAction<DamageSource, TargetableCharacter> SHIELD_SLAM = (world, actor, target) -> {
         int damage = actor.getOwner().getHero().getCurrentArmor();
-        return damageTarget(actor, target, damage);
+        return ActionUtils.damageCharacter(actor, damage, target);
     };
 
     public static final TargetedAction<PlayerProperty, Minion> SHADOW_MADNESS = (world, actor, target) -> {
@@ -147,7 +147,7 @@ public final class TargetedActions {
         Card card = cardRef.getResult();
 
         int damage = card != null ? card.getCardDescr().getManaCost() : 0;
-        UndoAction damageUndo = damageTarget(actor, target, damage);
+        UndoAction damageUndo = ActionUtils.damageCharacter(actor, damage, target);
 
         return () -> {
             damageUndo.undo();
@@ -209,6 +209,22 @@ public final class TargetedActions {
     public static final TargetedAction<Object, Minion> DESTROY_STEALTH = (world, actor, target) -> {
         return target.getBody().setStealth(false);
     };
+
+    public static <Actor extends PlayerProperty, Target> TargetedAction<Actor, Target> actWithOpponent(
+            @NamedArg("action") TargetedAction<? super Player, ? super Target> action) {
+        ExceptionHelper.checkNotNullArgument(action, "action");
+        return (World world, Actor actor, Target target) -> {
+            return action.alterWorld(world, actor.getOwner().getOpponent(), target);
+        };
+    }
+
+    public static <Target> TargetedAction<Object, Target> actWithTarget(
+            @NamedArg("action") TargetedAction<? super Target, ? super Target> action) {
+        ExceptionHelper.checkNotNullArgument(action, "action");
+        return (World world, Object actor, Target target) -> {
+            return action.alterWorld(world, target, target);
+        };
+    }
 
     public static <Actor extends PlayerProperty> TargetedAction<Actor, Minion> doOnAttack(
             @NamedArg("action") TargetlessAction<? super Actor> action) {
@@ -277,7 +293,7 @@ public final class TargetedActions {
 
     public static TargetedAction<TargetableCharacter, TargetableCharacter> DAMAGE_TARGET = (world, actor, target) -> {
         int attack = actor.getAttackTool().getAttack();
-        return damageTarget(actor, target, attack);
+        return ActionUtils.damageCharacter(actor, attack, target);
     };
 
     public static TargetedAction<DamageSource, TargetableCharacter> damageTarget(@NamedArg("damage") int damage) {
@@ -289,16 +305,7 @@ public final class TargetedActions {
             @NamedArg("maxDamage") int maxDamage) {
         return (World world, DamageSource actor, TargetableCharacter target) -> {
             int damage = world.getRandomProvider().roll(minDamage, maxDamage);
-            return damageTarget(actor, target, damage);
-        };
-    }
-
-    private static UndoAction damageTarget(DamageSource actor, TargetableCharacter target, int damage) {
-        UndoableResult<Damage> damageRef = actor.createDamage(damage);
-        UndoableIntResult damageUndo = target.damage(damageRef.getResult());
-        return () -> {
-            damageUndo.undo();
-            damageRef.getUndoAction();
+            return ActionUtils.damageCharacter(actor, damage, target);
         };
     }
 
@@ -445,10 +452,10 @@ public final class TargetedActions {
         };
     }
 
-    public static TargetedAction<Object, Card> copyTargetToHand(@NamedArg("copyCount") int copyCount) {
-        return (World world, Object actor, Card target) -> {
+    public static TargetedAction<PlayerProperty, Card> copyTargetToHand(@NamedArg("copyCount") int copyCount) {
+        return (World world, PlayerProperty actor, Card target) -> {
             CardDescr baseCard = target.getCardDescr();
-            Hand hand = target.getOwner().getHand();
+            Hand hand = actor.getOwner().getHand();
 
             UndoBuilder result = new UndoBuilder(copyCount);
             for (int i = 0; i < copyCount; i++) {

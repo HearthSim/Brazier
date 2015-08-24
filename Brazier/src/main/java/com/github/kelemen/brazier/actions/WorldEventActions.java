@@ -33,6 +33,15 @@ public final class WorldEventActions {
         return eventSource.vetoDamage();
     };
 
+    public static WorldEventAction<DamageSource, DamageEvent> LIFE_STEAL_FOR_HERO = (world, self, event) -> {
+        int damageDealt = event.getDamageDealt();
+        if (damageDealt <= 0) {
+            return UndoAction.DO_NOTHING;
+        }
+
+        return ActionUtils.damageCharacter(self, -damageDealt, self.getOwner().getHero());
+    };
+
     public static final WorldEventAction<PlayerProperty, AttackRequest> MISS_TARGET_SOMETIMES
             = missTargetSometimes(1, 2);
 
