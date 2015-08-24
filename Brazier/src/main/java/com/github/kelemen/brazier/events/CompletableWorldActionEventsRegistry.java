@@ -1,5 +1,6 @@
-package com.github.kelemen.brazier;
+package com.github.kelemen.brazier.event;
 
+import com.github.kelemen.brazier.Priorities;
 import com.github.kelemen.brazier.actions.UndoableUnregisterRef;
 
 public interface CompletableWorldActionEventsRegistry<T> {

@@ -1,5 +1,6 @@
-package com.github.kelemen.brazier;
+package com.github.kelemen.brazier.event;
 
+import com.github.kelemen.brazier.World;
 import com.github.kelemen.brazier.actions.UndoAction;
 import com.github.kelemen.brazier.actions.WorldObjectAction;
 import org.jtrim.utils.ExceptionHelper;

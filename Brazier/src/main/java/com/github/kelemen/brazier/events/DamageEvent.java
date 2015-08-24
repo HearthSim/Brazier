@@ -1,5 +1,8 @@
-package com.github.kelemen.brazier;
+package com.github.kelemen.brazier.event;
 
+import com.github.kelemen.brazier.DamageSource;
+import com.github.kelemen.brazier.TargetRef;
+import com.github.kelemen.brazier.TargetableCharacter;
 import org.jtrim.utils.ExceptionHelper;
 
 public final class DamageEvent implements TargetRef {

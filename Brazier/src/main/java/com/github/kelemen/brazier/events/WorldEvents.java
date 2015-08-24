@@ -1,5 +1,9 @@
-package com.github.kelemen.brazier;
+package com.github.kelemen.brazier.event;
 
+import com.github.kelemen.brazier.Player;
+import com.github.kelemen.brazier.Secret;
+import com.github.kelemen.brazier.UndoableResult;
+import com.github.kelemen.brazier.World;
 import com.github.kelemen.brazier.actions.AttackRequest;
 import com.github.kelemen.brazier.actions.UndoAction;
 import com.github.kelemen.brazier.actions.UndoableAction;

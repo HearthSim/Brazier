@@ -1,9 +1,6 @@
 package com.github.kelemen.brazier.actions;
 
-import com.github.kelemen.brazier.CardPlayEvent;
 import com.github.kelemen.brazier.Damage;
-import com.github.kelemen.brazier.DamageEvent;
-import com.github.kelemen.brazier.DamageRequest;
 import com.github.kelemen.brazier.DamageSource;
 import com.github.kelemen.brazier.Player;
 import com.github.kelemen.brazier.PlayerProperty;
@@ -12,6 +9,9 @@ import com.github.kelemen.brazier.TargetableCharacter;
 import com.github.kelemen.brazier.UndoableResult;
 import com.github.kelemen.brazier.World;
 import com.github.kelemen.brazier.cards.Card;
+import com.github.kelemen.brazier.event.CardPlayEvent;
+import com.github.kelemen.brazier.event.DamageEvent;
+import com.github.kelemen.brazier.event.DamageRequest;
 import com.github.kelemen.brazier.minions.Minion;
 import com.github.kelemen.brazier.minions.MinionProvider;
 import com.github.kelemen.brazier.parsing.NamedArg;

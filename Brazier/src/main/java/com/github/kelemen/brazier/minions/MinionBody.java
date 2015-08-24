@@ -1,14 +1,14 @@
 package com.github.kelemen.brazier.minions;
 
 import com.github.kelemen.brazier.Damage;
-import com.github.kelemen.brazier.DamageEvent;
 import com.github.kelemen.brazier.Silencable;
 import com.github.kelemen.brazier.UndoableIntResult;
-import com.github.kelemen.brazier.WorldEvents;
 import com.github.kelemen.brazier.abilities.AuraAwareBoolProperty;
 import com.github.kelemen.brazier.abilities.AuraAwareIntProperty;
 import com.github.kelemen.brazier.abilities.HpProperty;
 import com.github.kelemen.brazier.actions.UndoAction;
+import com.github.kelemen.brazier.event.DamageEvent;
+import com.github.kelemen.brazier.event.WorldEvents;
 import org.jtrim.utils.ExceptionHelper;
 
 public final class MinionBody implements Silencable {

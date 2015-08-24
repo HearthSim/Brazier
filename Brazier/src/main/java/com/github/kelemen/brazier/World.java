@@ -7,6 +7,7 @@ import com.github.kelemen.brazier.actions.UndoAction;
 import com.github.kelemen.brazier.actions.UndoBuilder;
 import com.github.kelemen.brazier.actions.UndoableUnregisterRef;
 import com.github.kelemen.brazier.cards.CardDescr;
+import com.github.kelemen.brazier.event.WorldEvents;
 import com.github.kelemen.brazier.minions.Minion;
 import com.github.kelemen.brazier.weapons.AttackTool;
 import com.github.kelemen.brazier.weapons.Weapon;

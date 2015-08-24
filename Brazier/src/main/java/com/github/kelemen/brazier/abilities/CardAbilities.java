@@ -1,12 +1,12 @@
 package com.github.kelemen.brazier.abilities;
 
 import com.github.kelemen.brazier.World;
-import com.github.kelemen.brazier.WorldEvents;
 import com.github.kelemen.brazier.actions.UndoAction;
 import com.github.kelemen.brazier.actions.WorldActionEventsRegistry;
 import com.github.kelemen.brazier.actions.WorldEventAction;
 import com.github.kelemen.brazier.actions.WorldEventFilter;
 import com.github.kelemen.brazier.cards.Card;
+import com.github.kelemen.brazier.event.WorldEvents;
 import com.github.kelemen.brazier.minions.Minion;
 import com.github.kelemen.brazier.parsing.NamedArg;
 import java.util.function.Function;

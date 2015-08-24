@@ -1,11 +1,11 @@
 package com.github.kelemen.brazier.actions;
 
-import com.github.kelemen.brazier.CompletableWorldActionEventsRegistry;
-import com.github.kelemen.brazier.CompletableWorldEventBasedActionDef;
-import com.github.kelemen.brazier.CompleteWorldEventAction;
 import com.github.kelemen.brazier.PlayerProperty;
 import com.github.kelemen.brazier.World;
-import com.github.kelemen.brazier.WorldEvents;
+import com.github.kelemen.brazier.event.CompletableWorldActionEventsRegistry;
+import com.github.kelemen.brazier.event.CompletableWorldEventBasedActionDef;
+import com.github.kelemen.brazier.event.CompleteWorldEventAction;
+import com.github.kelemen.brazier.event.WorldEvents;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Function;

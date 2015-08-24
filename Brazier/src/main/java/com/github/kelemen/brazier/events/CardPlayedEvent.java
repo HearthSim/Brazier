@@ -1,5 +1,9 @@
-package com.github.kelemen.brazier;
+package com.github.kelemen.brazier.event;
 
+import com.github.kelemen.brazier.Keyword;
+import com.github.kelemen.brazier.LabeledEntity;
+import com.github.kelemen.brazier.Player;
+import com.github.kelemen.brazier.PlayerProperty;
 import com.github.kelemen.brazier.actions.CardPlayRef;
 import com.github.kelemen.brazier.cards.Card;
 import java.util.Set;

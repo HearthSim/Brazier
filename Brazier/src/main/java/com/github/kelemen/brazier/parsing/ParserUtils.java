@@ -65,6 +65,7 @@ public final class ParserUtils {
     private static final String[] DEFAULT_PACKAGES = {
         "com.github.kelemen.brazier.actions",
         "com.github.kelemen.brazier.abilities",
+        "com.github.kelemen.brazier.events",
     };
 
     public static JsonDeserializer createDefaultDeserializer(Supplier<HearthStoneDb> dbRef) {

@@ -1,5 +1,8 @@
-package com.github.kelemen.brazier;
+package com.github.kelemen.brazier.event;
 
+import com.github.kelemen.brazier.Hero;
+import com.github.kelemen.brazier.Player;
+import com.github.kelemen.brazier.PlayerProperty;
 import org.jtrim.utils.ExceptionHelper;
 
 public final class ArmorGainedEvent implements PlayerProperty {
