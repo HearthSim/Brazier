@@ -3,17 +3,16 @@ package com.github.kelemen.brazier.minions;
 import com.github.kelemen.brazier.HearthStoneEntity;
 import com.github.kelemen.brazier.Keyword;
 import com.github.kelemen.brazier.Player;
-import com.github.kelemen.brazier.TargetableCharacter;
 import com.github.kelemen.brazier.World;
 import com.github.kelemen.brazier.abilities.ActivatableAbility;
 import com.github.kelemen.brazier.abilities.LivingEntitysAbilities;
 import com.github.kelemen.brazier.abilities.OwnedIntPropertyBuff;
 import com.github.kelemen.brazier.actions.PlayActionDef;
 import com.github.kelemen.brazier.actions.PlayArg;
-import com.github.kelemen.brazier.actions.TargetedAction;
 import com.github.kelemen.brazier.actions.UndoAction;
 import com.github.kelemen.brazier.actions.UndoBuilder;
 import com.github.kelemen.brazier.cards.CardDescr;
+import com.github.kelemen.brazier.cards.PlayAction;
 import com.github.kelemen.brazier.events.WorldEventAction;
 import com.github.kelemen.brazier.events.WorldEventActionDefs;
 import java.util.ArrayList;
@@ -270,7 +269,7 @@ public final class MinionDescr implements HearthStoneEntity {
             return UndoAction.DO_NOTHING;
         }
 
-        List<TargetedAction<? super Minion, ? super TargetableCharacter>> actions
+        List<PlayAction<Minion>> actions
                 = new ArrayList<>(battleCries.size());
         for (PlayActionDef<Minion> action: battleCries) {
             if (action.getRequirement().meetsRequirement(player)) {
@@ -283,12 +282,10 @@ public final class MinionDescr implements HearthStoneEntity {
         }
 
         World world = player.getWorld();
-        Minion actor = target.getActor();
-        TargetableCharacter characterTarget = target.getTarget().getTarget();
 
         UndoBuilder result = new UndoBuilder(actions.size());
-        for (TargetedAction<? super Minion, ? super TargetableCharacter> action: actions) {
-            result.addUndo(action.alterWorld(world, actor, characterTarget));
+        for (PlayAction<Minion> action: actions) {
+            result.addUndo(action.doPlay(world, target));
         }
         return result;
     }

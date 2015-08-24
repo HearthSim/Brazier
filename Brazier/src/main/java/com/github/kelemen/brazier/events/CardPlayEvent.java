@@ -8,9 +8,9 @@ import com.github.kelemen.brazier.TargetRef;
 import com.github.kelemen.brazier.TargetableCharacter;
 import com.github.kelemen.brazier.actions.CardPlayRef;
 import com.github.kelemen.brazier.actions.PlayArg;
-import com.github.kelemen.brazier.actions.PlayTarget;
 import com.github.kelemen.brazier.actions.UndoAction;
 import com.github.kelemen.brazier.cards.Card;
+import java.util.Optional;
 import java.util.Set;
 import org.jtrim.utils.ExceptionHelper;
 
@@ -32,19 +32,15 @@ public final class CardPlayEvent implements PlayerProperty, LabeledEntity, CardP
             return UndoAction.DO_NOTHING;
         }
 
-        return replaceTarget(new PlayTarget(getCastingPlayer(), newTarget));
+        return replaceTarget(Optional.ofNullable(newTarget));
     }
 
-    public UndoAction replaceTarget(PlayTarget newTarget) {
+    public UndoAction replaceTarget(Optional<TargetableCharacter> newTarget) {
         ExceptionHelper.checkNotNullArgument(newTarget, "newTarget");
 
         PlayArg<Card> prevArg = cardPlayArg;
         cardPlayArg = new PlayArg<>(getCard(), newTarget);
         return () -> cardPlayArg = prevArg;
-    }
-
-    public Player getCastingPlayer() {
-        return cardPlayArg.getTarget().getCastingPlayer();
     }
 
     public PlayArg<Card> getCardPlayArg() {
@@ -53,7 +49,7 @@ public final class CardPlayEvent implements PlayerProperty, LabeledEntity, CardP
 
     @Override
     public TargetableCharacter getTarget() {
-        return cardPlayArg.getTarget().getTarget();
+        return cardPlayArg.getTarget().orElse(null);
     }
 
     @Override

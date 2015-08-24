@@ -1,26 +1,26 @@
 package com.github.kelemen.brazier.actions;
 
 import com.github.kelemen.brazier.Player;
-import com.github.kelemen.brazier.TargetableCharacter;
 import com.github.kelemen.brazier.World;
 import com.github.kelemen.brazier.cards.Card;
+import com.github.kelemen.brazier.cards.PlayAction;
 import java.util.Collection;
 import org.jtrim.utils.ExceptionHelper;
 
-public final class PlayActionDef<Actor> implements WorldObjectAction<PlayArg<Actor>> {
+public final class PlayActionDef<Actor> {
     public static final PlayActionDef<Card> UNPLAYABLE_CARD = new PlayActionDef<>(
             TargetNeed.NO_NEED,
             (target) -> false,
-            TargetedAction.DO_NOTHING);
+            PlayAction.doNothing());
 
     private final TargetNeed targetNeed;
     private final PlayActionRequirement requirement;
-    private final TargetedAction<? super Actor, ? super TargetableCharacter> action;
+    private final PlayAction<Actor> action;
 
     public PlayActionDef(
             TargetNeed targetNeed,
             PlayActionRequirement requirement,
-            TargetedAction<? super Actor, ? super TargetableCharacter> action) {
+            PlayAction<Actor> action) {
         ExceptionHelper.checkNotNullArgument(targetNeed, "targetNeed");
         ExceptionHelper.checkNotNullArgument(requirement, "requirement");
         ExceptionHelper.checkNotNullArgument(action, "action");
@@ -48,13 +48,12 @@ public final class PlayActionDef<Actor> implements WorldObjectAction<PlayArg<Act
         return requirement;
     }
 
-    public TargetedAction<? super Actor, ? super TargetableCharacter> getAction() {
+    public PlayAction<Actor> getAction() {
         return action;
     }
 
-    @Override
-    public UndoAction alterWorld(World world, PlayArg<Actor> arg) {
-        return action.alterWorld(world, arg.getActor(), arg.getTarget().getTarget());
+    public UndoAction doPlay(World world, PlayArg<Actor> arg) {
+        return action.doPlay(world, arg);
     }
 
     @Override

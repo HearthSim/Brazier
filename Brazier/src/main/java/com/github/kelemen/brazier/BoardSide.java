@@ -1,7 +1,6 @@
 package com.github.kelemen.brazier;
 
 import com.github.kelemen.brazier.actions.PlayArg;
-import com.github.kelemen.brazier.actions.PlayTarget;
 import com.github.kelemen.brazier.actions.UndoAction;
 import com.github.kelemen.brazier.actions.UndoBuilder;
 import com.github.kelemen.brazier.actions.UndoableAction;
@@ -12,6 +11,7 @@ import com.github.kelemen.brazier.minions.MinionBody;
 import com.github.kelemen.brazier.minions.MinionDescr;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -323,7 +323,7 @@ public final class BoardSide {
 
     public UndoAction summonMinion(
             BoardReservationRef reservationRef,
-            PlayTarget battleCryTarget) {
+            Optional<TargetableCharacter> battleCryTarget) {
         ExceptionHelper.checkNotNullArgument(reservationRef, "reservationRef");
         ExceptionHelper.checkNotNullArgument(battleCryTarget, "battleCryTarget");
         return summonMinionUnsafe(reservationRef, battleCryTarget);
@@ -331,7 +331,7 @@ public final class BoardSide {
 
     private UndoAction summonMinionUnsafe(
             BoardReservationRef reservationRef,
-            PlayTarget battleCryTarget) {
+            Optional<TargetableCharacter> battleCryTarget) {
 
         Minion minion = reservationRef.getMinion();
 

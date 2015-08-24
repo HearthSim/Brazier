@@ -1,10 +1,10 @@
 package com.github.kelemen.brazier;
 
-import com.github.kelemen.brazier.actions.PlayTarget;
 import com.github.kelemen.brazier.actions.PlayTargetRequest;
 import com.github.kelemen.brazier.actions.UndoAction;
 import com.github.kelemen.brazier.actions.WorldAction;
 import com.github.kelemen.brazier.cards.Card;
+import java.util.Optional;
 import org.jtrim.utils.ExceptionHelper;
 
 public final class WorldPlayAgent {
@@ -62,7 +62,7 @@ public final class WorldPlayAgent {
             TargetableCharacter target = currentWorld.findTarget(targetRequest.getTargetId());
 
             HeroPower selectedPower = castingPlayer.getHero().getHeroPower();
-            return selectedPower.alterWorld(currentWorld, new PlayTarget(castingPlayer, target));
+            return selectedPower.alterWorld(currentWorld, Optional.ofNullable(target));
         });
     }
 

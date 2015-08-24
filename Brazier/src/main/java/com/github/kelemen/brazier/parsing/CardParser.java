@@ -6,6 +6,7 @@ import com.github.kelemen.brazier.Keywords;
 import com.github.kelemen.brazier.Player;
 import com.github.kelemen.brazier.Secret;
 import com.github.kelemen.brazier.SecretContainer;
+import com.github.kelemen.brazier.TargetableCharacter;
 import com.github.kelemen.brazier.World;
 import com.github.kelemen.brazier.abilities.ActivatableAbility;
 import com.github.kelemen.brazier.actions.BasicFilters;
@@ -14,7 +15,6 @@ import com.github.kelemen.brazier.actions.PlayActionDef;
 import com.github.kelemen.brazier.actions.PlayActionRequirement;
 import com.github.kelemen.brazier.actions.TargetNeed;
 import com.github.kelemen.brazier.actions.TargetlessAction;
-import com.github.kelemen.brazier.actions.TargetlessActions;
 import com.github.kelemen.brazier.actions.UndoAction;
 import com.github.kelemen.brazier.cards.Card;
 import com.github.kelemen.brazier.cards.CardDescr;
@@ -22,12 +22,14 @@ import com.github.kelemen.brazier.cards.CardId;
 import com.github.kelemen.brazier.cards.CardProvider;
 import com.github.kelemen.brazier.cards.CardRarity;
 import com.github.kelemen.brazier.cards.CardType;
+import com.github.kelemen.brazier.cards.PlayAction;
 import com.github.kelemen.brazier.events.WorldEventActionDefs;
 import com.github.kelemen.brazier.minions.MinionDescr;
 import com.github.kelemen.brazier.weapons.WeaponDescr;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Supplier;
@@ -121,9 +123,9 @@ public final class CardParser implements EntityParser<CardDescr> {
         };
     }
 
-    private TargetlessAction<Card> secretAction(Supplier<CardDescr> cardRef, WorldEventActionDefs<Secret> secretActionDef) {
+    private PlayAction<Card> secretAction(Supplier<CardDescr> cardRef, WorldEventActionDefs<Secret> secretActionDef) {
         ExceptionHelper.checkNotNullArgument(secretActionDef, "secretActionDef");
-        return (World world, Card actor) -> {
+        return (World world, Card actor, Optional<TargetableCharacter> target) -> {
             CardDescr card = cardRef.get();
             Player player = actor.getOwner();
             Secret secret = new Secret(player, card, secretActionDef);
@@ -146,7 +148,7 @@ public final class CardParser implements EntityParser<CardDescr> {
         result.addOnPlayAction(new PlayActionDef<>(
                 TargetNeed.NO_NEED,
                 secretRequirement(secretId),
-                secretAction(cardRef, secretActionDef).toTargetedAction()));
+                secretAction(cardRef, secretActionDef)));
         return true;
     }
 
@@ -282,10 +284,11 @@ public final class CardParser implements EntityParser<CardDescr> {
         if (weaponElement != null) {
             WeaponDescr weapon = weaponParser.fromJson(weaponElement, name, keywords);
             result.setWeapon(weapon);
-            result.addOnPlayAction(new PlayActionDef<>(
-                    TargetNeed.NO_NEED,
-                    PlayActionRequirement.ALLOWED,
-                    TargetlessActions.equipWeapon(() -> weapon).toTargetedAction()));
+            PlayAction<Card> playAction = (World world, Card actor, Optional<TargetableCharacter> target) -> {
+                return actor.getOwner().equipWeapon(weapon);
+            };
+
+            result.addOnPlayAction(new PlayActionDef<>(TargetNeed.NO_NEED, PlayActionRequirement.ALLOWED, playAction));
         }
 
         CardDescr card = result.create();

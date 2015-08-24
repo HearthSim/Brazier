@@ -1,12 +1,18 @@
 package com.github.kelemen.brazier.actions;
 
+import com.github.kelemen.brazier.TargetableCharacter;
+import java.util.Optional;
 import org.jtrim.utils.ExceptionHelper;
 
 public final class PlayArg<Actor> {
     private final Actor actor;
-    private final PlayTarget target;
+    private final Optional<TargetableCharacter> target;
 
-    public PlayArg(Actor actor, PlayTarget target) {
+    public PlayArg(Actor actor, TargetableCharacter target) {
+        this(actor, Optional.ofNullable(target));
+    }
+
+    public PlayArg(Actor actor, Optional<TargetableCharacter> target) {
         ExceptionHelper.checkNotNullArgument(actor, "actor");
         ExceptionHelper.checkNotNullArgument(target, "target");
 
@@ -18,7 +24,7 @@ public final class PlayArg<Actor> {
         return actor;
     }
 
-    public PlayTarget getTarget() {
+    public Optional<TargetableCharacter> getTarget() {
         return target;
     }
 }

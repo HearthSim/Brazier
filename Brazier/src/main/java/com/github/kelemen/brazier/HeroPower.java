@@ -2,7 +2,6 @@ package com.github.kelemen.brazier;
 
 import com.github.kelemen.brazier.actions.PlayActionDef;
 import com.github.kelemen.brazier.actions.PlayArg;
-import com.github.kelemen.brazier.actions.PlayTarget;
 import com.github.kelemen.brazier.actions.TargetNeed;
 import com.github.kelemen.brazier.actions.UndoAction;
 import com.github.kelemen.brazier.actions.UndoBuilder;
@@ -10,6 +9,7 @@ import com.github.kelemen.brazier.cards.Card;
 import com.github.kelemen.brazier.cards.CardDescr;
 import com.github.kelemen.brazier.cards.CardId;
 import com.github.kelemen.brazier.cards.CardType;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 import org.jtrim.utils.ExceptionHelper;
 
@@ -82,7 +82,7 @@ public final class HeroPower implements PlayerProperty {
         return false;
     }
 
-    public UndoAction alterWorld(World world, PlayTarget target) {
+    public UndoAction alterWorld(World world, Optional<TargetableCharacter> target) {
         PlayArg<Card> playArg = new PlayArg<>(getBaseCard(), target);
 
         Player owner = getOwner();
@@ -94,7 +94,7 @@ public final class HeroPower implements PlayerProperty {
         result.addUndo(() -> useCount--);
 
         for (PlayActionDef<Card> action: powerDef.getOnPlayActions()) {
-            result.addUndo(action.alterWorld(world, playArg));
+            result.addUndo(action.doPlay(world, playArg));
         }
         return result;
     }

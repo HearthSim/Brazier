@@ -29,6 +29,7 @@ import com.github.kelemen.brazier.actions.WorldObjectAction;
 import com.github.kelemen.brazier.cards.CardDescr;
 import com.github.kelemen.brazier.cards.CardId;
 import com.github.kelemen.brazier.cards.CardProvider;
+import com.github.kelemen.brazier.cards.PlayAction;
 import com.github.kelemen.brazier.events.WorldEventAction;
 import com.github.kelemen.brazier.events.WorldEventActionDefs;
 import com.github.kelemen.brazier.events.WorldEventFilter;
@@ -53,6 +54,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
@@ -536,7 +538,7 @@ public final class ParserUtils {
         };
     }
 
-    private static <Actor, Target> TargetedAction<? super Actor, ? super TargetableCharacter> parseTargetedAction(
+    private static <Actor, Target> PlayAction<Actor> parseTargetedAction(
             JsonDeserializer objectParser,
             JsonTree actionElement,
             Class<Actor> actorType,
@@ -546,7 +548,12 @@ public final class ParserUtils {
                 actionElement,
                 TargetedAction.class,
                 TypeCheckers.genericTypeChecker(TargetedAction.class, actorType, targetType));
-        return (world, actor, target) -> {
+        return (World world, Actor actor, Optional<TargetableCharacter> optTarget) -> {
+            if (!optTarget.isPresent()) {
+                return UndoAction.DO_NOTHING;
+            }
+
+            TargetableCharacter target = optTarget.get();
             if (targetType.isInstance(target)) {
                 return result.alterWorld(world, actor, targetType.cast(target));
             }
@@ -556,12 +563,13 @@ public final class ParserUtils {
         };
     }
 
-    private static <Actor> TargetedAction<? super Actor, ? super TargetableCharacter> parseTargetedActionRaw(
+    private static <Actor> PlayAction<Actor> parseTargetedActionRaw(
             JsonDeserializer objectParser,
             JsonTree actionElement,
             TargetNeed targetNeed,
             Class<Actor> actorType) throws ObjectParsingException {
 
+        // FIXME: Remove these unreliable tests after no longer needed
         if (!targetNeed.mayTargetHero()) {
             if (!targetNeed.mayTargetMinion()) {
                 @SuppressWarnings("unchecked")
@@ -585,7 +593,7 @@ public final class ParserUtils {
         }
     }
 
-    public static <Actor> TargetedAction<? super Actor, ? super TargetableCharacter> parseTargetedAction(
+    public static <Actor> PlayAction<Actor> parseTargetedAction(
             JsonDeserializer objectParser,
             JsonTree actionElement,
             TargetNeed targetNeed,
@@ -609,7 +617,7 @@ public final class ParserUtils {
 
         TargetNeed targetNeed = ParserUtils.getTargetNeedOfAction(objectParser, battleCryElement);
         PlayActionRequirement requirement = ParserUtils.getPlayRequirementOfAction(objectParser, battleCryElement);
-        TargetedAction<? super Actor, ? super TargetableCharacter> action
+        PlayAction<Actor> action
                 = parseTargetedAction(objectParser, battleCryElement, targetNeed, actorType);
 
         PlayActionRequirement actionCondition = ParserUtils.getActionConditionOfAction(objectParser, battleCryElement);
@@ -640,14 +648,14 @@ public final class ParserUtils {
         }
     }
 
-    private static <Actor extends PlayerProperty> TargetedAction<? super Actor, ? super TargetableCharacter> addCondition(
+    private static <Actor extends PlayerProperty> PlayAction<Actor> addCondition(
             PlayActionRequirement condition,
-            TargetedAction<? super Actor, ? super TargetableCharacter> action) {
+            PlayAction<Actor> action) {
         if (condition == PlayActionRequirement.ALLOWED) {
             return action;
         }
 
-        return (World world, Actor actor, TargetableCharacter target) -> {
+        return (World world, Actor actor, Optional<TargetableCharacter> target) -> {
             if (condition.meetsRequirement(actor.getOwner())) {
                 return action.alterWorld(world, actor, target);
             }

@@ -6,13 +6,13 @@ import com.github.kelemen.brazier.abilities.BuffableIntProperty;
 import com.github.kelemen.brazier.actions.ActionUtils;
 import com.github.kelemen.brazier.actions.PlayActionDef;
 import com.github.kelemen.brazier.actions.PlayArg;
-import com.github.kelemen.brazier.actions.PlayTarget;
 import com.github.kelemen.brazier.actions.PlayTargetRequest;
 import com.github.kelemen.brazier.actions.UndoAction;
 import com.github.kelemen.brazier.actions.UndoBuilder;
 import com.github.kelemen.brazier.actions.WorldActionList;
 import com.github.kelemen.brazier.cards.Card;
 import com.github.kelemen.brazier.cards.CardDescr;
+import com.github.kelemen.brazier.cards.PlayAction;
 import com.github.kelemen.brazier.events.CardPlayEvent;
 import com.github.kelemen.brazier.events.CardPlayedEvent;
 import com.github.kelemen.brazier.events.WorldEvents;
@@ -153,37 +153,42 @@ public final class Player implements PlayerProperty {
         return minionsPlayedThisTurn;
     }
 
-    private void getOnPlayActions(PlayArg<Card> arg, CardDescr cardDescr, List<PlayActionDef<Card>> result) {
-        for (PlayActionDef<Card> action: cardDescr.getOnPlayActions()) {
-            if (action.getRequirement().meetsRequirement(this)) {
-                result.add(action);
+    private void getOnPlayActions(
+            CardDescr cardDescr,
+            List<PlayAction<Card>> result) {
+        for (PlayActionDef<Card> actionDef: cardDescr.getOnPlayActions()) {
+            if (actionDef.getRequirement().meetsRequirement(this)) {
+                result.add(actionDef.getAction());
             }
         }
     }
 
-    private List<PlayActionDef<Card>> getOnPlayActions(PlayArg<Card> arg, CardDescr chooseOneChoice) {
+    private List<PlayAction<Card>> getOnPlayActions(
+            PlayArg<Card> arg,
+            CardDescr chooseOneChoice) {
+
         CardDescr cardDescr = arg.getActor().getCardDescr();
 
         int playActionCount = cardDescr.getOnPlayActions().size()
                 + (chooseOneChoice != null ? chooseOneChoice.getOnPlayActions().size() : 0);
 
-        List<PlayActionDef<Card>> result = new ArrayList<>(playActionCount);
-        getOnPlayActions(arg, arg.getActor().getCardDescr(), result);
+        List<PlayAction<Card>> result = new ArrayList<>(playActionCount);
+        getOnPlayActions(cardDescr, result);
         if (chooseOneChoice != null) {
-            getOnPlayActions(arg, chooseOneChoice, result);
+            getOnPlayActions(chooseOneChoice, result);
         }
 
         return result;
     }
 
-    private UndoAction executeCardPlayActions(PlayArg<Card> arg, List<? extends PlayActionDef<Card>> actions) {
+    private UndoAction executeCardPlayActions(PlayArg<Card> arg, List<? extends PlayAction<Card>> actions) {
         if (actions.isEmpty()) {
             return UndoAction.DO_NOTHING;
         }
 
         UndoBuilder result = new UndoBuilder(actions.size());
-        for (PlayActionDef<Card> actionDef: actions) {
-            result.addUndo(actionDef.alterWorld(world, arg));
+        for (PlayAction<Card> actionDef: actions) {
+            result.addUndo(actionDef.doPlay(world, arg));
         }
         return result;
     }
@@ -204,15 +209,14 @@ public final class Player implements PlayerProperty {
         ExceptionHelper.checkNotNullArgument(card, "card");
         ExceptionHelper.checkNotNullArgument(targetRequest, "target");
 
-        Player castingPlayer = world.getPlayer(targetRequest.getCastingPlayerId());
-        PlayTarget originalTarget = new PlayTarget(castingPlayer, world.findTarget(targetRequest.getTargetId()));
+        TargetableCharacter originalTarget = world.findTarget(targetRequest.getTargetId());
         PlayArg<Card> originalCardPlayArg = new PlayArg<>(card, originalTarget);
 
         // We request the on play actions before doing anything because
         // the requirements for playing a card action may no longer met
         // after firing events. However, in this case we must complete the
         // action under these circumstances (when its requirement is not met).
-        List<PlayActionDef<Card>> onPlayActions = getOnPlayActions(originalCardPlayArg, targetRequest.getChoseOneChoice());
+        List<PlayAction<Card>> onPlayActions = getOnPlayActions(originalCardPlayArg, targetRequest.getChoseOneChoice());
 
         UndoBuilder result = new UndoBuilder();
         result.addUndo(manaResource.spendMana(manaCost, card.getCardDescr().getOverload()));
