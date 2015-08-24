@@ -6,7 +6,7 @@
     "manaCost": 0,
     "playActions": {
         "targets": "self-minions",
-        "class": "MinionActions.returnMinion",
+        "class": "TargetedActions.returnMinion",
         "costReduction": 2
     }
 }

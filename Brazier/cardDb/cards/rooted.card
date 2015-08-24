@@ -6,13 +6,16 @@
     "collectible": false,
     "manaCost": 0,
     "playActions": {
-        "class": "CardPlayActions.doForPlayedMinion",
-        "action": [
-            {
-                "class": "MinionActions.buffHp",
-                "hp": 5
-            },
-            "MinionActions.TAUNT"
-        ]
+        "class": "TargetlessActions.withMinion",
+        "action": {
+            "class": "TargetlessActions.forSelf",
+            "action": [
+                {
+                    "class": "TargetedActions.buffTarget",
+                    "buff": "0/5"
+                },
+                "TargetedActions.TAUNT"
+            ]
+        }
     }
 }

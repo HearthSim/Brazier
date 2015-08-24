@@ -528,15 +528,34 @@ public final class TargetedActions {
     }
 
     public static TargetedAction<Object, Minion> resummonMinionWithHp(@NamedArg("hp") int hp) {
-        return (World world, Object actor, Minion minion) -> {
-            Minion newMinion = new Minion(minion.getOwner(), minion.getBaseDescr());
+        return (World world, Object actor, Minion target) -> {
+            Minion newMinion = new Minion(target.getOwner(), target.getBaseDescr());
 
-            UndoAction summonUndo = minion.getLocationRef().summonRight(newMinion);
+            UndoAction summonUndo = target.getLocationRef().summonRight(newMinion);
             UndoAction updateHpUndo = newMinion.getProperties().getBody().getHp().setCurrentHp(1);
             return () -> {
                 updateHpUndo.undo();
                 summonUndo.undo();
             };
+        };
+    }
+
+    public static <Actor> TargetedAction<Actor, Minion> reincarnate(
+            @NamedArg("newMinionAction") TargetedAction<? super Actor, ? super Minion> newMinionAction) {
+        ExceptionHelper.checkNotNullArgument(newMinionAction, "newMinionAction");
+
+        return (World world, Actor actor, Minion target) -> {
+            Player owner = target.getOwner();
+
+            UndoBuilder result = new UndoBuilder();
+            result.addUndo(target.poison());
+            result.addUndo(world.endPhase());
+
+            Minion newMinion = new Minion(owner, target.getBaseDescr());
+            result.addUndo(owner.summonMinion(newMinion));
+            result.addUndo(newMinionAction.alterWorld(world, actor, newMinion));
+
+            return result;
         };
     }
 

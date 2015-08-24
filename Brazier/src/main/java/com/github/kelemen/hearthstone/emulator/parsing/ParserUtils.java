@@ -21,7 +21,6 @@ import com.github.kelemen.hearthstone.emulator.abilities.AuraFilter;
 import com.github.kelemen.hearthstone.emulator.abilities.LivingEntitysAbilities;
 import com.github.kelemen.hearthstone.emulator.actions.CardPlayAction;
 import com.github.kelemen.hearthstone.emulator.actions.CardPlayArg;
-import com.github.kelemen.hearthstone.emulator.actions.MinionAction;
 import com.github.kelemen.hearthstone.emulator.actions.PlayActionRequirement;
 import com.github.kelemen.hearthstone.emulator.actions.PlayTarget;
 import com.github.kelemen.hearthstone.emulator.actions.PlayerAction;
@@ -136,9 +135,6 @@ public final class ParserUtils {
                     = (Collection<? extends WorldObjectAction<Object>>)elements;
             return WorldObjectAction.merge(unsafeElements);
         });
-        result.setTypeMerger(MinionAction.class, (Collection<? extends MinionAction> elements) -> {
-            return MinionAction.merge(elements);
-        });
         result.setTypeMerger(PlayerAction.class, (Collection<? extends PlayerAction> elements) -> {
             return PlayerAction.merge(elements);
         });
@@ -214,8 +210,6 @@ public final class ParserUtils {
         result.addTypeConversion(WorldAction.class, CardPlayAction.class,
                 (action) -> (world, target) -> action.alterWorld(world));
         result.addTypeConversion(PlayerAction.class, CardPlayAction.class,
-                (action) -> action.toCardPlayAction());
-        result.addTypeConversion(MinionAction.class, CardPlayAction.class,
                 (action) -> action.toCardPlayAction());
 
         result.addTypeConversion(WorldAction.class, WorldEventAction.class,

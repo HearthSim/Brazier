@@ -8,7 +8,7 @@
     "manaCost": 1,
     "playActions": {
         "targets": "all-minions",
-        "class": "MinionActions.buffAttack",
-        "attack": 1
+        "class": "TargetedActions.buffTarget",
+        "buff": "1/0"
     }
 }

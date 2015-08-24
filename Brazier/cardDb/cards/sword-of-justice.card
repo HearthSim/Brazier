@@ -16,11 +16,10 @@
                 "action": [
                     "TargetlessActions.REDUCE_WEAPON_DURABILITY",
                     {
-                        "class": "MinionEventActions.doForEventSourceMinion",
+                        "class": "WorldEventActions.forEventArgMinionTarget",
                         "action": {
-                            "class": "MinionActions.buff",
-                            "attack": 1,
-                            "hp": 1
+                            "class": "TargetedActions.buffTarget",
+                            "buff": "1/1"
                         }
                     }
                 ]

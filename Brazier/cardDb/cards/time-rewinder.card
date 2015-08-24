@@ -8,6 +8,6 @@
     "manaCost": 1,
     "playActions": {
         "targets": "self-minions",
-        "class": "MinionActions.RETURN_MINION"
+        "class": "TargetedActions.RETURN_MINION"
     }
 }

@@ -98,15 +98,6 @@ public final class MinionEventActions {
         };
     }
 
-    public static WorldEventAction<PlayerProperty, Minion> doForEventSourceMinion(
-            @NamedArg("action") MinionAction action) {
-        ExceptionHelper.checkNotNullArgument(action, "action");
-
-        return (World world, PlayerProperty self, Minion eventSource) -> {
-            return action.alterWorld(world, eventSource);
-        };
-    }
-
     public static WorldEventAction<PlayerProperty, PlayerProperty> doForEventSourcePlayer(
             @NamedArg("action") PlayerAction action) {
         ExceptionHelper.checkNotNullArgument(action, "action");

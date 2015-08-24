@@ -16,8 +16,8 @@
                     }
                 ],
                 "action": {
-                    "class": "MinionEventActions.doForEventSourceMinion",
-                    "action": "MinionActions.CHARGE"
+                    "class": "WorldEventActions.forEventArgMinionTarget",
+                    "action": "TargetedActions.CHARGE"
                 }
             }
         }

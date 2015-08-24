@@ -6,10 +6,7 @@
     "collectible": false,
     "manaCost": 0,
     "playActions": {
-        "class": "CardPlayActions.doForPlayedMinion",
-        "action": {
-            "class": "MinionActions.buffAttack",
-            "attack": 5
-        }
+        "class": "TargetlessActions.buffSelfMinion",
+        "buff": "5/0"
     }
 }
