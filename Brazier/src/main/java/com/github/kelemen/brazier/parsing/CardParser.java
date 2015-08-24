@@ -6,15 +6,16 @@ import com.github.kelemen.brazier.Keywords;
 import com.github.kelemen.brazier.Player;
 import com.github.kelemen.brazier.Secret;
 import com.github.kelemen.brazier.SecretContainer;
+import com.github.kelemen.brazier.TargetableCharacter;
 import com.github.kelemen.brazier.World;
 import com.github.kelemen.brazier.abilities.ActivatableAbility;
 import com.github.kelemen.brazier.actions.BasicFilters;
-import com.github.kelemen.brazier.actions.CardPlayAction;
-import com.github.kelemen.brazier.actions.CardPlayArg;
 import com.github.kelemen.brazier.actions.ManaCostAdjuster;
 import com.github.kelemen.brazier.actions.PlayActionRequirement;
 import com.github.kelemen.brazier.actions.TargetNeed;
+import com.github.kelemen.brazier.actions.TargetedAction;
 import com.github.kelemen.brazier.actions.TargetlessAction;
+import com.github.kelemen.brazier.actions.TargetlessActions;
 import com.github.kelemen.brazier.actions.UndoAction;
 import com.github.kelemen.brazier.actions.WorldEventActionDefs;
 import com.github.kelemen.brazier.cards.Card;
@@ -91,29 +92,16 @@ public final class CardParser implements EntityParser<CardDescr> {
         }
     }
 
-    private static CardPlayAction getTargetedAction(
-            JsonDeserializer objectParser,
-            JsonTree actionElement) throws ObjectParsingException {
-
-        if (actionElement.isJsonObject() && actionElement.getChild("class") == null) {
-            JsonTree actionsDefElement = actionElement.getChild("actions");
-            if (actionsDefElement == null) {
-                throw new ObjectParsingException("Missing action definition for CardPlayAction.");
-            }
-            return objectParser.toJavaObject(actionsDefElement, CardPlayAction.class);
-        }
-
-        return objectParser.toJavaObject(actionElement, CardPlayAction.class);
-    }
-
     public static CardPlayActionDef parsePlayAction(
             JsonDeserializer objectParser,
             JsonTree actionElement) throws ObjectParsingException {
         ExceptionHelper.checkNotNullArgument(objectParser, "objectParser");
         ExceptionHelper.checkNotNullArgument(actionElement, "actionElement");
 
-        CardPlayAction action = getTargetedAction(objectParser, actionElement);
         TargetNeed targetNeed = ParserUtils.getTargetNeedOfAction(objectParser, actionElement);
+        TargetedAction<? super Card, ? super TargetableCharacter> action
+                = ParserUtils.parseTargetedAction(objectParser, actionElement, targetNeed, Card.class);
+
         PlayActionRequirement requirement = ParserUtils.getPlayRequirementOfAction(objectParser, actionElement);
         return new CardPlayActionDef(targetNeed, requirement, action);
     }
@@ -171,11 +159,11 @@ public final class CardParser implements EntityParser<CardDescr> {
         };
     }
 
-    private CardPlayAction secretAction(Supplier<CardDescr> cardRef, WorldEventActionDefs<Secret> secretActionDef) {
+    private TargetlessAction<Card> secretAction(Supplier<CardDescr> cardRef, WorldEventActionDefs<Secret> secretActionDef) {
         ExceptionHelper.checkNotNullArgument(secretActionDef, "secretActionDef");
-        return (World world, CardPlayArg arg) -> {
+        return (World world, Card actor) -> {
             CardDescr card = cardRef.get();
-            Player player = arg.getTarget().getCastingPlayer();
+            Player player = actor.getOwner();
             Secret secret = new Secret(player, card, secretActionDef);
             return player.getSecrets().addSecret(secret);
         };
@@ -196,7 +184,7 @@ public final class CardParser implements EntityParser<CardDescr> {
         result.addOnPlayAction(new CardPlayActionDef(
                 TargetNeed.NO_NEED,
                 secretRequirement(secretId),
-                secretAction(cardRef, secretActionDef)));
+                secretAction(cardRef, secretActionDef).toTargetedAction()));
         return true;
     }
 
@@ -331,11 +319,11 @@ public final class CardParser implements EntityParser<CardDescr> {
 
         if (weaponElement != null) {
             WeaponDescr weapon = weaponParser.fromJson(weaponElement, name, keywords);
-            result.setWeapon(weapon);
-            result.addOnPlayAction(new CardPlayActionDef(TargetNeed.NO_NEED, PlayActionRequirement.ALLOWED, (world, arg) -> {
-                Player player = arg.getTarget().getCastingPlayer();
-                return player.equipWeapon(weapon);
-            }));
+            result.setWeapon(weapon);TargetlessActions.equipWeapon(() -> weapon).toTargetedAction();
+            result.addOnPlayAction(new CardPlayActionDef(
+                    TargetNeed.NO_NEED,
+                    PlayActionRequirement.ALLOWED,
+                    TargetlessActions.equipWeapon(() -> weapon).toTargetedAction()));
         }
 
         CardDescr card = result.create();

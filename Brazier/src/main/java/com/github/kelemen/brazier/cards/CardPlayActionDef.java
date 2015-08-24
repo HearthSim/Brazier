@@ -1,26 +1,31 @@
 package com.github.kelemen.brazier.cards;
 
 import com.github.kelemen.brazier.Player;
+import com.github.kelemen.brazier.TargetableCharacter;
 import com.github.kelemen.brazier.World;
-import com.github.kelemen.brazier.actions.CardPlayAction;
 import com.github.kelemen.brazier.actions.CardPlayArg;
 import com.github.kelemen.brazier.actions.PlayActionRequirement;
 import com.github.kelemen.brazier.actions.TargetNeed;
+import com.github.kelemen.brazier.actions.TargetedAction;
 import com.github.kelemen.brazier.actions.UndoAction;
+import com.github.kelemen.brazier.actions.WorldObjectAction;
 import java.util.Collection;
 import org.jtrim.utils.ExceptionHelper;
 
-public final class CardPlayActionDef implements CardPlayAction {
+public final class CardPlayActionDef implements WorldObjectAction<CardPlayArg> {
     public static final CardPlayActionDef UNPLAYABLE = new CardPlayActionDef(
             TargetNeed.NO_NEED,
             (target) -> false,
-            CardPlayAction.DO_NOTHING);
+            TargetedAction.DO_NOTHING);
 
     private final TargetNeed targetNeed;
     private final PlayActionRequirement requirement;
-    private final CardPlayAction action;
+    private final TargetedAction<? super Card, ? super TargetableCharacter> action;
 
-    public CardPlayActionDef(TargetNeed targetNeed, PlayActionRequirement requirement, CardPlayAction action) {
+    public CardPlayActionDef(
+            TargetNeed targetNeed,
+            PlayActionRequirement requirement,
+            TargetedAction<? super Card, ? super TargetableCharacter> action) {
         ExceptionHelper.checkNotNullArgument(targetNeed, "targetNeed");
         ExceptionHelper.checkNotNullArgument(requirement, "requirement");
         ExceptionHelper.checkNotNullArgument(action, "action");
@@ -48,13 +53,13 @@ public final class CardPlayActionDef implements CardPlayAction {
         return requirement;
     }
 
-    public CardPlayAction getAction() {
+    public TargetedAction<? super Card, ? super TargetableCharacter> getAction() {
         return action;
     }
 
     @Override
     public UndoAction alterWorld(World world, CardPlayArg arg) {
-        return action.alterWorld(world, arg);
+        return action.alterWorld(world, arg.getCard(), arg.getTarget().getTarget());
     }
 
     @Override

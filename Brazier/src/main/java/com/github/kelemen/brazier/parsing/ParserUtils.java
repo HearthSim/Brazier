@@ -1,6 +1,7 @@
 package com.github.kelemen.brazier.parsing;
 
 import com.github.kelemen.brazier.HearthStoneDb;
+import com.github.kelemen.brazier.Hero;
 import com.github.kelemen.brazier.Keyword;
 import com.github.kelemen.brazier.PlayerProperty;
 import com.github.kelemen.brazier.TargetableCharacter;
@@ -11,14 +12,11 @@ import com.github.kelemen.brazier.abilities.AuraFilter;
 import com.github.kelemen.brazier.abilities.Buff;
 import com.github.kelemen.brazier.abilities.Buffs;
 import com.github.kelemen.brazier.abilities.LivingEntitysAbilities;
-import com.github.kelemen.brazier.actions.CardPlayAction;
-import com.github.kelemen.brazier.actions.CardPlayArg;
 import com.github.kelemen.brazier.actions.EntityFilter;
 import com.github.kelemen.brazier.actions.EntityFilters;
 import com.github.kelemen.brazier.actions.EntitySelector;
 import com.github.kelemen.brazier.actions.PermanentBuff;
 import com.github.kelemen.brazier.actions.PlayActionRequirement;
-import com.github.kelemen.brazier.actions.PlayTarget;
 import com.github.kelemen.brazier.actions.TargetNeed;
 import com.github.kelemen.brazier.actions.TargetedAction;
 import com.github.kelemen.brazier.actions.TargetedActionCondition;
@@ -30,10 +28,10 @@ import com.github.kelemen.brazier.actions.WorldEventAction;
 import com.github.kelemen.brazier.actions.WorldEventActionDefs;
 import com.github.kelemen.brazier.actions.WorldEventFilter;
 import com.github.kelemen.brazier.actions.WorldObjectAction;
-import com.github.kelemen.brazier.cards.Card;
 import com.github.kelemen.brazier.cards.CardDescr;
 import com.github.kelemen.brazier.cards.CardId;
 import com.github.kelemen.brazier.cards.CardProvider;
+import com.github.kelemen.brazier.minions.Minion;
 import com.github.kelemen.brazier.minions.MinionDescr;
 import com.github.kelemen.brazier.minions.MinionId;
 import com.github.kelemen.brazier.minions.MinionProvider;
@@ -82,7 +80,6 @@ public final class ParserUtils {
 
     private static void addTypeMergers(JsonDeserializer.Builder result) {
         result.setTypeMerger(PlayActionRequirement.class, (elements) -> PlayActionRequirement.merge(elements));
-        result.setTypeMerger(CardPlayAction.class, (elements) -> CardPlayAction.mergeActions(elements));
         result.setTypeMerger(WorldEventFilter.class, (Collection<? extends WorldEventFilter<?, ?>> elements) -> {
             // Unsafe but there is nothing to do.
             @SuppressWarnings("unchecked")
@@ -200,9 +197,6 @@ public final class ParserUtils {
     }
 
     private static void addTypeConversions(JsonDeserializer.Builder result) {
-        result.addTypeConversion(WorldAction.class, CardPlayAction.class,
-                (action) -> (world, target) -> action.alterWorld(world));
-
         result.addTypeConversion(WorldAction.class, WorldEventAction.class,
                 (action) -> (world, self, eventSource) -> action.alterWorld(world));
         result.addTypeConversion(TargetlessAction.class, WorldEventAction.class, (action) -> {
@@ -242,30 +236,6 @@ public final class ParserUtils {
 
         result.addTypeConversion(Buff.class, PermanentBuff.class,
                 (action) -> action.toPermanent());
-
-        // FIXME: These are temporary conversion and will need only until all previous
-        //   action types get replaced with the new mechanic.
-        @SuppressWarnings("unchecked")
-        Class<TargetedAction<Card, TargetableCharacter>> playTargetedActionClass
-                = (Class<TargetedAction<Card, TargetableCharacter>>)(Class<?>)TargetedAction.class;
-        result.addTypeConversion(playTargetedActionClass, CardPlayAction.class, (action) -> {
-            return (World world, CardPlayArg arg) -> {
-                PlayTarget target = arg.getTarget();
-                TargetableCharacter characterTarget = target.getTarget();
-                return characterTarget != null
-                        ? action.alterWorld(world, arg.getCard(), characterTarget)
-                        : UndoAction.DO_NOTHING;
-            };
-        });
-
-        @SuppressWarnings("unchecked")
-        Class<TargetlessAction<Card>> playTargetlessActionClass
-                = (Class<TargetlessAction<Card>>)(Class<?>)TargetlessAction.class;
-        result.addTypeConversion(playTargetlessActionClass, CardPlayAction.class, (action) -> {
-            return (World world, CardPlayArg arg) -> {
-                return action.alterWorld(world, arg.getCard());
-            };
-        });
     }
 
     private static void addCustomStringParsers(Supplier<HearthStoneDb> dbRef, JsonDeserializer.Builder result) {
@@ -563,6 +533,72 @@ public final class ParserUtils {
             }
             return true;
         };
+    }
+
+    private static <Actor, Target> TargetedAction<? super Actor, ? super TargetableCharacter> parseTargetedAction(
+            JsonDeserializer objectParser,
+            JsonTree actionElement,
+            Class<Actor> actorType,
+            Class<Target> targetType) throws ObjectParsingException {
+        @SuppressWarnings("unchecked")
+        TargetedAction<? super Actor, ? super Target> result = objectParser.toJavaObject(
+                actionElement,
+                TargetedAction.class,
+                TypeCheckers.genericTypeChecker(TargetedAction.class, actorType, targetType));
+        return (world, actor, target) -> {
+            if (targetType.isInstance(target)) {
+                return result.alterWorld(world, actor, targetType.cast(target));
+            }
+            else {
+                return UndoAction.DO_NOTHING;
+            }
+        };
+    }
+
+    private static <Actor> TargetedAction<? super Actor, ? super TargetableCharacter> parseTargetedActionRaw(
+            JsonDeserializer objectParser,
+            JsonTree actionElement,
+            TargetNeed targetNeed,
+            Class<Actor> actorType) throws ObjectParsingException {
+
+        if (!targetNeed.mayTargetHero()) {
+            if (!targetNeed.mayTargetMinion()) {
+                @SuppressWarnings("unchecked")
+                TargetlessAction<Actor> result = objectParser.toJavaObject(
+                        actionElement,
+                        TargetlessAction.class,
+                        TypeCheckers.genericTypeChecker(TargetlessAction.class, actorType));
+                return (world, actor, target) -> result.alterWorld(world, actor);
+            }
+            else {
+                return parseTargetedAction(objectParser, actionElement, actorType, Minion.class);
+            }
+        }
+        else {
+            if (!targetNeed.mayTargetMinion()) {
+                return parseTargetedAction(objectParser, actionElement, actorType, Hero.class);
+            }
+            else {
+                return parseTargetedAction(objectParser, actionElement, actorType, TargetableCharacter.class);
+            }
+        }
+    }
+
+    public static <Actor> TargetedAction<? super Actor, ? super TargetableCharacter> parseTargetedAction(
+            JsonDeserializer objectParser,
+            JsonTree actionElement,
+            TargetNeed targetNeed,
+            Class<Actor> actorType) throws ObjectParsingException {
+
+        if (actionElement.isJsonObject() && actionElement.getChild("class") == null) {
+            JsonTree actionsDefElement = actionElement.getChild("actions");
+            if (actionsDefElement == null) {
+                throw new ObjectParsingException("Missing action definition for CardPlayAction.");
+            }
+            return parseTargetedActionRaw(objectParser, actionsDefElement, targetNeed, actorType);
+        }
+
+        return parseTargetedActionRaw(objectParser, actionElement, targetNeed, actorType);
     }
 
     private static final class BuffDescr {

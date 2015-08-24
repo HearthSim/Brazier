@@ -1,6 +1,5 @@
 package com.github.kelemen.brazier.parsing;
 
-import com.github.kelemen.brazier.Hero;
 import com.github.kelemen.brazier.Keyword;
 import com.github.kelemen.brazier.Keywords;
 import com.github.kelemen.brazier.TargetableCharacter;
@@ -9,7 +8,6 @@ import com.github.kelemen.brazier.actions.BattleCryAction;
 import com.github.kelemen.brazier.actions.PlayActionRequirement;
 import com.github.kelemen.brazier.actions.TargetNeed;
 import com.github.kelemen.brazier.actions.TargetedAction;
-import com.github.kelemen.brazier.actions.TargetlessAction;
 import com.github.kelemen.brazier.actions.UndoAction;
 import com.github.kelemen.brazier.cards.CardDescr;
 import com.github.kelemen.brazier.minions.Minion;
@@ -47,58 +45,14 @@ public final class MinionParser {
         };
     }
 
-    private <T> TargetedAction<? super Minion, ? super TargetableCharacter> parseBattleCryAction(
-            JsonTree battleCryElement,
-            Class<T> targetType) throws ObjectParsingException {
-        @SuppressWarnings("unchecked")
-        TargetedAction<? super Minion, ? super T> result = objectParser.toJavaObject(
-                battleCryElement,
-                TargetedAction.class,
-                TypeCheckers.genericTypeChecker(TargetedAction.class, Minion.class, targetType));
-        return (world, actor, target) -> {
-            if (targetType.isInstance(target)) {
-                return result.alterWorld(world, actor, targetType.cast(target));
-            }
-            else {
-                return UndoAction.DO_NOTHING;
-            }
-        };
-    }
-
-    private TargetedAction<? super Minion, ? super TargetableCharacter> parseBattleCryAction(
-            JsonTree battleCryElement,
-            TargetNeed targetNeed) throws ObjectParsingException {
-
-        if (!targetNeed.mayTargetHero()) {
-            if (!targetNeed.mayTargetMinion()) {
-                @SuppressWarnings("unchecked")
-                TargetlessAction<Minion> result = objectParser.toJavaObject(
-                        battleCryElement,
-                        TargetlessAction.class,
-                        TypeCheckers.genericTypeChecker(TargetlessAction.class, Minion.class));
-                return (world, actor, target) -> result.alterWorld(world, actor);
-            }
-            else {
-                return parseBattleCryAction(battleCryElement, Minion.class);
-            }
-        }
-        else {
-            if (!targetNeed.mayTargetMinion()) {
-                return parseBattleCryAction(battleCryElement, Hero.class);
-            }
-            else {
-                return parseBattleCryAction(battleCryElement, TargetableCharacter.class);
-            }
-        }
-    }
-
     private void parseSingleBattleCry(
             JsonTree battleCryElement,
             MinionDescr.Builder abilities) throws ObjectParsingException {
 
         TargetNeed targetNeed = ParserUtils.getTargetNeedOfAction(objectParser, battleCryElement);
         PlayActionRequirement requirement = ParserUtils.getPlayRequirementOfAction(objectParser, battleCryElement);
-        TargetedAction<? super Minion, ? super TargetableCharacter> action = parseBattleCryAction(battleCryElement, targetNeed);
+        TargetedAction<? super Minion, ? super TargetableCharacter> action
+                = ParserUtils.parseTargetedAction(objectParser, battleCryElement, targetNeed, Minion.class);
 
         PlayActionRequirement actionCondition = ParserUtils.getActionConditionOfAction(objectParser, battleCryElement);
         action = addCondition(actionCondition, action);
