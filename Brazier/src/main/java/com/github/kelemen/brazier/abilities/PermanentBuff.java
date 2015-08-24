@@ -1,6 +1,8 @@
-package com.github.kelemen.brazier.actions;
+package com.github.kelemen.brazier.abilities;
 
 import com.github.kelemen.brazier.World;
+import com.github.kelemen.brazier.actions.UndoAction;
+import com.github.kelemen.brazier.actions.UndoBuilder;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;

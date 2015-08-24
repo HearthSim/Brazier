@@ -7,7 +7,6 @@ import com.github.kelemen.brazier.LabeledEntity;
 import com.github.kelemen.brazier.TargetableCharacter;
 import com.github.kelemen.brazier.World;
 import com.github.kelemen.brazier.actions.ActionUtils;
-import com.github.kelemen.brazier.actions.PermanentBuff;
 import com.github.kelemen.brazier.actions.UndoAction;
 import com.github.kelemen.brazier.events.UndoableUnregisterRef;
 import com.github.kelemen.brazier.minions.Minion;

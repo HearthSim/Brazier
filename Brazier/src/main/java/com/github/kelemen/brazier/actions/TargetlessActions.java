@@ -29,6 +29,7 @@ import com.github.kelemen.brazier.abilities.AuraTargetProvider;
 import com.github.kelemen.brazier.abilities.Auras;
 import com.github.kelemen.brazier.abilities.Buff;
 import com.github.kelemen.brazier.abilities.CardAuras;
+import com.github.kelemen.brazier.abilities.PermanentBuff;
 import com.github.kelemen.brazier.abilities.TargetedActiveAura;
 import com.github.kelemen.brazier.cards.Card;
 import com.github.kelemen.brazier.cards.CardDescr;

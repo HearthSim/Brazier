@@ -18,6 +18,7 @@ import com.github.kelemen.brazier.abilities.ActivatableAbility;
 import com.github.kelemen.brazier.abilities.AuraAwareIntProperty;
 import com.github.kelemen.brazier.abilities.Buff;
 import com.github.kelemen.brazier.abilities.HpProperty;
+import com.github.kelemen.brazier.abilities.PermanentBuff;
 import com.github.kelemen.brazier.cards.Card;
 import com.github.kelemen.brazier.cards.CardDescr;
 import com.github.kelemen.brazier.events.UndoableUnregisterRef;
