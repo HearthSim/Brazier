@@ -1,6 +1,7 @@
-package com.github.kelemen.brazier.actions;
+package com.github.kelemen.brazier.events;
 
 import com.github.kelemen.brazier.Priorities;
+import com.github.kelemen.brazier.actions.WorldObjectAction;
 
 public interface WorldActionEventsRegistry<T> {
     public default UndoableUnregisterRef addAction(WorldObjectAction<T> action) {

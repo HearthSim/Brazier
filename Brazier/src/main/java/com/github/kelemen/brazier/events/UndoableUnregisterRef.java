@@ -1,5 +1,6 @@
-package com.github.kelemen.brazier.actions;
+package com.github.kelemen.brazier.events;
 
+import com.github.kelemen.brazier.actions.UndoAction;
 import java.util.concurrent.atomic.AtomicBoolean;
 import org.jtrim.utils.ExceptionHelper;
 

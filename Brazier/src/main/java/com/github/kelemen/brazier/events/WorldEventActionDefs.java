@@ -1,17 +1,11 @@
-package com.github.kelemen.brazier.actions;
+package com.github.kelemen.brazier.events;
 
 import com.github.kelemen.brazier.Player;
 import com.github.kelemen.brazier.PlayerProperty;
 import com.github.kelemen.brazier.Secret;
 import com.github.kelemen.brazier.abilities.ActivatableAbility;
+import com.github.kelemen.brazier.actions.AttackRequest;
 import com.github.kelemen.brazier.cards.Card;
-import com.github.kelemen.brazier.event.ArmorGainedEvent;
-import com.github.kelemen.brazier.event.CardPlayEvent;
-import com.github.kelemen.brazier.event.CardPlayedEvent;
-import com.github.kelemen.brazier.event.CompletableWorldEventBasedActionDef;
-import com.github.kelemen.brazier.event.DamageEvent;
-import com.github.kelemen.brazier.event.DamageRequest;
-import com.github.kelemen.brazier.event.WorldEvents;
 import com.github.kelemen.brazier.minions.Minion;
 import com.github.kelemen.brazier.weapons.Weapon;
 import java.util.ArrayList;

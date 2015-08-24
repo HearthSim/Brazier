@@ -1,11 +1,8 @@
-package com.github.kelemen.brazier.actions;
+package com.github.kelemen.brazier.events;
 
 import com.github.kelemen.brazier.PlayerProperty;
 import com.github.kelemen.brazier.World;
-import com.github.kelemen.brazier.event.CompletableWorldActionEventsRegistry;
-import com.github.kelemen.brazier.event.CompletableWorldEventBasedActionDef;
-import com.github.kelemen.brazier.event.CompleteWorldEventAction;
-import com.github.kelemen.brazier.event.WorldEvents;
+import com.github.kelemen.brazier.actions.UndoAction;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Function;

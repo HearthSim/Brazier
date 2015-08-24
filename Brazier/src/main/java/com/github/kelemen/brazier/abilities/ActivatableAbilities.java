@@ -3,7 +3,7 @@ package com.github.kelemen.brazier.abilities;
 import com.github.kelemen.brazier.PreparedResult;
 import com.github.kelemen.brazier.actions.UndoAction;
 import com.github.kelemen.brazier.actions.UndoBuilder;
-import com.github.kelemen.brazier.actions.UndoableUnregisterRef;
+import com.github.kelemen.brazier.events.UndoableUnregisterRef;
 import java.util.ArrayList;
 import java.util.List;
 import org.jtrim.utils.ExceptionHelper;

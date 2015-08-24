@@ -16,6 +16,7 @@ import com.github.kelemen.brazier.actions.EntityFilter;
 import com.github.kelemen.brazier.actions.EntityFilters;
 import com.github.kelemen.brazier.actions.EntitySelector;
 import com.github.kelemen.brazier.actions.PermanentBuff;
+import com.github.kelemen.brazier.actions.PlayActionDef;
 import com.github.kelemen.brazier.actions.PlayActionRequirement;
 import com.github.kelemen.brazier.actions.TargetNeed;
 import com.github.kelemen.brazier.actions.TargetedAction;
@@ -24,13 +25,13 @@ import com.github.kelemen.brazier.actions.TargetedEntitySelector;
 import com.github.kelemen.brazier.actions.TargetlessAction;
 import com.github.kelemen.brazier.actions.UndoAction;
 import com.github.kelemen.brazier.actions.WorldAction;
-import com.github.kelemen.brazier.actions.WorldEventAction;
-import com.github.kelemen.brazier.actions.WorldEventActionDefs;
-import com.github.kelemen.brazier.actions.WorldEventFilter;
 import com.github.kelemen.brazier.actions.WorldObjectAction;
 import com.github.kelemen.brazier.cards.CardDescr;
 import com.github.kelemen.brazier.cards.CardId;
 import com.github.kelemen.brazier.cards.CardProvider;
+import com.github.kelemen.brazier.events.WorldEventAction;
+import com.github.kelemen.brazier.events.WorldEventActionDefs;
+import com.github.kelemen.brazier.events.WorldEventFilter;
 import com.github.kelemen.brazier.minions.Minion;
 import com.github.kelemen.brazier.minions.MinionDescr;
 import com.github.kelemen.brazier.minions.MinionId;
@@ -599,6 +600,61 @@ public final class ParserUtils {
         }
 
         return parseTargetedActionRaw(objectParser, actionElement, targetNeed, actorType);
+    }
+
+    public static <Actor extends PlayerProperty> PlayActionDef<Actor> parseSinglePlayActionDef(
+            JsonDeserializer objectParser,
+            JsonTree battleCryElement,
+            Class<Actor> actorType) throws ObjectParsingException {
+
+        TargetNeed targetNeed = ParserUtils.getTargetNeedOfAction(objectParser, battleCryElement);
+        PlayActionRequirement requirement = ParserUtils.getPlayRequirementOfAction(objectParser, battleCryElement);
+        TargetedAction<? super Actor, ? super TargetableCharacter> action
+                = parseTargetedAction(objectParser, battleCryElement, targetNeed, actorType);
+
+        PlayActionRequirement actionCondition = ParserUtils.getActionConditionOfAction(objectParser, battleCryElement);
+        action = addCondition(actionCondition, action);
+
+        return new PlayActionDef<>(targetNeed, requirement, action);
+    }
+
+    public static <Actor extends PlayerProperty> boolean parsePlayActionDefs(
+            JsonDeserializer objectParser,
+            JsonTree actionDefsElement,
+            Class<Actor> actorType,
+            Consumer<PlayActionDef<Actor>> actionDefProcessor) throws ObjectParsingException {
+
+        if (actionDefsElement == null) {
+            return false;
+        }
+
+        if (actionDefsElement.isJsonArray()) {
+            for (JsonTree singleActionDefElement: actionDefsElement.getChildren()) {
+                actionDefProcessor.accept(parseSinglePlayActionDef(objectParser, singleActionDefElement, actorType));
+            }
+            return actionDefsElement.getChildCount() > 0;
+        }
+        else {
+            actionDefProcessor.accept(parseSinglePlayActionDef(objectParser, actionDefsElement, actorType));
+            return true;
+        }
+    }
+
+    private static <Actor extends PlayerProperty> TargetedAction<? super Actor, ? super TargetableCharacter> addCondition(
+            PlayActionRequirement condition,
+            TargetedAction<? super Actor, ? super TargetableCharacter> action) {
+        if (condition == PlayActionRequirement.ALLOWED) {
+            return action;
+        }
+
+        return (World world, Actor actor, TargetableCharacter target) -> {
+            if (condition.meetsRequirement(actor.getOwner())) {
+                return action.alterWorld(world, actor, target);
+            }
+            else {
+                return UndoAction.DO_NOTHING;
+            }
+        };
     }
 
     private static final class BuffDescr {

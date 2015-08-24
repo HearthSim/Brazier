@@ -1,6 +1,7 @@
-package com.github.kelemen.brazier.actions;
+package com.github.kelemen.brazier.events;
 
 import com.github.kelemen.brazier.World;
+import com.github.kelemen.brazier.actions.BasicFilters;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;

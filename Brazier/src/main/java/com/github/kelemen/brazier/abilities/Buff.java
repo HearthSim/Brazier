@@ -2,8 +2,8 @@ package com.github.kelemen.brazier.abilities;
 
 import com.github.kelemen.brazier.World;
 import com.github.kelemen.brazier.actions.PermanentBuff;
-import com.github.kelemen.brazier.actions.UndoableUnregisterRef;
-import com.github.kelemen.brazier.actions.UndoableUnregisterRefBuilder;
+import com.github.kelemen.brazier.events.UndoableUnregisterRef;
+import com.github.kelemen.brazier.events.UndoableUnregisterRefBuilder;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;

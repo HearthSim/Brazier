@@ -1,4 +1,6 @@
-package com.github.kelemen.brazier.actions;
+package com.github.kelemen.brazier.events;
+
+import com.github.kelemen.brazier.actions.UndoAction;
 
 public interface WorldActionEvents<T> extends WorldActionEventsRegistry<T> {
     public default UndoAction triggerEvent(T object) {

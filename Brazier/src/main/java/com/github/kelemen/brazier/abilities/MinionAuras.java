@@ -11,7 +11,7 @@ import com.github.kelemen.brazier.SummonLocationRef;
 import com.github.kelemen.brazier.TargetableCharacter;
 import com.github.kelemen.brazier.World;
 import com.github.kelemen.brazier.actions.ActionUtils;
-import com.github.kelemen.brazier.actions.UndoableUnregisterRefBuilder;
+import com.github.kelemen.brazier.events.UndoableUnregisterRefBuilder;
 import com.github.kelemen.brazier.minions.Minion;
 import com.github.kelemen.brazier.parsing.NamedArg;
 import java.util.ArrayList;

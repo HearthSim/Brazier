@@ -2,8 +2,8 @@ package com.github.kelemen.brazier;
 
 import com.github.kelemen.brazier.abilities.ActivatableAbility;
 import com.github.kelemen.brazier.actions.UndoAction;
-import com.github.kelemen.brazier.actions.UndoableUnregisterRef;
 import com.github.kelemen.brazier.cards.CardDescr;
+import com.github.kelemen.brazier.events.UndoableUnregisterRef;
 import java.util.Set;
 import org.jtrim.utils.ExceptionHelper;
 

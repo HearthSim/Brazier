@@ -1,31 +1,26 @@
-package com.github.kelemen.brazier.cards;
+package com.github.kelemen.brazier.actions;
 
 import com.github.kelemen.brazier.Player;
 import com.github.kelemen.brazier.TargetableCharacter;
 import com.github.kelemen.brazier.World;
-import com.github.kelemen.brazier.actions.CardPlayArg;
-import com.github.kelemen.brazier.actions.PlayActionRequirement;
-import com.github.kelemen.brazier.actions.TargetNeed;
-import com.github.kelemen.brazier.actions.TargetedAction;
-import com.github.kelemen.brazier.actions.UndoAction;
-import com.github.kelemen.brazier.actions.WorldObjectAction;
+import com.github.kelemen.brazier.cards.Card;
 import java.util.Collection;
 import org.jtrim.utils.ExceptionHelper;
 
-public final class CardPlayActionDef implements WorldObjectAction<CardPlayArg> {
-    public static final CardPlayActionDef UNPLAYABLE = new CardPlayActionDef(
+public final class PlayActionDef<Actor> implements WorldObjectAction<PlayArg<Actor>> {
+    public static final PlayActionDef<Card> UNPLAYABLE_CARD = new PlayActionDef<>(
             TargetNeed.NO_NEED,
             (target) -> false,
             TargetedAction.DO_NOTHING);
 
     private final TargetNeed targetNeed;
     private final PlayActionRequirement requirement;
-    private final TargetedAction<? super Card, ? super TargetableCharacter> action;
+    private final TargetedAction<? super Actor, ? super TargetableCharacter> action;
 
-    public CardPlayActionDef(
+    public PlayActionDef(
             TargetNeed targetNeed,
             PlayActionRequirement requirement,
-            TargetedAction<? super Card, ? super TargetableCharacter> action) {
+            TargetedAction<? super Actor, ? super TargetableCharacter> action) {
         ExceptionHelper.checkNotNullArgument(targetNeed, "targetNeed");
         ExceptionHelper.checkNotNullArgument(requirement, "requirement");
         ExceptionHelper.checkNotNullArgument(action, "action");
@@ -35,9 +30,9 @@ public final class CardPlayActionDef implements WorldObjectAction<CardPlayArg> {
         this.action = action;
     }
 
-    public static TargetNeed combineNeeds(Player player, Collection<? extends CardPlayActionDef> actions) {
+    public static <Actor> TargetNeed combineNeeds(Player player, Collection<? extends PlayActionDef<Actor>> actions) {
         TargetNeed result = TargetNeed.NO_NEED;
-        for (CardPlayActionDef action: actions) {
+        for (PlayActionDef<?> action: actions) {
             if (action.getRequirement().meetsRequirement(player)) {
                 result = result.combine(action.getTargetNeed());
             }
@@ -53,13 +48,13 @@ public final class CardPlayActionDef implements WorldObjectAction<CardPlayArg> {
         return requirement;
     }
 
-    public TargetedAction<? super Card, ? super TargetableCharacter> getAction() {
+    public TargetedAction<? super Actor, ? super TargetableCharacter> getAction() {
         return action;
     }
 
     @Override
-    public UndoAction alterWorld(World world, CardPlayArg arg) {
-        return action.alterWorld(world, arg.getCard(), arg.getTarget().getTarget());
+    public UndoAction alterWorld(World world, PlayArg<Actor> arg) {
+        return action.alterWorld(world, arg.getActor(), arg.getTarget().getTarget());
     }
 
     @Override

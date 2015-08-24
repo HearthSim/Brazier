@@ -1,10 +1,8 @@
-package com.github.kelemen.brazier.event;
+package com.github.kelemen.brazier.events;
 
 import com.github.kelemen.brazier.PlayerProperty;
 import com.github.kelemen.brazier.World;
 import com.github.kelemen.brazier.actions.UndoAction;
-import com.github.kelemen.brazier.actions.UndoableUnregisterRef;
-import com.github.kelemen.brazier.actions.UndoableUnregisterRefBuilder;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Function;

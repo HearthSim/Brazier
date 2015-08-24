@@ -18,6 +18,8 @@ import com.github.kelemen.brazier.abilities.ActivatableAbility;
 import com.github.kelemen.brazier.abilities.HpProperty;
 import com.github.kelemen.brazier.cards.Card;
 import com.github.kelemen.brazier.cards.CardDescr;
+import com.github.kelemen.brazier.events.UndoableUnregisterRef;
+import com.github.kelemen.brazier.events.WorldActionEvents;
 import com.github.kelemen.brazier.minions.Minion;
 import com.github.kelemen.brazier.minions.MinionDescr;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package com.github.kelemen.brazier.event;
+package com.github.kelemen.brazier.events;
 
 import com.github.kelemen.brazier.UndoableResult;
 import com.github.kelemen.brazier.actions.UndoableAction;

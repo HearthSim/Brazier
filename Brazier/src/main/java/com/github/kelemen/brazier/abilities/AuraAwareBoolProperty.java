@@ -2,7 +2,7 @@ package com.github.kelemen.brazier.abilities;
 
 import com.github.kelemen.brazier.Silencable;
 import com.github.kelemen.brazier.actions.UndoAction;
-import com.github.kelemen.brazier.actions.UndoableUnregisterRef;
+import com.github.kelemen.brazier.events.UndoableUnregisterRef;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public final class AuraAwareBoolProperty implements Silencable {

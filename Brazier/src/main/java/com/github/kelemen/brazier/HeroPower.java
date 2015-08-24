@@ -1,6 +1,7 @@
 package com.github.kelemen.brazier;
 
-import com.github.kelemen.brazier.actions.CardPlayArg;
+import com.github.kelemen.brazier.actions.PlayActionDef;
+import com.github.kelemen.brazier.actions.PlayArg;
 import com.github.kelemen.brazier.actions.PlayTarget;
 import com.github.kelemen.brazier.actions.TargetNeed;
 import com.github.kelemen.brazier.actions.UndoAction;
@@ -8,7 +9,6 @@ import com.github.kelemen.brazier.actions.UndoBuilder;
 import com.github.kelemen.brazier.cards.Card;
 import com.github.kelemen.brazier.cards.CardDescr;
 import com.github.kelemen.brazier.cards.CardId;
-import com.github.kelemen.brazier.cards.CardPlayActionDef;
 import com.github.kelemen.brazier.cards.CardType;
 import java.util.concurrent.atomic.AtomicReference;
 import org.jtrim.utils.ExceptionHelper;
@@ -61,7 +61,7 @@ public final class HeroPower implements PlayerProperty {
     }
 
     public TargetNeed getTargetNeed(Player player) {
-        return CardPlayActionDef.combineNeeds(player, powerDef.getOnPlayActions());
+        return PlayActionDef.combineNeeds(player, powerDef.getOnPlayActions());
     }
 
     public boolean isPlayable(Player player) {
@@ -74,7 +74,7 @@ public final class HeroPower implements PlayerProperty {
             return false;
         }
 
-        for (CardPlayActionDef action: powerDef.getOnPlayActions()) {
+        for (PlayActionDef<Card> action: powerDef.getOnPlayActions()) {
             if (action.getRequirement().meetsRequirement(player)) {
                 return true;
             }
@@ -83,7 +83,7 @@ public final class HeroPower implements PlayerProperty {
     }
 
     public UndoAction alterWorld(World world, PlayTarget target) {
-        CardPlayArg playArg = new CardPlayArg(getBaseCard(), target);
+        PlayArg<Card> playArg = new PlayArg<>(getBaseCard(), target);
 
         Player owner = getOwner();
 
@@ -93,7 +93,7 @@ public final class HeroPower implements PlayerProperty {
         useCount++;
         result.addUndo(() -> useCount--);
 
-        for (CardPlayActionDef action: powerDef.getOnPlayActions()) {
+        for (PlayActionDef<Card> action: powerDef.getOnPlayActions()) {
             result.addUndo(action.alterWorld(world, playArg));
         }
         return result;

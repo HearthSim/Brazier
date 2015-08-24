@@ -4,7 +4,7 @@ import com.github.kelemen.brazier.Player;
 import com.github.kelemen.brazier.World;
 import com.github.kelemen.brazier.actions.UndoAction;
 import com.github.kelemen.brazier.actions.UndoBuilder;
-import com.github.kelemen.brazier.actions.UndoableUnregisterRef;
+import com.github.kelemen.brazier.events.UndoableUnregisterRef;
 import java.util.HashMap;
 import java.util.IdentityHashMap;
 import java.util.List;

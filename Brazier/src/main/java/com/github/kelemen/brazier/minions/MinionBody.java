@@ -7,8 +7,8 @@ import com.github.kelemen.brazier.abilities.AuraAwareBoolProperty;
 import com.github.kelemen.brazier.abilities.AuraAwareIntProperty;
 import com.github.kelemen.brazier.abilities.HpProperty;
 import com.github.kelemen.brazier.actions.UndoAction;
-import com.github.kelemen.brazier.event.DamageEvent;
-import com.github.kelemen.brazier.event.WorldEvents;
+import com.github.kelemen.brazier.events.DamageEvent;
+import com.github.kelemen.brazier.events.WorldEvents;
 import org.jtrim.utils.ExceptionHelper;
 
 public final class MinionBody implements Silencable {

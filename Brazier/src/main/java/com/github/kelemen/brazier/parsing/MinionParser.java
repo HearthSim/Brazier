@@ -2,13 +2,6 @@ package com.github.kelemen.brazier.parsing;
 
 import com.github.kelemen.brazier.Keyword;
 import com.github.kelemen.brazier.Keywords;
-import com.github.kelemen.brazier.TargetableCharacter;
-import com.github.kelemen.brazier.World;
-import com.github.kelemen.brazier.actions.BattleCryAction;
-import com.github.kelemen.brazier.actions.PlayActionRequirement;
-import com.github.kelemen.brazier.actions.TargetNeed;
-import com.github.kelemen.brazier.actions.TargetedAction;
-import com.github.kelemen.brazier.actions.UndoAction;
 import com.github.kelemen.brazier.cards.CardDescr;
 import com.github.kelemen.brazier.minions.Minion;
 import com.github.kelemen.brazier.minions.MinionDescr;
@@ -26,58 +19,6 @@ public final class MinionParser {
 
         this.eventNotificationParser = new EventNotificationParser<>(Minion.class, objectParser);
         this.objectParser = objectParser;
-    }
-
-    private static TargetedAction<? super Minion, ? super TargetableCharacter> addCondition(
-            PlayActionRequirement condition,
-            TargetedAction<? super Minion, ? super TargetableCharacter> action) {
-        if (condition == PlayActionRequirement.ALLOWED) {
-            return action;
-        }
-
-        return (World world, Minion actor, TargetableCharacter target) -> {
-            if (condition.meetsRequirement(actor.getOwner())) {
-                return action.alterWorld(world, actor, target);
-            }
-            else {
-                return UndoAction.DO_NOTHING;
-            }
-        };
-    }
-
-    private void parseSingleBattleCry(
-            JsonTree battleCryElement,
-            MinionDescr.Builder abilities) throws ObjectParsingException {
-
-        TargetNeed targetNeed = ParserUtils.getTargetNeedOfAction(objectParser, battleCryElement);
-        PlayActionRequirement requirement = ParserUtils.getPlayRequirementOfAction(objectParser, battleCryElement);
-        TargetedAction<? super Minion, ? super TargetableCharacter> action
-                = ParserUtils.parseTargetedAction(objectParser, battleCryElement, targetNeed, Minion.class);
-
-        PlayActionRequirement actionCondition = ParserUtils.getActionConditionOfAction(objectParser, battleCryElement);
-        action = addCondition(actionCondition, action);
-
-        abilities.addBattleCry(new BattleCryAction(targetNeed, requirement, action));
-    }
-
-    private boolean parseBattleCries(
-            JsonTree battleCriesElement,
-            MinionDescr.Builder abilities) throws ObjectParsingException {
-
-        if (battleCriesElement == null) {
-            return false;
-        }
-
-        if (battleCriesElement.isJsonArray()) {
-            for (JsonTree singleBattleCryElement: battleCriesElement.getChildren()) {
-                parseSingleBattleCry(singleBattleCryElement, abilities);
-            }
-            return battleCriesElement.getChildCount() > 0;
-        }
-        else {
-            parseSingleBattleCry(battleCriesElement, abilities);
-            return true;
-        }
     }
 
     public MinionDescr fromJson(
@@ -151,7 +92,12 @@ public final class MinionParser {
 
         keywords.forEach(result::addKeyword);
 
-        if (parseBattleCries(root.getChild("battleCries"), result)) {
+        boolean hasBattleCry = ParserUtils.parsePlayActionDefs(
+                objectParser,
+                root.getChild("battleCries"),
+                Minion.class,
+                result::addBattleCry);
+        if (hasBattleCry) {
             result.addKeyword(Keywords.BATTLE_CRY);
         }
 

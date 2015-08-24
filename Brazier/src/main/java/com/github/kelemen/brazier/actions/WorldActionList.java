@@ -2,6 +2,8 @@ package com.github.kelemen.brazier.actions;
 
 import com.github.kelemen.brazier.Priorities;
 import com.github.kelemen.brazier.World;
+import com.github.kelemen.brazier.events.UndoableUnregisterRef;
+import com.github.kelemen.brazier.events.WorldActionEvents;
 import java.util.ArrayList;
 import java.util.Collection;
 import org.jtrim.collections.RefLinkedList;

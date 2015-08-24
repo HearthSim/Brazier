@@ -5,11 +5,12 @@ import com.github.kelemen.brazier.Keyword;
 import com.github.kelemen.brazier.Keywords;
 import com.github.kelemen.brazier.Player;
 import com.github.kelemen.brazier.abilities.ActivatableAbility;
-import com.github.kelemen.brazier.actions.BattleCryAction;
 import com.github.kelemen.brazier.actions.ManaCostAdjuster;
+import com.github.kelemen.brazier.actions.PlayActionDef;
 import com.github.kelemen.brazier.actions.TargetNeed;
 import com.github.kelemen.brazier.actions.TargetlessAction;
-import com.github.kelemen.brazier.actions.UndoableUnregisterRef;
+import com.github.kelemen.brazier.events.UndoableUnregisterRef;
+import com.github.kelemen.brazier.minions.Minion;
 import com.github.kelemen.brazier.minions.MinionDescr;
 import com.github.kelemen.brazier.weapons.WeaponDescr;
 import java.util.ArrayList;
@@ -37,7 +38,7 @@ public final class CardDescr implements HearthStoneEntity {
         private CardRarity rarity;
 
         private final List<TargetlessAction<? super Card>> onDrawActions;
-        private final List<CardPlayActionDef> onPlayActions;
+        private final List<PlayActionDef<Card>> onPlayActions;
         private final List<ManaCostAdjuster> manaCostAdjusters;
         private final List<CardProvider> chooseOneActions;
         private ActivatableAbility<? super Card> inHandAbility;
@@ -109,7 +110,7 @@ public final class CardDescr implements HearthStoneEntity {
             this.onDrawActions.add(onDrawAction);
         }
 
-        public void addOnPlayAction(CardPlayActionDef onPlayAction) {
+        public void addOnPlayAction(PlayActionDef<Card> onPlayAction) {
             ExceptionHelper.checkNotNullArgument(onPlayAction, "onPlayAction");
             this.onPlayActions.add(onPlayAction);
         }
@@ -164,7 +165,7 @@ public final class CardDescr implements HearthStoneEntity {
     private final WeaponDescr weapon;
 
     private final List<TargetlessAction<? super Card>> onDrawActions;
-    private final List<CardPlayActionDef> onPlayActions;
+    private final List<PlayActionDef<Card>> onPlayActions;
     private final List<ManaCostAdjuster> manaCostAdjusters;
     private final List<CardProvider> chooseOneActionsRef;
     private final ActivatableAbility<? super Card> inHandAbility;
@@ -243,9 +244,9 @@ public final class CardDescr implements HearthStoneEntity {
     public TargetNeed getCombinedTargetNeed(Player player) {
         ExceptionHelper.checkNotNullArgument(player, "player");
 
-        TargetNeed need = CardPlayActionDef.combineNeeds(player, onPlayActions);
+        TargetNeed need = PlayActionDef.combineNeeds(player, onPlayActions);
         if (minion != null) {
-            for (BattleCryAction battleCry: minion.getBattleCries()) {
+            for (PlayActionDef<Minion> battleCry: minion.getBattleCries()) {
                 if (battleCry.getRequirement().meetsRequirement(player)) {
                     need = need.combine(battleCry.getTargetNeed());
                 }
@@ -271,7 +272,7 @@ public final class CardDescr implements HearthStoneEntity {
         return onDrawActions;
     }
 
-    public List<CardPlayActionDef> getOnPlayActions() {
+    public List<PlayActionDef<Card>> getOnPlayActions() {
         return onPlayActions;
     }
 
@@ -295,7 +296,7 @@ public final class CardDescr implements HearthStoneEntity {
             return true;
         }
 
-        for (CardPlayActionDef action: onPlayActions) {
+        for (PlayActionDef<?> action: onPlayActions) {
             if (action.getRequirement().meetsRequirement(player)) {
                 return true;
             }

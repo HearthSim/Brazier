@@ -1,6 +1,6 @@
 package com.github.kelemen.brazier;
 
-import com.github.kelemen.brazier.actions.UndoableUnregisterRef;
+import com.github.kelemen.brazier.events.UndoableUnregisterRef;
 import java.util.HashMap;
 import java.util.Map;
 import org.jtrim.utils.ExceptionHelper;

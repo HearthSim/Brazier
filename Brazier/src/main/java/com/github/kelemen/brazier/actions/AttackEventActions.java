@@ -3,6 +3,7 @@ package com.github.kelemen.brazier.actions;
 import com.github.kelemen.brazier.Player;
 import com.github.kelemen.brazier.PlayerProperty;
 import com.github.kelemen.brazier.TargetableCharacter;
+import com.github.kelemen.brazier.events.WorldEventAction;
 import com.github.kelemen.brazier.minions.Minion;
 import com.github.kelemen.brazier.minions.MinionProvider;
 import com.github.kelemen.brazier.parsing.NamedArg;

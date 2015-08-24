@@ -1,12 +1,12 @@
 package com.github.kelemen.brazier;
 
-import com.github.kelemen.brazier.actions.BattleCryArg;
+import com.github.kelemen.brazier.actions.PlayArg;
 import com.github.kelemen.brazier.actions.PlayTarget;
 import com.github.kelemen.brazier.actions.UndoAction;
 import com.github.kelemen.brazier.actions.UndoBuilder;
 import com.github.kelemen.brazier.actions.UndoableAction;
-import com.github.kelemen.brazier.event.CompletableWorldActionEvents;
-import com.github.kelemen.brazier.event.WorldEvents;
+import com.github.kelemen.brazier.events.CompletableWorldActionEvents;
+import com.github.kelemen.brazier.events.WorldEvents;
 import com.github.kelemen.brazier.minions.Minion;
 import com.github.kelemen.brazier.minions.MinionBody;
 import com.github.kelemen.brazier.minions.MinionDescr;
@@ -345,7 +345,7 @@ public final class BoardSide {
         result.addUndo(summoningFinalizer.getUndoAction());
 
         if (battleCryTarget != null) {
-            BattleCryArg battleCryArg = new BattleCryArg(minion, battleCryTarget);
+            PlayArg<Minion> battleCryArg = new PlayArg<>(minion, battleCryTarget);
             result.addUndo(minion.getBaseDescr().executeBattleCriesNow(owner, battleCryArg));
         }
         result.addUndo(reservationRef.showMinion());

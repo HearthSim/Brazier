@@ -2,9 +2,9 @@ package com.github.kelemen.brazier.abilities;
 
 import com.github.kelemen.brazier.PlayerProperty;
 import com.github.kelemen.brazier.actions.UndoAction;
-import com.github.kelemen.brazier.actions.UndoableUnregisterRef;
-import com.github.kelemen.brazier.actions.WorldEventAction;
-import com.github.kelemen.brazier.actions.WorldEventActionDefs;
+import com.github.kelemen.brazier.events.UndoableUnregisterRef;
+import com.github.kelemen.brazier.events.WorldEventAction;
+import com.github.kelemen.brazier.events.WorldEventActionDefs;
 import org.jtrim.utils.ExceptionHelper;
 
 public final class LivingEntitysAbilities<Self extends PlayerProperty> {

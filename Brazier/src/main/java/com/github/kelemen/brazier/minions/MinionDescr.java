@@ -8,14 +8,14 @@ import com.github.kelemen.brazier.World;
 import com.github.kelemen.brazier.abilities.ActivatableAbility;
 import com.github.kelemen.brazier.abilities.LivingEntitysAbilities;
 import com.github.kelemen.brazier.abilities.OwnedIntPropertyBuff;
-import com.github.kelemen.brazier.actions.BattleCryAction;
-import com.github.kelemen.brazier.actions.BattleCryArg;
+import com.github.kelemen.brazier.actions.PlayActionDef;
+import com.github.kelemen.brazier.actions.PlayArg;
 import com.github.kelemen.brazier.actions.TargetedAction;
 import com.github.kelemen.brazier.actions.UndoAction;
 import com.github.kelemen.brazier.actions.UndoBuilder;
-import com.github.kelemen.brazier.actions.WorldEventAction;
-import com.github.kelemen.brazier.actions.WorldEventActionDefs;
 import com.github.kelemen.brazier.cards.CardDescr;
+import com.github.kelemen.brazier.events.WorldEventAction;
+import com.github.kelemen.brazier.events.WorldEventActionDefs;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -36,7 +36,7 @@ public final class MinionDescr implements HearthStoneEntity {
         private final Supplier<? extends CardDescr> baseCardRef;
 
         private final Set<Keyword> keywords;
-        private final List<BattleCryAction> battleCries;
+        private final List<PlayActionDef<Minion>> battleCries;
         private boolean taunt;
         private boolean charge;
         private boolean canAttack;
@@ -130,7 +130,7 @@ public final class MinionDescr implements HearthStoneEntity {
             keywords.add(keyword);
         }
 
-        public void addBattleCry(BattleCryAction battleCry) {
+        public void addBattleCry(PlayActionDef<Minion> battleCry) {
             ExceptionHelper.checkNotNullArgument(battleCry, "battleCry");
             battleCries.add(battleCry);
         }
@@ -146,7 +146,7 @@ public final class MinionDescr implements HearthStoneEntity {
     private final int attack;
     private final int hp;
     private final Set<Keyword> keywords;
-    private final List<BattleCryAction> battleCries;
+    private final List<PlayActionDef<Minion>> battleCries;
     private final LivingEntitysAbilities<Minion> abilities;
     private final boolean taunt;
     private final boolean divineShield;
@@ -258,11 +258,11 @@ public final class MinionDescr implements HearthStoneEntity {
         return charge;
     }
 
-    public List<BattleCryAction> getBattleCries() {
+    public List<PlayActionDef<Minion>> getBattleCries() {
         return battleCries;
     }
 
-    public UndoAction executeBattleCriesNow(Player player, BattleCryArg target) {
+    public UndoAction executeBattleCriesNow(Player player, PlayArg<Minion> target) {
         ExceptionHelper.checkNotNullArgument(player, "player");
         ExceptionHelper.checkNotNullArgument(target, "target");
 
@@ -272,7 +272,7 @@ public final class MinionDescr implements HearthStoneEntity {
 
         List<TargetedAction<? super Minion, ? super TargetableCharacter>> actions
                 = new ArrayList<>(battleCries.size());
-        for (BattleCryAction action: battleCries) {
+        for (PlayActionDef<Minion> action: battleCries) {
             if (action.getRequirement().meetsRequirement(player)) {
                 actions.add(action.getAction());
             }
@@ -283,7 +283,7 @@ public final class MinionDescr implements HearthStoneEntity {
         }
 
         World world = player.getWorld();
-        Minion actor = target.getSource();
+        Minion actor = target.getActor();
         TargetableCharacter characterTarget = target.getTarget().getTarget();
 
         UndoBuilder result = new UndoBuilder(actions.size());

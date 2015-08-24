@@ -1,11 +1,10 @@
-package com.github.kelemen.brazier.event;
+package com.github.kelemen.brazier.events;
 
 import com.github.kelemen.brazier.UndoableResult;
 import com.github.kelemen.brazier.World;
 import com.github.kelemen.brazier.actions.UndoAction;
 import com.github.kelemen.brazier.actions.UndoBuilder;
 import com.github.kelemen.brazier.actions.UndoableAction;
-import com.github.kelemen.brazier.actions.UndoableUnregisterRef;
 import java.util.ArrayList;
 import java.util.List;
 import org.jtrim.collections.RefLinkedList;

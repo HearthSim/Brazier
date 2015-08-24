@@ -1,5 +1,7 @@
-package com.github.kelemen.brazier.actions;
+package com.github.kelemen.brazier.events;
 
+import com.github.kelemen.brazier.actions.UndoAction;
+import com.github.kelemen.brazier.actions.UndoBuilder;
 import org.jtrim.utils.ExceptionHelper;
 
 public final class UndoableUnregisterRefBuilder implements UndoableUnregisterRef {

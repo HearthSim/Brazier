@@ -1,7 +1,6 @@
-package com.github.kelemen.brazier.event;
+package com.github.kelemen.brazier.events;
 
 import com.github.kelemen.brazier.Priorities;
-import com.github.kelemen.brazier.actions.UndoableUnregisterRef;
 
 public interface CompletableWorldActionEventsRegistry<T> {
     public default UndoableUnregisterRef addListener(CompletableWorldObjectAction<? super T> listener) {

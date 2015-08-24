@@ -1,4 +1,4 @@
-package com.github.kelemen.brazier.event;
+package com.github.kelemen.brazier.events;
 
 import com.github.kelemen.brazier.Player;
 import com.github.kelemen.brazier.Secret;
@@ -7,9 +7,6 @@ import com.github.kelemen.brazier.World;
 import com.github.kelemen.brazier.actions.AttackRequest;
 import com.github.kelemen.brazier.actions.UndoAction;
 import com.github.kelemen.brazier.actions.UndoableAction;
-import com.github.kelemen.brazier.actions.UndoableUnregisterRef;
-import com.github.kelemen.brazier.actions.WorldActionEvents;
-import com.github.kelemen.brazier.actions.WorldActionEventsRegistry;
 import com.github.kelemen.brazier.actions.WorldActionList;
 import com.github.kelemen.brazier.actions.WorldObjectAction;
 import com.github.kelemen.brazier.cards.Card;

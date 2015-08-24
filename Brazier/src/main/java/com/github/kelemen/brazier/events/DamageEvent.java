@@ -1,4 +1,4 @@
-package com.github.kelemen.brazier.event;
+package com.github.kelemen.brazier.events;
 
 import com.github.kelemen.brazier.DamageSource;
 import com.github.kelemen.brazier.TargetRef;

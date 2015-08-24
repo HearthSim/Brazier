@@ -4,7 +4,8 @@ import com.github.kelemen.brazier.abilities.AuraAwareIntProperty;
 import com.github.kelemen.brazier.abilities.BuffableBoolProperty;
 import com.github.kelemen.brazier.abilities.BuffableIntProperty;
 import com.github.kelemen.brazier.actions.ActionUtils;
-import com.github.kelemen.brazier.actions.CardPlayArg;
+import com.github.kelemen.brazier.actions.PlayActionDef;
+import com.github.kelemen.brazier.actions.PlayArg;
 import com.github.kelemen.brazier.actions.PlayTarget;
 import com.github.kelemen.brazier.actions.PlayTargetRequest;
 import com.github.kelemen.brazier.actions.UndoAction;
@@ -12,10 +13,9 @@ import com.github.kelemen.brazier.actions.UndoBuilder;
 import com.github.kelemen.brazier.actions.WorldActionList;
 import com.github.kelemen.brazier.cards.Card;
 import com.github.kelemen.brazier.cards.CardDescr;
-import com.github.kelemen.brazier.cards.CardPlayActionDef;
-import com.github.kelemen.brazier.event.CardPlayEvent;
-import com.github.kelemen.brazier.event.CardPlayedEvent;
-import com.github.kelemen.brazier.event.WorldEvents;
+import com.github.kelemen.brazier.events.CardPlayEvent;
+import com.github.kelemen.brazier.events.CardPlayedEvent;
+import com.github.kelemen.brazier.events.WorldEvents;
 import com.github.kelemen.brazier.minions.Minion;
 import com.github.kelemen.brazier.minions.MinionDescr;
 import com.github.kelemen.brazier.weapons.Weapon;
@@ -153,22 +153,22 @@ public final class Player implements PlayerProperty {
         return minionsPlayedThisTurn;
     }
 
-    private void getOnPlayActions(CardPlayArg arg, CardDescr cardDescr, List<CardPlayActionDef> result) {
-        for (CardPlayActionDef action: cardDescr.getOnPlayActions()) {
+    private void getOnPlayActions(PlayArg<Card> arg, CardDescr cardDescr, List<PlayActionDef<Card>> result) {
+        for (PlayActionDef<Card> action: cardDescr.getOnPlayActions()) {
             if (action.getRequirement().meetsRequirement(this)) {
                 result.add(action);
             }
         }
     }
 
-    private List<CardPlayActionDef> getOnPlayActions(CardPlayArg arg, CardDescr chooseOneChoice) {
-        CardDescr cardDescr = arg.getCard().getCardDescr();
+    private List<PlayActionDef<Card>> getOnPlayActions(PlayArg<Card> arg, CardDescr chooseOneChoice) {
+        CardDescr cardDescr = arg.getActor().getCardDescr();
 
         int playActionCount = cardDescr.getOnPlayActions().size()
                 + (chooseOneChoice != null ? chooseOneChoice.getOnPlayActions().size() : 0);
 
-        List<CardPlayActionDef> result = new ArrayList<>(playActionCount);
-        getOnPlayActions(arg, arg.getCard().getCardDescr(), result);
+        List<PlayActionDef<Card>> result = new ArrayList<>(playActionCount);
+        getOnPlayActions(arg, arg.getActor().getCardDescr(), result);
         if (chooseOneChoice != null) {
             getOnPlayActions(arg, chooseOneChoice, result);
         }
@@ -176,13 +176,13 @@ public final class Player implements PlayerProperty {
         return result;
     }
 
-    private UndoAction executeCardPlayActions(CardPlayArg arg, List<? extends CardPlayActionDef> actions) {
+    private UndoAction executeCardPlayActions(PlayArg<Card> arg, List<? extends PlayActionDef<Card>> actions) {
         if (actions.isEmpty()) {
             return UndoAction.DO_NOTHING;
         }
 
         UndoBuilder result = new UndoBuilder(actions.size());
-        for (CardPlayActionDef actionDef: actions) {
+        for (PlayActionDef<Card> actionDef: actions) {
             result.addUndo(actionDef.alterWorld(world, arg));
         }
         return result;
@@ -206,13 +206,13 @@ public final class Player implements PlayerProperty {
 
         Player castingPlayer = world.getPlayer(targetRequest.getCastingPlayerId());
         PlayTarget originalTarget = new PlayTarget(castingPlayer, world.findTarget(targetRequest.getTargetId()));
-        CardPlayArg originalCardPlayArg = new CardPlayArg(card, originalTarget);
+        PlayArg<Card> originalCardPlayArg = new PlayArg<>(card, originalTarget);
 
         // We request the on play actions before doing anything because
         // the requirements for playing a card action may no longer met
         // after firing events. However, in this case we must complete the
         // action under these circumstances (when its requirement is not met).
-        List<CardPlayActionDef> onPlayActions = getOnPlayActions(originalCardPlayArg, targetRequest.getChoseOneChoice());
+        List<PlayActionDef<Card>> onPlayActions = getOnPlayActions(originalCardPlayArg, targetRequest.getChoseOneChoice());
 
         UndoBuilder result = new UndoBuilder();
         result.addUndo(manaResource.spendMana(manaCost, card.getCardDescr().getOverload()));
@@ -245,7 +245,7 @@ public final class Player implements PlayerProperty {
             if (!playEvent.isVetodPlay() && reservationRefResult != null) {
                 BoardReservationRef reservationRef = reservationRefResult.getResult();
 
-                CardPlayArg cardPlayArg = playEvent.getCardPlayArg();
+                PlayArg<Card> cardPlayArg = playEvent.getCardPlayArg();
                 result.addUndo(board.summonMinion(reservationRef, cardPlayArg.getTarget()));
                 result.addUndo(executeCardPlayActions(cardPlayArg, onPlayActions));
             }
@@ -253,7 +253,7 @@ public final class Player implements PlayerProperty {
         else {
             result.addUndo(events.startPlayingCardListeners().triggerEvent(false, playEvent));
             if (!playEvent.isVetodPlay()) {
-                CardPlayArg cardPlayArg = playEvent.getCardPlayArg();
+                PlayArg<Card> cardPlayArg = playEvent.getCardPlayArg();
                 result.addUndo(executeCardPlayActions(cardPlayArg, onPlayActions));
             }
         }
