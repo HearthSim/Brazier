@@ -3,6 +3,7 @@ package com.github.kelemen.brazier.actions;
 import com.github.kelemen.hearthstone.emulator.CardPlayEvent;
 import com.github.kelemen.hearthstone.emulator.Damage;
 import com.github.kelemen.hearthstone.emulator.DamageEvent;
+import com.github.kelemen.hearthstone.emulator.DamageRequest;
 import com.github.kelemen.hearthstone.emulator.DamageSource;
 import com.github.kelemen.hearthstone.emulator.Player;
 import com.github.kelemen.hearthstone.emulator.PlayerProperty;
@@ -26,6 +27,10 @@ import org.jtrim.utils.ExceptionHelper;
 public final class WorldEventActions {
     public static final WorldEventAction<PlayerProperty, CardPlayEvent> PREVENT_CARD_PLAY = (world, self, eventSource) -> {
         return eventSource.vetoPlay();
+    };
+
+    public static final WorldEventAction<PlayerProperty, DamageRequest> PREVENT_PREPARED_DAMAGE = (world, self, eventSource) -> {
+        return eventSource.vetoDamage();
     };
 
     public static final WorldEventAction<PlayerProperty, AttackRequest> MISS_TARGET_SOMETIMES

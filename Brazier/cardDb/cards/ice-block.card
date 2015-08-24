@@ -13,10 +13,7 @@
                 "BasicFilters.PREPARED_DAMAGE_IS_LETHAL"
             ],
             "action": [
-                {
-                    "class": "PrepareDamageEventActions.adjustDamage",
-                    "damage": 0
-                },
+                "WorldEventActions.PREVENT_PREPARED_DAMAGE",
                 "PlayerActions.HERO_IS_IMMUNE_THIS_TURN"
             ]
         }

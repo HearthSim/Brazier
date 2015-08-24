@@ -4,8 +4,9 @@ import com.github.kelemen.hearthstone.emulator.actions.UndoAction;
 import org.jtrim.utils.ExceptionHelper;
 
 public final class DamageRequest implements TargetRef, PlayerProperty {
-    private Damage damage;
+    private final Damage damage;
     private final TargetableCharacter target;
+    private boolean vetoDamage;
 
     public DamageRequest(Damage damage, TargetableCharacter target) {
         ExceptionHelper.checkNotNullArgument(damage, "damage");
@@ -13,6 +14,7 @@ public final class DamageRequest implements TargetRef, PlayerProperty {
 
         this.damage = damage;
         this.target = target;
+        this.vetoDamage = false;
     }
 
     @Override
@@ -29,19 +31,12 @@ public final class DamageRequest implements TargetRef, PlayerProperty {
         return damage;
     }
 
-    public UndoAction adjustDamage(int newAttack) {
-        if (damage.getAttack() == newAttack) {
+    public UndoAction vetoDamage() {
+        if (vetoDamage) {
             return UndoAction.DO_NOTHING;
         }
 
-        return adjustDamage(new Damage(damage.getSource(), newAttack));
-    }
-
-    public UndoAction adjustDamage(Damage newDamage) {
-        ExceptionHelper.checkNotNullArgument(newDamage, "newDamage");
-
-        Damage prevDamage = damage;
-        damage = newDamage;
-        return () -> damage = prevDamage;
+        vetoDamage = true;
+        return () -> vetoDamage = false;
     }
 }
