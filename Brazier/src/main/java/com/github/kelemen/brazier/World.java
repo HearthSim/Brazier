@@ -17,7 +17,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
-import org.jtrim.collections.CollectionsEx;
 import org.jtrim.utils.ExceptionHelper;
 
 public final class World {
@@ -253,18 +252,26 @@ public final class World {
     }
 
     private UndoableResult<List<Weapon>> removeDeadWeapons() {
-        UndoableResult<List<Weapon>> deadWeaponsResult1 = player1.removeDeadWeapons();
-        UndoableResult<List<Weapon>> deadWeaponsResult2 = player2.removeDeadWeapons();
+        UndoableResult<Weapon> deadWeaponResult1 = player1.removeDeadWeapon();
+        UndoableResult<Weapon> deadWeaponResult2 = player2.removeDeadWeapon();
 
-        List<Weapon> deadWeapons1 = deadWeaponsResult1.getResult();
-        List<Weapon> deadWeapons2 = deadWeaponsResult2.getResult();
-        if (deadWeapons1.isEmpty() && deadWeapons2.isEmpty()) {
+        Weapon deadWeapon1 = deadWeaponResult1.getResult();
+        Weapon deadWeapon2 = deadWeaponResult2.getResult();
+        if (deadWeapon1 == null && deadWeapon2 == null) {
             return new UndoableResult<>(Collections.emptyList(), UndoAction.DO_NOTHING);
         }
 
-        return new UndoableResult<>(CollectionsEx.viewConcatList(deadWeapons1, deadWeapons2), () -> {
-            deadWeaponsResult2.undo();
-            deadWeaponsResult1.undo();
+        List<Weapon> result = new ArrayList<>(2);
+        if (deadWeapon1 != null) {
+            result.add(deadWeapon1);
+        }
+        if (deadWeapon2 != null) {
+            result.add(deadWeapon2);
+        }
+
+        return new UndoableResult<>(result, () -> {
+            deadWeaponResult2.undo();
+            deadWeaponResult1.undo();
         });
     }
 

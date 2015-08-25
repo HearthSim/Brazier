@@ -23,8 +23,6 @@ import com.github.kelemen.brazier.weapons.WeaponDescr;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import org.jtrim.collections.RefLinkedList;
-import org.jtrim.collections.RefList;
 import org.jtrim.utils.ExceptionHelper;
 
 public final class Player implements PlayerProperty {
@@ -54,7 +52,6 @@ public final class Player implements PlayerProperty {
     private final FlagContainer auraFlags;
 
     private Weapon weapon;
-    private final RefList<Weapon> deadWeapons;
 
     public Player(World world, PlayerId playerId) {
         ExceptionHelper.checkNotNullArgument(world, "world");
@@ -76,7 +73,6 @@ public final class Player implements PlayerProperty {
         this.deathRattleTriggerCount = new AuraAwareIntProperty(1);
         this.auraFlags = new FlagContainer();
         this.weapon = null;
-        this.deadWeapons = new RefLinkedList<>();
     }
 
     public FlagContainer getAuraFlags() {
@@ -277,24 +273,15 @@ public final class Player implements PlayerProperty {
         return weapon;
     }
 
-    public UndoableResult<List<Weapon>> removeDeadWeapons() {
+    public UndoableResult<Weapon> removeDeadWeapon() {
         Weapon weaponInHand = tryGetWeapon();
-
-        UndoAction destroyHandUndo;
-        if (weaponInHand != null && weaponInHand.getCharges() <= 0) {
-            destroyHandUndo = destroyWeapon();
-        }
-        else {
-            destroyHandUndo = UndoAction.DO_NOTHING;
+        if (weaponInHand == null || weaponInHand.getCharges() > 0) {
+            return new UndoableResult<>(null);
         }
 
-        List<Weapon> result = new ArrayList<>(deadWeapons.size());
-        result.addAll(deadWeapons);
-        deadWeapons.clear();
-
-        return new UndoableResult<>(Collections.unmodifiableList(result), () -> {
-            deadWeapons.addAll(result);
-            destroyHandUndo.undo();
+        weapon = null;
+        return new UndoableResult<>(weaponInHand, () -> {
+            weapon = weaponInHand;
         });
     }
 
@@ -308,14 +295,6 @@ public final class Player implements PlayerProperty {
 
     public UndoAction equipWeapon(WeaponDescr newWeaponDescr) {
         Weapon currentWeapon = tryGetWeapon();
-        UndoAction weaponKillUndo;
-        if (currentWeapon != null) {
-            deadWeapons.addLastGetReference(currentWeapon);
-            weaponKillUndo = () -> deadWeapons.remove(deadWeapons.size() - 1);
-        }
-        else {
-            weaponKillUndo = UndoAction.DO_NOTHING;
-        }
 
         Weapon newWeapon = newWeaponDescr != null
                 ? new Weapon(this, newWeaponDescr)
@@ -325,10 +304,18 @@ public final class Player implements PlayerProperty {
                 ? newWeapon.activatePassiveAbilities()
                 : UndoAction.DO_NOTHING;
 
+        UndoAction weaponKillUndo;
+        if (currentWeapon != null) {
+            weaponKillUndo = currentWeapon.destroy();
+        }
+        else {
+            weaponKillUndo = UndoAction.DO_NOTHING;
+        }
+
         return () -> {
+            weaponKillUndo.undo();
             abilityActivateUndo.undo();
             this.weapon = currentWeapon;
-            weaponKillUndo.undo();
         };
     }
 
