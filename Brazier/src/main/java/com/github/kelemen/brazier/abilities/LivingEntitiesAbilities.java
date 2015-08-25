@@ -7,12 +7,12 @@ import com.github.kelemen.brazier.events.WorldEventAction;
 import com.github.kelemen.brazier.events.WorldEventActionDefs;
 import org.jtrim.utils.ExceptionHelper;
 
-public final class LivingEntitysAbilities<Self extends PlayerProperty> {
+public final class LivingEntitiesAbilities<Self extends PlayerProperty> {
     private final ActivatableAbility<? super Self> ability;
     private final WorldEventActionDefs<Self> eventActionDefs;
     private final WorldEventAction<? super Self, ? super Self> deathRattle;
 
-    public LivingEntitysAbilities(
+    public LivingEntitiesAbilities(
             ActivatableAbility<? super Self> ability,
             WorldEventActionDefs<Self> eventActionDefs,
             WorldEventAction<? super Self, ? super Self> deathRattle) {
@@ -23,8 +23,8 @@ public final class LivingEntitysAbilities<Self extends PlayerProperty> {
         this.deathRattle = deathRattle;
     }
 
-    public static <Self extends PlayerProperty> LivingEntitysAbilities<Self> noAbilities() {
-        return new LivingEntitysAbilities<>(
+    public static <Self extends PlayerProperty> LivingEntitiesAbilities<Self> noAbilities() {
+        return new LivingEntitiesAbilities<>(
             null,
             new WorldEventActionDefs.Builder<Self>().create(),
             null);

@@ -3,7 +3,7 @@ package com.github.kelemen.brazier.weapons;
 import com.github.kelemen.brazier.HearthStoneEntity;
 import com.github.kelemen.brazier.Keyword;
 import com.github.kelemen.brazier.abilities.ActivatableAbility;
-import com.github.kelemen.brazier.abilities.LivingEntitysAbilities;
+import com.github.kelemen.brazier.abilities.LivingEntitiesAbilities;
 import com.github.kelemen.brazier.events.WorldEventAction;
 import com.github.kelemen.brazier.events.WorldEventActionDefs;
 import java.util.Collection;
@@ -24,7 +24,7 @@ public final class WeaponDescr implements HearthStoneEntity {
 
         private final Set<Keyword> keywords;
 
-        private LivingEntitysAbilities<Weapon> abilities;
+        private LivingEntitiesAbilities<Weapon> abilities;
 
         public Builder(WeaponId id, int attack, int charges) {
             ExceptionHelper.checkNotNullArgument(id, "id");
@@ -36,10 +36,10 @@ public final class WeaponDescr implements HearthStoneEntity {
             this.canRetaliateWith = false;
             this.canTargetRetaliate = true;
             this.keywords = new HashSet<>();
-            this.abilities = LivingEntitysAbilities.noAbilities();
+            this.abilities = LivingEntitiesAbilities.noAbilities();
         }
 
-        public void setAbilities(LivingEntitysAbilities<Weapon> abilities) {
+        public void setAbilities(LivingEntitiesAbilities<Weapon> abilities) {
             ExceptionHelper.checkNotNullArgument(abilities, "abilities");
             this.abilities = abilities;
         }
@@ -76,7 +76,7 @@ public final class WeaponDescr implements HearthStoneEntity {
 
     private final Set<Keyword> keywords;
 
-    private final LivingEntitysAbilities<Weapon> abilities;
+    private final LivingEntitiesAbilities<Weapon> abilities;
 
     private WeaponDescr(Builder builder) {
         this.id = builder.id;

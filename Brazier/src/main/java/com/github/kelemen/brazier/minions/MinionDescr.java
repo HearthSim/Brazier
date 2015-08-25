@@ -5,7 +5,7 @@ import com.github.kelemen.brazier.Keyword;
 import com.github.kelemen.brazier.Player;
 import com.github.kelemen.brazier.World;
 import com.github.kelemen.brazier.abilities.ActivatableAbility;
-import com.github.kelemen.brazier.abilities.LivingEntitysAbilities;
+import com.github.kelemen.brazier.abilities.LivingEntitiesAbilities;
 import com.github.kelemen.brazier.abilities.OwnedIntPropertyBuff;
 import com.github.kelemen.brazier.actions.PlayActionDef;
 import com.github.kelemen.brazier.actions.PlayArg;
@@ -39,7 +39,7 @@ public final class MinionDescr implements HearthStoneEntity {
         private boolean taunt;
         private boolean charge;
         private boolean canAttack;
-        private LivingEntitysAbilities<Minion> abilities;
+        private LivingEntitiesAbilities<Minion> abilities;
         private boolean divineShield;
         private int maxAttackCount;
         private boolean targetable;
@@ -67,13 +67,13 @@ public final class MinionDescr implements HearthStoneEntity {
             this.stealth = false;
             this.maxAttackCount = 1;
             this.canAttack = true;
-            this.abilities = LivingEntitysAbilities.noAbilities();
+            this.abilities = LivingEntitiesAbilities.noAbilities();
             this.attackLeft = false;
             this.attackRight = false;
             this.attackFinalizer = OwnedIntPropertyBuff.IDENTITY;
         }
 
-        public void setAbilities(LivingEntitysAbilities<Minion> abilities) {
+        public void setAbilities(LivingEntitiesAbilities<Minion> abilities) {
             ExceptionHelper.checkNotNullArgument(abilities, "abilities");
             this.abilities = abilities;
         }
@@ -146,7 +146,7 @@ public final class MinionDescr implements HearthStoneEntity {
     private final int hp;
     private final Set<Keyword> keywords;
     private final List<PlayActionDef<Minion>> battleCries;
-    private final LivingEntitysAbilities<Minion> abilities;
+    private final LivingEntitiesAbilities<Minion> abilities;
     private final boolean taunt;
     private final boolean divineShield;
     private final boolean charge;

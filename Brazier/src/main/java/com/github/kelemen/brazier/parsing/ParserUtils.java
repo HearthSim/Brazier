@@ -11,7 +11,7 @@ import com.github.kelemen.brazier.abilities.Aura;
 import com.github.kelemen.brazier.abilities.AuraFilter;
 import com.github.kelemen.brazier.abilities.Buff;
 import com.github.kelemen.brazier.abilities.Buffs;
-import com.github.kelemen.brazier.abilities.LivingEntitysAbilities;
+import com.github.kelemen.brazier.abilities.LivingEntitiesAbilities;
 import com.github.kelemen.brazier.abilities.PermanentBuff;
 import com.github.kelemen.brazier.actions.EntityFilter;
 import com.github.kelemen.brazier.actions.EntityFilters;
@@ -502,7 +502,7 @@ public final class ParserUtils {
         }
     }
 
-    public static <Self extends PlayerProperty> LivingEntitysAbilities<Self> parseAbilities(
+    public static <Self extends PlayerProperty> LivingEntitiesAbilities<Self> parseAbilities(
             Class<Self> selfClass,
             JsonDeserializer objectParser,
             EventNotificationParser<Self> eventNotificationParser,
@@ -512,7 +512,7 @@ public final class ParserUtils {
         WorldEventActionDefs<Self> eventActionDefs = parseEventActionDefs(eventNotificationParser, root.getChild("triggers"));
         WorldEventAction<? super Self, ? super Self> deathRattle = parseDeathRattle(selfClass, eventNotificationParser, root);
 
-        return new LivingEntitysAbilities<>(ability, eventActionDefs, deathRattle);
+        return new LivingEntitiesAbilities<>(ability, eventActionDefs, deathRattle);
     }
 
     public static <T> Predicate<T> mergePredicates(
