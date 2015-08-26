@@ -25,7 +25,7 @@ public enum SimpleEventType {
     MINION_HEALED("minion-healed", DamageEvent.class),
     TURN_STARTS("turn-starts", Player.class),
     TURN_ENDS("turn-ends", Player.class),
-    ATTACK_INITIATED("attack-initiated", AttackRequest.class),
+    ATTACK_INITIATED(true, "attack-initiated", AttackRequest.class),
     SECRET_REVEALED("secret-revealed", Secret.class);
 
     private static final Map<String, SimpleEventType> NAME_MAP;
@@ -38,16 +38,26 @@ public enum SimpleEventType {
         NAME_MAP = Collections.unmodifiableMap(nameMap);
     }
 
+    private final boolean greedyEvent;
     private final String eventName;
     private final Class<?> argType;
 
     private SimpleEventType(String eventName, Class<?> argType) {
+        this(false, eventName, argType);
+    }
+
+    private SimpleEventType(boolean greedyEvent, String eventName, Class<?> argType) {
+        this.greedyEvent = greedyEvent;
         this.eventName = eventName;
         this.argType = argType;
     }
 
     public static SimpleEventType tryParse(String str) {
         return NAME_MAP.get(str.toLowerCase(Locale.ROOT));
+    }
+
+    public boolean isGreedyEvent() {
+        return greedyEvent;
     }
 
     public String getEventName() {

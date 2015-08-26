@@ -6,29 +6,37 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 import static org.junit.Assert.assertEquals;
 
 public final class RandomTestUtils {
-    public static MinionId singleMinionScript(String minionLocation, Consumer<PlayScript> scriptConfig) {
-        AtomicReference<MinionId> resultRef = new AtomicReference<>(null);
+    public static <T> T singleMinionScript(
+            String minionLocation,
+            Function<Minion, T> propertyGetter,
+            Consumer<PlayScript> scriptConfig) {
+        AtomicReference<T> resultRef = new AtomicReference<>(null);
 
         PlayScript.testScript((script) -> {
             scriptConfig.accept(script);
 
             script.expectMinion(minionLocation, (minion) -> {
-                MinionId id = minion.getBaseDescr().getId();
-                MinionId prevRef = resultRef.get();
+                T property = propertyGetter.apply(minion);
+                T prevRef = resultRef.get();
                 if (prevRef != null) {
-                    assertEquals("Expected same minion for all runs.", prevRef, id);
+                    assertEquals("Expected same minion for all runs.", prevRef, property);
                 }
                 else {
-                    resultRef.set(id);
+                    resultRef.set(property);
                 }
             });
         });
 
         return resultRef.get();
+    }
+
+    public static MinionId singleMinionScript(String minionLocation, Consumer<PlayScript> scriptConfig) {
+        return singleMinionScript(minionLocation, (minion) -> minion.getBaseDescr().getId(), scriptConfig);
     }
 
     public static List<MinionId> boardMinionScript(String playerName, Consumer<PlayScript> scriptConfig) {

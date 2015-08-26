@@ -71,7 +71,7 @@ public final class WorldEvents {
     public <T> WorldActionEvents<T> simpleListeners(SimpleEventType eventType, Class<T> argType) {
         WorldActionEvents<T> result = tryGetSimpleListeners(eventType, argType);
         if (result == null) {
-            result = createEventContainer();
+            result = createEventContainer(eventType);
             simpleListeners.put(eventType, result);
         }
 
@@ -154,7 +154,7 @@ public final class WorldEvents {
                 pauseCollectorRef.compareAndSet(currentCollector, null);
             }
 
-            UndoAction eventUndo = currentCollector.executeActionsNow(world, null);
+            UndoAction eventUndo = currentCollector.executeActionsNow(world, null, false);
             return () -> {
                 eventUndo.undo();
                 actionUndo.undo();
@@ -162,11 +162,8 @@ public final class WorldEvents {
         }
     }
 
-    private static <T> WorldObjectAction<Void> toAction(WorldActionList<T> actionList, T object) {
-        return (world, voidArg) -> actionList.executeActionsNow(world, object);
-    }
-
-    private <T> WorldActionEvents<T> createEventContainer() {
+    private <T> WorldActionEvents<T> createEventContainer(SimpleEventType eventType) {
+        boolean greedyEvent = eventType.isGreedyEvent();
         WorldActionList<T> actionList = new WorldActionList<>();
 
         return new WorldActionEvents<T>() {
@@ -182,11 +179,12 @@ public final class WorldEvents {
             public UndoAction triggerEvent(boolean delayable, T object) {
                 WorldActionList<Void> pauseCollector = pauseCollectorRef.get();
                 if (pauseCollector != null && delayable) {
-                    UndoableUnregisterRef actionRegRef = pauseCollector.addAction(toAction(actionList, object));
+                    // We do not support greedyness for delayable events.
+                    UndoableUnregisterRef actionRegRef = pauseCollector.addAction(actionList.snapshotCurrentEvents(object));
                     return actionRegRef::undo;
                 }
                 else {
-                    return actionList.executeActionsNow(world, object);
+                    return actionList.executeActionsNow(world, object, greedyEvent);
                 }
             }
         };

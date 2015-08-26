@@ -41,6 +41,7 @@ public final class TestCards {
     public static final String FIRE_ELEMENTAL = "Fire Elemental";
     public static final String FLAME_OF_AZZINOTH = "Flame of Azzinoth";
     public static final String FLAMESTRIKE = "Flamestrike";
+    public static final String FLAMETONGUE_TOTEM = "Flametongue Totem";
     public static final String FREEZING_TRAP = "Freezing Trap";
     public static final String FROTHING_BERSERKER = "Frothing Berserker";
     public static final String FROST_NOVA = "Frost Nova";
@@ -64,6 +65,7 @@ public final class TestCards {
     public static final String MANA_WRAITH = "Mana Wraith";
     public static final String MIRROR_ENTITY = "Mirror Entity";
     public static final String MOONFIRE = "Moonfire";
+    public static final String OGRE_BRUTE = "Ogre Brute";
     public static final String PREPARATION = "Preparation";
     public static final String PYROBLAST = "Pyroblast";
     public static final String REDEMPTION = "Redemption";

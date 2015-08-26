@@ -49,13 +49,13 @@ public final class BasicFilters {
     public static final WorldEventFilter<PlayerProperty, AttackRequest> ATTACKER_IS_MINION
             = (world, owner, eventSource) -> eventSource.getAttacker() instanceof Minion;
     public static final WorldEventFilter<PlayerProperty, AttackRequest> ATTACK_TARGET_IS_MINION
-            = (world, owner, eventSource) -> eventSource.getOriginalTarget()instanceof Minion;
+            = (world, owner, eventSource) -> eventSource.testExistingDefender((defender) -> defender instanceof Minion);
     public static final WorldEventFilter<PlayerProperty, AttackRequest> ATTACK_TARGET_IS_OWN_HERO
-            = (world, owner, eventSource) -> owner.getOwner().getHero() == eventSource.getOriginalTarget();
+            = (world, owner, eventSource) -> owner.getOwner().getHero() == eventSource.getDefender();
     public static final WorldEventFilter<PlayerProperty, AttackRequest> ATTACK_TARGET_IS_OWNER
-            = (world, owner, eventSource) -> owner.getOwner() == eventSource.getOriginalTarget().getOwner();
+            = (world, owner, eventSource) -> eventSource.testExistingDefender((defender) -> owner.getOwner() == defender.getOwner());
     public static final WorldEventFilter<PlayerProperty, AttackRequest> ATTACK_TARGET_IS_ENEMY
-            = (world, owner, eventSource) -> owner.getOwner() != eventSource.getOriginalTarget().getOwner();
+            = (world, owner, eventSource) -> eventSource.testExistingDefender((defender) -> owner.getOwner() != defender.getOwner());
     public static final WorldEventFilter<PlayerProperty, AttackRequest> ATTACKER_IS_OWNER
             = (world, owner, eventSource) -> owner.getOwner() == eventSource.getAttacker().getOwner();
     public static final WorldEventFilter<PlayerProperty, AttackRequest> ATTACKER_IS_ENEMY
@@ -138,7 +138,7 @@ public final class BasicFilters {
     }
 
     public static Predicate<TargetableCharacter> validMisdirectTarget(AttackRequest request) {
-        return validMisdirectTarget(request.getOriginalTarget(), request.getAttacker());
+        return validMisdirectTarget(request.getAttacker(), request.getDefender());
     }
 
     public static Predicate<TargetableCharacter> validMisdirectTarget(TargetableCharacter attacker, TargetableCharacter defender) {

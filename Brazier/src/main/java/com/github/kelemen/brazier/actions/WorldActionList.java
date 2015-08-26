@@ -3,9 +3,11 @@ package com.github.kelemen.brazier.actions;
 import com.github.kelemen.brazier.Priorities;
 import com.github.kelemen.brazier.World;
 import com.github.kelemen.brazier.events.UndoableUnregisterRef;
-import com.github.kelemen.brazier.events.WorldActionEvents;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Predicate;
 import org.jtrim.collections.RefLinkedList;
@@ -67,36 +69,85 @@ public final class WorldActionList<T> {
         };
     }
 
-    public WorldActionEvents<T> toEventContainer(World world) {
-        ExceptionHelper.checkNotNullArgument(world, "world");
-        return new WorldActionEvents<T>() {
-            @Override
-            public UndoableUnregisterRef addAction(int priority, Predicate<? super T> condition, WorldObjectAction<? super T> action) {
-                return WorldActionList.this.addAction(priority, condition, action);
-            }
+    public WorldAction snapshotCurrentEvents(T object) {
+        List<WorldObjectAction<? super T>> snapshot = getApplicableActions(object);
+        if (snapshot.isEmpty()) {
+            return (world) -> UndoAction.DO_NOTHING;
+        }
 
-            @Override
-            public UndoAction triggerEvent(boolean delayable, T object) {
-                return WorldActionList.this.executeActionsNow(world, object);
-            }
-        };
+        return (world) -> executeActionsNow(world, object, snapshot);
     }
 
-    public UndoAction executeActionsNow(World world, T object) {
+
+    public UndoAction executeActionsNowGreedily(World world, T object) {
+        List<ActionWrapper<T>> remaining = new ArrayList<>(actions);
+        List<ActionWrapper<T>> skippedActions = new LinkedList<>();
+
+        UndoBuilder result = new UndoBuilder(remaining.size());
+
+        while (!remaining.isEmpty()) {
+            for (ActionWrapper<T> actionRef: remaining) {
+                if (actionRef.isApplicable(object)) {
+                    result.addUndo(actionRef.wrapped.alterWorld(world, object));
+                }
+                else {
+                    skippedActions.add(actionRef);
+                }
+            }
+            remaining.clear();
+
+            Iterator<ActionWrapper<T>> skippedActionsItr = skippedActions.iterator();
+            while (skippedActionsItr.hasNext()) {
+                ActionWrapper<T> skippedAction = skippedActionsItr.next();
+                // FIXME: isApplicable for the first item will be called again
+                //   needlessly. This - in theory - can cause an infinite loop.
+                //   However, it is reasonable to assume that filters are deterministic.
+                //   Still it should be fixed.
+                if (skippedAction.isApplicable(object)) {
+                    skippedActionsItr.remove();
+                    remaining.add(skippedAction);
+                }
+            }
+        }
+
+        return result;
+    }
+
+    private static <T> List<WorldObjectAction<? super T>> getApplicableActions(
+            T object,
+            Collection<ActionWrapper<T>> actions) {
+        if (actions.isEmpty()) {
+            return Collections.emptyList();
+        }
+
+        List<WorldObjectAction<? super T>> result = new ArrayList<>(actions.size());
+        for (ActionWrapper<T> action: actions) {
+            if (action.isApplicable(object)) {
+                result.add(action.getAction());
+            }
+        }
+        return result;
+    }
+
+    private List<WorldObjectAction<? super T>> getApplicableActions(T object) {
+        return getApplicableActions(object, actions);
+    }
+
+    public UndoAction executeActionsNow(World world, T object, boolean greedy) {
         if (actions.isEmpty()) {
             return UndoAction.DO_NOTHING;
         }
 
-        // We have to first check if the action conditions are met, otherwise
-        // two Hobgoblin would be the same as a single hobgoblin (because the first buff
-        // would prevent the second to trigger).
-        List<WorldObjectAction<? super T>> applicableActions = new ArrayList<>(actions.size());
-        for (ActionWrapper<T> action: actions) {
-            if (action.condition.test(object)) {
-                applicableActions.add(action.wrapped);
-            }
+        if (greedy) {
+            return executeActionsNowGreedily(world, object);
         }
-        return executeActionsNow(world, object, applicableActions);
+        else {
+            // We have to first check if the action conditions are met, otherwise
+            // two Hobgoblin would be the same as a single hobgoblin (because the first buff
+            // would prevent the second to trigger).
+            List<WorldObjectAction<? super T>> applicableActions = getApplicableActions(object);
+            return executeActionsNow(world, object, applicableActions);
+        }
     }
 
     public static <T> UndoAction executeActionsNow(
@@ -127,6 +178,14 @@ public final class WorldActionList<T> {
             this.priority = priority;
             this.condition = condition;
             this.wrapped = wrapped;
+        }
+
+        public boolean isApplicable(T arg) {
+            return condition.test(arg);
+        }
+
+        public WorldObjectAction<? super T> getAction() {
+            return wrapped;
         }
     }
 
