@@ -1,22 +1,14 @@
 package com.github.kelemen.brazier.parsing;
 
-import com.github.kelemen.brazier.Player;
 import com.github.kelemen.brazier.PlayerProperty;
 import com.github.kelemen.brazier.Priorities;
-import com.github.kelemen.brazier.Secret;
 import com.github.kelemen.brazier.World;
-import com.github.kelemen.brazier.actions.AttackRequest;
 import com.github.kelemen.brazier.actions.BasicFilters;
 import com.github.kelemen.brazier.actions.UndoAction;
-import com.github.kelemen.brazier.cards.Card;
-import com.github.kelemen.brazier.events.ArmorGainedEvent;
-import com.github.kelemen.brazier.events.CardPlayEvent;
-import com.github.kelemen.brazier.events.CardPlayedEvent;
 import com.github.kelemen.brazier.events.CompletableWorldEventAction;
 import com.github.kelemen.brazier.events.CompletableWorldEventBasedActionDef;
 import com.github.kelemen.brazier.events.CompleteWorldEventAction;
-import com.github.kelemen.brazier.events.DamageEvent;
-import com.github.kelemen.brazier.events.DamageRequest;
+import com.github.kelemen.brazier.events.SimpleEventType;
 import com.github.kelemen.brazier.events.WorldActionEventsRegistry;
 import com.github.kelemen.brazier.events.WorldEventAction;
 import com.github.kelemen.brazier.events.WorldEventActionDefs;
@@ -24,7 +16,6 @@ import com.github.kelemen.brazier.events.WorldEventBasedActionDef;
 import com.github.kelemen.brazier.events.WorldEventFilter;
 import com.github.kelemen.brazier.events.WorldEvents;
 import com.github.kelemen.brazier.minions.Minion;
-import com.github.kelemen.brazier.weapons.Weapon;
 import com.google.gson.JsonPrimitive;
 import java.util.Locale;
 import java.util.function.Consumer;
@@ -199,6 +190,29 @@ public final class EventNotificationParser<Self extends PlayerProperty> {
         }
     }
 
+    private <T> void parseSimpleActionDefs(
+            JsonTree root,
+            SimpleEventType eventType,
+            WorldEventActionDefs.Builder<Self> result) throws ObjectParsingException {
+
+        JsonTree actionDefsElement = root.getChild(eventType.getEventName());
+        if (actionDefsElement == null) {
+            return;
+        }
+
+        @SuppressWarnings("unchecked")
+        Class<T> eventArgType = (Class<T>)eventType.getArgumentType();
+
+        Function<WorldEvents, ? extends WorldActionEventsRegistry<T>> actionEventListenersGetter = (worldEvents) -> {
+            return worldEvents.simpleListeners(eventType, eventArgType);
+        };
+        Consumer<WorldEventBasedActionDef<Self, T>> actionDefAdder = (actionDef) -> {
+            result.addSimpleEventDef(eventType, actionDef);
+        };
+
+        parseActionDefs(eventArgType, actionDefsElement, actionEventListenersGetter, actionDefAdder);
+    }
+
     private void parseSingleOnSummonEvent(
             JsonTree actionDefElement,
             WorldEventActionDefs.Builder<Self> result) throws ObjectParsingException {
@@ -254,25 +268,11 @@ public final class EventNotificationParser<Self extends PlayerProperty> {
     public WorldEventActionDefs<Self> fromJson(JsonTree root) throws ObjectParsingException {
         WorldEventActionDefs.Builder<Self> result = new WorldEventActionDefs.Builder<>();
 
+        for (SimpleEventType eventType: SimpleEventType.values()) {
+            parseSimpleActionDefs(root, eventType, result);
+        }
+
         parseOnSummonEvents(root.getChild("on-summon"), result);
-
-        parseActionDefs(
-                Card.class,
-                root.getChild("draw-card"),
-                WorldEvents::drawCardListeners,
-                result::addOnDrawCardActionDef);
-
-        parseActionDefs(
-                CardPlayEvent.class,
-                root.getChild("start-play-card"),
-                WorldEvents::startPlayingCardListeners,
-                result::addOnStartPlayingCardActionDef);
-
-        parseActionDefs(
-                CardPlayedEvent.class,
-                root.getChild("done-play-card"),
-                WorldEvents::donePlayingCardListeners,
-                result::addOnDonePlayingCardActionDef);
 
         parseActionDefs(
                 Minion.class,
@@ -285,77 +285,6 @@ public final class EventNotificationParser<Self extends PlayerProperty> {
                 root.getChild("done-summoning"),
                 WorldEvents::doneSummoningListeners,
                 (actionDef) -> { result.addOnSummoningActionDef(actionDef.toDoneEventDef(WorldEvents::summoningListeners)); });
-
-        parseActionDefs(
-                DamageRequest.class,
-                root.getChild("prepare-damage"),
-                WorldEvents::prepareDamageListeners,
-                result::addOnPrepareDamageActionDef);
-
-        parseActionDefs(
-                DamageEvent.class,
-                root.getChild("hero-damaged"),
-                WorldEvents::heroDamagedListeners,
-                result::addOnHeroDamagedActionDef);
-
-        parseActionDefs(
-                DamageEvent.class,
-                root.getChild("minion-damaged"),
-                WorldEvents::minionDamagedListeners,
-                result::addOnMinionDamagedActionDef);
-
-        parseActionDefs(
-                Minion.class,
-                root.getChild("minion-killed"),
-                WorldEvents::minionKilledListeners,
-                result::addOnMinionKilledActionDef);
-
-        parseActionDefs(
-                Weapon.class,
-                root.getChild("weapon-destroyed"),
-                WorldEvents::weaponDestroyedListeners,
-                result::addOnWeaponDestroyedActionDef);
-
-        parseActionDefs(ArmorGainedEvent.class,
-                root.getChild("armor-gained"),
-                WorldEvents::armorGainedListeners,
-                result::addOnArmorGainedActionDef);
-
-        parseActionDefs(
-                DamageEvent.class,
-                root.getChild("hero-healed"),
-                WorldEvents::heroHealedListeners,
-                result::addOnHeroHealedActionDef);
-
-        parseActionDefs(
-                DamageEvent.class,
-                root.getChild("minion-healed"),
-                WorldEvents::minionHealedListeners,
-                result::addOnMinionHealedActionDef);
-
-        parseActionDefs(
-                Player.class,
-                root.getChild("turn-starts"),
-                WorldEvents::turnStartsListeners,
-                result::addOnTurnStartsActionDef);
-
-        parseActionDefs(
-                Player.class,
-                root.getChild("turn-ends"),
-                WorldEvents::turnEndsListeners,
-                result::addOnTurnEndsActionDef);
-
-        parseActionDefs(
-                AttackRequest.class,
-                root.getChild("attack-initiated"),
-                WorldEvents::attackListeners,
-                result::addOnAttackActionDef);
-
-        parseActionDefs(
-                Secret.class,
-                root.getChild("secret-revealed"),
-                WorldEvents::secretRevealedListeners,
-                result::addOnSecretRevealedActionDefs);
 
         return result.create();
     }

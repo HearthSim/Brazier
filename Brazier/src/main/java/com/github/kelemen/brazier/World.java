@@ -6,6 +6,7 @@ import com.github.kelemen.brazier.actions.AttackRequest;
 import com.github.kelemen.brazier.actions.UndoAction;
 import com.github.kelemen.brazier.actions.UndoBuilder;
 import com.github.kelemen.brazier.cards.CardDescr;
+import com.github.kelemen.brazier.events.SimpleEventType;
 import com.github.kelemen.brazier.events.UndoableUnregisterRef;
 import com.github.kelemen.brazier.events.WorldEvents;
 import com.github.kelemen.brazier.minions.Minion;
@@ -151,7 +152,7 @@ public final class World {
         UndoBuilder resultUndo = new UndoBuilder();
 
         AttackRequest attackRequest = new AttackRequest(attacker, defender);
-        resultUndo.addUndo(events.attackListeners().triggerEvent(false, attackRequest));
+        resultUndo.addUndo(events.triggerEventNow(SimpleEventType.ATTACK_INITIATED, attackRequest));
 
         DeathResolutionResult deathResolution = resolveDeaths();
         resultUndo.addUndo(deathResolution.getUndoAction());

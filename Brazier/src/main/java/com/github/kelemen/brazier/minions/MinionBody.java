@@ -8,6 +8,7 @@ import com.github.kelemen.brazier.abilities.AuraAwareIntProperty;
 import com.github.kelemen.brazier.abilities.HpProperty;
 import com.github.kelemen.brazier.actions.UndoAction;
 import com.github.kelemen.brazier.events.DamageEvent;
+import com.github.kelemen.brazier.events.SimpleEventType;
 import com.github.kelemen.brazier.events.WorldEvents;
 import org.jtrim.utils.ExceptionHelper;
 
@@ -171,14 +172,12 @@ public final class MinionBody implements Silencable {
         int damageDone = currentHp - newHp;
 
         WorldEvents events = owner.getWorld().getEvents();
-        UndoAction eventUndo;
         DamageEvent event = new DamageEvent(damage.getSource(), owner, damageDone);
-        if (damageDone < 0) {
-            eventUndo = events.minionHealedListeners().triggerEvent(event);
-        }
-        else {
-            eventUndo = events.minionDamagedListeners().triggerEvent(event);
-        }
+
+        SimpleEventType eventType = damageDone < 0
+                ? SimpleEventType.MINION_HEALED
+                : SimpleEventType.MINION_DAMAGED;
+        UndoAction eventUndo = events.triggerEvent(eventType, event);
 
         return new UndoableIntResult(event.getDamageDealt(), () -> {
             eventUndo.undo();

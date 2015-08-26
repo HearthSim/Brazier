@@ -14,6 +14,7 @@ import com.github.kelemen.brazier.abilities.ActivatableAbility;
 import com.github.kelemen.brazier.abilities.AuraAwareIntProperty;
 import com.github.kelemen.brazier.actions.UndoAction;
 import com.github.kelemen.brazier.actions.UndoBuilder;
+import com.github.kelemen.brazier.events.SimpleEventType;
 import com.github.kelemen.brazier.events.WorldActionEvents;
 import com.github.kelemen.brazier.events.WorldEventAction;
 import java.util.Set;
@@ -156,8 +157,7 @@ public final class Weapon implements DestroyableEntity, DamageSource, LabeledEnt
 
     @Override
     public UndoAction destroy() {
-        WorldActionEvents<Weapon> weaponDestroyedListeners = owner.getWorld().getEvents().weaponDestroyedListeners();
-        UndoAction eventUndo = weaponDestroyedListeners.triggerEvent(this);
+        UndoAction eventUndo = owner.getWorld().getEvents().triggerEvent(SimpleEventType.WEAPON_DESTROYED, this);
 
         // TODO: If we want to deactivate the abilities first, we have to
         //       adjust death-rattle handling not to get disabled.
@@ -174,7 +174,8 @@ public final class Weapon implements DestroyableEntity, DamageSource, LabeledEnt
         ExceptionHelper.checkNotNullArgument(deathRattle, "deathRattle");
 
         return (Weapon self) -> {
-            WorldActionEvents<Weapon> listeners = self.getWorld().getEvents().weaponDestroyedListeners();
+            WorldActionEvents<Weapon> listeners = self.getWorld().getEvents()
+                    .simpleListeners(SimpleEventType.WEAPON_DESTROYED, Weapon.class);
             return listeners.addAction((World world, Weapon target) -> {
                 if (target == self) {
                     return deathRattle.alterWorld(world, self, target);

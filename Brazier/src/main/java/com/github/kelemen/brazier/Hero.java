@@ -7,8 +7,8 @@ import com.github.kelemen.brazier.cards.CardDescr;
 import com.github.kelemen.brazier.events.ArmorGainedEvent;
 import com.github.kelemen.brazier.events.DamageEvent;
 import com.github.kelemen.brazier.events.DamageRequest;
+import com.github.kelemen.brazier.events.SimpleEventType;
 import com.github.kelemen.brazier.events.UndoableUnregisterRef;
-import com.github.kelemen.brazier.events.WorldActionEvents;
 import com.github.kelemen.brazier.events.WorldEvents;
 import com.github.kelemen.brazier.weapons.AttackTool;
 import com.github.kelemen.brazier.weapons.Weapon;
@@ -231,8 +231,9 @@ public final class Hero implements TargetableCharacter {
     public UndoAction armorUp(int armor) {
         if (armor > 0) {
             UndoAction armorUndo = setCurrentArmor(getCurrentArmor() + armor);
-            WorldActionEvents<ArmorGainedEvent> listeners = getWorld().getEvents().armorGainedListeners();
-            UndoAction eventUndo = listeners.triggerEvent(new ArmorGainedEvent(this, armor));
+            UndoAction eventUndo = getWorld().getEvents().triggerEvent(
+                    SimpleEventType.ARMOR_GAINED,
+                    new ArmorGainedEvent(this, armor));
             return () -> {
                 eventUndo.undo();
                 armorUndo.undo();
@@ -251,10 +252,8 @@ public final class Hero implements TargetableCharacter {
         ExceptionHelper.checkNotNullArgument(target, "target");
         ExceptionHelper.checkNotNullArgument(damageMethod, "damageMethod");
 
-        WorldActionEvents<DamageRequest> listeners = target.getWorld().getEvents().prepareDamageListeners();
-
         DamageRequest request = new DamageRequest(damage, target);
-        UndoAction eventUndo = listeners.triggerEvent(false, request);
+        UndoAction eventUndo = target.getWorld().getEvents().triggerEventNow(SimpleEventType.PREPARE_DAMAGE, request);
 
         UndoableIntResult applyDamageRef = damageMethod.apply(request.getDamage());
 
@@ -318,20 +317,21 @@ public final class Hero implements TargetableCharacter {
         UndoAction adjustHpUndo = setCurrentHp(newHp);
 
         WorldEvents events = getOwner().getWorld().getEvents();
-        UndoAction eventUndo;
 
-        DamageEvent event = new DamageEvent(damage.getSource(), this, originalHp - newHp);
-        if (newHp > originalHp) {
-            eventUndo = events.heroHealedListeners().triggerEvent(event);
-        }
-        else if (newHp < originalHp) {
-            eventUndo = events.heroDamagedListeners().triggerEvent(event);
+        UndoAction eventUndo;
+        int damageDealt = originalHp - newHp;
+        if (damageDealt != 0) {
+            SimpleEventType eventType = damageDealt < 0
+                    ? SimpleEventType.HERO_HEALED
+                    : SimpleEventType.HERO_DAMAGED;
+            DamageEvent event = new DamageEvent(damage.getSource(), this, damageDealt);
+            eventUndo = events.triggerEvent(eventType, event);
         }
         else {
             eventUndo = UndoAction.DO_NOTHING;
         }
 
-        return new UndoableIntResult(event.getDamageDealt(), () -> {
+        return new UndoableIntResult(damageDealt, () -> {
             eventUndo.undo();
             adjustHpUndo.undo();
             adjustArmorUndo.undo();

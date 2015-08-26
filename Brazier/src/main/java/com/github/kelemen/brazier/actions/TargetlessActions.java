@@ -37,9 +37,12 @@ import com.github.kelemen.brazier.cards.CardId;
 import com.github.kelemen.brazier.cards.CardProvider;
 import com.github.kelemen.brazier.cards.CardType;
 import com.github.kelemen.brazier.events.CardPlayEvent;
+import com.github.kelemen.brazier.events.SimpleEventType;
 import com.github.kelemen.brazier.events.UndoableUnregisterRef;
 import com.github.kelemen.brazier.events.UndoableUnregisterRefBuilder;
+import com.github.kelemen.brazier.events.WorldActionEvents;
 import com.github.kelemen.brazier.events.WorldEventFilter;
+import com.github.kelemen.brazier.events.WorldEvents;
 import com.github.kelemen.brazier.minions.Minion;
 import com.github.kelemen.brazier.minions.MinionBody;
 import com.github.kelemen.brazier.minions.MinionDescr;
@@ -1114,7 +1117,10 @@ public final class TargetlessActions {
             UndoableUnregisterRef abilityRef = ability.activate(self);
             result.addRef(abilityRef);
 
-            UndoableUnregisterRef listenerRef = self.getWorld().getEvents().startPlayingCardListeners().addAction((World world, CardPlayEvent playEvent) -> {
+            WorldEvents events = self.getWorld().getEvents();
+
+            WorldActionEvents<CardPlayEvent> listeners = events.simpleListeners(SimpleEventType.START_PLAY_CARD, CardPlayEvent.class);
+            UndoableUnregisterRef listenerRef = listeners.addAction((World world, CardPlayEvent playEvent) -> {
                 if (deactivateCondition.test(playEvent.getCard())) {
                     return abilityRef.unregister();
                 }
@@ -1145,7 +1151,7 @@ public final class TargetlessActions {
             if (cardDescr.getCardType() == CardType.MINION) {
                 UndoAction drawActionsUndo = WorldActionList.executeActionsNow(world, card, cardDescr.getOnDrawActions());
                 UndoAction addCardUndo = player.getHand().addCard(replaceCard.getCard());
-                UndoAction eventUndo = world.getEvents().drawCardListeners().triggerEvent(card);
+                UndoAction eventUndo = world.getEvents().triggerEvent(SimpleEventType.DRAW_CARD, card);
 
                 return () -> {
                     eventUndo.undo();

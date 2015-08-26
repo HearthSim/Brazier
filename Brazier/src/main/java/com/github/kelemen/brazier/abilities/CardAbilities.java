@@ -3,6 +3,7 @@ package com.github.kelemen.brazier.abilities;
 import com.github.kelemen.brazier.World;
 import com.github.kelemen.brazier.actions.UndoAction;
 import com.github.kelemen.brazier.cards.Card;
+import com.github.kelemen.brazier.events.SimpleEventType;
 import com.github.kelemen.brazier.events.WorldActionEventsRegistry;
 import com.github.kelemen.brazier.events.WorldEventAction;
 import com.github.kelemen.brazier.events.WorldEventFilter;
@@ -16,7 +17,9 @@ public final class CardAbilities {
     public static ActivatableAbility<Card> onMinionKilledAbility(
             @NamedArg("filter") WorldEventFilter<? super Card, ? super Minion> filter,
             @NamedArg("action") WorldEventAction<? super Card, ? super Minion> action) {
-        return onEventAbility(filter, action, WorldEvents::minionKilledListeners);
+        return onEventAbility(filter, action, (worldEvents) -> {
+            return worldEvents.simpleListeners(SimpleEventType.MINION_KILLED, Minion.class);
+        });
     }
 
     public static <EventArg> ActivatableAbility<Card> onEventAbility(

@@ -15,6 +15,7 @@ import com.github.kelemen.brazier.cards.CardDescr;
 import com.github.kelemen.brazier.cards.PlayAction;
 import com.github.kelemen.brazier.events.CardPlayEvent;
 import com.github.kelemen.brazier.events.CardPlayedEvent;
+import com.github.kelemen.brazier.events.SimpleEventType;
 import com.github.kelemen.brazier.events.WorldEvents;
 import com.github.kelemen.brazier.minions.Minion;
 import com.github.kelemen.brazier.minions.MinionDescr;
@@ -96,14 +97,14 @@ public final class Player implements PlayerProperty {
         result.addUndo(hero.refresh());
 
         WorldEvents events = getWorld().getEvents();
-        result.addUndo(events.turnStartsListeners().triggerEvent(this));
+        result.addUndo(events.triggerEvent(SimpleEventType.TURN_STARTS, this));
 
         return result;
     }
 
     public UndoAction endTurn() {
         WorldEvents events = getWorld().getEvents();
-        UndoAction eventUndo = events.turnEndsListeners().triggerEvent(this);
+        UndoAction eventUndo = events.triggerEvent(SimpleEventType.TURN_ENDS, this);
 
         UndoAction refreshHeroUndo = hero.refreshEndOfTurn();
         UndoAction boardRefreshUndo = board.refreshEndOfTurn();
@@ -239,7 +240,7 @@ public final class Player implements PlayerProperty {
             }
 
             if (playCardEvents) {
-                result.addUndo(events.startPlayingCardListeners().triggerEvent(false, playEvent));
+                result.addUndo(events.triggerEventNow(SimpleEventType.START_PLAY_CARD, playEvent));
             }
 
             if (!playEvent.isVetodPlay() && reservationRefResult != null) {
@@ -251,7 +252,7 @@ public final class Player implements PlayerProperty {
             }
         }
         else {
-            result.addUndo(events.startPlayingCardListeners().triggerEvent(false, playEvent));
+            result.addUndo(events.triggerEventNow(SimpleEventType.START_PLAY_CARD, playEvent));
             if (!playEvent.isVetodPlay()) {
                 PlayArg<Card> cardPlayArg = playEvent.getCardPlayArg();
                 result.addUndo(executeCardPlayActions(cardPlayArg, onPlayActions));
@@ -259,7 +260,7 @@ public final class Player implements PlayerProperty {
         }
 
         if (playCardEvents && !playEvent.isVetodPlay()) {
-            result.addUndo(events.donePlayingCardListeners().triggerEvent(new CardPlayedEvent(card, manaCost)));
+            result.addUndo(events.triggerEvent(SimpleEventType.DONE_PLAY_CARD, new CardPlayedEvent(card, manaCost)));
         }
 
         return result;
@@ -378,7 +379,9 @@ public final class Player implements PlayerProperty {
         ExceptionHelper.checkNotNullArgument(card, "card");
 
         UndoAction drawActionsUndo = WorldActionList.executeActionsNow(world, card, card.getCardDescr().getOnDrawActions());
-        UndoAction addCardUndo = hand.addCard(card, world.getEvents().drawCardListeners()::triggerEvent);
+
+        WorldEvents events = world.getEvents();
+        UndoAction addCardUndo = hand.addCard(card, (addedCard) -> events.triggerEvent(SimpleEventType.DRAW_CARD, addedCard));
 
         return () -> {
             addCardUndo.undo();

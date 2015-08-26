@@ -21,7 +21,9 @@ import com.github.kelemen.brazier.abilities.HpProperty;
 import com.github.kelemen.brazier.abilities.PermanentBuff;
 import com.github.kelemen.brazier.cards.Card;
 import com.github.kelemen.brazier.cards.CardDescr;
+import com.github.kelemen.brazier.events.SimpleEventType;
 import com.github.kelemen.brazier.events.UndoableUnregisterRef;
+import com.github.kelemen.brazier.events.WorldActionEvents;
 import com.github.kelemen.brazier.events.WorldEventAction;
 import com.github.kelemen.brazier.events.WorldEvents;
 import com.github.kelemen.brazier.minions.Minion;
@@ -231,9 +233,12 @@ public final class TargetedActions {
         return (World world, Actor actor, Minion target) -> {
             return target.addAndActivateAbility((Minion self) -> {
                 WorldEvents events = world.getEvents();
-                return events.attackListeners().addAction(Priorities.LOW_PRIORITY, (attackWorld, attackRequest) -> {
+                WorldActionEvents<AttackRequest> listeners = events.simpleListeners(
+                        SimpleEventType.ATTACK_INITIATED,
+                        AttackRequest.class);
+                return listeners.addAction(Priorities.LOW_PRIORITY, (attackWorld, attackRequest) -> {
                     return attackRequest.getAttacker() == self
-                            ? action.alterWorld(world, actor)
+                            ? action.alterWorld(attackWorld, actor)
                             : UndoAction.DO_NOTHING;
                 });
             });

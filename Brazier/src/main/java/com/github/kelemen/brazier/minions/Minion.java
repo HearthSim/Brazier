@@ -19,6 +19,7 @@ import com.github.kelemen.brazier.actions.CardRef;
 import com.github.kelemen.brazier.actions.UndoAction;
 import com.github.kelemen.brazier.actions.UndoBuilder;
 import com.github.kelemen.brazier.cards.Card;
+import com.github.kelemen.brazier.events.SimpleEventType;
 import com.github.kelemen.brazier.events.WorldEventAction;
 import com.github.kelemen.brazier.events.WorldEvents;
 import com.github.kelemen.brazier.weapons.AttackTool;
@@ -176,7 +177,7 @@ public final class Minion implements TargetableCharacter, DestroyableEntity, Sil
 
     private UndoAction triggerKilledEvents() {
         WorldEvents events = getOwner().getWorld().getEvents();
-        return events.minionKilledListeners().triggerEvent(this);
+        return events.triggerEvent(SimpleEventType.MINION_KILLED, this);
     }
 
     @Override

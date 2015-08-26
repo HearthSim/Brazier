@@ -1,45 +1,23 @@
 package com.github.kelemen.brazier.events;
 
 import com.github.kelemen.brazier.Player;
-import com.github.kelemen.brazier.Secret;
 import com.github.kelemen.brazier.UndoableResult;
 import com.github.kelemen.brazier.World;
-import com.github.kelemen.brazier.actions.AttackRequest;
 import com.github.kelemen.brazier.actions.UndoAction;
 import com.github.kelemen.brazier.actions.UndoableAction;
 import com.github.kelemen.brazier.actions.WorldActionList;
 import com.github.kelemen.brazier.actions.WorldObjectAction;
-import com.github.kelemen.brazier.cards.Card;
 import com.github.kelemen.brazier.minions.Minion;
-import com.github.kelemen.brazier.weapons.Weapon;
+import java.util.EnumMap;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 import org.jtrim.utils.ExceptionHelper;
 
 public final class WorldEvents {
     private final World world;
 
-    private final WorldActionEvents<Card> drawCardListeners;
-    private final WorldActionEvents<CardPlayEvent> startPlayingCardListeners;
-    private final WorldActionEvents<CardPlayedEvent> donePlayingCardListeners;
-
+    private final Map<SimpleEventType, WorldActionEvents<?>> simpleListeners;
     private final CompletableWorldActionEvents<Minion> summoningListeners;
-
-    private final WorldActionEvents<DamageRequest> prepareDamageListeners;
-
-    private final WorldActionEvents<DamageEvent> heroDamagedListeners;
-    private final WorldActionEvents<DamageEvent> minionDamagedListeners;
-    private final WorldActionEvents<Minion> minionKilledListeners;
-    private final WorldActionEvents<Weapon> weaponDestroyedListeners;
-
-    private final WorldActionEvents<ArmorGainedEvent> armorGainedListeners;
-    private final WorldActionEvents<DamageEvent> heroHealedListeners;
-    private final WorldActionEvents<DamageEvent> minionHealedListeners;
-
-    private final WorldActionEvents<Player> turnStartsListeners;
-    private final WorldActionEvents<Player> turnEndsListeners;
-
-    private final WorldActionEvents<AttackRequest> attackListeners;
-    private final WorldActionEvents<Secret> secretRevealedListeners;
 
     private final AtomicReference<WorldActionList<Void>> pauseCollectorRef;
 
@@ -54,22 +32,8 @@ public final class WorldEvents {
         this.world = world;
         this.pauseCollectorRef = new AtomicReference<>(null);
 
-        this.drawCardListeners = createEventContainer();
-        this.startPlayingCardListeners = createEventContainer();
-        this.donePlayingCardListeners = createEventContainer();
+        this.simpleListeners = new EnumMap<>(SimpleEventType.class);
         this.summoningListeners = createCompletableWorldActionEvents();
-        this.prepareDamageListeners = createEventContainer();
-        this.heroDamagedListeners = createEventContainer();
-        this.minionDamagedListeners = createEventContainer();
-        this.minionKilledListeners = createEventContainer();
-        this.weaponDestroyedListeners = createEventContainer();
-        this.armorGainedListeners = createEventContainer();
-        this.heroHealedListeners = createEventContainer();
-        this.minionHealedListeners = createEventContainer();
-        this.attackListeners = createEventContainer();
-        this.secretRevealedListeners = createEventContainer();
-        this.turnStartsListeners = createEventContainer();
-        this.turnEndsListeners = createEventContainer();
 
         this.startSummoningListeners = (int priority, WorldObjectAction<Minion> action) -> {
             return summoningListeners.addListener(priority, (World eventWorld, Minion minion) -> {
@@ -84,64 +48,54 @@ public final class WorldEvents {
         };
     }
 
-    public WorldActionEvents<ArmorGainedEvent> armorGainedListeners() {
-        return armorGainedListeners;
+    private <T> WorldActionEvents<T> tryGetSimpleListeners(SimpleEventType eventType, Class<T> argType) {
+        if (argType != eventType.getArgumentType()) {
+            throw new IllegalArgumentException("The requested listener has a different argument type."
+                    + " Requested: " + argType.getName()
+                    + ". Expected: " + eventType.getArgumentType());
+        }
+
+        @SuppressWarnings("unchecked")
+        WorldActionEvents<T> result = (WorldActionEvents<T>)simpleListeners.get(eventType);
+        return result;
     }
 
-    public WorldActionEvents<DamageEvent> heroHealedListeners() {
-        return heroHealedListeners;
+    public <T> WorldActionEvents<T> simpleListeners(SimpleEventType eventType, Class<T> argType) {
+        WorldActionEvents<T> result = tryGetSimpleListeners(eventType, argType);
+        if (result == null) {
+            result = createEventContainer();
+            simpleListeners.put(eventType, result);
+        }
+
+        return result;
     }
 
-    public WorldActionEvents<DamageEvent> minionHealedListeners() {
-        return minionHealedListeners;
+    public <T> UndoAction triggerEventNow(SimpleEventType eventType, T arg) {
+        return triggerEvent(eventType, arg, false);
     }
 
-    public WorldActionEvents<DamageRequest> prepareDamageListeners() {
-        return prepareDamageListeners;
+    public <T> UndoAction triggerEvent(SimpleEventType eventType, T arg) {
+        return triggerEvent(eventType, arg, true);
     }
 
-    public WorldActionEvents<DamageEvent> heroDamagedListeners() {
-        return heroDamagedListeners;
-    }
+    private <T> UndoAction triggerEvent(SimpleEventType eventType, T arg, boolean delayable) {
+        Class<?> expectedArgType = eventType.getArgumentType();
+        if (!expectedArgType.isInstance(arg)) {
+            throw new IllegalArgumentException("The requested listener has a different argument type."
+                    + " Requested: " + arg.getClass().getName()
+                    + ". Expected: " + eventType.getArgumentType());
+        }
 
-    public WorldActionEvents<DamageEvent> minionDamagedListeners() {
-        return minionDamagedListeners;
-    }
-
-    public WorldActionEvents<Minion> minionKilledListeners() {
-        return minionKilledListeners;
-    }
-
-    public WorldActionEvents<Weapon> weaponDestroyedListeners() {
-        return weaponDestroyedListeners;
-    }
-
-    public WorldActionEvents<Card> drawCardListeners() {
-        return drawCardListeners;
-    }
-
-    public WorldActionEvents<CardPlayEvent> startPlayingCardListeners() {
-        return startPlayingCardListeners;
-    }
-
-    public WorldActionEvents<CardPlayedEvent> donePlayingCardListeners() {
-        return donePlayingCardListeners;
+        @SuppressWarnings("unchecked")
+        WorldActionEvents<T> listeners = tryGetSimpleListeners(eventType, (Class<T>)eventType.getArgumentType());
+        if (listeners == null) {
+            return UndoAction.DO_NOTHING;
+        }
+        return listeners.triggerEvent(delayable, arg);
     }
 
     public CompletableWorldActionEvents<Minion> summoningListeners() {
         return summoningListeners;
-    }
-
-    public WorldActionEvents<AttackRequest> attackListeners() {
-        return attackListeners;
-    }
-
-    public WorldActionEvents<Player> turnStartsListeners() {
-        return turnStartsListeners;
-    }
-
-    public WorldActionEvents<Player> turnEndsListeners() {
-        return turnEndsListeners;
     }
 
     public WorldActionEventsRegistry<Minion> startSummoningListeners() {
@@ -152,8 +106,12 @@ public final class WorldEvents {
         return doneSummoningListeners;
     }
 
-    public WorldActionEvents<Secret> secretRevealedListeners() {
-        return secretRevealedListeners;
+    public WorldActionEvents<Player> turnStartsListeners() {
+        return simpleListeners(SimpleEventType.TURN_STARTS, Player.class);
+    }
+
+    public WorldActionEvents<Player> turnEndsListeners() {
+        return simpleListeners(SimpleEventType.TURN_ENDS, Player.class);
     }
 
     /**

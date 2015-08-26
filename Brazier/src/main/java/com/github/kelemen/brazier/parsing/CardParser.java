@@ -23,6 +23,7 @@ import com.github.kelemen.brazier.cards.CardProvider;
 import com.github.kelemen.brazier.cards.CardRarity;
 import com.github.kelemen.brazier.cards.CardType;
 import com.github.kelemen.brazier.cards.PlayAction;
+import com.github.kelemen.brazier.events.SimpleEventType;
 import com.github.kelemen.brazier.events.WorldEventActionDefs;
 import com.github.kelemen.brazier.minions.MinionDescr;
 import com.github.kelemen.brazier.weapons.WeaponDescr;
@@ -56,7 +57,7 @@ public final class CardParser implements EntityParser<CardDescr> {
 
     private static UndoAction unregisterSecret(World world, Secret self, Object eventSource) {
         UndoAction removeUndo = self.getOwner().getSecrets().removeSecret(self);
-        UndoAction eventUndo = world.getEvents().secretRevealedListeners().triggerEvent(self);
+        UndoAction eventUndo = world.getEvents().triggerEvent(SimpleEventType.SECRET_REVEALED, self);
         return () -> {
             eventUndo.undo();
             removeUndo.undo();
