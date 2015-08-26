@@ -6,6 +6,7 @@
     "manaCost": 2,
     "secret": {
         "attack-initiated": {
+            "lazyFilter": true,
             "filter": [
                 "BasicFilters.ATTACKER_IS_ENEMY",
                 "BasicFilters.ATTACKER_IS_ALIVE"

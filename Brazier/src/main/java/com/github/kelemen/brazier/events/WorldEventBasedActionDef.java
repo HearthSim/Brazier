@@ -6,9 +6,11 @@ import com.github.kelemen.brazier.actions.UndoAction;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import org.jtrim.utils.ExceptionHelper;
 
 public final class WorldEventBasedActionDef<Self extends PlayerProperty, T> {
+    private final boolean lazyFilter;
     private final boolean triggerOnce;
     private final int priority;
     private final Function<WorldEvents, ? extends WorldActionEventsRegistry<T>> actionEventListenersGetter;
@@ -16,14 +18,7 @@ public final class WorldEventBasedActionDef<Self extends PlayerProperty, T> {
     private final WorldEventAction<? super Self, ? super T> eventAction;
 
     public WorldEventBasedActionDef(
-            int priority,
-            Function<WorldEvents, ? extends WorldActionEventsRegistry<T>> actionEventListenersGetter,
-            WorldEventFilter<? super Self, ? super T> condition,
-            WorldEventAction<? super Self, ? super T> eventAction) {
-        this(false, priority, actionEventListenersGetter, condition, eventAction);
-    }
-
-    public WorldEventBasedActionDef(
+            boolean lazyFilter,
             boolean triggerOnce,
             int priority,
             Function<WorldEvents, ? extends WorldActionEventsRegistry<T>> actionEventListenersGetter,
@@ -33,6 +28,7 @@ public final class WorldEventBasedActionDef<Self extends PlayerProperty, T> {
         ExceptionHelper.checkNotNullArgument(condition, "condition");
         ExceptionHelper.checkNotNullArgument(eventAction, "eventAction");
 
+        this.lazyFilter = lazyFilter;
         this.triggerOnce = triggerOnce;
         this.priority = priority;
         this.actionEventListenersGetter = actionEventListenersGetter;
@@ -87,14 +83,23 @@ public final class WorldEventBasedActionDef<Self extends PlayerProperty, T> {
             WorldActionEventsRegistry<T> actionEvents,
             Self self,
             WorldEventAction<? super Self, ? super T> appliedEventAction) {
-        return actionEvents.addAction(priority, (World world, T object) -> {
-            if (sourceFilter.applies(world, self, object)) {
+
+        if (lazyFilter) {
+            return actionEvents.addAction(priority, (World world, T object) -> {
+                if (sourceFilter.applies(world, self, object)) {
+                    return appliedEventAction.alterWorld(world, self, object);
+                }
+                else {
+                    return UndoAction.DO_NOTHING;
+                }
+            });
+        }
+        else {
+            Predicate<T> condition = (T object) -> sourceFilter.applies(self.getWorld(), self, object);
+            return actionEvents.addAction(priority, condition, (World world, T object) -> {
                 return appliedEventAction.alterWorld(world, self, object);
-            }
-            else {
-                return UndoAction.DO_NOTHING;
-            }
-        });
+            });
+        }
     }
 
     public UndoableUnregisterRef registerForEvent(WorldEvents worldEvents, Self self) {

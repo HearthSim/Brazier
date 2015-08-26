@@ -11,6 +11,7 @@ import com.github.kelemen.brazier.minions.Minion;
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Predicate;
 import org.jtrim.utils.ExceptionHelper;
 
 public final class WorldEvents {
@@ -35,14 +36,21 @@ public final class WorldEvents {
         this.simpleListeners = new EnumMap<>(SimpleEventType.class);
         this.summoningListeners = createCompletableWorldActionEvents();
 
-        this.startSummoningListeners = (int priority, WorldObjectAction<Minion> action) -> {
+        this.startSummoningListeners = (int priority, Predicate<? super Minion> condition, WorldObjectAction<? super Minion> action) -> {
             return summoningListeners.addListener(priority, (World eventWorld, Minion minion) -> {
+                if (!condition.test(minion)) {
+                    return CompleteWorldObjectAction.doNothing(UndoAction.DO_NOTHING);
+                }
+
                 UndoAction actionUndo = action.alterWorld(world, minion);
                 return CompleteWorldObjectAction.doNothing(actionUndo);
             });
         };
-        this.doneSummoningListeners = (int priority, WorldObjectAction<Minion> action) -> {
+        this.doneSummoningListeners = (int priority, Predicate<? super Minion> condition, WorldObjectAction<? super Minion> action) -> {
             return summoningListeners.addListener(priority, (World eventWorld, Minion minion) -> {
+                if (!condition.test(minion)) {
+                    return CompleteWorldObjectAction.doNothing(UndoAction.DO_NOTHING);
+                }
                 return CompleteWorldObjectAction.nothingToUndo(action);
             });
         };
@@ -163,8 +171,11 @@ public final class WorldEvents {
 
         return new WorldActionEvents<T>() {
             @Override
-            public UndoableUnregisterRef addAction(int priority, WorldObjectAction<T> action) {
-                return actionList.addAction(priority, action);
+            public UndoableUnregisterRef addAction(
+                    int priority,
+                    Predicate<? super T> condition,
+                    WorldObjectAction<? super T> action) {
+                return actionList.addAction(priority, condition, action);
             }
 
             @Override

@@ -158,9 +158,12 @@ public final class EventNotificationParser<Self extends PlayerProperty> {
         JsonTree triggerOnceElement = actionDefElement.getChild("triggerOnce");
         boolean triggerOnce = triggerOnceElement != null ? triggerOnceElement.getAsBoolean() : false;
 
+        JsonTree lazyFilterElement = actionDefElement.getChild("lazyFilter");
+        boolean lazyFilter = lazyFilterElement != null ? lazyFilterElement.getAsBoolean() : false;
+
         int priority = getPriority(actionDefElement);
 
-        return new WorldEventBasedActionDef<>(triggerOnce, priority, actionEventListenersGetter, filter, action);
+        return new WorldEventBasedActionDef<>(lazyFilter, triggerOnce, priority, actionEventListenersGetter, filter, action);
     }
 
     private <T> void parseActionDefs(

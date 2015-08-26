@@ -37,6 +37,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import org.jtrim.utils.ExceptionHelper;
 
 public final class TargetedActions {
@@ -238,10 +239,10 @@ public final class TargetedActions {
                 WorldActionEvents<AttackRequest> listeners = events.simpleListeners(
                         SimpleEventType.ATTACK_INITIATED,
                         AttackRequest.class);
-                return listeners.addAction(Priorities.LOW_PRIORITY, (attackWorld, attackRequest) -> {
-                    return attackRequest.getAttacker() == self
-                            ? action.alterWorld(attackWorld, actor)
-                            : UndoAction.DO_NOTHING;
+
+                Predicate<AttackRequest> condition = (attackRequest) -> attackRequest.getAttacker() == self;
+                return listeners.addAction(Priorities.LOW_PRIORITY, condition, (attackWorld, attackRequest) -> {
+                    return action.alterWorld(attackWorld, actor);
                 });
             });
         };

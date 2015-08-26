@@ -6,6 +6,21 @@ import static com.github.kelemen.brazier.TestCards.*;
 
 public final class CardPlayedTest {
     @Test
+    public void testTwoHobgoblins() {
+        PlayScript.testScript((script) -> {
+            script.setMana("p1", 10);
+            script.playMinionCard("p1", HOBGOBLIN, 0);
+            script.playMinionCard("p1", HOBGOBLIN, 1);
+            script.playMinionCard("p1", SLIME, 2);
+
+            script.expectBoard("p1",
+                    expectedMinion(HOBGOBLIN, 2, 3),
+                    expectedMinion(HOBGOBLIN, 2, 3),
+                    expectedMinion(SLIME, 5, 6));
+        });
+    }
+
+    @Test
     public void testIllidanPlayToItsRightSide() {
         PlayScript.testScript((script) -> {
             script.setMana("p1", 10);
