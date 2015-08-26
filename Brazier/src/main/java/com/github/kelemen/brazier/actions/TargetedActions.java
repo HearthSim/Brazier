@@ -14,6 +14,7 @@ import com.github.kelemen.brazier.TargetableCharacter;
 import com.github.kelemen.brazier.UndoableIntResult;
 import com.github.kelemen.brazier.UndoableResult;
 import com.github.kelemen.brazier.World;
+import com.github.kelemen.brazier.abilities.ActivatableAbilities;
 import com.github.kelemen.brazier.abilities.ActivatableAbility;
 import com.github.kelemen.brazier.abilities.AuraAwareIntProperty;
 import com.github.kelemen.brazier.abilities.Buff;
@@ -25,6 +26,7 @@ import com.github.kelemen.brazier.events.SimpleEventType;
 import com.github.kelemen.brazier.events.UndoableUnregisterRef;
 import com.github.kelemen.brazier.events.WorldActionEvents;
 import com.github.kelemen.brazier.events.WorldEventAction;
+import com.github.kelemen.brazier.events.WorldEventFilter;
 import com.github.kelemen.brazier.events.WorldEvents;
 import com.github.kelemen.brazier.minions.Minion;
 import com.github.kelemen.brazier.minions.MinionBody;
@@ -338,6 +340,33 @@ public final class TargetedActions {
             @NamedArg("ability") ActivatableAbility<? super Minion> ability) {
         ExceptionHelper.checkNotNullArgument(ability, "ability");
         return (World world, Object actor, Minion target) -> {
+            return target.addAndActivateAbility(ability);
+        };
+    }
+
+    public static TargetedAction<PlayerProperty, Minion> addOnActorsStartOfTurnAbility(
+            @NamedArg("action") WorldEventAction<? super Minion, ? super Player> action) {
+        ExceptionHelper.checkNotNullArgument(action, "action");
+
+        return addOnActorsPlayerEventAbility(action, SimpleEventType.TURN_STARTS);
+    }
+
+    public static TargetedAction<PlayerProperty, Minion> addOnActorsEndOfTurnAbility(
+            @NamedArg("action") WorldEventAction<? super Minion, ? super Player> action) {
+        return addOnActorsPlayerEventAbility(action, SimpleEventType.TURN_ENDS);
+    }
+
+    private static TargetedAction<PlayerProperty, Minion> addOnActorsPlayerEventAbility(
+            WorldEventAction<? super Minion, ? super Player> action,
+            SimpleEventType eventType) {
+        ExceptionHelper.checkNotNullArgument(action, "action");
+        ExceptionHelper.checkNotNullArgument(eventType, "eventType");
+
+        return (World world, PlayerProperty actor, Minion target) -> {
+            WorldEventFilter<Minion, Player> filter
+                    = (filterWorld, owner, eventSource) -> eventSource.getOwner() == actor.getOwner();
+            ActivatableAbility<Minion> ability
+                    = ActivatableAbilities.onEventAbility(filter, action, SimpleEventType.TURN_ENDS, Player.class);
             return target.addAndActivateAbility(ability);
         };
     }

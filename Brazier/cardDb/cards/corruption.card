@@ -6,12 +6,7 @@
     "manaCost": 1,
     "playActions": {
         "targets": "enemy-minions",
-        "class": "TargetedActions.addAbility",
-        "ability": {
-            "class": "ActivatableAbilities.onEventAbility",
-            "event": "turn-starts",
-            "filter": "BasicFilters.SELF_TURN",
-            "action": "TargetlessActions.SELF_DESTRUCT"
-        }
+        "class": "TargetedActions.addOnActorsStartOfTurnAbility",
+        "action": "TargetlessActions.SELF_DESTRUCT"
     }
 }
