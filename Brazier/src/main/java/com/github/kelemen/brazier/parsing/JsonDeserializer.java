@@ -164,6 +164,14 @@ public final class JsonDeserializer {
     }
 
     private Object fromEnum(String str, Class<?> enumClass) throws ObjectParsingException {
+        CustomStringParser<?> customResolver = customStringParsers.get(enumClass);
+        if (customResolver != null) {
+            Object result = customResolver.parse(str);
+            if (result != null) {
+                return result;
+            }
+        }
+
         Object[] enumConstants = enumClass.getEnumConstants();
         Object matchWithCaseError = null;
         for (Object candidate: enumConstants) {
@@ -228,11 +236,11 @@ public final class JsonDeserializer {
         }
     }
 
+
     private Object parsePrimitive(
             JsonPrimitive element,
             Class<?> expectedType,
             TypeChecker typeChecker) throws ObjectParsingException {
-
         CustomStringParser<?> customResolver = customStringParsers.get(expectedType);
         if (customResolver != null) {
             Object result = customResolver.parse(element.getAsString());

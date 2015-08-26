@@ -1,5 +1,6 @@
 package com.github.kelemen.brazier.abilities;
 
+import com.github.kelemen.brazier.Player;
 import com.github.kelemen.brazier.PreparedResult;
 import com.github.kelemen.brazier.World;
 import com.github.kelemen.brazier.WorldProperty;
@@ -79,10 +80,14 @@ public final class ActivatableAbilities<Self> {
         return result;
     }
 
-    public static <Self extends WorldProperty> ActivatableAbility<Self> onMinionKilledAbility(
-            @NamedArg("filter") WorldEventFilter<? super Self, ? super Minion> filter,
-            @NamedArg("action") WorldEventAction<? super Self, ? super Minion> action) {
-        return onEventAbility(filter, action, SimpleEventType.MINION_KILLED, Minion.class);
+    public static <Self extends WorldProperty, EventArg> ActivatableAbility<Self> onEventAbility(
+            @NamedArg("filter") WorldEventFilter<? super Self, ? super EventArg> filter,
+            @NamedArg("action") WorldEventAction<? super Self, ? super EventArg> action,
+            @NamedArg("event") SimpleEventType eventType) {
+
+        @SuppressWarnings("unchecked")
+        Class<EventArg> argType = (Class<EventArg>)eventType.getArgumentType();
+        return onEventAbility(filter, action, eventType, argType);
     }
 
     public static <Self extends WorldProperty, EventArg> ActivatableAbility<Self> onEventAbility(

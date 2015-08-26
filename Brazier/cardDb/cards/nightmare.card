@@ -16,8 +16,9 @@
             {
                 "class": "TargetedActions.addAbility",
                 "ability": {
-                    "class": "MinionAbilities.startOfTurnBuff",
-                    "filter": "BasicFilters.NOT_SELF_TURN",
+                    "class": "ActivatableAbilities.onEventAbility",
+                    "event": "turn-starts",
+                    "filter": "BasicFilters.SELF_TURN",
                     "action": "TargetlessActions.SELF_DESTRUCT"
                 }
             }

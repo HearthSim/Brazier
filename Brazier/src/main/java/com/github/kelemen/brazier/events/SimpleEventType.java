@@ -6,6 +6,10 @@ import com.github.kelemen.brazier.actions.AttackRequest;
 import com.github.kelemen.brazier.cards.Card;
 import com.github.kelemen.brazier.minions.Minion;
 import com.github.kelemen.brazier.weapons.Weapon;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 public enum SimpleEventType {
     DRAW_CARD("draw-card", Card.class),
@@ -24,12 +28,26 @@ public enum SimpleEventType {
     ATTACK_INITIATED("attack-initiated", AttackRequest.class),
     SECRET_REVEALED("secret-revealed", Secret.class);
 
+    private static final Map<String, SimpleEventType> NAME_MAP;
+
+    static {
+        Map<String, SimpleEventType> nameMap = new HashMap<>();
+        for (SimpleEventType eventType: values()) {
+            nameMap.put(eventType.eventName, eventType);
+        }
+        NAME_MAP = Collections.unmodifiableMap(nameMap);
+    }
+
     private final String eventName;
     private final Class<?> argType;
 
     private SimpleEventType(String eventName, Class<?> argType) {
         this.eventName = eventName;
         this.argType = argType;
+    }
+
+    public static SimpleEventType tryParse(String str) {
+        return NAME_MAP.get(str.toLowerCase(Locale.ROOT));
     }
 
     public String getEventName() {

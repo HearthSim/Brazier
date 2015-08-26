@@ -5,7 +5,8 @@
     "rarity": "legendary",
     "manaCost": 5,
     "inHandAbility": {
-        "class": "ActivatableAbilities.onMinionKilledAbility",
+        "class": "ActivatableAbilities.onEventAbility",
+        "event": "minion-killed",
         "filter": "BasicFilters.HAS_SAME_OWNER_PLAYER",
         "action": {
             "class": "TargetlessActions.buffSelfMinion",

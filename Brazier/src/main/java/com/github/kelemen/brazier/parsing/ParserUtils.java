@@ -30,6 +30,7 @@ import com.github.kelemen.brazier.cards.CardDescr;
 import com.github.kelemen.brazier.cards.CardId;
 import com.github.kelemen.brazier.cards.CardProvider;
 import com.github.kelemen.brazier.cards.PlayAction;
+import com.github.kelemen.brazier.events.SimpleEventType;
 import com.github.kelemen.brazier.events.WorldEventAction;
 import com.github.kelemen.brazier.events.WorldEventActionDefs;
 import com.github.kelemen.brazier.events.WorldEventFilter;
@@ -250,6 +251,7 @@ public final class ParserUtils {
         result.setCustomStringParser(CardId.class, (str) -> new CardId(str));
         result.setCustomStringParser(MinionId.class, (str) -> new MinionId(str));
         result.setCustomStringParser(WeaponId.class, (str) -> new WeaponId(str));
+        result.setCustomStringParser(SimpleEventType.class, SimpleEventType::tryParse);
 
         result.setCustomStringParser(Buff.class, (String str) -> {
             BuffDescr buffDescr = BuffDescr.tryCreate(str);
