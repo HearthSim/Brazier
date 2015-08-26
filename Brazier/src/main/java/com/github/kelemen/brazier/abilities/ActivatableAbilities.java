@@ -1,9 +1,18 @@
 package com.github.kelemen.brazier.abilities;
 
 import com.github.kelemen.brazier.PreparedResult;
+import com.github.kelemen.brazier.World;
+import com.github.kelemen.brazier.WorldProperty;
 import com.github.kelemen.brazier.actions.UndoAction;
 import com.github.kelemen.brazier.actions.UndoBuilder;
+import com.github.kelemen.brazier.events.SimpleEventType;
 import com.github.kelemen.brazier.events.UndoableUnregisterRef;
+import com.github.kelemen.brazier.events.WorldActionEventsRegistry;
+import com.github.kelemen.brazier.events.WorldEventAction;
+import com.github.kelemen.brazier.events.WorldEventFilter;
+import com.github.kelemen.brazier.events.WorldEvents;
+import com.github.kelemen.brazier.minions.Minion;
+import com.github.kelemen.brazier.parsing.NamedArg;
 import java.util.ArrayList;
 import java.util.List;
 import org.jtrim.utils.ExceptionHelper;
@@ -68,6 +77,36 @@ public final class ActivatableAbilities<Self> {
         }
 
         return result;
+    }
+
+    public static <Self extends WorldProperty> ActivatableAbility<Self> onMinionKilledAbility(
+            @NamedArg("filter") WorldEventFilter<? super Self, ? super Minion> filter,
+            @NamedArg("action") WorldEventAction<? super Self, ? super Minion> action) {
+        return onEventAbility(filter, action, SimpleEventType.MINION_KILLED, Minion.class);
+    }
+
+    public static <Self extends WorldProperty, EventArg> ActivatableAbility<Self> onEventAbility(
+            WorldEventFilter<? super Self, ? super EventArg> filter,
+            WorldEventAction<? super Self, ? super EventArg> action,
+            SimpleEventType eventType,
+            Class<EventArg> argType) {
+        ExceptionHelper.checkNotNullArgument(filter, "filter");
+        ExceptionHelper.checkNotNullArgument(action, "action");
+        ExceptionHelper.checkNotNullArgument(eventType, "eventType");
+        ExceptionHelper.checkNotNullArgument(argType, "argType");
+
+        return (Self self) -> {
+            WorldEvents events = self.getWorld().getEvents();
+            WorldActionEventsRegistry<EventArg> listeners = events.simpleListeners(eventType, argType);
+            return listeners.addAction((World world, EventArg eventArg) -> {
+                if (filter.applies(world, self, eventArg)) {
+                    return action.alterWorld(world, self, eventArg);
+                }
+                else {
+                    return UndoAction.DO_NOTHING;
+                }
+            });
+        };
     }
 
     private static final class CustomAbilityRef<Self> {

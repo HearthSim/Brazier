@@ -5,7 +5,7 @@
     "rarity": "legendary",
     "manaCost": 5,
     "inHandAbility": {
-        "class": "CardAbilities.onMinionKilledAbility",
+        "class": "ActivatableAbilities.onMinionKilledAbility",
         "filter": "BasicFilters.HAS_SAME_OWNER_PLAYER",
         "action": {
             "class": "TargetlessActions.buffSelfMinion",
