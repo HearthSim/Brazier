@@ -85,16 +85,22 @@ public final class WorldActionList<T> {
 
         UndoBuilder result = new UndoBuilder(remaining.size());
 
+        List<WorldObjectAction<? super T>> toExecute = new ArrayList<>();
         while (!remaining.isEmpty()) {
+            toExecute.clear();
             for (ActionWrapper<T> actionRef: remaining) {
                 if (actionRef.isApplicable(object)) {
-                    result.addUndo(actionRef.wrapped.alterWorld(world, object));
+                    toExecute.add(actionRef.getAction());
                 }
                 else {
                     skippedActions.add(actionRef);
                 }
             }
             remaining.clear();
+
+            for (WorldObjectAction<? super T> action: toExecute) {
+                result.addUndo(action.alterWorld(world, object));
+            }
 
             Iterator<ActionWrapper<T>> skippedActionsItr = skippedActions.iterator();
             while (skippedActionsItr.hasNext()) {
