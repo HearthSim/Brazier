@@ -32,6 +32,7 @@ public final class World {
     private final HearthStoneDb db;
     private final Player player1;
     private final Player player2;
+    private GameResult gameResult;
 
     private final ActiveAuraContainer activeAuras;
 
@@ -49,6 +50,7 @@ public final class World {
         this.player1 = new Player(this, player1Id);
         this.player2 = new Player(this, player2Id);
         this.activeAuras = new ActiveAuraContainer();
+        this.gameResult = null;
 
         this.events = new WorldEvents(this);
         this.randomProvider = DEFAULT_RANDOM_PROVIDER;
@@ -79,6 +81,38 @@ public final class World {
 
     public long getCurrentTime() {
         return currentTime.getAndIncrement();
+    }
+
+    public boolean isGameOver() {
+        return gameResult != null;
+    }
+
+    public GameResult tryGetGameResult() {
+        return gameResult;
+    }
+
+    private UndoAction updateGameOverState() {
+        if (gameResult != null) {
+            // Once the game is over, we cannot change the result.
+            return UndoAction.DO_NOTHING;
+        }
+
+        boolean player1Dead = player1.getHero().isDead();
+        boolean player2Dead = player2.getHero().isDead();
+        if (!player1Dead && !player2Dead) {
+            return UndoAction.DO_NOTHING;
+        }
+
+        List<PlayerId> deadPlayers = new ArrayList<>(2);
+        if (player1Dead) {
+            deadPlayers.add(player1.getPlayerId());
+        }
+        if (player2Dead) {
+            deadPlayers.add(player2.getPlayerId());
+        }
+
+        this.gameResult = new GameResult(deadPlayers);
+        return () -> gameResult = null;
     }
 
     public Player getCurrentPlayer() {
@@ -135,38 +169,37 @@ public final class World {
         return findTarget(character.getTargetId()) != null;
     }
 
-    public DeathResolutionResult attack(TargetId attackerId, TargetId defenderId) {
+    public UndoAction attack(TargetId attackerId, TargetId defenderId) {
         ExceptionHelper.checkNotNullArgument(attackerId, "attackerId");
         ExceptionHelper.checkNotNullArgument(defenderId, "defenderId");
 
         TargetableCharacter attacker = findTarget(attackerId);
         if (attacker == null) {
-            return DeathResolutionResult.NO_DEATHS;
+            return UndoAction.DO_NOTHING;
         }
 
         TargetableCharacter defender = findTarget(defenderId);
         if (defender == null) {
-            return DeathResolutionResult.NO_DEATHS;
+            return UndoAction.DO_NOTHING;
         }
 
-        UndoBuilder resultUndo = new UndoBuilder();
+        UndoBuilder result = new UndoBuilder();
 
         AttackRequest attackRequest = new AttackRequest(attacker, defender);
-        resultUndo.addUndo(events.triggerEventNow(SimpleEventType.ATTACK_INITIATED, attackRequest));
+        result.addUndo(events.triggerEventNow(SimpleEventType.ATTACK_INITIATED, attackRequest));
 
-        DeathResolutionResult deathResolution = resolveDeaths();
-        resultUndo.addUndo(deathResolution.getUndoAction());
-        if (deathResolution.isGameOver()) {
-            return new DeathResolutionResult(true, deathResolution.getDeadPlayers(), resultUndo);
+        result.addUndo(resolveDeaths());
+        if (isGameOver()) {
+            return result;
         }
 
         TargetableCharacter newDefender = attackRequest.getDefender();
         if (newDefender == null) {
-            return new DeathResolutionResult(true, resultUndo);
+            return result;
         }
 
         if (!isTargetExist(attacker) || !isTargetExist(newDefender)) {
-            return new DeathResolutionResult(true, resultUndo);
+            return result;
         }
 
         // We request all this info prior attacking, because we do not want
@@ -177,13 +210,13 @@ public final class World {
         boolean swipeRight = attackTool.attacksRight();
 
         UndoAction attackUndo = events.doAtomic(() -> resolveAttackNonAtomic(attacker, newDefender));
-        resultUndo.addUndo(attackUndo);
+        result.addUndo(attackUndo);
 
         if (swipLeft || swipeRight) {
-            resultUndo.addUndo(doSwipeAttack(attack, swipLeft, swipeRight, attacker, newDefender));
+            result.addUndo(doSwipeAttack(attack, swipLeft, swipeRight, attacker, newDefender));
         }
 
-        return new DeathResolutionResult(true, resultUndo);
+        return result;
     }
 
     private static UndoAction doSwipeAttack(
@@ -288,49 +321,40 @@ public final class World {
         return result;
     }
 
-    public DeathResolutionResult endPhase() {
-        DeathResolutionResult deathResults = resolveDeaths();
-        if (!deathResults.deathOccurred()) {
+    public UndoAction endPhase() {
+        UndoableResult<Boolean> deathResults = resolveDeaths();
+        if (!deathResults.getResult()) {
             return deathResults;
         }
 
-        UndoBuilder undos = new UndoBuilder();
-        undos.addUndo(deathResults.getUndoAction());
+        UndoBuilder result = new UndoBuilder();
+        result.addUndo(deathResults.getUndoAction());
 
         do {
             deathResults = resolveDeaths();
-            undos.addUndo(deathResults.getUndoAction());
-        } while (deathResults.deathOccurred() && !deathResults.isGameOver());
+            result.addUndo(deathResults.getUndoAction());
+        } while (deathResults.getResult() && !isGameOver());
 
-        return new DeathResolutionResult(true, deathResults.getDeadPlayers(), undos);
+        return new UndoableResult<>(true, result);
     }
 
-    private DeathResolutionResult resolveDeaths() {
+    private UndoableResult<Boolean> resolveDeaths() {
         UndoAction auraUndo = updateAllAuras();
-        DeathResolutionResult result = resolveDeathsWithoutAura();
-        if (!result.deathOccurred()) {
-            return new DeathResolutionResult(false, result.getDeadPlayers(), auraUndo);
-        }
-        else {
-            return new DeathResolutionResult(true, result.getDeadPlayers(), () -> {
-                result.undo();
-                auraUndo.undo();
-            });
-        }
+        UndoableResult<Boolean> deathResolution = resolveDeathsWithoutAura();
+        return new UndoableResult<>(deathResolution.getResult(), () -> {
+            deathResolution.undo();
+            auraUndo.undo();
+        });
     }
 
-    private DeathResolutionResult resolveDeathsWithoutAura() {
-        List<PlayerId> deadPlayers = new ArrayList<>(2);
-        if (player1.getHero().isDead()) {
-            deadPlayers.add(player1.getPlayerId());
-        }
-        if (player2.getHero().isDead()) {
-            deadPlayers.add(player2.getPlayerId());
-        }
+    private UndoableResult<Boolean> resolveDeathsWithoutAura() {
+        UndoBuilder result = new UndoBuilder();
 
-        if (!deadPlayers.isEmpty()) {
+        result.addUndo(updateGameOverState());
+
+        if (isGameOver()) {
             // We could finish the death-rattles but why would we?
-            return new DeathResolutionResult(true, deadPlayers, UndoAction.DO_NOTHING);
+            return new UndoableResult<>(false, result);
         }
 
         List<Minion> deadMinions = new ArrayList<>();
@@ -338,14 +362,13 @@ public final class World {
         player2.getBoard().collectMinions(deadMinions, Minion::isDead);
 
         UndoableResult<List<Weapon>> deadWeaponsResult = removeDeadWeapons();
+        result.addUndo(deadWeaponsResult.getUndoAction());
+
         List<Weapon> deadWeapons = deadWeaponsResult.getResult();
 
         if (deadWeapons.isEmpty() && deadMinions.isEmpty()) {
-            return DeathResolutionResult.NO_DEATHS;
+            return new UndoableResult<>(false, result);
         }
-
-        UndoBuilder result = new UndoBuilder();
-        result.addUndo(deadWeaponsResult);
 
         List<DestroyableEntity> deadEntities = new ArrayList<>(deadWeapons.size() + deadMinions.size());
         for (Minion minion: deadMinions) {
@@ -368,7 +391,7 @@ public final class World {
             result.addUndo(dead.destroy());
         }
 
-        return new DeathResolutionResult(true, deadPlayers, result);
+        return new UndoableResult<>(true, result);
     }
 
     public WorldEvents getEvents() {

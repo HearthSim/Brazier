@@ -40,23 +40,23 @@ public final class WorldPlayAgent {
         return getCurrentPlayer().getPlayerId();
     }
 
-    public DeathResolutionResult doWorldAction(WorldAction worldAction) {
+    public UndoAction doWorldAction(WorldAction worldAction) {
         ExceptionHelper.checkNotNullArgument(worldAction, "worldAction");
 
         UndoAction action = worldAction.alterWorld(world);
-        DeathResolutionResult deathResults = world.endPhase();
-        return new DeathResolutionResult(deathResults.deathOccurred(), deathResults.getDeadPlayers(), () -> {
+        UndoAction deathResults = world.endPhase();
+        return () -> {
             deathResults.undo();
             action.undo();
-        });
+        };
     }
 
-    public DeathResolutionResult attack(TargetId attacker, TargetId defender) {
+    public UndoAction attack(TargetId attacker, TargetId defender) {
         // TODO: Check if the action is actually a valid move.
         return doWorldAction((currentWorld) -> currentWorld.attack(attacker, defender));
     }
 
-    public DeathResolutionResult playHeroPower(PlayTargetRequest targetRequest) {
+    public UndoAction playHeroPower(PlayTargetRequest targetRequest) {
         return doWorldAction((currentWorld) -> {
             Player castingPlayer = currentWorld.getPlayer(targetRequest.getCastingPlayerId());
             TargetableCharacter target = currentWorld.findTarget(targetRequest.getTargetId());
@@ -66,7 +66,7 @@ public final class WorldPlayAgent {
         });
     }
 
-    public DeathResolutionResult playCard(int cardIndex, PlayTargetRequest playTarget) {
+    public UndoAction playCard(int cardIndex, PlayTargetRequest playTarget) {
         // TODO: Check if the action is actually a valid move.
         return doWorldAction((currentWorld) -> {
             Player player = currentWorld.getPlayer(playTarget.getCastingPlayerId());

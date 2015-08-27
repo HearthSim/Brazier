@@ -1,12 +1,12 @@
 package com.github.kelemen.brazier.ui;
 
-import com.github.kelemen.brazier.DeathResolutionResult;
 import com.github.kelemen.brazier.Player;
 import com.github.kelemen.brazier.PlayerId;
 import com.github.kelemen.brazier.TargetId;
 import com.github.kelemen.brazier.World;
 import com.github.kelemen.brazier.WorldPlayAgent;
 import com.github.kelemen.brazier.actions.PlayTargetRequest;
+import com.github.kelemen.brazier.actions.UndoAction;
 import com.github.kelemen.brazier.actions.WorldAction;
 import org.jtrim.event.CopyOnTriggerListenerManager;
 import org.jtrim.event.EventListeners;
@@ -88,24 +88,24 @@ public final class WorldPlayUiAgent {
     }
 
     public void attack(TargetId attacker, TargetId defender) {
-        DeathResolutionResult result = playAgent.attack(attacker, defender);
-        undoManager.addUndo(result.getUndoAction());
+        UndoAction result = playAgent.attack(attacker, defender);
+        undoManager.addUndo(result);
 
         // TODO: Update game over state
         refreshWorld();
     }
 
     public void playCard(int cardIndex, PlayTargetRequest playTarget) {
-        DeathResolutionResult result = playAgent.playCard(cardIndex, playTarget);
-        undoManager.addUndo(result.getUndoAction());
+        UndoAction result = playAgent.playCard(cardIndex, playTarget);
+        undoManager.addUndo(result);
 
         // TODO: Update game over state
         refreshWorld();
     }
 
     public void playHeroPower(PlayTargetRequest playTarget) {
-        DeathResolutionResult result = playAgent.playHeroPower(playTarget);
-        undoManager.addUndo(result.getUndoAction());
+        UndoAction result = playAgent.playHeroPower(playTarget);
+        undoManager.addUndo(result);
 
         // TODO: Update game over state
         refreshWorld();

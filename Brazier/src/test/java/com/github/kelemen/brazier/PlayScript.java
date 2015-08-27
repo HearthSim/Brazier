@@ -16,7 +16,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
-import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import org.jtrim.utils.ExceptionHelper;
@@ -129,14 +128,7 @@ public final class PlayScript {
     private void playCard(PlayerId playerId, int cardIndex, int minionPos, String target) {
         expectGameContinues();
         addScriptAction((state) -> {
-            DeathResolutionResult playResolution
-                    = state.playAgent.playCard(cardIndex, state.toPlayTarget(playerId, minionPos, target));
-            UndoAction resolutionSetUndo = state.setPlayResolution(playResolution);
-
-            return () -> {
-                resolutionSetUndo.undo();
-                playResolution.undo();
-            };
+            return state.playAgent.playCard(cardIndex, state.toPlayTarget(playerId, minionPos, target));
         });
     }
 
@@ -178,13 +170,11 @@ public final class PlayScript {
             UndoAction addCardUndo = hand.addCard(cardDescr);
             int cardIndex = hand.getCardCount() - 1;
 
-            DeathResolutionResult playResolution
+            UndoAction playUndo
                     = state.playAgent.playCard(cardIndex, state.toPlayTarget(playerId, minionPos, target));
-            UndoAction resolutionSetUndo = state.setPlayResolution(playResolution);
 
             return () -> {
-                resolutionSetUndo.undo();
-                playResolution.undo();
+                playUndo.undo();
                 addCardUndo.undo();
             };
         });
@@ -192,9 +182,9 @@ public final class PlayScript {
 
     public void expectGameContinues() {
         expect((state) -> {
-            DeathResolutionResult lastPlayResolution = state.getLastPlayResolution();
-            if (lastPlayResolution.isGameOver()) {
-                fail("Unexpected game over: " + lastPlayResolution.getDeadPlayers());
+            GameResult gameResult = state.world.tryGetGameResult();
+            if (gameResult != null) {
+                fail("Unexpected game over: " + gameResult);
             }
         });
     }
@@ -206,12 +196,12 @@ public final class PlayScript {
         }
 
         expect((state) -> {
-            DeathResolutionResult lastPlayResolution = state.getLastPlayResolution();
-            if (!lastPlayResolution.isGameOver()) {
-                fail("Expected game over.");
+            GameResult gameResult = state.world.tryGetGameResult();
+            if (gameResult == null) {
+                throw new AssertionError("Expected game over.");
             }
 
-            Set<PlayerId> deadPlayerIds = new HashSet<>(lastPlayResolution.getDeadPlayers());
+            Set<PlayerId> deadPlayerIds = new HashSet<>(gameResult.getDeadPlayers());
             assertEquals("Dead players", expectedDeadPlayerIds, deadPlayerIds);
         });
     }
@@ -462,14 +452,7 @@ public final class PlayScript {
             TargetId attackerId = state.findTargetId(attacker);
             TargetId targetId = state.findTargetId(target);
 
-            DeathResolutionResult playResolution
-                    = state.playAgent.attack(attackerId, targetId);
-            UndoAction setStateUndo = state.setPlayResolution(playResolution);
-
-            return () -> {
-                setStateUndo.undo();
-                playResolution.undo();
-            };
+            return state.playAgent.attack(attackerId, targetId);
         });
     }
 
@@ -733,7 +716,6 @@ public final class PlayScript {
         private final ScriptedRandomProvider randomProvider;
         private final WorldPlayAgent playAgent;
         private final World world;
-        private final AtomicReference<DeathResolutionResult> lastPlayResolution;
 
         public State(boolean changePlayers, HearthStoneDb db) {
             this.randomProvider = new ScriptedRandomProvider();
@@ -744,18 +726,6 @@ public final class PlayScript {
             this.world.setRandomProvider(randomProvider);
             this.world.setUserAgent(userAgent);
             this.playAgent = new WorldPlayAgent(world);
-            this.lastPlayResolution = new AtomicReference<>(DeathResolutionResult.NO_DEATHS);
-        }
-
-        public DeathResolutionResult getLastPlayResolution() {
-            return lastPlayResolution.get();
-        }
-
-        public UndoAction setPlayResolution(DeathResolutionResult newResult) {
-            ExceptionHelper.checkNotNullArgument(newResult, "newResult");
-
-            DeathResolutionResult prevResult = lastPlayResolution.getAndSet(newResult);
-            return () -> lastPlayResolution.set(prevResult);
         }
 
         public TargetableCharacter findTarget(String targetId) {
