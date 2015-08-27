@@ -107,8 +107,8 @@ public final class WorldActionList<T> {
                 ActionWrapper<T> skippedAction = skippedActionsItr.next();
                 // FIXME: isApplicable for the first item will be called again
                 //   needlessly. This - in theory - can cause an infinite loop.
-                //   However, it is reasonable to assume that filters are deterministic.
-                //   Still it should be fixed.
+                //   However, it is reasonable to assume that filters are
+                //   deterministic and statless. Still it should be fixed.
                 if (skippedAction.isApplicable(object)) {
                     skippedActionsItr.remove();
                     remaining.add(skippedAction);
