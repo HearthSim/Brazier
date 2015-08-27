@@ -78,40 +78,66 @@ public final class WorldActionList<T> {
         return (world) -> executeActionsNow(world, object, snapshot);
     }
 
+    private static <T> void drainSamePriotityActions(List<ActionWrapper<T>> src, List<ActionWrapper<T>> dest) {
+        if (src.isEmpty()) {
+            return;
+        }
+
+        ActionWrapper<T> first = src.remove(0);
+        dest.add(first);
+        int priority = first.priority;
+
+        Iterator<ActionWrapper<T>> srcItr = src.iterator();
+        while (srcItr.hasNext()) {
+            ActionWrapper<T> current = srcItr.next();
+            if (current.priority != priority) {
+                break;
+            }
+
+            srcItr.remove();
+            dest.add(current);
+        }
+    }
 
     public UndoAction executeActionsNowGreedily(World world, T object) {
-        List<ActionWrapper<T>> remaining = new ArrayList<>(actions);
+        List<ActionWrapper<T>> remainingAll = new LinkedList<>(actions);
+        List<ActionWrapper<T>> remainingQueue = new ArrayList<>(actions.size());
         List<ActionWrapper<T>> skippedActions = new LinkedList<>();
-
-        UndoBuilder result = new UndoBuilder(remaining.size());
-
         List<WorldObjectAction<? super T>> toExecute = new ArrayList<>();
-        while (!remaining.isEmpty()) {
-            toExecute.clear();
-            for (ActionWrapper<T> actionRef: remaining) {
-                if (actionRef.isApplicable(object)) {
-                    toExecute.add(actionRef.getAction());
-                }
-                else {
-                    skippedActions.add(actionRef);
-                }
-            }
-            remaining.clear();
 
-            for (WorldObjectAction<? super T> action: toExecute) {
-                result.addUndo(action.alterWorld(world, object));
-            }
+        UndoBuilder result = new UndoBuilder(remainingAll.size());
 
-            Iterator<ActionWrapper<T>> skippedActionsItr = skippedActions.iterator();
-            while (skippedActionsItr.hasNext()) {
-                ActionWrapper<T> skippedAction = skippedActionsItr.next();
-                // FIXME: isApplicable for the first item will be called again
-                //   needlessly. This - in theory - can cause an infinite loop.
-                //   However, it is reasonable to assume that filters are
-                //   deterministic and statless. Still it should be fixed.
-                if (skippedAction.isApplicable(object)) {
-                    skippedActionsItr.remove();
-                    remaining.add(skippedAction);
+        while (!remainingAll.isEmpty()) {
+            skippedActions.clear();
+            drainSamePriotityActions(remainingAll, remainingQueue);
+
+            while (!remainingQueue.isEmpty()) {
+                toExecute.clear();
+                for (ActionWrapper<T> actionRef: remainingQueue) {
+                    if (actionRef.isApplicable(object)) {
+                        toExecute.add(actionRef.getAction());
+                    }
+                    else {
+                        skippedActions.add(actionRef);
+                    }
+                }
+                remainingQueue.clear();
+
+                for (WorldObjectAction<? super T> action: toExecute) {
+                    result.addUndo(action.alterWorld(world, object));
+                }
+
+                Iterator<ActionWrapper<T>> skippedActionsItr = skippedActions.iterator();
+                while (skippedActionsItr.hasNext()) {
+                    ActionWrapper<T> skippedAction = skippedActionsItr.next();
+                    // FIXME: isApplicable for the first item will be called again
+                    //   needlessly. This - in theory - can cause an infinite loop.
+                    //   However, it is reasonable to assume that filters are
+                    //   deterministic and statless. Still it should be fixed.
+                    if (skippedAction.isApplicable(object)) {
+                        skippedActionsItr.remove();
+                        remainingQueue.add(skippedAction);
+                    }
                 }
             }
         }
