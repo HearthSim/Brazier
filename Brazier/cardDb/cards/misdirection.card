@@ -8,7 +8,7 @@
     "secret": {
         "attack-initiated": {
             "filter": "BasicFilters.HAS_MISSDIRECT_TARGET",
-            "action": "AttackEventActions.MISSDIRECT"
+            "action": "WorldEventActions.MISSDIRECT"
         }
     }
 }

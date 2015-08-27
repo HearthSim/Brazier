@@ -11,7 +11,7 @@
                 "BasicFilters.SELF_BOARD_IS_NOT_FULL"
             ],
             "action": {
-                "class": "AttackEventActions.summonNewTargetForAttack",
+                "class": "WorldEventActions.summonNewTargetForAttack",
                 "minion": "Defender"
             }
         }
