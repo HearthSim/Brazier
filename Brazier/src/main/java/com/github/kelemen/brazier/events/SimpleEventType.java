@@ -10,10 +10,13 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import org.jtrim.utils.ExceptionHelper;
 
 public enum SimpleEventType {
     DRAW_CARD("draw-card", Card.class),
-    START_PLAY_CARD("start-play-card", CardPlayEvent.class),
+    START_PLAY_CARD("start-play-card", CardPlayEvent.class, (world, self, arg) -> {
+        return self != ((CardPlayEvent)arg).getCard().getMinion();
+    }),
     DONE_PLAY_CARD("done-play-card", CardPlayedEvent.class),
     PREPARE_DAMAGE("prepare-damage", DamageRequest.class),
     HERO_DAMAGED("hero-damaged", DamageEvent.class),
@@ -41,15 +44,45 @@ public enum SimpleEventType {
     private final boolean greedyEvent;
     private final String eventName;
     private final Class<?> argType;
+    private final WorldEventFilter<Object, Object> globalFilter;
 
     private SimpleEventType(String eventName, Class<?> argType) {
         this(false, eventName, argType);
     }
 
+    private SimpleEventType(String eventName, Class<?> argType, WorldEventFilter<Object, Object> globalFilter) {
+        this(false, eventName, argType, globalFilter);
+    }
+
     private SimpleEventType(boolean greedyEvent, String eventName, Class<?> argType) {
+        this(greedyEvent, eventName, argType, null);
+    }
+
+    private SimpleEventType(
+            boolean greedyEvent,
+            String eventName,
+            Class<?> argType,
+            WorldEventFilter<Object, Object> globalFilter) {
         this.greedyEvent = greedyEvent;
         this.eventName = eventName;
         this.argType = argType;
+        this.globalFilter = globalFilter;
+    }
+
+    public WorldEventFilter<Object, Object> getGlobalFilter() {
+        return globalFilter;
+    }
+
+    public <Self, Arg> WorldEventFilter<Self, Arg> addGlobalFilter(
+            WorldEventFilter<Self, Arg> localFilter) {
+        ExceptionHelper.checkNotNullArgument(localFilter, "localFilter");
+        if (globalFilter == null) {
+            return localFilter;
+        }
+
+        return (world, self, arg) -> {
+            return localFilter.applies(world, self, arg) && globalFilter.applies(world, arg, eventName);
+        };
     }
 
     public static SimpleEventType tryParse(String str) {

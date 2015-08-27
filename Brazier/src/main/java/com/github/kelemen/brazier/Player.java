@@ -232,22 +232,20 @@ public final class Player implements PlayerProperty {
 
             int minionLocation = targetRequest.getMinionLocation();
 
-            UndoableResult<BoardReservationRef> reservationRefResult
-                    = board.tryReservePosition(minion, minionLocation);
-            // reservationRefResult shouldn't be null if we were allowed to play this card.
-            if (reservationRefResult != null) {
-                result.addUndo(reservationRefResult::undo);
+            UndoAction reserveUndo
+                    = board.tryAddToBoard(minion, minionLocation);
+            // reserveUndo shouldn't be null if we were allowed to play this card.
+            if (reserveUndo != null) {
+                result.addUndo(reserveUndo::undo);
             }
 
             if (playCardEvents) {
                 result.addUndo(events.triggerEventNow(SimpleEventType.START_PLAY_CARD, playEvent));
             }
 
-            if (!playEvent.isVetodPlay() && reservationRefResult != null) {
-                BoardReservationRef reservationRef = reservationRefResult.getResult();
-
+            if (!playEvent.isVetodPlay() && reserveUndo != null) {
                 PlayArg<Card> cardPlayArg = playEvent.getCardPlayArg();
-                result.addUndo(board.summonMinion(reservationRef, cardPlayArg.getTarget()));
+                result.addUndo(board.completeSummonMinion(minion, cardPlayArg.getTarget()));
                 result.addUndo(executeCardPlayActions(cardPlayArg, onPlayActions));
             }
         }
@@ -325,15 +323,15 @@ public final class Player implements PlayerProperty {
     }
 
     public UndoAction summonMinion(Minion minion) {
-        UndoableResult<BoardReservationRef> reservationRef = board.tryReservePosition(minion);
-        if (reservationRef == null) {
+        UndoAction reservationUndo = board.tryAddToBoard(minion);
+        if (reservationUndo == null) {
             return UndoAction.DO_NOTHING;
         }
 
-        UndoAction summonUndo = board.summonMinion(reservationRef.getResult());
+        UndoAction summonUndo = board.completeSummonMinion(minion);
         return () -> {
             summonUndo.undo();
-            reservationRef.undo();
+            reservationUndo.undo();
         };
     }
 

@@ -23,7 +23,7 @@ public final class BoardSide {
     private final Player owner;
 
     private final int maxSize;
-    private final RefList<MinionRef> minionRefs;
+    private final RefList<BoardMinionRef> minionRefs;
 
     private final Deck deck;
 
@@ -51,7 +51,7 @@ public final class BoardSide {
      */
     public UndoAction refresh() {
         UndoBuilder result = new UndoBuilder();
-        for (MinionRef minionRef: minionRefs) {
+        for (BoardMinionRef minionRef: minionRefs) {
             result.addUndo(minionRef.minion.refresh());
         }
         result.addUndo(graveyard.refresh());
@@ -60,7 +60,7 @@ public final class BoardSide {
 
     public UndoAction refreshEndOfTurn() {
         UndoBuilder result = new UndoBuilder(minionRefs.size());
-        for (MinionRef minionRef: minionRefs) {
+        for (BoardMinionRef minionRef: minionRefs) {
             result.addUndo(minionRef.minion.refreshEndOfTurn());
         }
         return result;
@@ -79,7 +79,7 @@ public final class BoardSide {
      */
     public UndoAction applyAuras() {
         UndoBuilder result = new UndoBuilder(minionRefs.size());
-        for (MinionRef minionRef: minionRefs) {
+        for (BoardMinionRef minionRef: minionRefs) {
             result.addUndo(minionRef.minion.applyAuras());
         }
         return result;
@@ -99,7 +99,7 @@ public final class BoardSide {
 
     private int getReservationCount() {
         int result = 0;
-        for (MinionRef minionRef: minionRefs) {
+        for (BoardMinionRef minionRef: minionRefs) {
             if (minionRef.needsSpace) {
                 result++;
             }
@@ -131,7 +131,7 @@ public final class BoardSide {
     public Minion findMinion(Predicate<? super Minion> filter) {
         ExceptionHelper.checkNotNullArgument(filter, "filter");
 
-        for (MinionRef minionRef: minionRefs) {
+        for (BoardMinionRef minionRef: minionRefs) {
             Minion minion = minionRef.tryGetVisibleMinion();
             if (minion != null && filter.test(minion)) {
                 return minion;
@@ -160,7 +160,7 @@ public final class BoardSide {
     public void collectMinions(List<? super Minion> result, Predicate<? super Minion> filter) {
         ExceptionHelper.checkNotNullArgument(filter, "filter");
 
-        for (MinionRef minionRef: minionRefs) {
+        for (BoardMinionRef minionRef: minionRefs) {
             Minion minion = minionRef.tryGetVisibleMinion();
             if (minion != null && filter.test(minion)) {
                 result.add(minion);
@@ -178,7 +178,7 @@ public final class BoardSide {
 
         UndoBuilder result = new UndoBuilder(reservationCount);
         boolean applied = false;
-        for (MinionRef minionRef: minionRefs) {
+        for (BoardMinionRef minionRef: minionRefs) {
             Minion minion = minionRef.tryGetVisibleMinion();
             if (minion != null) {
                 applied = true;
@@ -192,7 +192,7 @@ public final class BoardSide {
         ExceptionHelper.checkNotNullArgument(filter, "filter");
 
         int result = 0;
-        for (MinionRef minionRef: minionRefs) {
+        for (BoardMinionRef minionRef: minionRefs) {
             Minion minion = minionRef.tryGetVisibleMinion();
             if (minion != null && filter.test(minion)) {
                 result++;
@@ -227,37 +227,43 @@ public final class BoardSide {
         else return boardIndex;
     }
 
-    private UndoableResult<BoardReservationRef> tryReserveBoardFor(
-            MinionDescr minion,
-            Function<MinionRef, RefList.ElementRef<MinionRef>> addToList) {
-        return tryReserveBoardFor(new Minion(owner, minion), addToList);
+    private UndoableResult<Minion> tryAddToBoard(
+            MinionDescr minionDescr,
+            Function<BoardMinionRef, RefList.ElementRef<BoardMinionRef>> addToList) {
+        Minion minion = new Minion(owner, minionDescr);
+        UndoAction reserveUndo = tryAddToBoard(minion, addToList);
+        return new UndoableResult<>(minion, reserveUndo);
     }
 
-    private UndoableResult<BoardReservationRef> tryReserveBoardFor(
+    private UndoAction tryAddToBoard(
             Minion minion,
-            Function<MinionRef, RefList.ElementRef<MinionRef>> addToList) {
+            Function<BoardMinionRef, RefList.ElementRef<BoardMinionRef>> addToList) {
+        ExceptionHelper.checkNotNullArgument(minion, "minion");
 
         if (isFull()) {
             return null;
         }
 
-        MinionRef result = new MinionRef(minion);
+        BoardMinionRef result = new BoardMinionRef(minion);
 
         UndoAction setLocationRefUndo = minion.setLocationRef(result);
 
-        RefList.ElementRef<MinionRef> listRef = addToList.apply(result);
+        RefList.ElementRef<BoardMinionRef> listRef = addToList.apply(result);
         result.setReference(listRef);
 
+        UndoAction activateUndo = minion.activatePassiveAbilities();
+
         return new UndoableResult<>(result, () -> {
+            activateUndo.undo();
             result.getElementReference().remove();
             setLocationRefUndo.undo();
         });
     }
 
-    private MinionRef findMinionRef(TargetId minionId) {
+    private BoardMinionRef findMinionRef(TargetId minionId) {
         ExceptionHelper.checkNotNullArgument(minionId, "minionId");
-        for (RefList.ElementRef<MinionRef> ref = minionRefs.getFirstReference(); ref != null; ref = ref.getNext(1)) {
-            MinionRef candidate = ref.getElement();
+        for (RefList.ElementRef<BoardMinionRef> ref = minionRefs.getFirstReference(); ref != null; ref = ref.getNext(1)) {
+            BoardMinionRef candidate = ref.getElement();
             if (candidate != null && minionId.equals(candidate.minion.getTargetId())) {
                 return candidate;
             }
@@ -271,7 +277,7 @@ public final class BoardSide {
 
     private static void removeFromBoard(Minion minion, UndoBuilder result) {
         Player owner = minion.getOwner();
-        MinionRef prevRef = owner.getBoard().findMinionRef(minion.getTargetId());
+        BoardMinionRef prevRef = owner.getBoard().findMinionRef(minion.getTargetId());
         if (prevRef != null) {
             result.addUndo(prevRef.removeFromBoardList());
         }
@@ -300,40 +306,39 @@ public final class BoardSide {
         minion.setOwner(getOwner());
         result.addUndo(() -> minion.setOwner(prevOwner));
 
-        UndoableResult<BoardReservationRef> boardPos = tryReservePosition(minion);
+        UndoAction reserveUndo = BoardSide.this.tryAddToBoard(minion);
         // This shouldn't happen since we already checked that there is room to put the minion
         // but do the check anyway.
-        if (boardPos == null) {
-            return minion.poison();
+        if (reserveUndo == null) {
+            result.addUndo(minion.poison());
+            return result;
         }
-        result.addUndo(boardPos.getUndoAction());
+
+        result.addUndo(reserveUndo);
 
         result.addUndo(minion.refresh());
         result.addUndo(minion.exhaust());
 
-        result.addUndo(summonMinion(boardPos.getResult()));
+        result.addUndo(completeSummonMinion(minion));
 
         return result;
     }
 
-    public UndoAction summonMinion(BoardReservationRef reservationRef) {
-        ExceptionHelper.checkNotNullArgument(reservationRef, "reservationRef");
-        return summonMinionUnsafe(reservationRef, null);
+    public UndoAction completeSummonMinion(Minion minion) {
+        return completeSummonMinionUnsafe(minion, null);
     }
 
-    public UndoAction summonMinion(
-            BoardReservationRef reservationRef,
+    public UndoAction completeSummonMinion(
+            Minion minion,
             Optional<TargetableCharacter> battleCryTarget) {
-        ExceptionHelper.checkNotNullArgument(reservationRef, "reservationRef");
         ExceptionHelper.checkNotNullArgument(battleCryTarget, "battleCryTarget");
-        return summonMinionUnsafe(reservationRef, battleCryTarget);
+        return completeSummonMinionUnsafe(minion, battleCryTarget);
     }
 
-    private UndoAction summonMinionUnsafe(
-            BoardReservationRef reservationRef,
+    private UndoAction completeSummonMinionUnsafe(
+            Minion minion,
             Optional<TargetableCharacter> battleCryTarget) {
-
-        Minion minion = reservationRef.getMinion();
+        ExceptionHelper.checkNotNullArgument(minion, "minion");
 
         World world = getWorld();
         WorldEvents events = world.getEvents();
@@ -348,81 +353,77 @@ public final class BoardSide {
             PlayArg<Minion> battleCryArg = new PlayArg<>(minion, battleCryTarget);
             result.addUndo(minion.getBaseDescr().executeBattleCriesNow(owner, battleCryArg));
         }
-        result.addUndo(reservationRef.showMinion());
 
         result.addUndo(summoningFinalizer.getResult().doAction());
 
         return result;
     }
 
-    public UndoableResult<BoardReservationRef> tryReservePosition(Minion minion, int index) {
-        return tryReserveBoardFor(minion, (element) -> {
+    public UndoAction tryAddToBoard(Minion minion, int index) {
+        return tryAddToBoard(minion, (element) -> {
             return minionRefs.addGetReference(toBounds(index), element);
         });
     }
 
-    public UndoableResult<BoardReservationRef> tryReservePosition(MinionDescr minionDescr, int index) {
-        return tryReservePosition(new Minion(owner, minionDescr), index);
+    public UndoableResult<Minion> tryAddToBoard(MinionDescr minionDescr, int index) {
+        return BoardSide.this.tryAddToBoard(minionDescr, index);
     }
 
-    public UndoableResult<BoardReservationRef> tryReservePosition(Minion minion) {
-        ExceptionHelper.checkNotNullArgument(minion, "minion");
-        return tryReserveBoardFor(minion, minionRefs::addLastGetReference);
+    public UndoAction tryAddToBoard(Minion minion) {
+        return tryAddToBoard(minion, minionRefs::addLastGetReference);
     }
 
-    public UndoableResult<BoardReservationRef> tryReservePosition(MinionDescr minionDescr) {
-        ExceptionHelper.checkNotNullArgument(minionDescr, "minionDescr");
-
-        return tryReserveBoardFor(minionDescr, minionRefs::addLastGetReference);
+    public UndoableResult<Minion> tryAddToBoard(MinionDescr minionDescr) {
+        return tryAddToBoard(minionDescr, minionRefs::addLastGetReference);
     }
 
-    private final class MinionRef
+    private final class BoardMinionRef
     implements
-            BoardReservationRef, SummonLocationRef {
+            SummonLocationRef {
         private Minion minion;
         private boolean needsSpace;
         private final AtomicBoolean visible;
 
-        private RefList.ElementRef<MinionRef> listRef;
+        private RefList.ElementRef<BoardMinionRef> listRef;
 
-        public MinionRef(Minion minion) {
+        public BoardMinionRef(Minion minion) {
             assert minion != null;
 
             this.minion = minion;
             this.needsSpace = true;
-            this.visible = new AtomicBoolean(false);
+            this.visible = new AtomicBoolean(true);
         }
 
-        public void setReference(RefList.ElementRef<MinionRef> newRef) {
+        public void setReference(RefList.ElementRef<BoardMinionRef> newRef) {
             assert newRef.getElement() == this;
             this.listRef = newRef;
         }
 
-        public RefList.ElementRef<MinionRef> getElementReference() {
+        public RefList.ElementRef<BoardMinionRef> getElementReference() {
             return listRef;
         }
 
-        public UndoableResult<BoardReservationRef> tryReserveLeft(Minion newMinion) {
-            return tryReserveBoardFor(newMinion, listRef::addBefore);
+        public UndoAction tryAddToBoardLeft(Minion newMinion) {
+            return tryAddToBoard(newMinion, listRef::addBefore);
         }
 
-        public UndoableResult<BoardReservationRef> tryReserveRight(Minion newMinion) {
-            return tryReserveBoardFor(newMinion, listRef::addAfter);
+        public UndoAction tryAddToBoardRight(Minion newMinion) {
+            return tryAddToBoard(newMinion, listRef::addAfter);
         }
 
         private UndoAction summonSide(
                 Minion summonedMinion,
-                Function<MinionRef, RefList.ElementRef<MinionRef>> addToList) {
+                Function<BoardMinionRef, RefList.ElementRef<BoardMinionRef>> addToList) {
 
-            UndoableResult<BoardReservationRef> reservationRef = tryReserveBoardFor(summonedMinion, addToList);
-            if (reservationRef == null) {
+            UndoAction reservationUndo = tryAddToBoard(summonedMinion, addToList);
+            if (reservationUndo == null) {
                 return UndoAction.DO_NOTHING;
             }
 
-            UndoAction summonUndo = summonMinion(reservationRef.getResult());
+            UndoAction summonUndo = completeSummonMinion(summonedMinion);
             return () -> {
                 summonUndo.undo();
-                reservationRef.undo();
+                reservationUndo.undo();
             };
         }
 
@@ -432,21 +433,21 @@ public final class BoardSide {
             boolean prevNeedsSpace = needsSpace;
             needsSpace = false;
 
-            UndoableResult<BoardReservationRef> boardReservation = tryReserveBoardFor(summonedMinion, listRef::addAfter);
+            UndoAction reservationUndo = tryAddToBoard(summonedMinion, listRef::addAfter);
 
             UndoAction destroyUndo = minion.completeKillAndDeactivate(false);
             UndoAction removeUndo = removeFromBoardList();
 
-            UndoAction summonUndo = boardReservation != null
-                    ? summonMinion(boardReservation.getResult())
+            UndoAction summonUndo = reservationUndo != null
+                    ? completeSummonMinion(summonedMinion)
                     : UndoAction.DO_NOTHING;
 
             return () -> {
                 summonUndo.undo();
                 removeUndo.undo();
                 destroyUndo.undo();
-                if (boardReservation != null) {
-                    boardReservation.undo();
+                if (reservationUndo != null) {
+                    reservationUndo.undo();
                 }
 
                 needsSpace = prevNeedsSpace;
@@ -469,36 +470,19 @@ public final class BoardSide {
         }
 
         @Override
-        public UndoAction showMinion() {
-            if (minion.isDestroyed()) {
-                return UndoAction.DO_NOTHING;
-            }
-
-            if (!visible.compareAndSet(false, true)) {
-                return UndoAction.DO_NOTHING;
-            }
-
-            UndoAction activateUndo = minion.activatePassiveAbilities();
-            return () -> {
-                activateUndo.undo();
-                visible.set(false);
-            };
-        }
-
-        @Override
         public Minion getMinion() {
             return minion;
         }
 
         @Override
         public BoardLocationRef tryGetLeft() {
-            RefList.ElementRef<MinionRef> prevRef = getElementReference().getPrevious(1);
+            RefList.ElementRef<BoardMinionRef> prevRef = getElementReference().getPrevious(1);
             return prevRef != null ? prevRef.getElement() : null;
         }
 
         @Override
         public BoardLocationRef tryGetRight() {
-            RefList.ElementRef<MinionRef> nextRef = getElementReference().getNext(1);
+            RefList.ElementRef<BoardMinionRef> nextRef = getElementReference().getNext(1);
             return nextRef != null ? nextRef.getElement() : null;
         }
 

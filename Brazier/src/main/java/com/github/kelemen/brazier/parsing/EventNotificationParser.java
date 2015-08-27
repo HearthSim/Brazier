@@ -143,7 +143,8 @@ public final class EventNotificationParser<Self extends PlayerProperty> {
     private <T> WorldEventBasedActionDef<Self, T> tryParseActionDef(
             Class<T> targetType,
             JsonTree actionDefElement,
-            Function<WorldEvents, ? extends WorldActionEventsRegistry<T>> actionEventListenersGetter) throws ObjectParsingException {
+            Function<WorldEvents, ? extends WorldActionEventsRegistry<T>> actionEventListenersGetter,
+            WorldEventFilter<? super Self, ? super T> globalFilter) throws ObjectParsingException {
         if (actionDefElement == null) {
             return null;
         }
@@ -152,8 +153,16 @@ public final class EventNotificationParser<Self extends PlayerProperty> {
             throw new ObjectParsingException("WorldEventBasedActionDef requires a JsonObject.");
         }
 
-        WorldEventFilter<? super Self, ? super T> filter = parseFilter(targetType, actionDefElement.getChild("filter"));
+        WorldEventFilter<? super Self, ? super T> baseFilter = parseFilter(targetType, actionDefElement.getChild("filter"));
         WorldEventAction<? super Self, ? super T> action = parseAction(targetType, actionDefElement.getChild("action"));
+
+        WorldEventFilter<? super Self, ? super T> filter;
+        if (globalFilter != null) {
+            filter = (world, self, arg) -> baseFilter.applies(world, self, arg) && globalFilter.applies(world, self, arg);
+        }
+        else {
+            filter = baseFilter;
+        }
 
         JsonTree triggerOnceElement = actionDefElement.getChild("triggerOnce");
         boolean triggerOnce = triggerOnceElement != null ? triggerOnceElement.getAsBoolean() : false;
@@ -170,7 +179,8 @@ public final class EventNotificationParser<Self extends PlayerProperty> {
             Class<T> targetType,
             JsonTree actionDefsElement,
             Function<WorldEvents, ? extends WorldActionEventsRegistry<T>> actionEventListenersGetter,
-            Consumer<WorldEventBasedActionDef<Self, T>> actionDefAdder) throws ObjectParsingException {
+            Consumer<WorldEventBasedActionDef<Self, T>> actionDefAdder,
+            WorldEventFilter<? super Self, ? super T> globalFilter) throws ObjectParsingException {
         if (actionDefsElement == null) {
             return;
         }
@@ -178,7 +188,7 @@ public final class EventNotificationParser<Self extends PlayerProperty> {
         if (actionDefsElement.isJsonArray()) {
             for (JsonTree singleActionDefElement: actionDefsElement.getChildren()) {
                 WorldEventBasedActionDef<Self, T> actionDef
-                        = tryParseActionDef(targetType, singleActionDefElement, actionEventListenersGetter);
+                        = tryParseActionDef(targetType, singleActionDefElement, actionEventListenersGetter, globalFilter);
                 if (actionDef != null) {
                     actionDefAdder.accept(actionDef);
                 }
@@ -186,7 +196,7 @@ public final class EventNotificationParser<Self extends PlayerProperty> {
         }
         else {
             WorldEventBasedActionDef<Self, T> actionDef
-                    = tryParseActionDef(targetType, actionDefsElement, actionEventListenersGetter);
+                    = tryParseActionDef(targetType, actionDefsElement, actionEventListenersGetter, globalFilter);
             if (actionDef != null) {
                 actionDefAdder.accept(actionDef);
             }
@@ -213,7 +223,7 @@ public final class EventNotificationParser<Self extends PlayerProperty> {
             result.addSimpleEventDef(eventType, actionDef);
         };
 
-        parseActionDefs(eventArgType, actionDefsElement, actionEventListenersGetter, actionDefAdder);
+        parseActionDefs(eventArgType, actionDefsElement, actionEventListenersGetter, actionDefAdder, eventType.getGlobalFilter());
     }
 
     private void parseSingleOnSummonEvent(
@@ -233,6 +243,10 @@ public final class EventNotificationParser<Self extends PlayerProperty> {
         int priority = getPriority(actionDefElement);
 
         CompletableWorldEventAction<Self, Minion> eventDef = (World world, Self self, Minion eventSource) -> {
+            if (self == eventSource) {
+                return CompleteWorldEventAction.doNothing(UndoAction.DO_NOTHING);
+            }
+
             if (filter.applies(world, self, eventSource)) {
                 UndoAction alterWorld = action.alterWorld(world, self, eventSource);
                 return CompleteWorldEventAction.doNothing(alterWorld);
@@ -281,13 +295,15 @@ public final class EventNotificationParser<Self extends PlayerProperty> {
                 Minion.class,
                 root.getChild("start-summoning"),
                 WorldEvents::startSummoningListeners,
-                (actionDef) -> { result.addOnSummoningActionDef(actionDef.toStartEventDef(WorldEvents::summoningListeners)); });
+                (actionDef) -> { result.addOnSummoningActionDef(actionDef.toStartEventDef(WorldEvents::summoningListeners)); },
+                null);
 
         parseActionDefs(
                 Minion.class,
                 root.getChild("done-summoning"),
                 WorldEvents::doneSummoningListeners,
-                (actionDef) -> { result.addOnSummoningActionDef(actionDef.toDoneEventDef(WorldEvents::summoningListeners)); });
+                (actionDef) -> { result.addOnSummoningActionDef(actionDef.toDoneEventDef(WorldEvents::summoningListeners)); },
+                null);
 
         return result.create();
     }
