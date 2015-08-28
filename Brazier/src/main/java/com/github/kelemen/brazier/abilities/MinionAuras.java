@@ -74,7 +74,7 @@ public final class MinionAuras {
     };
 
     public static final Aura<Object, Minion> UNTARGETABLE = (World world, Object source, Minion target) -> {
-        return target.getProperties().getBody().getUntargetableProperty().addAuraBuff(true);
+        return target.getProperties().getBody().getUntargetableProperty().setValueToExternal(true);
     };
 
     public static final AuraFilter<PlayerProperty, PlayerProperty> SAME_OWNER = (world, source, target) -> {
@@ -90,11 +90,11 @@ public final class MinionAuras {
     };
 
     public static final Aura<Object, Minion> GRANT_IMMUNITY = (world, source, target) -> {
-        return target.getBody().getImmuneProperty().addAuraBuff(true);
+        return target.getBody().getImmuneProperty().setValueToExternal(true);
     };
 
     public static final Aura<Object, Minion> CHARGE = (world, source, target) -> {
-        return target.getProperties().getChargeProperty().addAuraBuff(true);
+        return target.getProperties().getChargeProperty().setValueToExternal(true);
     };
 
     public static final Aura<Object, Minion> WIND_FURY = windFury(2);

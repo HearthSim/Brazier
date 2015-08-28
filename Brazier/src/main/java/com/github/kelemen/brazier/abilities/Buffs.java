@@ -19,11 +19,11 @@ public final class Buffs {
     public static Buff<TargetableCharacter> IMMUNE = (World world, TargetableCharacter target) -> {
         if (target instanceof Minion) {
             Minion minion = (Minion)target;
-            return minion.getProperties().getBody().getImmuneProperty().addRemovableBuff(true);
+            return minion.getProperties().getBody().getImmuneProperty().setValueTo(true);
         }
         else if (target instanceof Hero) {
             Hero hero = (Hero)target;
-            return hero.getImmuneProperty().addRemovableBuff(true);
+            return hero.getImmuneProperty().setValueTo(true);
         }
         else {
             return UndoableUnregisterRef.UNREGISTERED_REF;

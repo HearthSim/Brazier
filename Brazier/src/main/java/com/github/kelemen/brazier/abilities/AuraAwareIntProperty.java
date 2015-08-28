@@ -40,7 +40,7 @@ public final class AuraAwareIntProperty implements Silencable {
         return new AuraAwareIntProperty(this);
     }
 
-    public UndoAction setValueTo(int newValue) {
+    public UndoableUnregisterRef setValueTo(int newValue) {
         return addRemovableBuff((prev) -> newValue);
     }
 
@@ -64,7 +64,7 @@ public final class AuraAwareIntProperty implements Silencable {
         return addRemovableBuff(Priorities.HIGH_PRIORITY, true, toAdd);
     }
 
-    public UndoAction setValueTo(int priority, boolean external, int newValue) {
+    public UndoableUnregisterRef setValueTo(int priority, boolean external, int newValue) {
         return addRemovableBuff(priority, external, (prev) -> newValue);
     }
 

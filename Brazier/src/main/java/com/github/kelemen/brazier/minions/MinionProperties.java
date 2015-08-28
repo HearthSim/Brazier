@@ -274,7 +274,7 @@ public final class MinionProperties implements Silencable {
         }
 
         public UndoAction setCharge(boolean newCharge) {
-            return charge.setValue(newCharge);
+            return charge.setValueTo(newCharge);
         }
 
         private UndoAction removeSwipeAttack() {

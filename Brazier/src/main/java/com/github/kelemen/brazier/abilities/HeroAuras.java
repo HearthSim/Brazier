@@ -28,7 +28,7 @@ public final class HeroAuras {
     };
 
     public static final Aura<Object, Hero> GRANT_IMMUNITY = (world, source, target) -> {
-        return target.getImmuneProperty().addAuraBuff(true);
+        return target.getImmuneProperty().setValueTo(true);
     };
 
     public static final Aura<Object, Player> DUPLICATE_DEATH_RATTLE = (world, source, target) -> {

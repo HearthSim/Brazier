@@ -90,7 +90,7 @@ public final class TargetedActions {
 
     public static final TargetedAction<Object, Minion> STEALTH_FOR_A_TURN = (world, actor, target) -> {
         return target.addAndActivateAbility(ActionUtils.toUntilTurnStartsAbility(world, target, (Minion self) -> {
-            return self.getBody().getStealthProperty().addBuff((prev) -> true);
+            return self.getBody().getStealthProperty().setValueTo(true);
         }));
     };
 

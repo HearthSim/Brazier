@@ -138,7 +138,7 @@ public final class MinionBody implements Silencable {
     }
 
     public UndoAction setStealth(boolean newValue) {
-        return stealth.setValue(newValue);
+        return stealth.setValueTo(newValue);
     }
 
     public UndoAction setTaunt(boolean newValue) {

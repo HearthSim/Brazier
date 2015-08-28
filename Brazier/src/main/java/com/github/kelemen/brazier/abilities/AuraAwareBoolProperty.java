@@ -1,71 +1,67 @@
 package com.github.kelemen.brazier.abilities;
 
+import com.github.kelemen.brazier.Priorities;
 import com.github.kelemen.brazier.Silencable;
 import com.github.kelemen.brazier.actions.UndoAction;
 import com.github.kelemen.brazier.events.UndoableUnregisterRef;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public final class AuraAwareBoolProperty implements Silencable {
-    private final AtomicBoolean baseValueRef;
-    private final BuffableBoolProperty ownValue;
-    private final BuffableBoolProperty auraBuffs;
+    private final boolean baseValue;
+    private final AuraAwarePropertyBase<BoolPropertyBuff> impl;
 
     public AuraAwareBoolProperty(boolean baseValue) {
-        this.baseValueRef = new AtomicBoolean(baseValue);
-        this.ownValue = new BuffableBoolProperty(baseValueRef::get);
-        this.auraBuffs = new BuffableBoolProperty(this.ownValue::getValue);
+        this.baseValue = baseValue;
+
+        this.impl = new AuraAwarePropertyBase<>((buffs) -> {
+            return (prev) -> {
+                boolean result = prev;
+                for (AuraAwarePropertyBase.BuffRef<BoolPropertyBuff> buffRef: buffs) {
+                    result = buffRef.getBuff().buffProperty(result);
+                }
+                return result;
+            };
+        });
     }
 
-    private AuraAwareBoolProperty(AuraAwareBoolProperty base) {
-        this.baseValueRef = new AtomicBoolean(base.baseValueRef.get());
-        this.ownValue = base.ownValue.copy(baseValueRef::get);
-        this.auraBuffs = new BuffableBoolProperty(this.ownValue::getValue);
+    private AuraAwareBoolProperty(AuraAwareBoolProperty other) {
+        this.baseValue = other.baseValue;
+        this.impl = other.impl.copy();
     }
 
     public AuraAwareBoolProperty copy() {
         return new AuraAwareBoolProperty(this);
     }
 
+    public UndoableUnregisterRef setValueTo(boolean newValue) {
+        return addRemovableBuff((prev) -> newValue);
+    }
+
+    public UndoableUnregisterRef setValueToExternal(boolean newValue) {
+        return addRemovableBuff(Priorities.HIGH_PRIORITY, true, (prev) -> newValue);
+    }
+
+    public UndoableUnregisterRef addRemovableBuff(BoolPropertyBuff toAdd) {
+        return addRemovableBuff(Priorities.NORMAL_PRIORITY, false, toAdd);
+    }
+
+    public UndoableUnregisterRef addExternalBuff(BoolPropertyBuff toAdd) {
+        return addRemovableBuff(Priorities.HIGH_PRIORITY, true, toAdd);
+    }
+
+    public UndoableUnregisterRef setValueTo(int priority, boolean external, boolean newValue) {
+        return addRemovableBuff(priority, external, (prev) -> newValue);
+    }
+
+    public UndoableUnregisterRef addRemovableBuff(int priority, boolean external, BoolPropertyBuff toAdd) {
+        return impl.addRemovableBuff(priority, external, toAdd);
+    }
+
     @Override
     public UndoAction silence() {
-        boolean prevBaseValue = baseValueRef.getAndSet(false);
-        UndoAction silenceUndo = ownValue.silence();
-        return () -> {
-            silenceUndo.undo();
-            baseValueRef.set(prevBaseValue);
-        };
-    }
-
-    public UndoAction setValue(boolean newValue) {
-        UndoAction buffSilenceUndo = ownValue.silence();
-        boolean prevValue = baseValueRef.getAndSet(newValue);
-        return () -> {
-            baseValueRef.set(prevValue);
-            buffSilenceUndo.undo();
-        };
-    }
-
-    public UndoAction addBuff(boolean value) {
-        return ownValue.addNonRemovableBuff(value);
-    }
-
-    public UndoableUnregisterRef addBuff(BoolPropertyBuff value) {
-        return ownValue.addBuff(value);
-    }
-
-    public UndoableUnregisterRef addRemovableBuff(boolean value) {
-        return ownValue.addBuff(value);
+        return impl.silence();
     }
 
     public boolean getValue() {
-        return auraBuffs.getValue();
-    }
-
-    public UndoableUnregisterRef addAuraBuff(boolean value) {
-        return auraBuffs.addBuff(value);
-    }
-
-    public UndoableUnregisterRef addAuraBuff(BoolPropertyBuff buff) {
-        return auraBuffs.addBuff(buff);
+        return impl.getCombinedView().buffProperty(baseValue);
     }
 }
