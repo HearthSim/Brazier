@@ -6,6 +6,7 @@ import com.github.kelemen.brazier.Keyword;
 import com.github.kelemen.brazier.LabeledEntity;
 import com.github.kelemen.brazier.Player;
 import com.github.kelemen.brazier.PlayerProperty;
+import com.github.kelemen.brazier.Priorities;
 import com.github.kelemen.brazier.World;
 import com.github.kelemen.brazier.WorldProperty;
 import com.github.kelemen.brazier.actions.ActionUtils;
@@ -73,6 +74,19 @@ public final class Auras {
         return (world, source) -> {
             return Collections.singletonList(source);
         };
+    };
+
+    public static <Source, Target> Aura<Source, Target> buffAura(
+            @NamedArg("buff") Buff<Target> buff) {
+        return buffAura(Priorities.HIGH_PRIORITY, buff);
+    }
+
+    public static <Source, Target> Aura<Source, Target> buffAura(
+            @NamedArg("priority") int priority,
+            @NamedArg("buff") Buff<? super Target> buff) {
+        ExceptionHelper.checkNotNullArgument(buff, "buff");
+        BuffArg buffArg = BuffArg.externalBuff(priority);
+        return (world, source, target) -> buff.buff(world, target, buffArg);
     };
 
     public static <Self extends WorldProperty> ActivatableAbility<Self> selfAura(
