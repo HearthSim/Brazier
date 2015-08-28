@@ -1,6 +1,7 @@
 package com.github.kelemen.brazier.parsing;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -51,6 +52,13 @@ public final class CardFileUpdateUtils {
         }
     }
 
+    private static Gson getGson() {
+        GsonBuilder result = new GsonBuilder();
+        result.disableHtmlEscaping();
+        result.setPrettyPrinting();
+        return result.create();
+    }
+
     public static void updateFiles(
             Path dir,
             String extension,
@@ -59,15 +67,17 @@ public final class CardFileUpdateUtils {
         ExceptionHelper.checkNotNullArgument(extension, "extension");
         ExceptionHelper.checkNotNullArgument(processor, "processor");
 
-        Gson gson = new Gson();
+        Gson gson = getGson();
         Charset charset = Charset.forName("UTF-8");
         processObjects(dir, extension, (file, obj) -> {
             try (Writer writer = Files.newBufferedWriter(file, charset);
                     JsonWriter jsonWriter = new JsonWriter(writer)) {
                 jsonWriter.setIndent("    ");
+                jsonWriter.setHtmlSafe(false);
 
                 JsonObject newObj = processor.apply(obj);
                 gson.toJson(newObj, jsonWriter);
+                writer.write('\n');
             } catch (IOException ex) {
                 throw ExceptionHelper.throwUnchecked(ex);
             }
@@ -215,6 +225,7 @@ public final class CardFileUpdateUtils {
         );
 
         Comparator<String> battleCriesOrder = definedOrder(
+                "targets",
                 "requires",
                 "actionCondition",
                 "class"
