@@ -1,5 +1,6 @@
 package com.github.kelemen.brazier.abilities;
 
+import com.github.kelemen.brazier.Priorities;
 import com.github.kelemen.brazier.Silencable;
 import com.github.kelemen.brazier.actions.UndoAction;
 import com.github.kelemen.brazier.events.UndoableUnregisterRef;
@@ -61,6 +62,21 @@ public final class HpProperty implements Silencable {
         int prevCurrentHp = currentHp;
         currentHp = Math.min(getMaxHp(), newHp);
         return () -> currentHp = prevCurrentHp;
+    }
+
+    public UndoAction buffHp(BuffArg arg, int amount) {
+        if (arg.isExternal()) {
+            if (arg.getPriority() != Priorities.HIGH_PRIORITY) {
+                throw new UnsupportedOperationException("Unsupported aura priority: " + arg.getPriority());
+            }
+            return addAuraBuff(amount);
+        }
+        else {
+            if (arg.getPriority() != Priorities.NORMAL_PRIORITY) {
+                throw new UnsupportedOperationException("Unsupported buff priority: " + arg.getPriority());
+            }
+            return buffHp(amount);
+        }
     }
 
     public UndoAction buffHp(int amount) {

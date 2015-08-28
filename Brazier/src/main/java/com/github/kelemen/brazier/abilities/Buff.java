@@ -9,11 +9,11 @@ import java.util.List;
 import org.jtrim.utils.ExceptionHelper;
 
 public interface Buff<Target> {
-    public UndoableUnregisterRef buff(World world, Target target);
+    public UndoableUnregisterRef buff(World world, Target target, BuffArg arg);
 
     public default PermanentBuff<Target> toPermanent() {
-        return (World world, Target target) -> {
-            return buff(world, target);
+        return (World world, Target target, BuffArg arg) -> {
+            return buff(world, target, arg);
         };
     }
 
@@ -24,16 +24,16 @@ public interface Buff<Target> {
 
         int count = buffsCopy.size();
         if (count == 0) {
-            return (world, actor) -> UndoableUnregisterRef.UNREGISTERED_REF;
+            return (world, actor, arg) -> UndoableUnregisterRef.UNREGISTERED_REF;
         }
         if (count == 1) {
             return buffsCopy.get(0);
         }
 
-        return (World world, Target target) -> {
+        return (World world, Target target, BuffArg arg) -> {
             UndoableUnregisterRefBuilder result = new UndoableUnregisterRefBuilder(buffsCopy.size());
             for (Buff<Target> buff: buffsCopy) {
-                result.addRef(buff.buff(world, target));
+                result.addRef(buff.buff(world, target, arg));
             }
             return result;
         };

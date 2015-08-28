@@ -11,7 +11,6 @@ import com.github.kelemen.brazier.abilities.AuraAwareIntProperty;
 import com.github.kelemen.brazier.abilities.OwnedIntPropertyBuff;
 import com.github.kelemen.brazier.actions.UndoAction;
 import com.github.kelemen.brazier.actions.UndoBuilder;
-import com.github.kelemen.brazier.events.UndoableUnregisterRef;
 import com.github.kelemen.brazier.events.WorldEventAction;
 import com.github.kelemen.brazier.weapons.AttackTool;
 import java.util.ArrayList;
@@ -192,14 +191,6 @@ public final class MinionProperties implements Silencable {
 
     public UndoAction setAttackFinalizer(OwnedIntPropertyBuff<? super Minion> newAttackFinalizer) {
         return attackTool.setAttackFinalizer(newAttackFinalizer);
-    }
-
-    public UndoAction addAttackBuff(int attack) {
-        return attackTool.attack.addBuff(attack);
-    }
-
-    public UndoableUnregisterRef addRemovableAttackBuff(int attack) {
-        return attackTool.attack.addRemovableBuff(attack);
     }
 
     public UndoAction setCharge(boolean newCharge) {

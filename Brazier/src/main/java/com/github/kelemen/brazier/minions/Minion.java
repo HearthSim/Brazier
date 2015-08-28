@@ -163,10 +163,6 @@ public final class Minion implements TargetableCharacter, DestroyableEntity, Sil
         return properties.addAndActivateAbility(abilityRegisterTask);
     }
 
-    public UndoAction addAttackBuff(int attack) {
-        return properties.addAttackBuff(attack);
-    }
-
     public UndoAction activatePassiveAbilities() {
         return properties.activatePassiveAbilities();
     }

@@ -1,6 +1,5 @@
 package com.github.kelemen.brazier.abilities;
 
-import com.github.kelemen.brazier.Priorities;
 import com.github.kelemen.brazier.Silencable;
 import com.github.kelemen.brazier.actions.UndoAction;
 import com.github.kelemen.brazier.events.UndoableUnregisterRef;
@@ -53,7 +52,7 @@ public final class AuraAwareIntProperty implements Silencable {
     }
 
     public UndoableUnregisterRef addRemovableBuff(IntPropertyBuff toAdd) {
-        return addRemovableBuff(Priorities.NORMAL_PRIORITY, false, toAdd);
+        return addRemovableBuff(BuffArg.NORMAL_BUFF, toAdd);
     }
 
     public UndoableUnregisterRef addExternalBuff(int toAdd) {
@@ -61,23 +60,23 @@ public final class AuraAwareIntProperty implements Silencable {
     }
 
     public UndoableUnregisterRef addExternalBuff(IntPropertyBuff toAdd) {
-        return addRemovableBuff(Priorities.HIGH_PRIORITY, true, toAdd);
+        return addRemovableBuff(BuffArg.NORMAL_AURA_BUFF, toAdd);
     }
 
-    public UndoableUnregisterRef setValueTo(int priority, boolean external, int newValue) {
-        return addRemovableBuff(priority, external, (prev) -> newValue);
+    public UndoableUnregisterRef setValueTo(BuffArg arg, int newValue) {
+        return addRemovableBuff(arg, (prev) -> newValue);
     }
 
-    public UndoAction addBuff(int priority, boolean external, int toAdd) {
-        return addRemovableBuff(priority, external, toAdd);
+    public UndoAction addBuff(BuffArg arg, int toAdd) {
+        return addRemovableBuff(arg, toAdd);
     }
 
-    public UndoableUnregisterRef addRemovableBuff(int priority, boolean external, int toAdd) {
-        return addRemovableBuff(priority, external, (prev) -> prev + toAdd);
+    public UndoableUnregisterRef addRemovableBuff(BuffArg arg, int toAdd) {
+        return addRemovableBuff(arg, (prev) -> prev + toAdd);
     }
 
-    public UndoableUnregisterRef addRemovableBuff(int priority, boolean external, IntPropertyBuff toAdd) {
-        return impl.addRemovableBuff(priority, external, toAdd);
+    public UndoableUnregisterRef addRemovableBuff(BuffArg arg, IntPropertyBuff toAdd) {
+        return impl.addRemovableBuff(arg, toAdd);
     }
 
     @Override

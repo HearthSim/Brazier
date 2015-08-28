@@ -30,7 +30,10 @@ public final class AuraAwarePropertyBase<T> implements Silencable {
         }
     }
 
-    public UndoableUnregisterRef addRemovableBuff(int priority, boolean external, T toAdd) {
+    public UndoableUnregisterRef addRemovableBuff(BuffArg buffArg, T toAdd) {
+        int priority = buffArg.getPriority();
+        boolean external = buffArg.isExternal();
+
         int buffPos = findInsertPos(priority);
 
         BuffRef<T> buffRef = new BuffRef<>(priority, external, toAdd);

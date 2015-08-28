@@ -51,10 +51,10 @@ public final class CardAuras {
     public static Aura<Object, Card> decreaseManaCostWithLimit(
             @NamedArg("amount") int amount,
             @NamedArg("limit") int limit) {
+        BuffArg buffArg = new BuffArg(Priorities.LOWEST_PRIORITY, true);
         return (World world, Object source, Card target) -> {
             return target.getRawManaCost().addRemovableBuff(
-                    Priorities.LOWEST_PRIORITY,
-                    true,
+                    buffArg,
                     (prevValue) -> Math.max(1, prevValue - amount));
         };
     }

@@ -9,7 +9,7 @@ import java.util.List;
 import org.jtrim.utils.ExceptionHelper;
 
 public interface PermanentBuff<Target> {
-    public UndoAction buff(World world, Target target);
+    public UndoAction buff(World world, Target target, BuffArg arg);
 
     public static <Target> PermanentBuff<Target> merge(
             Collection<? extends PermanentBuff<Target>> buffs) {
@@ -18,16 +18,16 @@ public interface PermanentBuff<Target> {
 
         int count = buffsCopy.size();
         if (count == 0) {
-            return (world, actor) -> UndoAction.DO_NOTHING;
+            return (world, actor, arg) -> UndoAction.DO_NOTHING;
         }
         if (count == 1) {
             return buffsCopy.get(0);
         }
 
-        return (World world, Target target) -> {
+        return (World world, Target target, BuffArg arg) -> {
             UndoBuilder result = new UndoBuilder(buffsCopy.size());
             for (PermanentBuff<Target> buff: buffsCopy) {
-                result.addUndo(buff.buff(world, target));
+                result.addUndo(buff.buff(world, target, arg));
             }
             return result;
         };

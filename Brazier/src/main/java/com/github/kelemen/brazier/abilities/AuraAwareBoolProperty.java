@@ -1,6 +1,5 @@
 package com.github.kelemen.brazier.abilities;
 
-import com.github.kelemen.brazier.Priorities;
 import com.github.kelemen.brazier.Silencable;
 import com.github.kelemen.brazier.actions.UndoAction;
 import com.github.kelemen.brazier.events.UndoableUnregisterRef;
@@ -37,23 +36,23 @@ public final class AuraAwareBoolProperty implements Silencable {
     }
 
     public UndoableUnregisterRef setValueToExternal(boolean newValue) {
-        return addRemovableBuff(Priorities.HIGH_PRIORITY, true, (prev) -> newValue);
+        return addRemovableBuff(BuffArg.NORMAL_AURA_BUFF, (prev) -> newValue);
     }
 
     public UndoableUnregisterRef addRemovableBuff(BoolPropertyBuff toAdd) {
-        return addRemovableBuff(Priorities.NORMAL_PRIORITY, false, toAdd);
+        return addRemovableBuff(BuffArg.NORMAL_BUFF, toAdd);
     }
 
     public UndoableUnregisterRef addExternalBuff(BoolPropertyBuff toAdd) {
-        return addRemovableBuff(Priorities.HIGH_PRIORITY, true, toAdd);
+        return addRemovableBuff(BuffArg.NORMAL_AURA_BUFF, toAdd);
     }
 
-    public UndoableUnregisterRef setValueTo(int priority, boolean external, boolean newValue) {
-        return addRemovableBuff(priority, external, (prev) -> newValue);
+    public UndoableUnregisterRef setValueTo(BuffArg buffArg, boolean newValue) {
+        return addRemovableBuff(buffArg, (prev) -> newValue);
     }
 
-    public UndoableUnregisterRef addRemovableBuff(int priority, boolean external, BoolPropertyBuff toAdd) {
-        return impl.addRemovableBuff(priority, external, toAdd);
+    public UndoableUnregisterRef addRemovableBuff(BuffArg buffArg, BoolPropertyBuff toAdd) {
+        return impl.addRemovableBuff(buffArg, toAdd);
     }
 
     @Override

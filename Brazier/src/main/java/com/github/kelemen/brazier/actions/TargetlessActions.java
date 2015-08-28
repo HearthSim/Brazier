@@ -292,7 +292,7 @@ public final class TargetlessActions {
         }
 
         if (hpBuff != 0 && attackBuff != 0) {
-            result.addUndo(actor.addAttackBuff(attackBuff));
+            result.addUndo(actor.getBuffableAttack().addBuff(attackBuff));
             result.addUndo(actor.getBody().getHp().buffHp(hpBuff));
         }
 

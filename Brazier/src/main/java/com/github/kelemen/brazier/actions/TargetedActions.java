@@ -18,6 +18,7 @@ import com.github.kelemen.brazier.abilities.ActivatableAbilities;
 import com.github.kelemen.brazier.abilities.ActivatableAbility;
 import com.github.kelemen.brazier.abilities.AuraAwareIntProperty;
 import com.github.kelemen.brazier.abilities.Buff;
+import com.github.kelemen.brazier.abilities.BuffArg;
 import com.github.kelemen.brazier.abilities.HpProperty;
 import com.github.kelemen.brazier.abilities.PermanentBuff;
 import com.github.kelemen.brazier.cards.Card;
@@ -376,7 +377,7 @@ public final class TargetedActions {
             @NamedArg("buff") PermanentBuff<? super Target> buff) {
         ExceptionHelper.checkNotNullArgument(buff, "buff");
         return (World world, Object actor, Target target) -> {
-            return buff.buff(world, target);
+            return buff.buff(world, target, BuffArg.NORMAL_BUFF);
         };
     }
 
@@ -384,7 +385,7 @@ public final class TargetedActions {
             @NamedArg("buff") Buff<? super Target> buff) {
         ExceptionHelper.checkNotNullArgument(buff, "buff");
         return (World world, Object actor, Target target) -> {
-            return ActionUtils.doTemporary(world, () -> buff.buff(world, target));
+            return ActionUtils.doTemporary(world, () -> buff.buff(world, target, BuffArg.NORMAL_BUFF));
         };
     }
 
