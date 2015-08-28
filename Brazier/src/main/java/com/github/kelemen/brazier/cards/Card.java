@@ -30,7 +30,7 @@ public final class Card implements PlayerProperty, LabeledEntity, CardRef, Damag
         this.owner = owner;
         this.cardDescr = cardDescr;
         this.manaCost = new AuraAwareIntProperty(cardDescr.getManaCost());
-        this.manaCost.addBuff(this::adjustManaCost);
+        this.manaCost.addRemovableBuff(this::adjustManaCost);
 
         MinionDescr minionDescr = cardDescr.getMinion();
         this.minion = minionDescr != null ? new Minion(owner, cardDescr.getMinion()) : null;

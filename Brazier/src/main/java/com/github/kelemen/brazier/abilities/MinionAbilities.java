@@ -7,15 +7,15 @@ import com.github.kelemen.brazier.parsing.NamedArg;
 public final class MinionAbilities {
     public static ActivatableAbility<PlayerProperty> spellPower(@NamedArg("spellPower") int spellPower) {
         return (PlayerProperty self) -> {
-            BuffableIntProperty playersSpellPower = self.getOwner().getSpellPower();
-            return playersSpellPower.addBuff(spellPower);
+            AuraAwareIntProperty playersSpellPower = self.getOwner().getSpellPower();
+            return playersSpellPower.addExternalBuff(spellPower);
         };
     }
 
     public static ActivatableAbility<PlayerProperty> spellMultiplier(@NamedArg("mul") int mul) {
         return (PlayerProperty self) -> {
-            BuffableIntProperty playersSpellPower = self.getOwner().getHeroDamageMultiplier();
-            return playersSpellPower.addBuff((prev) -> prev * mul);
+            AuraAwareIntProperty playersSpellPower = self.getOwner().getHeroDamageMultiplier();
+            return playersSpellPower.addExternalBuff((prev) -> prev * mul);
         };
     }
 

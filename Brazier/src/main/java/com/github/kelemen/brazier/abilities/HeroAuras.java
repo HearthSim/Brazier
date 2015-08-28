@@ -32,7 +32,7 @@ public final class HeroAuras {
     };
 
     public static final Aura<Object, Player> DUPLICATE_DEATH_RATTLE = (world, source, target) -> {
-        return target.getDeathRattleTriggerCount().addAuraBuff((int prev) -> Math.max(prev, 2));
+        return target.getDeathRattleTriggerCount().addExternalBuff((int prev) -> Math.max(prev, 2));
     };
 
     public static final Aura<Object, Player> DAMAGING_HEAL = (world, source, target) -> {

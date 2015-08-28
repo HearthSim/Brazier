@@ -31,7 +31,7 @@ public final class Buffs {
     };
 
     public static final Buff<Minion> DOUBLE_ATTACK = (world, target) -> {
-        return target.getProperties().getBuffableAttack().addBuff((prev) -> 2 * prev);
+        return target.getProperties().getBuffableAttack().addRemovableBuff((prev) -> 2 * prev);
     };
 
     public static final PermanentBuff<Minion> WEAPON_ATTACK_BUFF = weaponAttackBuff(1);

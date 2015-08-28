@@ -525,7 +525,7 @@ public final class TargetedActions {
     public static TargetedAction<Object, Minion> windFury(@NamedArg("attackCount") int attackCount) {
         return (World world, Object actor, Minion target) -> {
             AuraAwareIntProperty maxAttackCount = target.getProperties().getMaxAttackCountProperty();
-            return maxAttackCount.addAuraBuff((prev) -> Math.max(prev, attackCount));
+            return maxAttackCount.addExternalBuff((prev) -> Math.max(prev, attackCount));
         };
     }
 

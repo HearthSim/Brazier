@@ -2,7 +2,6 @@ package com.github.kelemen.brazier;
 
 import com.github.kelemen.brazier.abilities.AuraAwareIntProperty;
 import com.github.kelemen.brazier.abilities.BuffableBoolProperty;
-import com.github.kelemen.brazier.abilities.BuffableIntProperty;
 import com.github.kelemen.brazier.actions.ActionUtils;
 import com.github.kelemen.brazier.actions.PlayActionDef;
 import com.github.kelemen.brazier.actions.PlayArg;
@@ -39,8 +38,8 @@ public final class Player implements PlayerProperty {
     private final Hand hand;
 
     private final AuraAwareIntProperty deathRattleTriggerCount;
-    private final BuffableIntProperty spellPower;
-    private final BuffableIntProperty heroDamageMultiplier;
+    private final AuraAwareIntProperty spellPower;
+    private final AuraAwareIntProperty heroDamageMultiplier;
     private final BuffableBoolProperty damagingHealAura;
 
     private final ManaResource manaResource;
@@ -65,8 +64,8 @@ public final class Player implements PlayerProperty {
         this.hand = new Hand(this, MAX_HAND_SIZE);
         this.manaResource = new ManaResource();
         this.fatique = 0;
-        this.spellPower = new BuffableIntProperty(() -> 0);
-        this.heroDamageMultiplier = new BuffableIntProperty(() -> 1);
+        this.spellPower = new AuraAwareIntProperty(0);
+        this.heroDamageMultiplier = new AuraAwareIntProperty(1);
         this.damagingHealAura = new BuffableBoolProperty(() -> false);
         this.cardsPlayedThisTurn = 0;
         this.minionsPlayedThisTurn = 0;
@@ -446,11 +445,11 @@ public final class Player implements PlayerProperty {
         return manaResource.getMana();
     }
 
-    public BuffableIntProperty getSpellPower() {
+    public AuraAwareIntProperty getSpellPower() {
         return spellPower;
     }
 
-    public BuffableIntProperty getHeroDamageMultiplier() {
+    public AuraAwareIntProperty getHeroDamageMultiplier() {
         return heroDamageMultiplier;
     }
 

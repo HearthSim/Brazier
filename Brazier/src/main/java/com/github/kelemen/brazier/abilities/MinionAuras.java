@@ -129,13 +129,13 @@ public final class MinionAuras {
             int count2 = world.getPlayer2().getBoard().countMinions(filter);
 
             int buff = attack * (count1 + count2);
-            return target.getBuffableAttack().addAuraBuff(buff);
+            return target.getBuffableAttack().addExternalBuff(buff);
         };
     }
 
     public static Aura<Object, Minion> attackBuff(@NamedArg("attack") int attack) {
         return (World world, Object source, Minion target) -> {
-            return target.getBuffableAttack().addAuraBuff(attack);
+            return target.getBuffableAttack().addExternalBuff(attack);
         };
     }
 
@@ -151,7 +151,7 @@ public final class MinionAuras {
         return (World world, Object source, Minion target) -> {
             UndoableUnregisterRefBuilder result = new UndoableUnregisterRefBuilder(2);
 
-            result.addRef(target.getBuffableAttack().addAuraBuff(attack));
+            result.addRef(target.getBuffableAttack().addExternalBuff(attack));
             result.addRef(target.getBody().getHp().addAuraBuff(hp));
 
             return result;
@@ -160,14 +160,14 @@ public final class MinionAuras {
 
     public static Aura<Object, Minion> minHp(@NamedArg("hp") int hp) {
         return (World world, Object source, Minion target) -> {
-            return target.getBody().getMinHpProperty().addAuraBuff((prev) -> Math.max(prev, hp));
+            return target.getBody().getMinHpProperty().addExternalBuff((prev) -> Math.max(prev, hp));
         };
     }
 
     public static Aura<Object, Minion> windFury(@NamedArg("attackCount") int attackCount) {
         return (World world, Object source, Minion target) -> {
             AuraAwareIntProperty maxAttackCount = target.getProperties().getMaxAttackCountProperty();
-            return maxAttackCount.addAuraBuff((prev) -> Math.max(prev, attackCount));
+            return maxAttackCount.addExternalBuff((prev) -> Math.max(prev, attackCount));
         };
     }
 }

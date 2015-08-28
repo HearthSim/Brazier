@@ -26,7 +26,7 @@ public final class WeaponAuras {
 
     public static Aura<Object, Weapon> attackBuff(@NamedArg("attack") int attack) {
         return (World world, Object source, Weapon target) -> {
-            return target.getBuffableAttack().addAuraBuff(attack);
+            return target.getBuffableAttack().addExternalBuff(attack);
         };
     }
 

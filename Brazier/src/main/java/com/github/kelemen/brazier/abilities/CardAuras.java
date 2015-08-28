@@ -4,6 +4,7 @@ import com.github.kelemen.brazier.Keywords;
 import com.github.kelemen.brazier.LabeledEntity;
 import com.github.kelemen.brazier.Player;
 import com.github.kelemen.brazier.PlayerProperty;
+import com.github.kelemen.brazier.Priorities;
 import com.github.kelemen.brazier.World;
 import com.github.kelemen.brazier.cards.Card;
 import com.github.kelemen.brazier.parsing.NamedArg;
@@ -39,7 +40,7 @@ public final class CardAuras {
 
     public static Aura<Object, Card> increaseManaCost(@NamedArg("amount") int amount) {
         return (World world, Object source, Card target) -> {
-            return target.getRawManaCost().addAuraBuff(amount);
+            return target.getRawManaCost().addExternalBuff(amount);
         };
     }
 
@@ -51,13 +52,16 @@ public final class CardAuras {
             @NamedArg("amount") int amount,
             @NamedArg("limit") int limit) {
         return (World world, Object source, Card target) -> {
-            return target.getRawManaCost().addPreAuraBuff((prevValue) -> Math.max(1, prevValue - amount));
+            return target.getRawManaCost().addRemovableBuff(
+                    Priorities.LOWEST_PRIORITY,
+                    true,
+                    (prevValue) -> Math.max(1, prevValue - amount));
         };
     }
 
     public static Aura<Object, Card> setManaCost(@NamedArg("manaCost") int manaCost) {
         return (World world, Object source, Card target) -> {
-            return target.getRawManaCost().addAuraBuff((prevValue) -> 0);
+            return target.getRawManaCost().addExternalBuff((prevValue) -> 0);
         };
     }
 
