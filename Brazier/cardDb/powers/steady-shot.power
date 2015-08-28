@@ -10,19 +10,20 @@
                 "flag": "steady-shot-snipe"
             },
             "class": "TargetlessActions.forTargets",
-            "selector": "EntitySelectors.enemyHero",
             "action": {
                 "class": "TargetedActions.damageTarget",
                 "damage": 2
-            }
+            },
+            "selector": "EntitySelectors.enemyHero"
         },
         {
+            "targets": "all",
             "requires": {
                 "class": "PlayActionRequirements.hasPlayerFlag",
                 "flag": "steady-shot-snipe"
             },
-            "targets": "all",
             "class": "TargetedActions.damageTarget",
             "damage": 2
-        }]
+        }
+    ]
 }

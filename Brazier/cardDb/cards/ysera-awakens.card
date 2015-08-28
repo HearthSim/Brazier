@@ -8,6 +8,7 @@
     "manaCost": 2,
     "playActions": {
         "class": "TargetlessActions.damageTarget",
+        "damage": 5,
         "selector": {
             "class": "EntitySelectors.filtered",
             "filter": {
@@ -15,7 +16,6 @@
                 "keywords": "ysera"
             },
             "selector": "EntitySelectors.allTargetsAlive"
-        },
-        "damage": 5
+        }
     }
 }

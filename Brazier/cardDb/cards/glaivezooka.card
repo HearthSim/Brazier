@@ -7,14 +7,14 @@
     "manaCost": 2,
     "playActions": {
         "class": "TargetlessActions.forTargets",
+        "action": {
+            "class": "TargetedActions.buffTarget",
+            "buff": "1/0"
+        },
         "selector": {
             "class": "EntitySelectors.filtered",
             "filter": "EntityFilters.random",
             "selector": "EntitySelectors.friendlyBoardAlive"
-        },
-        "action": {
-            "class": "TargetedActions.buffTarget",
-            "buff": "1/0"
         }
     },
     "weapon": {

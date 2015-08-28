@@ -9,17 +9,17 @@
         "hp": 3,
         "battleCries": {
             "class": "TargetlessActions.forOtherTargets",
-            "selector": {
-                "class": "EntitySelectors.filtered",
-                "filter": "EntityFilters.random",
-                "selector": "EntitySelectors.board"
-            },
             "action": {
                 "class": "TargetedActions.transformMinion",
                 "minion": [
                     "Devlisaur",
                     "Squirrel"
                 ]
+            },
+            "selector": {
+                "class": "EntitySelectors.filtered",
+                "filter": "EntityFilters.random",
+                "selector": "EntitySelectors.board"
             }
         }
     }

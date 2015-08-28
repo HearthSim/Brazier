@@ -6,7 +6,7 @@
     "manaCost": 4,
     "playActions": {
         "class": "TargetlessActions.damageTarget",
-        "selector": "EntitySelectors.enemyTargetsAlive",
-        "damage": 2
+        "damage": 2,
+        "selector": "EntitySelectors.enemyTargetsAlive"
     }
 }

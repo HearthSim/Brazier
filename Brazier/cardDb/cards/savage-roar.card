@@ -6,10 +6,10 @@
     "manaCost": 3,
     "playActions": {
         "class": "TargetlessActions.forTargets",
-        "selector": "EntitySelectors.friendlyTargets",
         "action": {
             "class": "TargetedActions.buffTargetThisTurn",
             "buff": "2/0"
-        }
+        },
+        "selector": "EntitySelectors.friendlyTargets"
     }
 }

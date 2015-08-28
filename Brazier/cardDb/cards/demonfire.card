@@ -12,14 +12,15 @@
             {
                 "class": "TargetedActionConditions.forTarget",
                 "filter": "EntityFilters.isDemon"
-            }],
-        "if": {
-            "class": "TargetedActions.buffTarget",
-            "buff": "2/2"
-        },
+            }
+        ],
         "else": {
             "class": "TargetedActions.damageTarget",
             "damage": 2
+        },
+        "if": {
+            "class": "TargetedActions.buffTarget",
+            "buff": "2/2"
         }
     }
 }

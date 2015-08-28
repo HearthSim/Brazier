@@ -7,11 +7,11 @@
         "attack": 5,
         "hp": 4,
         "battleCries": {
+            "targets": "all",
             "requires": {
                 "class": "PlayActionRequirements.hasCardInHand",
                 "keywords": "dragon"
             },
-            "targets": "all",
             "class": "TargetedActions.damageTarget",
             "damage": 3
         }

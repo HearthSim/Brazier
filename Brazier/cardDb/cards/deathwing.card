@@ -11,8 +11,8 @@
         "battleCries": [
             {
                 "class": "TargetlessActions.forOtherTargets",
-                "selector": "EntitySelectors.board",
-                "action": "TargetedActions.KILL_TARGET"
+                "action": "TargetedActions.KILL_TARGET",
+                "selector": "EntitySelectors.board"
             },
             "TargetlessActions.DISCARD_HAND"
         ]

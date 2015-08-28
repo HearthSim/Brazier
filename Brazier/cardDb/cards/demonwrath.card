@@ -6,6 +6,7 @@
     "manaCost": 3,
     "playActions": {
         "class": "TargetlessActions.damageTarget",
+        "damage": 2,
         "selector": {
             "class": "EntitySelectors.filtered",
             "filter": {
@@ -13,7 +14,6 @@
                 "filter": "EntityFilters.isDemon"
             },
             "selector": "EntitySelectors.board"
-        },
-        "damage": 2
+        }
     }
 }

@@ -7,13 +7,13 @@
     "playActions": [
         {
             "class": "TargetlessActions.damageTarget",
-            "selector": "EntitySelectors.enemyTargets",
-            "damage": 2
+            "damage": 2,
+            "selector": "EntitySelectors.enemyTargets"
         },
         {
             "class": "TargetlessActions.damageTarget",
-            "selector": "EntitySelectors.friendlyTargetsBuffable",
-            "damage": -2
+            "damage": -2,
+            "selector": "EntitySelectors.friendlyTargetsBuffable"
         }
     ]
 }

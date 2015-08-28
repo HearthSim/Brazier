@@ -9,6 +9,10 @@
         "hp": 5,
         "battleCries": {
             "class": "TargetlessActions.forTargets",
+            "action": {
+                "class": "TargetedActions.buffTarget",
+                "buff": "2/2"
+            },
             "selector": {
                 "class": "EntitySelectors.filtered",
                 "filter": {
@@ -16,10 +20,6 @@
                     "name": "Silver Hand Recruit"
                 },
                 "selector": "EntitySelectors.friendlyBoard"
-            },
-            "action": {
-                "class": "TargetedActions.buffTarget",
-                "buff": "2/2"
             }
         }
     }

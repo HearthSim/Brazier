@@ -9,14 +9,14 @@
         "hp": 2,
         "battleCries": {
             "class": "TargetlessActions.forTargets",
-            "selector": "EntitySelectors.friendlyWeapon",
             "action": {
                 "class": "TargetedActions.buffTarget",
                 "buff": {
                     "class": "Buffs.buffWeapon",
                     "attack": 1
                 }
-            }
+            },
+            "selector": "EntitySelectors.friendlyWeapon"
         }
     }
 }

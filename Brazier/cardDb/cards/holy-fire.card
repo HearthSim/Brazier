@@ -13,8 +13,8 @@
         },
         {
             "class": "TargetlessActions.damageTarget",
-            "selector": "EntitySelectors.friendlyHero",
-            "damage": -5
+            "damage": -5,
+            "selector": "EntitySelectors.friendlyHero"
         }
     ]
 }

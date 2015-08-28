@@ -6,7 +6,7 @@
     "manaCost": 6,
     "playActions": {
         "class": "TargetlessActions.forBornTargets",
-        "selector": "EntitySelectors.board",
-        "action": "TargetedActions.RETURN_MINION"
+        "action": "TargetedActions.RETURN_MINION",
+        "selector": "EntitySelectors.board"
     }
 }

@@ -7,14 +7,14 @@
     "playActions": {
         "requires": "PlayActionRequirements.OPPONENT_BOARD_NOT_EMPTY",
         "class": "TargetlessActions.forTargets",
+        "action": {
+            "class": "TargetedActions.damageTarget",
+            "damage": 4
+        },
         "selector": {
             "class": "EntitySelectors.filtered",
             "filter": "EntityFilters.random",
             "selector": "EntitySelectors.enemyBoardAlive"
-        },
-        "action": {
-            "class": "TargetedActions.damageTarget",
-            "damage": 4
         }
     }
 }

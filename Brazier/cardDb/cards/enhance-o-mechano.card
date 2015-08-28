@@ -10,7 +10,6 @@
         "hp": 2,
         "battleCries": {
             "class": "TargetlessActions.forOtherTargets",
-            "selector": "EntitySelectors.friendlyBoard",
             "action": {
                 "class": "TargetedActions.randomAction",
                 "actions": [
@@ -18,7 +17,8 @@
                     "TargetedActions.WIND_FURY",
                     "TargetedActions.TAUNT"
                 ]
-            }
+            },
+            "selector": "EntitySelectors.friendlyBoard"
         }
     }
 }

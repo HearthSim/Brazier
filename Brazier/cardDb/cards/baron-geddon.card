@@ -16,7 +16,7 @@
                         "class": "EntitySelectors.notSelf",
                         "selector": "EntitySelectors.allTargetsAlive"
                     },
-                    damage: 2
+                    "damage": 2
                 }
             }
         }

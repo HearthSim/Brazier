@@ -6,7 +6,6 @@
     "manaCost": 2,
     "playActions": {
         "class": "TargetlessActions.forTargets",
-        "selector": "EntitySelectors.friendlyHero",
         "action": [
             {
                 "class": "TargetedActions.damageTarget",
@@ -16,6 +15,7 @@
                 "class": "TargetedActions.buffTargetThisTurn",
                 "buff": "2/0"
             }
-        ]
+        ],
+        "selector": "EntitySelectors.friendlyHero"
     }
 }

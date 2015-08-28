@@ -10,6 +10,10 @@
             "minionCount": 1
         },
         "class": "TargetlessActions.forBornTargets",
+        "action": {
+            "class": "TargetedActions.damageTarget",
+            "damage": 3
+        },
         "selector": {
             "class": "EntitySelectors.filtered",
             "filter": {
@@ -17,10 +21,6 @@
                 "count": 2
             },
             "selector": "EntitySelectors.enemyBoardAlive"
-        },
-        "action": {
-            "class": "TargetedActions.damageTarget",
-            "damage": 3
         }
     }
 }

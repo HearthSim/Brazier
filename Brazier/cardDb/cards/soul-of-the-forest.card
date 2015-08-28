@@ -6,13 +6,13 @@
     "manaCost": 4,
     "playActions": {
         "class": "TargetlessActions.forTargets",
-        "selector": "EntitySelectors.friendlyBoard",
         "action": {
             "class": "TargetedActions.addDeathRattle",
             "action": {
                 "class": "TargetlessActions.summonMinion",
                 "minion": "Treant"
             }
-        }
+        },
+        "selector": "EntitySelectors.friendlyBoard"
     }
 }

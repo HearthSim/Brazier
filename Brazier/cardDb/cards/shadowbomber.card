@@ -10,13 +10,13 @@
         "battleCries": [
             {
                 "class": "TargetlessActions.damageTarget",
-                "selector": "EntitySelectors.friendlyHero",
-                "damage": 3
+                "damage": 3,
+                "selector": "EntitySelectors.friendlyHero"
             },
             {
                 "class": "TargetlessActions.damageTarget",
-                "selector": "EntitySelectors.enemyHero",
-                "damage": 3
+                "damage": 3,
+                "selector": "EntitySelectors.enemyHero"
             }
         ]
     }

@@ -9,14 +9,14 @@
         "hp": 5,
         "battleCries": {
             "class": "TargetlessActions.forTargets",
-            "selector": "EntitySelectors.neighbours",
             "action": {
                 "class": "TargetedActions.addAbility",
                 "ability": {
                     "class": "MinionAbilities.spellPower",
                     "spellPower": 1
                 }
-            }
+            },
+            "selector": "EntitySelectors.neighbours"
         }
     }
 }

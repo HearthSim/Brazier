@@ -7,7 +7,7 @@
     "manaCost": 9,
     "playActions": {
         "class": "TargetlessActions.forTargets",
-        "selector": "EntitySelectors.allTargets",
-        "action": "TargetedActions.FULL_HEAL"
+        "action": "TargetedActions.FULL_HEAL",
+        "selector": "EntitySelectors.allTargets"
     }
 }

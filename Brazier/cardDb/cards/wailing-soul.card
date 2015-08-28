@@ -9,8 +9,8 @@
         "hp": 5,
         "battleCries": {
             "class": "TargetlessActions.forOtherTargets",
-            "selector": "EntitySelectors.friendlyBoard",
-            "action": "TargetedActions.SILENCE"
+            "action": "TargetedActions.SILENCE",
+            "selector": "EntitySelectors.friendlyBoard"
         }
     }
 }

@@ -6,14 +6,14 @@
     "manaCost": 0,
     "playActions": {
         "class": "TargetlessActions.forOtherTargets",
+        "action": {
+            "class": "TargetedActions.buffTarget",
+            "buff": "0/2"
+        },
         "selector": {
             "class": "EntitySelectors.filtered",
             "filter": "EntityFilters.isTotem",
             "selector": "EntitySelectors.board"
-        },
-        "action": {
-            "class": "TargetedActions.buffTarget",
-            "buff": "0/2"
         }
     }
 }

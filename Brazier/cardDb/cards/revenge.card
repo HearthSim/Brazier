@@ -12,8 +12,8 @@
                 "hp": 12
             },
             "class": "TargetlessActions.damageTarget",
-            "selector": "EntitySelectors.boardAlive",
-            "damage": 1
+            "damage": 1,
+            "selector": "EntitySelectors.boardAlive"
         },
         {
             "requires": {
@@ -21,8 +21,8 @@
                 "hp": 13
             },
             "class": "TargetlessActions.damageTarget",
-            "selector": "EntitySelectors.boardAlive",
-            "damage": 3
+            "damage": 3,
+            "selector": "EntitySelectors.boardAlive"
         }
     ]
 }

@@ -7,13 +7,13 @@
     "playActions": {
         "requires": "PlayActionRequirements.HAS_WEAPON",
         "class": "TargetlessActions.forTargets",
-        "selector": "EntitySelectors.friendlyWeapon",
         "action": {
             "class": "TargetedActions.buffTarget",
             "buff": {
                 "class": "Buffs.buffWeapon",
                 "attack": 2
             }
-        }
+        },
+        "selector": "EntitySelectors.friendlyWeapon"
     }
 }

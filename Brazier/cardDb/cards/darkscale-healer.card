@@ -8,8 +8,8 @@
         "hp": 5,
         "battleCries": {
             "class": "TargetlessActions.damageTarget",
-            "selector": "EntitySelectors.friendlyTargets",
-            "damage": -2
+            "damage": -2,
+            "selector": "EntitySelectors.friendlyTargets"
         }
     }
 }

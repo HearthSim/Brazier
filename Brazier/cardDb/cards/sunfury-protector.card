@@ -9,8 +9,8 @@
         "hp": 3,
         "battleCries": {
             "class": "TargetlessActions.forTargets",
-            "selector": "EntitySelectors.neighbours",
-            "action": "TargetedActions.TAUNT"
+            "action": "TargetedActions.TAUNT",
+            "selector": "EntitySelectors.neighbours"
         }
     }
 }

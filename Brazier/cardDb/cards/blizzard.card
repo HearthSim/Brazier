@@ -8,14 +8,14 @@
     "playActions": [
         {
             "class": "TargetlessActions.damageTarget",
-            "selector": "EntitySelectors.enemyBoard",
-            "damage": 2
+            "damage": 2,
+            "selector": "EntitySelectors.enemyBoard"
         },
         {
             "class": "TargetlessActions.forBornTargets",
+            "action": "TargetedActions.FREEZE_TARGET",
             "atomic": true,
-            "selector": "EntitySelectors.enemyBoard",
-            "action": "TargetedActions.FREEZE_TARGET"
+            "selector": "EntitySelectors.enemyBoard"
         }
     ]
 }

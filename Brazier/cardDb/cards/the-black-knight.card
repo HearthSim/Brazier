@@ -8,11 +8,11 @@
         "attack": 4,
         "hp": 5,
         "battleCries": {
-            "class": "TargetedActions.KILL_TARGET",
             "targets": [
                 "enemy-minions",
                 "TargetNeeds.IS_TAUNT"
-            ]
+            ],
+            "class": "TargetedActions.KILL_TARGET"
         }
     }
 }

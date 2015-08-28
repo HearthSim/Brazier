@@ -10,6 +10,7 @@
         "hp": 5,
         "battleCries": {
             "class": "TargetlessActions.forTargets",
+            "action": "TargetedActions.KILL_TARGET",
             "selector": {
                 "class": "EntitySelectors.filtered",
                 "filter": "EntityFilters.random",
@@ -21,8 +22,7 @@
                     },
                     "selector": "EntitySelectors.enemyBoardAlive"
                 }
-            },
-            "action": "TargetedActions.KILL_TARGET"
+            }
         }
     }
 }

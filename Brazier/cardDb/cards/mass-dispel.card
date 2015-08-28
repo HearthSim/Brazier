@@ -8,8 +8,8 @@
     "playActions": [
         {
             "class": "TargetlessActions.forTargets",
-            "selector": "EntitySelectors.enemyBoard",
-            "action": "TargetedActions.SILENCE"
+            "action": "TargetedActions.SILENCE",
+            "selector": "EntitySelectors.enemyBoard"
         },
         "TargetlessActions.DRAW_FOR_SELF"
     ]

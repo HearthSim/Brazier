@@ -6,8 +6,8 @@
     "rarity": "epic",
     "manaCost": 2,
     "playActions": {
-       "class": "TargetlessActions.forBornTargets",
-       "selector": "EntitySelectors.friendlyBoard",
-       "action": "TargetedActions.TRIGGER_DEATHRATTLE"
+        "class": "TargetlessActions.forBornTargets",
+        "action": "TargetedActions.TRIGGER_DEATHRATTLE",
+        "selector": "EntitySelectors.friendlyBoard"
     }
 }

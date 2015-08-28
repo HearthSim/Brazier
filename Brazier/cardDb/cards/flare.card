@@ -9,8 +9,8 @@
         "TargetlessActions.DESTROY_OPPONENT_SECRET",
         {
             "class": "TargetlessActions.forTargets",
-            "selector": "EntitySelectors.board",
-            "action": "TargetedActions.DESTROY_STEALTH"
+            "action": "TargetedActions.DESTROY_STEALTH",
+            "selector": "EntitySelectors.board"
         },
         "TargetlessActions.DRAW_FOR_SELF"
     ]

@@ -7,13 +7,13 @@
     "playActions": {
         "class": "TargetlessActions.doIf",
         "condition": "EntityFilters.isMaxManaCrystals",
-        "if": {
-            "class": "TargetlessActions.addCard",
-            "card": "Excess Mana"
-        },
         "else": {
             "class": "TargetlessActions.addManaCrystal",
             "amount": 1
+        },
+        "if": {
+            "class": "TargetlessActions.addCard",
+            "card": "Excess Mana"
         }
     }
 }

@@ -9,12 +9,12 @@
         "hp": 3,
         "battleCries": {
             "class": "TargetlessActions.damageTarget",
+            "damage": 4,
             "selector": {
                 "class": "EntitySelectors.filtered",
                 "filter": "EntityFilters.random",
                 "selector": "EntitySelectors.enemyBoardAlive"
-            },
-            "damage": 4
+            }
         }
     }
 }

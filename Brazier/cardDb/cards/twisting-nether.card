@@ -7,7 +7,7 @@
     "manaCost": 8,
     "playActions": {
         "class": "TargetlessActions.forTargets",
-        "selector": "EntitySelectors.board",
-        "action": "TargetedActions.KILL_TARGET"
+        "action": "TargetedActions.KILL_TARGET",
+        "selector": "EntitySelectors.board"
     }
 }

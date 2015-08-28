@@ -7,10 +7,10 @@
     "manaCost": 0,
     "playActions": {
         "class": "TargetlessActions.forOtherTargets",
-        "selector": "EntitySelectors.friendlyBoardBuffable",
         "action": {
             "class": "TargetedActions.buffTarget",
             "buff": "2/2"
-        }
+        },
+        "selector": "EntitySelectors.friendlyBoardBuffable"
     }
 }

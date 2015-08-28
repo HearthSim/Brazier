@@ -7,11 +7,11 @@
     "manaCost": 6,
     "playActions": {
         "class": "TargetlessActions.forBornTargets",
-        "selector": "EntitySelectors.board",
-        "atomic": false,
         "action": {
             "class": "TargetlessActions.forSelf",
             "action": "TargetedActions.DAMAGE_TARGET"
-        }
+        },
+        "atomic": false,
+        "selector": "EntitySelectors.board"
     }
 }

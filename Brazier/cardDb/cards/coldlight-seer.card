@@ -10,14 +10,14 @@
         "hp": 3,
         "battleCries": {
             "class": "TargetlessActions.forOtherTargets",
+            "action": {
+                "class": "TargetedActions.buffTarget",
+                "buff": "0/2"
+            },
             "selector": {
                 "class": "EntitySelectors.filtered",
                 "filter": "EntityFilters.isMurloc",
                 "selector": "EntitySelectors.board"
-            },
-            "action": {
-                "class": "TargetedActions.buffTarget",
-                "buff": "0/2"
             }
         }
     }

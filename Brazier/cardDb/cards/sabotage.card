@@ -9,12 +9,12 @@
         {
             "requires": "PlayActionRequirements.OPPONENT_BOARD_NOT_EMPTY",
             "class": "TargetlessActions.forTargets",
+            "action": "TargetedActions.KILL_TARGET",
             "selector": {
                 "class": "EntitySelectors.filtered",
                 "filter": "EntityFilters.random",
                 "selector": "EntitySelectors.enemyBoardAlive"
-            },
-            "action": "TargetedActions.KILL_TARGET"
+            }
         },
         {
             "requires": "PlayActionRequirements.COMBO",

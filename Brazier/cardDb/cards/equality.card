@@ -7,13 +7,13 @@
     "manaCost": 2,
     "playActions": {
         "class": "TargetlessActions.forTargets",
-        "selector": "EntitySelectors.enemyBoard",
         "action": {
             "class": "TargetedActions.buffTarget",
             "buff": {
                 "class": "Buffs.setMaxHp",
                 "hp": 1
             }
-        }
+        },
+        "selector": "EntitySelectors.enemyBoard"
     }
 }

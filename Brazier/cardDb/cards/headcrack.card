@@ -8,8 +8,8 @@
     "playActions": [
         {
             "class": "TargetlessActions.damageTarget",
-            "selector": "EntitySelectors.enemyHero",
-            "damage": "2"
+            "damage": "2",
+            "selector": "EntitySelectors.enemyHero"
         },
         {
             "requires": "PlayActionRequirements.COMBO",

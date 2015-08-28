@@ -8,26 +8,26 @@
         {
             "requires": "PlayActionRequirements.HAS_WEAPON",
             "class": "TargetlessActions.forTargets",
-            "selector": "EntitySelectors.friendlyWeapon",
             "action": {
                 "class": "TargetedActions.buffTarget",
                 "buff": {
                     "class": "Buffs.buffWeapon",
                     "attack": 3
                 }
-            }
+            },
+            "selector": "EntitySelectors.friendlyWeapon"
         },
         {
             "requires": "PlayActionRequirements.COMBO",
             "class": "TargetlessActions.forTargets",
+            "action": {
+                "class": "TargetedActions.buffTarget",
+                "buff": "3/0"
+            },
             "selector": {
                 "class": "EntitySelectors.filtered",
                 "filter": "EntityFilters.random",
                 "selector": "EntitySelectors.friendlyBoardAlive"
-            },
-            "action": {
-                "class": "TargetedActions.buffTarget",
-                "buff": "3/0"
             }
         }
     ]

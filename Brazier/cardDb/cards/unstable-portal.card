@@ -6,7 +6,6 @@
     "manaCost": 2,
     "playActions": {
         "class": "TargetlessActions.addSelectedCard",
-        "costReduction": 3,
         "card": {
             "class": "EntitySelectors.filtered",
             "filter": "EntityFilters.random",
@@ -17,6 +16,7 @@
                     "collectible"
                 ]
             }
-        }
+        },
+        "costReduction": 3
     }
 }

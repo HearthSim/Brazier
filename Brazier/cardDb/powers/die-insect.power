@@ -5,11 +5,11 @@
     "manaCost": 2,
     "playActions": {
         "class": "TargetlessActions.damageTarget",
+        "damage": 8,
         "selector": {
             "class": "EntitySelectors.filtered",
             "filter": "EntityFilters.random",
             "selector": "EntitySelectors.enemyTargetsAlive"
-        },
-        "damage": 8
+        }
     }
 }
